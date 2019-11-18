@@ -9,6 +9,32 @@
       Title="Page1" ShowsNavigationUI="False">
 
     <Grid>
-        <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14">Dit is de homepagina</Label>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical" Grid.Column="0">
+            <Label FontSize="32" Margin="20,5,0,0" 
+               FontWeight="Bold" Grid.Column="0">Snel Foutloos Typen</Label>
+            <TextBlock Margin="20,10,-0.2,0" TextWrapping="Wrap">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam dolor dui,
+                dignissim lacinia turpis efficitur sit amet. Vivamus sit amet finibus quam.
+                Donec tincidunt egestas ipsum ut ultrices. Nam lacinia egestas facilisis.
+                Phasellus ut lobortis ipsum, ut bibendum tortor.
+                Praesent at dui est. Vestibulum pellentesque, purus ac tempus tristique,
+                nibh turpis lobortis tortor, nec ultrices ante mi quis velit.
+            </TextBlock>
+            <Button Width="300" Height="30" Margin="0,20,0,0">Inloggen/registreren om toetsen te maken</Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Column="1">
+            <Label FontSize="22" Margin="0,5,0,0" HorizontalAlignment="Center"
+               FontWeight="Bold" Grid.Column="0">Trending Toetsen</Label>
+            <ListView x:Name="trendingTestsListView" Width="400" Margin="0,10,0,0"/>
+            <TextBlock x:Name="moreTrendingTestsLink" HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Hyperlink>Meer trending toetsen...</Hyperlink>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </Page>
