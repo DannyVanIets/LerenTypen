@@ -62,7 +62,11 @@
                 <TextBox x:Name="securityvraag" Height="31" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="399" Width="162" TextChanged="TextBox_TextChanged"/>
             </StackPanel>
 
-            <CheckBox x:Name="checkboxakkoord" Content="Ik ga akkoord met het privacystatement" Height="24" Canvas.Left="612" Canvas.Top="457" Width="245" IsChecked="False" Checked="CheckBox_Checked" Unchecked="CheckBox_unChecked"/>
+            <CheckBox x:Name="checkboxakkoord" Height="24" Canvas.Left="612" Canvas.Top="457" Width="245" IsChecked="False" Checked="CheckBox_Checked" Unchecked="CheckBox_unChecked">
+                <TextBlock>Ik ga akkoord met het
+                <Hyperlink.Click> Privacystatement</Hyperlink.Click>
+                </TextBlock>
+            </CheckBox>
             <Button x:Name="accountmaken" Content="Account Aanmaken" Height="35" Canvas.Left="612" Canvas.Top="486" Width="162" Click="Button_Click" IsEnabled="False"/>
         </StackPanel>
         <Border x:Name="Line" BorderBrush="#FF525252" BorderThickness="1" HorizontalAlignment="Center" Height="492" Margin="0,30,0,0" VerticalAlignment="Top" Width="3" Background="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
