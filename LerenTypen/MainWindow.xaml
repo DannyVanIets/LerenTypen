@@ -1,0 +1,33 @@
+﻿<Window x:Class="LerenTypen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LerenTypen"
+        mc:Ignorable="d"
+        Title="Snel Foutloos Typen" Height="650" Width="1050">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal" Height="50" Grid.Row="0">
+            <ToggleButton x:Name="page1Button" IsChecked="True" Margin="15" Width="75" Click="Page1Button_Click">Pagina 1</ToggleButton>
+            <ToggleButton x:Name="page2Button" Margin="15" Width="75" Click="Page2Button_Click">Pagina 2</ToggleButton>
+            <ToggleButton x:Name="page3Button" Margin="15" Width="75" Click="Page3Button_Click">Pagina 3</ToggleButton>
+            <ToggleButton x:Name="page4Button" Margin="15" Width="75" Click="Page4Button_Click">Pagina 4</ToggleButton>
+            <ToggleButton x:Name="page5Button" Margin="15" Width="75" Click="Page5Button_Click">Pagina 5</ToggleButton>
+        </StackPanel>
+
+        <Frame x:Name="frame" Source="Page1.xaml" MinWidth="842" MinHeight="370" Grid.Row="1">
+            <Frame.Template>
+                <!-- ControlTemplate to remove the navigation UI of the frame,
+                     both in the designer and the app itself -->
+                <ControlTemplate TargetType="Frame">
+                    <ContentPresenter/>
+                </ControlTemplate>
+            </Frame.Template>
+        </Frame>
+    </Grid>
+</Window>
