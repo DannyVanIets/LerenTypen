@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace LerenTypen
 {
@@ -40,8 +42,12 @@ namespace LerenTypen
             if (checkboxakkoord.IsChecked == true)
             {
                 accountmaken.IsEnabled = true;
-
             }
+        }
+
+        private void wachtwoord_vergeten_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            
         }
     }
 }
