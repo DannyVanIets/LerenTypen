@@ -8,14 +8,19 @@ namespace LerenTypen
     /// </summary>
     public partial class CreateTestPage : Page
     {
+        private TextBox tb;
+        private Thickness margin;
+        static int i = 4;
         public CreateTestPage()
         {
             InitializeComponent();
+
+
+
+
         }
-        TextBox tb;
-        private Thickness margin;
-        static int i = 4;
-        //Height="25" Margin="50,20,50,10"
+        
+        
         private void addLine_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             tb = new TextBox();
@@ -26,16 +31,15 @@ namespace LerenTypen
             margin.Top = 0;
             margin.Bottom = 10;
             tb.Margin = margin;
-            
-
 
             tb.Name = "textInputLine" + i.ToString();
-            TextBlock newAddLineLink = addLineLink; 
+            
             testLinesPane.Children.Remove(addLineLink);
             testLinesPane.Children.Add(tb);
             testLinesPane.Children.Add(addLineLink);
             i++;
             scrollViewer.ScrollToEnd();
         }
+
     }
 }
