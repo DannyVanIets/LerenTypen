@@ -28,7 +28,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Name="wachtwoord_vergeten" Content="Wachtwoord vergeten" MouseDoubleClick="wachtwoord_vergeten_MouseDoubleClick" Height="30" Width="130" Margin="150, 5, 5, 5" Cursor="Hand" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+                <Button Name="forgot_password_button" Content="Wachtwoord vergeten" Height="20" Width="120" Margin="160, 5, 5, 5" Cursor="Hand" Background="White" BorderBrush="White" Click="forgot_password_button_Click"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

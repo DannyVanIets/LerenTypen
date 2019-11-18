@@ -9,9 +9,12 @@ namespace LerenTypen
     /// </summary>
     public partial class LoginPage : Page
     {
-        public LoginPage()
+        private MainWindow MainWindow;
+
+        public LoginPage(MainWindow mainWindow)
         {
             InitializeComponent();
+            MainWindow = mainWindow;
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -45,9 +48,9 @@ namespace LerenTypen
             }
         }
 
-        private void wachtwoord_vergeten_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void forgot_password_button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            
+            MainWindow.ChangePage(new ForgotPasswordPage());
         }
     }
 }

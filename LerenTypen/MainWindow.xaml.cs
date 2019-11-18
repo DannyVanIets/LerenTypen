@@ -33,10 +33,10 @@ namespace LerenTypen
         {
             ChangePage(new LeaderboardPage(), leaderboardPageButton);
         }
-     
+
         private void LoginPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new LoginPage(), loginPageButton);
+            ChangePage(new LoginPage(this), loginPageButton);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace LerenTypen
             {
                 frame.Navigate(pageToChangeTo);
                 SwitchMenuButtons(pageToggleButton);
-            }           
+            }
         }
 
         /// <summary>
