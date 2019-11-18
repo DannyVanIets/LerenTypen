@@ -27,6 +27,11 @@ namespace LerenTypen
         {
             mainWindow.ChangePage(new LoginPage());
         }
+
+        private void MoreTrendingTestsLink_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            mainWindow.ChangePage(new TrendingTestsPage());
+        }
     }
 
     class Test

@@ -18,23 +18,20 @@
             <Label FontSize="32" Margin="20,5,0,0" 
                FontWeight="Bold" Grid.Column="0">Snel Foutloos Typen</Label>
             <TextBlock Margin="20,10,-0.2,0" TextWrapping="Wrap">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam dolor dui,
-                dignissim lacinia turpis efficitur sit amet. Vivamus sit amet finibus quam.
-                Donec tincidunt egestas ipsum ut ultrices. Nam lacinia egestas facilisis.
-                Phasellus ut lobortis ipsum, ut bibendum tortor.
-                Praesent at dui est. Vestibulum pellentesque, purus ac tempus tristique,
-                nibh turpis lobortis tortor, nec ultrices ante mi quis velit.
+                Welkom bij Snel Foutloos Typen, de applicatie om je typskills te verbeteren!
+                Als je een account aanmaakt kan je toetsen oefenen en maken. 
+                Klik op de knop hieronder om aan de slag te gaan!
             </TextBlock>
             <Button x:Name="loginRegisterButton" Width="300" Height="30" Margin="0,20,0,0" 
-                    Click="LoginRegisterButton_Click">Inloggen/registreren om toetsen te maken</Button>
+                    Click="LoginRegisterButton_Click">Inloggen/registreren om toetsen te oefenen</Button>
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Column="1">
             <Label FontSize="22" Margin="0,5,0,0" HorizontalAlignment="Center"
                FontWeight="Bold" Grid.Column="0">Trending Toetsen</Label>
             <ListView x:Name="trendingTestsListView" Width="400" Margin="0,10,0,0"/>
-            <TextBlock x:Name="moreTrendingTestsLink" HorizontalAlignment="Center" Margin="0,10,0,0">
-                <Hyperlink>Meer trending toetsen...</Hyperlink>
+            <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Hyperlink x:Name="moreTrendingTestsLink" Click="MoreTrendingTestsLink_Click">Meer trending toetsen...</Hyperlink>
             </TextBlock>
         </StackPanel>
     </Grid>
