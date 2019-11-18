@@ -33,7 +33,7 @@ namespace LerenTypen
         {
             ChangePage(new Page4(), page4Button);
         }
-
+     
         private void Page5Button_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(new Page5(), page5Button);

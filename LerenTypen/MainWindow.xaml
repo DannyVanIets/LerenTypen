@@ -13,11 +13,11 @@
         </Grid.RowDefinitions>
         
         <StackPanel Orientation="Horizontal" Height="50" Grid.Row="0">
-            <ToggleButton x:Name="page1Button" IsChecked="True" Margin="15" Width="75" Click="Page1Button_Click">Pagina 1</ToggleButton>
-            <ToggleButton x:Name="page2Button" Margin="15" Width="75" Click="Page2Button_Click">Pagina 2</ToggleButton>
-            <ToggleButton x:Name="page3Button" Margin="15" Width="75" Click="Page3Button_Click">Pagina 3</ToggleButton>
-            <ToggleButton x:Name="page4Button" Margin="15" Width="75" Click="Page4Button_Click">Pagina 4</ToggleButton>
-            <ToggleButton x:Name="page5Button" Margin="15" Width="75" Click="Page5Button_Click">Pagina 5</ToggleButton>
+            <ToggleButton x:Name="page1Button" IsChecked="True" Margin="15" Width="150" Click="Page1Button_Click" Content="Overzicht alle toetsen"/>
+            <ToggleButton x:Name="page2Button" Margin="15" Width="120" Click="Page2Button_Click" Content="Trending toetsen"/>
+            <ToggleButton x:Name="page3Button" Margin="15" Width="100" Click="Page3Button_Click" Content="Tips/advies"/>
+            <ToggleButton x:Name="page4Button" Margin="15" Width="100" Click="Page4Button_Click" Content="Leaderboard"/>
+            <ToggleButton x:Name="page5Button" Margin="15" Width="150" Click="Page5Button_Click" Content="Inloggen/registreren"/>
         </StackPanel>
 
         <Frame x:Name="frame" Source="Page1.xaml" MinWidth="842" MinHeight="370" Grid.Row="1">
