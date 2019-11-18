@@ -43,8 +43,8 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Geboorte datum :&#xA;" Canvas.Left="612" Canvas.Top="303" Width="162" FontSize="14" Height="40"/>
-                <TextBox x:Name="geboortedatum" Height="31" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="303" Width="162" TextChanged="TextBox_TextChanged"/>
+                <Label Content="Geboortedatum :&#xA;" Canvas.Left="612" Canvas.Top="303" Width="162" FontSize="14" Height="40"/>
+                <DatePicker x:Name="geboortedatum" Height="31" Canvas.Left="795" Canvas.Top="303" Width="162" SelectedDate="01-01-1980"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -65,7 +65,7 @@
             <CheckBox x:Name="checkboxakkoord" Content="Ik ga akkoord met het privacystatement" Height="24" Canvas.Left="612" Canvas.Top="457" Width="245" IsChecked="False" Checked="CheckBox_Checked" Unchecked="CheckBox_unChecked"/>
             <Button x:Name="accountmaken" Content="Account Aanmaken" Height="35" Canvas.Left="612" Canvas.Top="486" Width="162" Click="Button_Click" IsEnabled="False"/>
         </StackPanel>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="492" Margin="525,30,0,30" VerticalAlignment="Top" Width="4" Background="Black" RenderTransformOrigin="0.5,0.5">
+        <Border x:Name="Line" BorderBrush="#FF525252" BorderThickness="1" HorizontalAlignment="Center" Height="492" Margin="0,30,0,0" VerticalAlignment="Top" Width="3" Background="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">
             <Border.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="-1"/>
