@@ -16,11 +16,16 @@ namespace LerenTypen
         };
         private MainWindow mainWindow;
 
+        public HomePage()
+        {
+            InitializeComponent();
+            trendingTestsListView.ItemsSource = trendingTests;
+        }
+
         public HomePage(MainWindow mainWindow)
         {
             InitializeComponent();
-            this.mainWindow = mainWindow;
-            trendingTestsListView.ItemsSource = trendingTests;
+            this.mainWindow = mainWindow;           
         }
 
         private void LoginRegisterButton_Click(object sender, System.Windows.RoutedEventArgs e)
