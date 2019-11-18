@@ -14,7 +14,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Center">
+        <StackPanel x:Name="textpanel" Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Center">
             <TextBlock Height="61" Canvas.Left="612" TextWrapping="Wrap" Text="Registreren" Canvas.Top="10" Width="245" FontWeight="Bold" FontSize="36" HorizontalAlignment="Center"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -34,7 +34,7 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Wachtwoord : " Canvas.Left="612" Canvas.Top="207" Width="162" FontSize="14" RenderTransformOrigin="0.513,1.588" Height="40"/>
-                <PasswordBox Name="wachtwoord" Height="31" Canvas.Left="795" MaxLength="25" PasswordChar="*" Canvas.Top="207" Width="162"/>
+                <PasswordBox Name="wachtwoordd" Height="31" Canvas.Left="795" MaxLength="25" PasswordChar="*" Canvas.Top="207" Width="162"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

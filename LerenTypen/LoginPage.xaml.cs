@@ -1,4 +1,10 @@
-﻿using System.Windows.Controls;
+﻿
+using System;
+using System.Data.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace LerenTypen
 {
@@ -10,24 +16,51 @@ namespace LerenTypen
         public LoginPage()
         {
             InitializeComponent();
-        }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        }
+        static string ComputeSha256Hash(string plainData)
         {
-            string gebruikersnaam = gebruikernaam.Text;
-            string voorn = voornaam.Text;
-            string achtern = achternaam.Text;
-            string ww = wachtwoord.Password;
-            string wwherh = wachtwoordherh.Password;
-            string geboort = geboortedatum.Text;
-            string security = securityvraag.Text;
-        }
+            // Create a SHA256   
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(plainData));
 
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+        // Er word gekeken als de velden ingevuld zijn, anders word alles afgebroken
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            
+            if (gebruikernaam.Text.Trim() == "" || voornaam.Text.Trim() == "" || achternaam.Text.Trim() == "" || wachtwoordd.Password.Trim() == "" || wachtwoordd.Password.Trim() == "" || geboortedatum.Text.Trim() == "" || securityvraag.Text.Trim() == "")
+            {
+                MessageBox.Show("Vul alle velden in!", "Velden niet ingevuld!");
+                return;
+            }
+
+            /*Het wachtwoord en wachtwoord herhalen field worden vergeleken, als ze anders zijn krijg je melding.
+            Klik op de registreer button en het wachtwoord word gehasht.*/
+            if (wachtwoordd.Password == wachtwoordherh.Password)
+            {
+                Console.WriteLine(ComputeSha256Hash(wachtwoordd.Password));
+                MessageBox.Show("Er is succesvol geregistreerd!");
+                gebruikernaam.Text = string.Empty; achternaam.Text = string.Empty;
+                voornaam.Text = string.Empty; wachtwoordd.Password = string.Empty;
+                wachtwoordherh.Password = string.Empty; geboortedatum.Text = string.Empty; securityvraag.Text = string.Empty;
+            }
+            else
+            {
+                MessageBox.Show("De wachtwoorden zijn niet gelijk!", "Wachtwoorden ongelijk!");
+            }
+
         }
-        
+        //De button word niet clickable als de checkbox unchecked is.
         private void CheckBox_unChecked(object sender, System.Windows.RoutedEventArgs e)
         {
             if (checkboxakkoord.IsChecked == false)
@@ -35,6 +68,7 @@ namespace LerenTypen
                 accountmaken.IsEnabled = false;
             }
         }
+        //De button word clickable als de checkbox checked is.
         private void CheckBox_Checked(object sender, System.Windows.RoutedEventArgs e)
         {
             if (checkboxakkoord.IsChecked == true)
@@ -44,8 +78,16 @@ namespace LerenTypen
             }
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string gebruiker = gebruikernaam.Text;
+            string voorna = voornaam.Text;
+            string achtern = achternaam.Text;
+            string password = wachtwoordd.Password;
+            string passherh = wachtwoordherh.Password;
+            string geboorte = geboortedatum.Text;
+            string securityans = securityvraag.Text;
 
-
-
+        }
     }
 }
