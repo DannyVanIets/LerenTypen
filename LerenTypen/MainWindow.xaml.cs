@@ -12,6 +12,7 @@ namespace LerenTypen
         public MainWindow()
         {
             InitializeComponent();
+            frame.Navigate(new HomePage(this));
         }
 
         private void HomePageButton_Click(object sender, RoutedEventArgs e)

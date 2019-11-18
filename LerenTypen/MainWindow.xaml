@@ -21,7 +21,7 @@
             <ToggleButton x:Name="loginPageButton" Margin="15" Width="150" Click="LoginPageButton_Click" Content="Inloggen/registreren"/>
         </StackPanel>
 
-        <Frame x:Name="frame" Source="HomePage.xaml" MinWidth="842" MinHeight="370" Grid.Row="1">
+        <Frame x:Name="frame" MinWidth="842" MinHeight="370" Grid.Row="1">
             <Frame.Template>
                 <!-- ControlTemplate to remove the navigation UI of the frame,
                      both in the designer and the app itself -->
