@@ -49,10 +49,6 @@ namespace LerenTypen
             }
             testLinesPane.Children.Add(addLineLink);
 
-
-
-
-            
            
         }
 

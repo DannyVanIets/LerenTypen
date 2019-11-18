@@ -28,16 +28,16 @@
             </ComboBox>
         </StackPanel>
         <StackPanel x:Name="testLinesTitlePane" HorizontalAlignment="Left" Height="40" Margin="0,0,0,0" VerticalAlignment="Top" Width="1050">
-            <Label Content="Toetszinnen:" Margin="50,0,0,0" FontSize="20" VerticalAlignment="Center"/>
+            <Label Content="Toetsregels:" Margin="50,0,0,0" FontSize="20" VerticalAlignment="Center"/>
         </StackPanel>
         <ScrollViewer x:Name="scrollViewer" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="300" VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
             <StackPanel x:Name="testLinesPane"  HorizontalAlignment="Left"  Margin="0,0,0,0" VerticalAlignment="Top" Width="1050">
-                <TextBlock x:Name="addLineLink" TextWrapping="Wrap" Margin="50,0,50,0"><Hyperlink x:Name="addLine" Click="addLine_Click" ><Run Text="Voeg nieuw(e) woord/zin toe"/></Hyperlink></TextBlock>
+                <TextBlock x:Name="addLineLink" TextWrapping="Wrap" Margin="50,0,50,0"><Hyperlink x:Name="addLine" Click="addLine_Click" ><Run Text="Voeg nieuwe regel toe"/></Hyperlink></TextBlock>
             </StackPanel>
         </ScrollViewer>
         <StackPanel x:Name="uploadPane" Orientation ="Horizontal" HorizontalAlignment="Left" Height="90" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="1050">
             <RadioButton x:Name="publicRadio" Content="Publiek" Margin="750,0,0,0" Width="80" VerticalAlignment="Center"/>
-            <RadioButton x:Name="privateRadio" Content="Prive" Margin="10,0,0,0" Width="80" VerticalAlignment="Center"/>
+            <RadioButton x:Name="privateRadio" Content="Prive" Margin="10,0,0,0" Width="80" VerticalAlignment="Center" IsChecked="True"/>
             <Button x:Name="saveButton" Content="Opslaan" Height="20" Margin="10,0,0,0" VerticalAlignment="Center"/>
         </StackPanel>
     </StackPanel>
