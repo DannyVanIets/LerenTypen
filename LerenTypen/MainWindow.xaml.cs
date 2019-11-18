@@ -55,6 +55,54 @@ namespace LerenTypen
         }
 
         /// <summary>
+        /// Changes the page to the specified page if this page is not 
+        /// already open and updates the menu buttons accordingly
+        /// </summary>
+        /// <param name="pageToChangeTo"></param>
+        public void ChangePage(Page pageToChangeTo)
+        {
+            if (frame.Content != pageToChangeTo)
+            {
+                frame.Navigate(pageToChangeTo);
+
+                ToggleButton pageToggleButton = null;
+                if (pageToChangeTo is HomePage)
+                {
+                    pageToggleButton = homePageButton;
+                }
+                else if (pageToChangeTo is TestOverviewPage)
+                {
+                    pageToggleButton = testOverviewPageButton;
+                }
+                else if (pageToChangeTo is TrendingTestsPage)
+                {
+                    pageToggleButton = trendingTestsPageButton;
+                }
+                else if (pageToChangeTo is TrendingTestsPage)
+                {
+                    pageToggleButton = trendingTestsPageButton;
+                }
+                else if (pageToChangeTo is TipPage)
+                {
+                    pageToggleButton = tipPageButton;
+                }
+                else if (pageToChangeTo is LeaderboardPage)
+                {
+                    pageToggleButton = leaderboardPageButton;
+                }
+                else if (pageToChangeTo is LoginPage)
+                {
+                    pageToggleButton = loginPageButton;
+                }
+
+                if (pageToggleButton != null)
+                {
+                    SwitchMenuButtons(pageToggleButton);
+                }
+            }
+        }
+
+        /// <summary>
         /// Checks the specified button and unchecks all other buttons of the menu
         /// </summary>
         /// <param name="buttonToSwitchTo">The ToggleButton to check</param>
