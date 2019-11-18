@@ -14,6 +14,11 @@ namespace LerenTypen
             InitializeComponent();
         }
 
+        private void HomePageButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(new HomePage(), homePageButton);
+        }
+
         private void TestOverviewPageButton_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(new TestOverviewPage(), testOverviewPageButton);
@@ -60,6 +65,7 @@ namespace LerenTypen
         /// <param name="buttonToSwitchTo">The ToggleButton to check</param>
         private void SwitchMenuButtons(ToggleButton buttonToSwitchTo)
         {
+            homePageButton.IsChecked = false;
             testOverviewPageButton.IsChecked = false;
             trendingTestsPageButton.IsChecked = false;
             tipPageButton.IsChecked = false;
