@@ -13,14 +13,14 @@
         </Grid.RowDefinitions>
         
         <StackPanel Orientation="Horizontal" Height="50" Grid.Row="0">
-            <ToggleButton x:Name="page1Button" IsChecked="True" Margin="15" Width="150" Click="Page1Button_Click" Content="Overzicht alle toetsen"/>
-            <ToggleButton x:Name="page2Button" Margin="15" Width="120" Click="Page2Button_Click" Content="Trending toetsen"/>
-            <ToggleButton x:Name="page3Button" Margin="15" Width="100" Click="Page3Button_Click" Content="Tips/advies"/>
-            <ToggleButton x:Name="page4Button" Margin="15" Width="100" Click="Page4Button_Click" Content="Leaderboard"/>
-            <ToggleButton x:Name="page5Button" Margin="15" Width="150" Click="Page5Button_Click" Content="Inloggen/registreren"/>
+            <ToggleButton x:Name="testOverviewPageButton" Margin="15" Width="150" Click="TestOverviewPageButton_Click" Content="Overzicht alle toetsen"/>
+            <ToggleButton x:Name="trendingTestsPageButton" Margin="15" Width="120" Click="TrendingTestsPageButton_Click" Content="Trending toetsen"/>
+            <ToggleButton x:Name="tipPageButton" Margin="15" Width="100" Click="TipPageButton_Click" Content="Tips/advies"/>
+            <ToggleButton x:Name="leaderboardPageButton" Margin="15" Width="100" Click="LeaderboardPageButton_Click" Content="Leaderboard"/>
+            <ToggleButton x:Name="loginPageButton" Margin="15" Width="150" Click="LoginPageButton_Click" Content="Inloggen/registreren"/>
         </StackPanel>
 
-        <Frame x:Name="frame" Source="Page1.xaml" MinWidth="842" MinHeight="370" Grid.Row="1">
+        <Frame x:Name="frame" Source="HomePage.xaml" MinWidth="842" MinHeight="370" Grid.Row="1">
             <Frame.Template>
                 <!-- ControlTemplate to remove the navigation UI of the frame,
                      both in the designer and the app itself -->

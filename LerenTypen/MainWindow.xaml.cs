@@ -14,29 +14,29 @@ namespace LerenTypen
             InitializeComponent();
         }
 
-        private void Page1Button_Click(object sender, RoutedEventArgs e)
+        private void TestOverviewPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new Page1(), page1Button);
+            ChangePage(new TestOverviewPage(), testOverviewPageButton);
         }
 
-        private void Page2Button_Click(object sender, RoutedEventArgs e)
+        private void TrendingTestsPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new Page2(), page2Button);
+            ChangePage(new TrendingTestsPage(), trendingTestsPageButton);
         }
 
-        private void Page3Button_Click(object sender, RoutedEventArgs e)
+        private void TipPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new Page3(), page3Button);
+            ChangePage(new TipPage(), tipPageButton);
         }
 
-        private void Page4Button_Click(object sender, RoutedEventArgs e)
+        private void LeaderboardPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new Page4(), page4Button);
+            ChangePage(new LeaderboardPage(), leaderboardPageButton);
         }
      
-        private void Page5Button_Click(object sender, RoutedEventArgs e)
+        private void LoginPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new Page5(), page5Button);
+            ChangePage(new LoginPage(), loginPageButton);
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace LerenTypen
         /// <param name="buttonToSwitchTo">The ToggleButton to check</param>
         private void SwitchMenuButtons(ToggleButton buttonToSwitchTo)
         {
-            page1Button.IsChecked = false;
-            page2Button.IsChecked = false;
-            page3Button.IsChecked = false;
-            page4Button.IsChecked = false;
-            page5Button.IsChecked = false;
+            testOverviewPageButton.IsChecked = false;
+            trendingTestsPageButton.IsChecked = false;
+            tipPageButton.IsChecked = false;
+            leaderboardPageButton.IsChecked = false;
+            loginPageButton.IsChecked = false;
 
             buttonToSwitchTo.IsChecked = true;
         }
