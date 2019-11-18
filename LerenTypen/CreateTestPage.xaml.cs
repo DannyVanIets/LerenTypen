@@ -61,6 +61,8 @@ namespace LerenTypen
             panel.Name = "Panel" + i.ToString();
             tbl = new TextBlock();
             tb = new TextBox();
+
+
             Hyperlink removeLink = new Hyperlink();
             removeLink.Tag = i;
             removeLink.Inlines.Add("X");
@@ -90,5 +92,24 @@ namespace LerenTypen
             scrollViewer.ScrollToEnd();
         }
 
+        private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox[] textBoxes = new TextBox[testLinesPane.Children.Count];
+            for (int i = 0; i < testLinesPane.Children.Count -1 ; i++)
+            {
+                
+            }
+            
+            
+
+            if (!textInputTestName.Text.Equals(""))
+            {
+
+            }
+            else
+            {
+                Console.WriteLine("jo");
+            }
+        }
     }
 }

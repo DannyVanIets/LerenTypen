@@ -38,7 +38,7 @@
         <StackPanel x:Name="uploadPane" Orientation ="Horizontal" HorizontalAlignment="Left" Height="90" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="1050">
             <RadioButton x:Name="publicRadio" Content="Publiek" Margin="750,0,0,0" Width="80" VerticalAlignment="Center"/>
             <RadioButton x:Name="privateRadio" Content="Prive" Margin="10,0,0,0" Width="80" VerticalAlignment="Center" IsChecked="True"/>
-            <Button x:Name="saveButton" Content="Opslaan" Height="20" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <Button x:Name="saveButton" Content="Opslaan" Height="20" Margin="10,0,0,0" VerticalAlignment="Center" Click="saveButton_Click"/>
         </StackPanel>
     </StackPanel>
 </Page>
