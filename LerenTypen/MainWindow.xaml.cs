@@ -16,7 +16,7 @@ namespace LerenTypen
 
         private void HomePageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new HomePage(), homePageButton);
+            ChangePage(new HomePage(this), homePageButton);
         }
 
         private void TestOverviewPageButton_Click(object sender, RoutedEventArgs e)

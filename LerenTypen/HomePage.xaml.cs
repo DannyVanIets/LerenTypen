@@ -14,11 +14,18 @@ namespace LerenTypen
             new Test() { Name = "Nog meer woorden", Author = "Slimpie2" },
             new Test() { Name = "Zinnen", Author = "Slimpie3" },
         };
+        private MainWindow mainWindow;
 
-        public HomePage()
+        public HomePage(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.mainWindow = mainWindow;
             trendingTestsListView.ItemsSource = trendingTests;
+        }
+
+        private void LoginRegisterButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            mainWindow.ChangePage(new LoginPage());
         }
     }
 

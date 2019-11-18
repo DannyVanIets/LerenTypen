@@ -25,7 +25,8 @@
                 Praesent at dui est. Vestibulum pellentesque, purus ac tempus tristique,
                 nibh turpis lobortis tortor, nec ultrices ante mi quis velit.
             </TextBlock>
-            <Button Width="300" Height="30" Margin="0,20,0,0">Inloggen/registreren om toetsen te maken</Button>
+            <Button x:Name="loginRegisterButton" Width="300" Height="30" Margin="0,20,0,0" 
+                    Click="LoginRegisterButton_Click">Inloggen/registreren om toetsen te maken</Button>
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Column="1">
