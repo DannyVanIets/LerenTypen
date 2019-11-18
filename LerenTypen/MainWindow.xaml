@@ -1,0 +1,33 @@
+﻿<Window x:Class="LerenTypen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LerenTypen"
+        mc:Ignorable="d"
+        Title="Snel Foutloos Typen" Height="650" Width="1050">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal" Height="50" Grid.Row="0">
+            <ToggleButton x:Name="testOverviewPageButton" Margin="15" Width="150" Click="TestOverviewPageButton_Click" Content="Overzicht alle toetsen"/>
+            <ToggleButton x:Name="trendingTestsPageButton" Margin="15" Width="120" Click="TrendingTestsPageButton_Click" Content="Trending toetsen"/>
+            <ToggleButton x:Name="tipPageButton" Margin="15" Width="100" Click="TipPageButton_Click" Content="Tips/advies"/>
+            <ToggleButton x:Name="leaderboardPageButton" Margin="15" Width="100" Click="LeaderboardPageButton_Click" Content="Leaderboard"/>
+            <ToggleButton x:Name="loginPageButton" Margin="15" Width="150" Click="LoginPageButton_Click" Content="Inloggen/registreren"/>
+        </StackPanel>
+
+        <Frame x:Name="frame" Source="HomePage.xaml" MinWidth="842" MinHeight="370" Grid.Row="1">
+            <Frame.Template>
+                <!-- ControlTemplate to remove the navigation UI of the frame,
+                     both in the designer and the app itself -->
+                <ControlTemplate TargetType="Frame">
+                    <ContentPresenter/>
+                </ControlTemplate>
+            </Frame.Template>
+        </Frame>
+    </Grid>
+</Window>
