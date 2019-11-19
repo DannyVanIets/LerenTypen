@@ -126,6 +126,22 @@ namespace LerenTypen
         }
         private void saveToDatabase()
         {
+            string title = textInputTestName.Text;
+            int difficulty = comboBoxDifficulty.SelectedIndex;
+            int type = comboBoxType.SelectedIndex;
+
+
+            bool privateTest = false;
+            if ((bool)privateRadio.IsChecked)
+            {
+                privateTest = true;
+            }
+
+            foreach(TextBox t in textBoxes)
+            {
+               
+            }
+
             
 
         }
