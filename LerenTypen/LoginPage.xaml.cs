@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Data.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
@@ -38,7 +37,7 @@ namespace LerenTypen
         // Er word gekeken als de velden ingevuld zijn, anders word alles afgebroken
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (gebruikernaam.Text.Trim() == "" || voornaam.Text.Trim() == "" || achternaam.Text.Trim() == "" || wachtwoordd.Password.Trim() == "" || wachtwoordd.Password.Trim() == "" || geboortedatum.Text.Trim() == "" || securityvraag.Text.Trim() == "")
+            if (gebruikernaam.Text.Trim() == "" || voornaam.Text.Trim() == "" || achternaam.Text.Trim() == "" || wachtwoordd.Password.Trim() == "" || wachtwoordd.Password.Trim() == "" || geboortedatum.Text.Trim() == "" || securityans.Text.Trim() == "")
             {
                 MessageBox.Show("Vul alle velden in!", "Velden niet ingevuld!");
                 return;
@@ -47,12 +46,13 @@ namespace LerenTypen
             /*Het wachtwoord en wachtwoord herhalen field worden vergeleken, als ze anders zijn krijg je melding.
             Klik op de registreer button en het wachtwoord word gehasht.*/
             if (wachtwoordd.Password == wachtwoordherh.Password)
-            {
-                Console.WriteLine(ComputeSha256Hash(wachtwoordd.Password));
+            {  
+                string hashedpw = ComputeSha256Hash(wachtwoordd.Password);
+                Database.Registreer(gebruikernaam.Text, hashedpw.ToString(), geboortedatum.Text, voornaam.Text, achternaam.Text, securityvraag.Text ,securityans.Text);
                 MessageBox.Show("Er is succesvol geregistreerd!" , "Succesvol Geregistreerd!");
                 gebruikernaam.Text = string.Empty; achternaam.Text = string.Empty;
                 voornaam.Text = string.Empty; wachtwoordd.Password = string.Empty;
-                wachtwoordherh.Password = string.Empty; geboortedatum.Text = string.Empty; securityvraag.Text = string.Empty;
+                wachtwoordherh.Password = string.Empty; geboortedatum.Text = string.Empty; securityans.Text = string.Empty;
             }
             else
             {
@@ -84,7 +84,7 @@ namespace LerenTypen
             newWindow.Show();
            }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        protected void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string gebruiker = gebruikernaam.Text;
             string voorna = voornaam.Text;
@@ -92,6 +92,7 @@ namespace LerenTypen
             string password = wachtwoordd.Password;
             string passherh = wachtwoordherh.Password;
             string geboorte = geboortedatum.Text;
+            string securtiyvraag = securityvraag.Text;
             string securityans = securityvraag.Text;
 
         }

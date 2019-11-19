@@ -49,7 +49,7 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Securityvraag :&#xA;" Canvas.Left="612" Canvas.Top="351" Width="162" FontSize="14" HorizontalAlignment="Center" Margin="40,0,0,0" Height="40"/>
-                <ComboBox Height="28" Canvas.Left="795" Canvas.Top="351" Width="202" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0">
+                <ComboBox x:Name="securityvraag" Height="28" Canvas.Left="795" Canvas.Top="351" Width="202" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0">
                     <ListBoxItem Content="Wat is je geboorteplaats?"/>
                     <ListBoxItem Content="Wat is de naam van je moeder?"/>
                     <ListBoxItem Content="Naam van je eerste huisdier?"/>
@@ -59,7 +59,7 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Securtiy Antwoord :&#xA;" Width="162" FontSize="14" HorizontalAlignment="Center" Margin="0" Height="40" />
-                <TextBox x:Name="securityvraag" Height="31" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="399" Width="162" TextChanged="TextBox_TextChanged"/>
+                <TextBox x:Name="securityans" Height="31" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="399" Width="162" TextChanged="TextBox_TextChanged"/>
             </StackPanel>
 
             <CheckBox x:Name="checkboxakkoord" Height="24" Canvas.Left="612" Canvas.Top="457" Width="245" IsChecked="False" Checked="CheckBox_Checked" Unchecked="CheckBox_unChecked">
