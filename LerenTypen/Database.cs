@@ -62,7 +62,7 @@ namespace LerenTypen
                     
                     foreach (string s in content)
                     {
-                        string MySql = $"INSERT INTO testContent (testID, line) VALUES (@testID,'@s');";
+                        string MySql = $"INSERT INTO testContent (testID, line) VALUES (@testID,@s);";
 
                         using (MySqlCommand command = new MySqlCommand(MySql, connection))
                         {
