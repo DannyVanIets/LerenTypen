@@ -39,7 +39,9 @@ namespace LerenTypen
         // Check if all fields are filled, otherwise show an error message
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (gebruikernaam.Text.Trim() == "" || voornaam.Text.Trim() == "" || achternaam.Text.Trim() == "" || wachtwoordd.Password.Trim() == "" || wachtwoordd.Password.Trim() == "" || geboortedatum.Text.Trim() == "" || securityans.Text.Trim() == "")
+            if (gebruikernaam.Text.Trim() == "" || voornaam.Text.Trim() == "" || achternaam.Text.Trim() == "" || 
+                wachtwoord.Password.Trim() == "" || wachtwoord.Password.Trim() == "" ||
+                geboortedatum.Text.Trim() == ""|| securityans.Text.Trim() == "")
             {
                 MessageBox.Show("Vul alle velden in!", "Velden niet ingevuld!");
                 return;
