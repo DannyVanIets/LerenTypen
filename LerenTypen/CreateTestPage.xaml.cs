@@ -17,6 +17,8 @@ namespace LerenTypen
         private Thickness margin;
         private ArrayList textBoxes;
         static int i = 0;
+
+
         public CreateTestPage()
         {
             InitializeComponent();
@@ -116,10 +118,7 @@ namespace LerenTypen
         {
             if (textFieldCheck())
             {
-
                 saveToDatabase();
-
-
             }
 
 
@@ -128,8 +127,6 @@ namespace LerenTypen
         private void saveToDatabase()
         {
             
-
-
 
         }
 
@@ -151,10 +148,14 @@ namespace LerenTypen
             }
 
 
-            if (!textInputTestName.Text.Equals("") && !textEmpty)
+            if (!textInputTestName.Text.Equals("") && !textEmpty && !textBoxes.Count.Equals(0))
             {
                 return true;
 
+            }
+            else if (textBoxes.Count.Equals(0))
+            {
+                MessageBox.Show("De toets bevat geen regels", "Voeg een regel toe");
             }
             else if (textEmpty)
             {
