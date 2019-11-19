@@ -12,7 +12,12 @@ namespace LerenTypen
     {
         List<TestTable> TableContent;
         List<TestTable> CurrentContent = new List<TestTable>();
+        List<TestTable> SearchResult = new List<TestTable>();
         bool isInitialized = false;
+        int ActiveFilter = 0;
+        int StartValue = 0;
+        int EndValue = 999999;
+        int[] StartAndEnd = new int[2];
         public TestOverviewPage()
         {
             InitializeComponent();
@@ -26,144 +31,200 @@ namespace LerenTypen
             TableContent.Add(new TestTable(4, "Mark oefententamen", 8, 0, 400, "moeilijk", "Tristan"));
             TableContent.Add(new TestTable(5, "Hugo opdracht 3", 99, 0, 94, "makkelijk", "Bram"));
 
-            //ToonAlles_Clicker(this, new System.Windows.RoutedEventArgs() );
             AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
             isInitialized = true;
             CurrentContent = TableContent;
 
 
         }
+        private void ToonAlles_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (isInitialized)
+            {
+                if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+                {
+                    CurrentContent = TableContent;
+                }
+                else
+                {
+                    CurrentContent = SearchResult;
+                }
+                ActiveFilter = 0;
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+                //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
+                //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+                ////CurrentContent = TableContent;
+
+            }
+        }
 
         private void LessThan50_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
 
             List<TestTable> ItemsLessThan50 = new List<TestTable>();
-            foreach (var item in CurrentContent)
+            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
-                if (item.AmountOfWords < 50)
-                {
-                    ItemsLessThan50.Add(item);
-                }
+                CurrentContent = TableContent;
             }
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsLessThan50;
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            else
+            {
+                CurrentContent = SearchResult;
+            }
+            ActiveFilter = 1;
+            Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+            //foreach (var item in CurrentContent)
+            //{
+            //    if (item.AmountOfWords < 50)
+            //    {
+            //        ItemsLessThan50.Add(item);
+            //    }
+            //}
+            //                ActiveFilter = 0;
+            //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsLessThan50;
+            //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
 
-            CurrentContent = ItemsLessThan50;
+            //CurrentContent = ItemsLessThan50;
 
         }
 
-        private void ToonAlles_Clicker(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (isInitialized)
-            {
-                if (AllTestsOverview_TextBox_Search.Text.Equals("Zoeken") || AllTestsOverview_TextBox_Search.Text.Equals(""))
-                {
-                    CurrentContent = TableContent;
-                }
 
-                AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
-                AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-                //CurrentContent = TableContent;
-
-            }
-        }
 
         private void Between50And100_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween50And100 = new List<TestTable>();
-            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoeken") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = TableContent;
             }
-
-            foreach (var item in CurrentContent)
+            else
             {
-                if (item.AmountOfWords > 49 && item.AmountOfWords < 100)
-                {
-                    ItemsBetween50And100.Add(item);
-                }
+                CurrentContent = SearchResult;
             }
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsBetween50And100;
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-            CurrentContent = ItemsBetween50And100;
+            ActiveFilter = 2;
+            Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+            //foreach (var item in CurrentContent)
+            //{
+            //    if (item.AmountOfWords > 49 && item.AmountOfWords < 100)
+            //    {
+            //        ItemsBetween50And100.Add(item);
+            //    }
+            //}
+            //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsBetween50And100;
+            //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            ////CurrentContent = ItemsBetween50And100;
 
         }
 
         private void Between100And150_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween100And150 = new List<TestTable>();
-            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoeken") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = TableContent;
             }
-            foreach (var item in CurrentContent)
+            else
             {
-                if (item.AmountOfWords > 99 && item.AmountOfWords < 150)
-                {
-                    ItemsBetween100And150.Add(item);
-                }
+                CurrentContent = SearchResult;
             }
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsBetween100And150;
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-            CurrentContent = ItemsBetween100And150;
+            ActiveFilter = 3;
+            Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+            //foreach (var item in CurrentContent)
+            //{
+            //    if (item.AmountOfWords > 99 && item.AmountOfWords < 150)
+            //    {
+            //        ItemsBetween100And150.Add(item);
+            //    }
+            //}
+            //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsBetween100And150;
+            //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            ////CurrentContent = ItemsBetween100And150;
 
         }
 
         private void Between150And200_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween150And200 = new List<TestTable>();
-            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoeken") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = TableContent;
             }
-            foreach (var item in CurrentContent)
+            else
             {
-                if (item.AmountOfWords > 149 && item.AmountOfWords < 200)
-                {
-                    ItemsBetween150And200.Add(item);
-                }
+                CurrentContent = SearchResult;
             }
+            ActiveFilter = 4;
+            Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
 
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsBetween150And200;
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-            CurrentContent = ItemsBetween150And200;
+            //foreach (var item in CurrentContent)
+            //{
+            //    if (item.AmountOfWords > 149 && item.AmountOfWords < 200)
+            //    {
+            //        ItemsBetween150And200.Add(item);
+            //    }
+            //}
+
+            //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsBetween150And200;
+            //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            ////CurrentContent = ItemsBetween150And200;
 
         }
 
         private void MoreThan200_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             List<TestTable> ItemsMoreThan200 = new List<TestTable>();
-            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoeken") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = TableContent;
             }
-            foreach (var item in CurrentContent)
+            else
             {
-                if (item.AmountOfWords > 200)
-                {
-                    ItemsMoreThan200.Add(item);
-                }
+                CurrentContent = SearchResult;
             }
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsMoreThan200;
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-            CurrentContent = ItemsMoreThan200;
+            ActiveFilter = 5;
+            Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+            //foreach (var item in CurrentContent)
+            //{
+            //    if (item.AmountOfWords > 200)
+            //    {
+            //        ItemsMoreThan200.Add(item);
+            //    }
+            //}
+            //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsMoreThan200;
+            //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            ////CurrentContent = ItemsMoreThan200;
 
         }
 
         private void Search_Event(object sender, TextChangedEventArgs e)
         {
-
-            if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam"))
+            if (AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
-                string searchterm = AllTestsOverview_TextBox_Search.Text;
-                var SearchResult = from t in CurrentContent
-                                   where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
-                                   select t;
-                AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = SearchResult;
-                AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-                //CurrentContent = SearchResult;
+                CurrentContent = TableContent;
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+                //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
+                //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
 
             }
+
+            if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
+            {
+                CurrentContent = TableContent;
+                string searchterm = AllTestsOverview_TextBox_Search.Text;
+                SearchResult = (from t in CurrentContent
+                                where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                select t).ToList();
+
+                CurrentContent = SearchResult;
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+                //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = SearchResult;
+                //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+
+            }
+
         }
 
 
@@ -172,6 +233,81 @@ namespace LerenTypen
             if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam"))
             {
                 AllTestsOverview_TextBox_Search.Text = "";
+            }
+        }
+
+        private void Filter(int startValue, int endValue)
+        {
+            List<TestTable> FilterList = new List<TestTable>();
+
+                    foreach (var item in CurrentContent)
+                    {
+                        if (item.AmountOfWords > startValue && item.AmountOfWords < endValue)
+                        {
+                            FilterList.Add(item);
+                        }
+                    }
+                    AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = FilterList;
+                    AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+
+
+        }
+        private void Filter(int startValue, int endValue, List<TestTable> searchList)
+        {
+            List<TestTable> FilterList = new List<TestTable>();
+
+            foreach (var item in searchList)
+            {
+                if (item.AmountOfWords > startValue && item.AmountOfWords < endValue)
+                {
+                    FilterList.Add(item);
+                }
+            }
+            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = FilterList;
+            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+        }
+            private int[] FindFilter(int activeFilter)
+        {
+            switch (activeFilter)
+            {
+                case 0:
+                    StartValue = 0;
+                    EndValue = 99999;
+                    StartAndEnd[0] = StartValue;
+                    StartAndEnd[1] = EndValue;
+                    return StartAndEnd;
+                case 1:
+                    StartValue = 0;
+                    EndValue = 50;
+                    StartAndEnd[0] = StartValue;
+                    StartAndEnd[1] = EndValue;
+                    return StartAndEnd;
+                case 2:
+                    StartValue = 49;
+                    EndValue = 100;
+                    StartAndEnd[0] = StartValue;
+                    StartAndEnd[1] = EndValue;
+                    return StartAndEnd;
+                case 3:
+                    StartValue = 99;
+                    EndValue = 150;
+                    StartAndEnd[0] = StartValue;
+                    StartAndEnd[1] = EndValue;
+                    return StartAndEnd;
+                case 4:
+                    StartValue = 149;
+                    EndValue = 200;
+                    StartAndEnd[0] = StartValue;
+                    StartAndEnd[1] = EndValue;
+                    return StartAndEnd;
+                case 5:
+                    StartValue = 199;
+                    EndValue = 999999;
+                    StartAndEnd[0] = StartValue;
+                    StartAndEnd[1] = EndValue;
+                    return StartAndEnd;
+                default:
+                    return null;
             }
         }
     }
