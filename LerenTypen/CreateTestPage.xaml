@@ -8,7 +8,7 @@
       d:DesignHeight="570" d:DesignWidth="1050" Background="White"
       Title="Page3" ShowsNavigationUI="False">
 
-    <StackPanel Orientation="Vertical">
+    <StackPanel x:Name="mainPanel" Orientation="Vertical">
         <StackPanel x:Name="titlePane" HorizontalAlignment="Left" Height="80" VerticalAlignment="Top" Width="1050" Margin="0,0,-0.4,0">
             <Label Content="Toets Aanmaken" Margin="20,5,0,0" FontSize="32" FontWeight="Bold"/>
         </StackPanel>

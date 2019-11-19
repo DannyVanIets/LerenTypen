@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -14,13 +15,16 @@ namespace LerenTypen
         private TextBox tb;
         private TextBlock tbl;
         private Thickness margin;
+        private ArrayList textBoxes;
         static int i = 0;
         public CreateTestPage()
         {
             InitializeComponent();
+            textBoxes = new ArrayList();
             createInputLine();
             createInputLine();
             createInputLine();
+            
 
 
 
@@ -34,27 +38,42 @@ namespace LerenTypen
         }
         private void removeLine_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            removeInputLine(sender);
+
+           
+        }
+
+        private void removeInputLine(object sender)
+        {
             Hyperlink link = (Hyperlink)sender;
 
             testLinesPane.Children.Remove(addLineLink);
 
             foreach (StackPanel p in testLinesPane.Children)
             {
-                
-                if (p.Name.Equals("Panel"+link.Tag.ToString()))
+
+                if (p.Name.Equals("Panel" + link.Tag.ToString()))
                 {
                     testLinesPane.Children.Remove(p);
                     break;
                 }
             }
-            testLinesPane.Children.Add(addLineLink);
+            foreach (TextBox t in textBoxes)
+            {
+                if (t.Name.Equals("textBox" + link.Tag.ToString()))
+                {
+                    textBoxes.Remove(t);
+                    break;
+                }
+            }
 
-           
+
+            testLinesPane.Children.Add(addLineLink);
         }
 
 
 
-
+        
         private void createInputLine()
         {
             panel = new StackPanel();
@@ -80,7 +99,8 @@ namespace LerenTypen
             margin.Bottom = 10;
             tb.Width = 800;
             tb.Margin = margin;
-
+            tb.Name = "textBox" + i;
+            textBoxes.Add(tb);
             
             panel.Children.Add(tb);
             panel.Children.Add(tbl);
@@ -94,22 +114,59 @@ namespace LerenTypen
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            TextBox[] textBoxes = new TextBox[testLinesPane.Children.Count];
-            for (int i = 0; i < testLinesPane.Children.Count -1 ; i++)
+            if (textFieldCheck())
             {
-                
+
+                saveToDatabase();
+
+
             }
-            
+
+
+
+        }
+        private void saveToDatabase()
+        {
             
 
-            if (!textInputTestName.Text.Equals(""))
+
+
+        }
+
+
+
+
+        private bool textFieldCheck()
+        {
+            bool textEmpty = false;
+
+            foreach (TextBox t in textBoxes)
             {
+                if (t.Text.Equals(""))
+                {
 
+                    textEmpty = true;
+                    break;
+                }
+            }
+
+
+            if (!textInputTestName.Text.Equals("") && !textEmpty)
+            {
+                return true;
+
+            }
+            else if (textEmpty)
+            {
+                MessageBox.Show("Vul alle toetsregels", "Er is iets fout gegaan");
+                
             }
             else
             {
-                Console.WriteLine("jo");
+                MessageBox.Show("De toets heeft geen titel", "Er is iets fout gegaan");
+                
             }
+            return false;
         }
     }
 }
