@@ -1,6 +1,7 @@
 ﻿using Microsoft.OData.Edm;
 using MySql.Data.MySqlClient;
 using System;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace LerenTypen
@@ -16,17 +17,21 @@ namespace LerenTypen
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append($"INSERT INTO accounts(accountType , accountUsername , accountPassword , accountBirthdate , accountFirstname, accountSurname , AccountSecurityQuestion , AccountSecurityAnswer , archived) VALUES (0 , '{username}','{password}', '{res}', '{firstname}','{lastname}',  '{securityvraag}', '{securityanswer}', 0)");
-                    string MySql = sb.ToString();
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    String query = "INSERT INTO accounts(accountType , accountUsername , accountPassword , accountBirthdate , accountFirstname, accountSurname , AccountSecurityQuestion , AccountSecurityAnswer , archived) VALUES (0 , @username, @pwhash, @bday, @fname, @lname,  @secvraag, @secans, 0)";
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                        }
-
+                        //a shorter syntax to adding parameters
+                        command.Parameters.AddWithValue("@username", username);
+                        command.Parameters.AddWithValue("@pwhash", password);
+                        command.Parameters.AddWithValue("@bday", res);
+                        command.Parameters.AddWithValue("@fname", firstname);
+                        command.Parameters.AddWithValue("@lname", lastname);
+                        command.Parameters.AddWithValue("@secvraag", securityvraag);
+                        command.Parameters.AddWithValue("@secans", securityanswer);
+                        //make sure you open and close(after executing) the connection
+                        connection.Open();
+                        command.ExecuteNonQuery();
                     }
                 }
             }

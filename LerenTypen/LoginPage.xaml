@@ -48,7 +48,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Securityvraag :&#xA;" Canvas.Left="612" Canvas.Top="351" Width="162" FontSize="14" HorizontalAlignment="Center" Margin="40,0,0,0" Height="40"/>
+                <Label Content="Security Vraag :&#xA;" Canvas.Left="612" Canvas.Top="351" Width="162" FontSize="14" HorizontalAlignment="Center" Margin="40,0,0,0" Height="40"/>
                 <ComboBox x:Name="securityvraag" Height="28" Canvas.Left="795" Canvas.Top="351" Width="202" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0">
                     <ListBoxItem Content="Wat is je geboorteplaats?"/>
                     <ListBoxItem Content="Wat is de naam van je moeder?"/>
@@ -58,7 +58,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="Securtiy Antwoord :&#xA;" Width="162" FontSize="14" HorizontalAlignment="Center" Margin="0" Height="40" />
+                <Label Content="Security Antwoord :&#xA;" Width="162" FontSize="14" HorizontalAlignment="Center" Margin="0" Height="40" />
                 <TextBox x:Name="securityans" Height="31" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="399" Width="162" TextChanged="TextBox_TextChanged"/>
             </StackPanel>
 
