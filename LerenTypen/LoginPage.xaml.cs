@@ -48,7 +48,7 @@ namespace LerenTypen
             if (wachtwoordd.Password == wachtwoordherh.Password)
             {  
                 string hashedpw = ComputeSha256Hash(wachtwoordd.Password);
-                Database.Registreer(gebruikernaam.Text, hashedpw.ToString(), geboortedatum.Text, voornaam.Text, achternaam.Text, securityvraag.Text ,securityans.Text);
+                Database.Registreer(gebruikernaam.Text, hashedpw.ToString(), geboortedatum.SelectedDate.Value.Date , voornaam.Text, achternaam.Text, securityvraag.Text, securityans.Text);
                 MessageBox.Show("Er is succesvol geregistreerd!" , "Succesvol Geregistreerd!");
                 gebruikernaam.Text = string.Empty; achternaam.Text = string.Empty;
                 voornaam.Text = string.Empty; wachtwoordd.Password = string.Empty;
