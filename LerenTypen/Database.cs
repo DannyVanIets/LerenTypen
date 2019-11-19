@@ -39,18 +39,20 @@ namespace LerenTypen
             {
                 Console.WriteLine(e.ToString());
             }
-            return false;
 
+            return false;
         }
 
         public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
             Date res = birthday.Date;
+
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    String query = "INSERT INTO accounts(accountType , accountUsername , accountPassword , accountBirthdate , accountFirstname, accountSurname , AccountSecurityQuestion , AccountSecurityAnswer , archived) VALUES (0 , @username, @pwhash, @bday, @fname, @lname,  @secvraag, @secans, 0)";
+                    String query = "INSERT INTO accounts(accountType, accountUsername, accountPassword, accountBirthdate, accountFirstname, accountSurname, AccountSecurityQuestion, " +
+                        "AccountSecurityAnswer, archived) VALUES (0 , @username, @pwhash, @bday, @fname, @lname,  @secvraag, @secans, 0)";
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
