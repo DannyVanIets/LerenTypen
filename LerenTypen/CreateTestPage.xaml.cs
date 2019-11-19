@@ -12,8 +12,9 @@ namespace LerenTypen
     /// </summary>
     public partial class CreateTestPage : Page
     {
-        private StackPanel panel;
+        // De eerste vier variablen kan je in de functie zelf aanmaken, hoeven niet voor de hele klasse beschikbaar te zijn
         private TextBox tb;
+        private StackPanel panel; 
         private TextBlock tbl;
         private Thickness margin;
         private List<TextBox> textBoxes;
@@ -31,13 +32,13 @@ namespace LerenTypen
             createInputLine();
             
 
-
+            // Overbodige witruimte
 
 
 
         }
         
-        
+        // Methodes horen te beginnen met een hoofdletter!
         private void addLine_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             createInputLine();
@@ -82,7 +83,7 @@ namespace LerenTypen
         
         private void createInputLine()
         {
-            panel = new StackPanel();
+            panel = new StackPanel(); // Hier dus gewoon Panel panel = new StackPanel();
             panel.Name = "Panel" + i.ToString();
             tbl = new TextBlock();
             tb = new TextBox();
@@ -156,6 +157,7 @@ namespace LerenTypen
                 
                 textBoxValues.Add(t.Text);
             }
+            // Error?
             Database.AddTest(title, type, difficulty, privateTest, amountOfWords, textBoxValues, 0);
 
             
@@ -173,6 +175,7 @@ namespace LerenTypen
 
             foreach (TextBox t in textBoxes)
             {
+                // Beter .Trim() == "" gebruiken, omdat dit ook werkt voor meerdere spaties/tabs
                 if (t.Text.Equals(""))
                 {
 
