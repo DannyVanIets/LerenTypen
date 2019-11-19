@@ -33,7 +33,7 @@ namespace LerenTypen
                         object testID = command.ExecuteScalar();
                        int intTestID = int.Parse(testID.ToString());
 
-                        addTestContent(intTestID, content);
+                        AddTestContent(intTestID, content);
                         
                     }
                 }
@@ -45,7 +45,7 @@ namespace LerenTypen
 
         }
 
-        public static void addTestContent(int testID, List<string> content)
+        public static void AddTestContent(int testID, List<string> content)
         {
             try
             {

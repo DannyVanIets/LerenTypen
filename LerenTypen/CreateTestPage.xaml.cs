@@ -12,11 +12,6 @@ namespace LerenTypen
     /// </summary>
     public partial class CreateTestPage : Page
     {
-        // De eerste vier variablen kan je in de functie zelf aanmaken, hoeven niet voor de hele klasse beschikbaar te zijn
-        private TextBox tb;
-        private StackPanel panel; 
-        private TextBlock tbl;
-        private Thickness margin;
         private List<TextBox> textBoxes;
         private List<string> textBoxValues;
         static int i = 0;
@@ -27,30 +22,22 @@ namespace LerenTypen
             InitializeComponent();
             textBoxes = new List<TextBox>();
             textBoxValues = new List<string>();
-            createInputLine();
-            createInputLine();
-            createInputLine();
-            
-
-            // Overbodige witruimte
-
-
-
+            CreateInputLine();
+            CreateInputLine();
+            CreateInputLine();
         }
         
-        // Methodes horen te beginnen met een hoofdletter!
-        private void addLine_Click(object sender, System.Windows.RoutedEventArgs e)
+        
+        private void AddLine_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            createInputLine();
+            CreateInputLine();
         }
-        private void removeLine_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void RemoveLine_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            removeInputLine(sender);
-
-           
+            RemoveInputLine(sender);
         }
 
-        private void removeInputLine(object sender)
+        private void RemoveInputLine(object sender)
         {
             Hyperlink link = (Hyperlink)sender;
 
@@ -81,18 +68,20 @@ namespace LerenTypen
 
 
         
-        private void createInputLine()
+        private void CreateInputLine()
         {
-            panel = new StackPanel(); // Hier dus gewoon Panel panel = new StackPanel();
+
+            Thickness margin = new Thickness();
+            StackPanel panel = new StackPanel(); 
             panel.Name = "Panel" + i.ToString();
-            tbl = new TextBlock();
-            tb = new TextBox();
+            TextBlock tbl = new TextBlock();
+            TextBox tb = new TextBox();
 
 
             Hyperlink removeLink = new Hyperlink();
             removeLink.Tag = i;
             removeLink.Inlines.Add("X");
-            removeLink.Click += removeLine_Click;
+            removeLink.Click += RemoveLine_Click;
             tbl.Inlines.Add(removeLink);
 
             tb.Height = 25;
@@ -119,17 +108,17 @@ namespace LerenTypen
             scrollViewer.ScrollToEnd();
         }
 
-        private void saveButton_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (textFieldCheck())
+            if (TextFieldCheck())
             {
-                saveToDatabase();
+                SaveToDatabase();
             }
 
 
 
         }
-        private void saveToDatabase()
+        private void SaveToDatabase()
         {
             string title = textInputTestName.Text;
             int difficulty = comboBoxDifficulty.SelectedIndex;
@@ -157,7 +146,7 @@ namespace LerenTypen
                 
                 textBoxValues.Add(t.Text);
             }
-            // Error?
+            
             Database.AddTest(title, type, difficulty, privateTest, amountOfWords, textBoxValues, 0);
 
             
@@ -169,14 +158,13 @@ namespace LerenTypen
 
 
 
-        private bool textFieldCheck()
+        private bool TextFieldCheck()
         {
             bool textEmpty = false;
 
             foreach (TextBox t in textBoxes)
             {
-                // Beter .Trim() == "" gebruiken, omdat dit ook werkt voor meerdere spaties/tabs
-                if (t.Text.Equals(""))
+                if (t.Text.Trim().Equals(""))
                 {
 
                     textEmpty = true;
