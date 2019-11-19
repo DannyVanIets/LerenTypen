@@ -12,9 +12,9 @@ namespace LerenTypen
         };
 
         private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
-        
-        
-        
+        /// <summary>
+        /// Method for adding tests to database. 
+        /// </summary>        
         public static void AddTest(string testName, int testType, int testDifficulty, int isPrivate, int amountOfWords, List<string> content, int isTeacher)
         {
             try
@@ -23,18 +23,26 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    
-                    sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, uploadDate, isPrivate, amountOfWords, isTeacher) VALUES ('{testName}', {testType}, 0, {testDifficulty},NOW(), {isPrivate}, {amountOfWords}, {isTeacher}); SELECT LAST_INSERT_ID()");
+
+                    // Select last insert id is used to insert the tests content into a seperate table with the same id
+                    sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, uploadDate, isPrivate, amountOfWords, isTeacher) " +
+                        $"VALUES (@testName, {testType}, 0, {testDifficulty},NOW(), {isPrivate}, {amountOfWords}, {isTeacher}); SELECT LAST_INSERT_ID()");
                     
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
-                        object testID = command.ExecuteScalar();
+                        command.Parameters.AddWithValue("@testName", testName);
+                        command.Parameters.AddWithValue("@testType", testType);
+                        command.Parameters.AddWithValue("@testDifficulty", testDifficulty);
+                        command.Parameters.AddWithValue("@isPrivate", isPrivate);
+                        command.Parameters.AddWithValue("@amountOfWords", amountOfWords);
+                        command.Parameters.AddWithValue("@isTeacher", isTeacher);
+
+                       object testID = command.ExecuteScalar();
                        int intTestID = int.Parse(testID.ToString());
 
-                        AddTestContent(intTestID, content);
-                        
+                       AddTestContent(intTestID, content);                      
                     }
                 }
             }
@@ -42,28 +50,29 @@ namespace LerenTypen
             {
                 System.Console.WriteLine(e.Message);
             }
-
         }
 
-        public static void AddTestContent(int testID, List<string> content)
+        private static void AddTestContent(int testID, List<string> content)
         {
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    StringBuilder sb = new StringBuilder();
+                    
                     foreach (string s in content)
                     {
-                        sb.Append($"INSERT INTO testContent (testID, line) VALUES ({testID},'{s}');");
-                    }
-                    string MySql = sb.ToString();
+                        string MySql = $"INSERT INTO testContent (testID, line) VALUES (@testID,'@s');";
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (MySqlCommand command = new MySqlCommand(MySql, connection))
                         {
+                            command.Parameters.AddWithValue("@testID", testID);
+                            command.Parameters.AddWithValue("@s", s);
+                            
+                            using (MySqlDataReader reader = command.ExecuteReader())
+                            {
                            
+                            }
                         }
                     }
                 }
@@ -73,10 +82,6 @@ namespace LerenTypen
                 System.Console.WriteLine(e.Message);
             }
         }
-
-
-
-
 
         public static void TestQuery() {
             try

@@ -16,7 +16,6 @@ namespace LerenTypen
         private List<string> textBoxValues;
         static int i = 0;
 
-
         public CreateTestPage()
         {
             InitializeComponent();
@@ -27,25 +26,29 @@ namespace LerenTypen
             CreateInputLine();
         }
         
-        
         private void AddLine_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             CreateInputLine();
         }
+
         private void RemoveLine_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             RemoveInputLine(sender);
         }
 
+        /// <summary>
+        /// Used to remove textinput lines, when created, hyperlinks(sender) get a tag which corresponds to the name of the panel its on.
+        /// textBoxes is a list which tracks the active textboxes, these need to be removed aswell.
+        /// The addLinelink gets removed at the beginning and added after the method to make sure the foreach loops dont include this link.
+        /// </summary>
+        /// <param name="sender"></param>
         private void RemoveInputLine(object sender)
         {
             Hyperlink link = (Hyperlink)sender;
-
             testLinesPane.Children.Remove(addLineLink);
 
             foreach (StackPanel p in testLinesPane.Children)
             {
-
                 if (p.Name.Equals("Panel" + link.Tag.ToString()))
                 {
                     testLinesPane.Children.Remove(p);
@@ -61,32 +64,28 @@ namespace LerenTypen
                 }
             }
 
-
             testLinesPane.Children.Add(addLineLink);
         }
 
-
-
-        
+        /// <summary>
+        /// Method for adding textinputlines, the lines include a hyperlink to remove themselves.
+        /// Tags and Names are added for the RemoveInputLine method.
+        /// </summary>
         private void CreateInputLine()
         {
-
             Thickness margin = new Thickness();
             StackPanel panel = new StackPanel(); 
-            panel.Name = "Panel" + i.ToString();
             TextBlock tbl = new TextBlock();
             TextBox tb = new TextBox();
-
-
             Hyperlink removeLink = new Hyperlink();
+
+            panel.Name = "Panel" + i.ToString();
             removeLink.Tag = i;
             removeLink.Inlines.Add("X");
             removeLink.Click += RemoveLine_Click;
             tbl.Inlines.Add(removeLink);
-
             tb.Height = 25;
             panel.Orientation = Orientation.Horizontal;
-
             tbl.VerticalAlignment = VerticalAlignment.Center;
 
             margin.Left = 50;
@@ -107,35 +106,38 @@ namespace LerenTypen
             i++;
             scrollViewer.ScrollToEnd();
         }
-
+               
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (TextFieldCheck())
             {
                 SaveToDatabase();
             }
-
-
-
         }
+
+        /// <summary>
+        /// Method for sending the test to the database.
+        /// </summary>
         private void SaveToDatabase()
         {
             string title = textInputTestName.Text;
             int difficulty = comboBoxDifficulty.SelectedIndex;
             int type = comboBoxType.SelectedIndex;
-           
-
             int privateTest = 0;
+
             if (privateRadio.IsChecked == true)
             {
                 privateTest = 1;
             }
             
             int amountOfWords = 0;
+
+            // Text.Split splits the text into words using spaces
+            // empty words are not added to the counter amountOfWords
             foreach(TextBox t in textBoxes)
             {
-
                 string[] words = t.Text.Split();
+
                 foreach(string word in words)
                 {
                     if (!word.Equals(""))
@@ -148,16 +150,12 @@ namespace LerenTypen
             }
             
             Database.AddTest(title, type, difficulty, privateTest, amountOfWords, textBoxValues, 0);
-
-            
-
-            
-
         }
 
-
-
-
+        /// <summary>
+        /// Checks if all textboxes are filled and textboxes are included
+        /// </summary>
+        /// <returns>returns a boolean</returns>
         private bool TextFieldCheck()
         {
             bool textEmpty = false;
@@ -166,17 +164,14 @@ namespace LerenTypen
             {
                 if (t.Text.Trim().Equals(""))
                 {
-
                     textEmpty = true;
                     break;
                 }
             }
 
-
             if (!textInputTestName.Text.Equals("") && !textEmpty && !textBoxes.Count.Equals(0))
             {
                 return true;
-
             }
             else if (textBoxes.Count.Equals(0))
             {
@@ -185,12 +180,10 @@ namespace LerenTypen
             else if (textEmpty)
             {
                 MessageBox.Show("Vul alle toetsregels", "Er is iets fout gegaan");
-                
             }
             else
             {
                 MessageBox.Show("De toets heeft geen titel", "Er is iets fout gegaan");
-                
             }
             return false;
         }
