@@ -38,7 +38,7 @@ namespace LerenTypen
         {
 
             List<TestTable> ItemsLessThan50 = new List<TestTable>();
-            foreach (var item in TableContent)
+            foreach (var item in CurrentContent)
             {
                 if (item.AmountOfWords < 50)
                 {
@@ -56,10 +56,14 @@ namespace LerenTypen
         {
             if (isInitialized)
             {
+                if (AllTestsOverview_TextBox_Search.Text.Equals("Zoeken") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+                {
+                    CurrentContent = TableContent;
+                }
 
                 AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
                 AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-                CurrentContent = TableContent;
+                //CurrentContent = TableContent;
 
             }
         }
@@ -67,7 +71,12 @@ namespace LerenTypen
         private void Between50And100_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween50And100 = new List<TestTable>();
-            foreach (var item in TableContent)
+            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoeken") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            {
+                CurrentContent = TableContent;
+            }
+
+            foreach (var item in CurrentContent)
             {
                 if (item.AmountOfWords > 49 && item.AmountOfWords < 100)
                 {
@@ -83,7 +92,11 @@ namespace LerenTypen
         private void Between100And150_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween100And150 = new List<TestTable>();
-            foreach (var item in TableContent)
+            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoeken") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            {
+                CurrentContent = TableContent;
+            }
+            foreach (var item in CurrentContent)
             {
                 if (item.AmountOfWords > 99 && item.AmountOfWords < 150)
                 {
@@ -99,7 +112,11 @@ namespace LerenTypen
         private void Between150And200_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween150And200 = new List<TestTable>();
-            foreach (var item in TableContent)
+            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoeken") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            {
+                CurrentContent = TableContent;
+            }
+            foreach (var item in CurrentContent)
             {
                 if (item.AmountOfWords > 149 && item.AmountOfWords < 200)
                 {
@@ -116,7 +133,11 @@ namespace LerenTypen
         private void MoreThan200_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             List<TestTable> ItemsMoreThan200 = new List<TestTable>();
-            foreach (var item in TableContent)
+            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoeken") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            {
+                CurrentContent = TableContent;
+            }
+            foreach (var item in CurrentContent)
             {
                 if (item.AmountOfWords > 200)
                 {
@@ -140,7 +161,7 @@ namespace LerenTypen
                                    select t;
                 AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = SearchResult;
                 AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-
+                //CurrentContent = SearchResult;
 
             }
         }
