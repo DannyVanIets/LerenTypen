@@ -15,12 +15,12 @@
         <StackPanel x:Name="optionsPane" Orientation="Horizontal" HorizontalAlignment="Left" Height="60" Margin="0,0,0,0" VerticalAlignment="Top" Width="1050">
             <Label Content="Toets naam" FontSize="15" Margin="50,0,0,0" VerticalAlignment="Center"/>
             <TextBox x:Name="textInputTestName" TextWrapping="Wrap" Width="240" Height="25" Margin="20,0,0,0" VerticalAlignment="Center"/>
-            <Label Content="Type:" FontSize="15" Margin="20,0,20,0" VerticalAlignment="Center"/>
+            <Label Content="Type:" FontSize="15" Margin="20,0,0,0" VerticalAlignment="Center"/>
             <ComboBox x:Name="comboBoxType" Width="120" Margin="20" VerticalAlignment="Center" SelectedIndex="0">
                 <ListBoxItem x:Name="itemSentence" Content="Zinnen"/>
                 <ListBoxItem x:Name="ItemWord" Content="Woorden"/>
             </ComboBox>
-            <Label Content="Moeilijkheidsgraad:" FontSize="15" Margin="20,0,20,0" VerticalAlignment="Center"/>
+            <Label Content="Moeilijkheidsgraad:" FontSize="15" Margin="20,0,0,0" VerticalAlignment="Center"/>
             <ComboBox x:Name="comboBoxDifficulty" Width="120" Margin="20" VerticalAlignment="Center" SelectedIndex="0">
                 <ListBoxItem x:Name="itemEasy" Content="Makkelijk"/>
                 <ListBoxItem x:Name="ItemMedium" Content="Middel"/>
@@ -28,7 +28,7 @@
             </ComboBox>
         </StackPanel>
         <StackPanel x:Name="testLinesTitlePane" HorizontalAlignment="Left" Height="40" Margin="0,0,0,0" VerticalAlignment="Top" Width="1050">
-            <Label Content="Toetsregels:" Margin="50,0,0,0" FontSize="20" VerticalAlignment="Center"/>
+            <Label Content="Toetsinhoud:" Margin="50,0,0,0" FontSize="20" VerticalAlignment="Center"/>
         </StackPanel>
         <ScrollViewer x:Name="scrollViewer" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="300" VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
             <StackPanel x:Name="testLinesPane"  HorizontalAlignment="Left"  Margin="0,0,0,0" VerticalAlignment="Top" Width="1050">

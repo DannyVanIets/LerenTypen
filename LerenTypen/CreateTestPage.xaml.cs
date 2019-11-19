@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -15,20 +16,21 @@ namespace LerenTypen
         private TextBox tb;
         private TextBlock tbl;
         private Thickness margin;
-        private ArrayList textBoxes;
-        private ArrayList textBoxValues;
+        private List<TextBox> textBoxes;
+        private List<string> textBoxValues;
         static int i = 0;
 
 
         public CreateTestPage()
         {
             InitializeComponent();
-            textBoxes = new ArrayList();
-            textBoxValues = new ArrayList();
+            textBoxes = new List<TextBox>();
+            textBoxValues = new List<string>();
             createInputLine();
             createInputLine();
             createInputLine();
             
+
 
 
 
@@ -131,20 +133,31 @@ namespace LerenTypen
             string title = textInputTestName.Text;
             int difficulty = comboBoxDifficulty.SelectedIndex;
             int type = comboBoxType.SelectedIndex;
-            DateTime uploadDatum = DateTime.Now;
+           
 
-            bool privateTest = false;
+            int privateTest = 0;
             if (privateRadio.IsChecked == true)
             {
-                privateTest = true;
+                privateTest = 1;
             }
             
-            int aantalWoorden = 0;
+            int amountOfWords = 0;
             foreach(TextBox t in textBoxes)
             {
-                aantalWoorden += t.Text.Length;
+
+                string[] words = t.Text.Split();
+                foreach(string word in words)
+                {
+                    if (!word.Equals(""))
+                    {
+                        amountOfWords++;
+                    }
+                }
+                
                 textBoxValues.Add(t.Text);
             }
+            Database.AddTest(title, type, difficulty, privateTest, amountOfWords, textBoxValues, 0);
+
             
 
             
