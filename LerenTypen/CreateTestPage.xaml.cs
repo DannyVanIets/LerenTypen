@@ -136,10 +136,10 @@ namespace LerenTypen
             {
                 privateTest = true;
             }
-
+            int aantalWoorden = 0;
             foreach(TextBox t in textBoxes)
             {
-               
+                aantalWoorden += t.Text.Length;
             }
 
             
