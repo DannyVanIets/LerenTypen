@@ -64,7 +64,7 @@
 
             <CheckBox x:Name="checkboxakkoord" Height="24" Canvas.Left="612" Canvas.Top="457" Width="245" IsChecked="False" Checked="CheckBox_Checked" Unchecked="CheckBox_unChecked">
                 <TextBlock>Ik ga akkoord met het
-                <Hyperlink.Click> Privacystatement</Hyperlink.Click>
+                <Hyperlink Click="Hyperlink_click"> Privacystatement</Hyperlink>
                 </TextBlock>
             </CheckBox>
             <Button x:Name="accountmaken" Content="Account Aanmaken" Height="35" Canvas.Left="612" Canvas.Top="486" Width="162" Click="Button_Click" IsEnabled="False"/>

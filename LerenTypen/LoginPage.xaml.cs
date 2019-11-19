@@ -78,6 +78,12 @@ namespace LerenTypen
             }
         }
 
+        private void Hyperlink_click(object sender , RoutedEventArgs e)
+        {
+            var newWindow = new Privacystatement();
+            newWindow.Show();
+           }
+
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string gebruiker = gebruikernaam.Text;
