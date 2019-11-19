@@ -132,7 +132,7 @@ namespace LerenTypen
         private void Search_Event(object sender, TextChangedEventArgs e)
         {
 
-            if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoeken"))
+            if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam"))
             {
                 string searchterm = AllTestsOverview_TextBox_Search.Text;
                 var SearchResult = from t in CurrentContent
@@ -148,7 +148,7 @@ namespace LerenTypen
 
         private void Search_Remove_Event(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoeken"))
+            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam"))
             {
                 AllTestsOverview_TextBox_Search.Text = "";
             }
