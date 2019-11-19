@@ -50,7 +50,7 @@ namespace LerenTypen
             catch (MySqlException e)
             {
                 System.Console.WriteLine(e.Message);
-            }
+            }            
         }
 
         private static void AddTestContent(int testID, List<string> content)
