@@ -43,12 +43,18 @@ namespace LerenTypen
                 return;
             }
 
+            if (Database.UserExists(gebruikernaam.Text))
+            {
+                MessageBox.Show("Deze gebruikersnaam is al in gebruik!","Gebruikersnaam in gebruik");
+                return;
+            }
+
             /*Het wachtwoord en wachtwoord herhalen field worden vergeleken, als ze anders zijn krijg je melding.
             Klik op de registreer button en het wachtwoord word gehasht.*/
             if (wachtwoordd.Password == wachtwoordherh.Password)
             {  
                 string hashedpw = ComputeSha256Hash(wachtwoordd.Password);
-                Database.Registreer(gebruikernaam.Text, hashedpw.ToString(), geboortedatum.SelectedDate.Value.Date , voornaam.Text, achternaam.Text, securityvraag.Text, securityans.Text);
+                Database.Registrer(gebruikernaam.Text, hashedpw.ToString(), geboortedatum.SelectedDate.Value.Date , voornaam.Text, achternaam.Text, securityvraag.Text, securityans.Text);
                 MessageBox.Show("Er is succesvol geregistreerd!" , "Succesvol Geregistreerd!");
                 gebruikernaam.Text = string.Empty; achternaam.Text = string.Empty;
                 voornaam.Text = string.Empty; wachtwoordd.Password = string.Empty;

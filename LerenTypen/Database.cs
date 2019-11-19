@@ -10,7 +10,40 @@ namespace LerenTypen
     {
         private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
 
-        public static void Registreer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
+        public static bool UserExists(string user)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    String query = "Select @username from accounts";
+                    using (MySqlCommand username = new MySqlCommand(query, connection))
+                    {
+                        username.Parameters.AddWithValue("@username", user);
+                        connection.Open();
+                        using (MySqlDataReader reader = username.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                       }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return false;
+
+        }
+
+        public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
             Date res = birthday.Date;
             try
