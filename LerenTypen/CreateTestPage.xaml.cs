@@ -16,6 +16,7 @@ namespace LerenTypen
         private TextBlock tbl;
         private Thickness margin;
         private ArrayList textBoxes;
+        private ArrayList textBoxValues;
         static int i = 0;
 
 
@@ -23,6 +24,7 @@ namespace LerenTypen
         {
             InitializeComponent();
             textBoxes = new ArrayList();
+            textBoxValues = new ArrayList();
             createInputLine();
             createInputLine();
             createInputLine();
@@ -129,18 +131,21 @@ namespace LerenTypen
             string title = textInputTestName.Text;
             int difficulty = comboBoxDifficulty.SelectedIndex;
             int type = comboBoxType.SelectedIndex;
-
+            DateTime uploadDatum = DateTime.Now;
 
             bool privateTest = false;
-            if ((bool)privateRadio.IsChecked)
+            if (privateRadio.IsChecked == true)
             {
                 privateTest = true;
             }
+            
             int aantalWoorden = 0;
             foreach(TextBox t in textBoxes)
             {
                 aantalWoorden += t.Text.Length;
+                textBoxValues.Add(t.Text);
             }
+            
 
             
 
