@@ -15,7 +15,7 @@ namespace LerenTypen
         
         
         
-        public static void AddTest(string testName, int testType, int testDifficulty, int isPrivate, int amountOfWords, List<string> content)
+        public static void AddTest(string testName, int testType, int testDifficulty, int isPrivate, int amountOfWords, List<string> content, int isTeacher)
         {
             try
             {
@@ -24,7 +24,7 @@ namespace LerenTypen
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     
-                    sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, uploadDate, isPrivate, amountOfWords) VALUES ('{testName}', {testType}, 0, {testDifficulty},NOW(), {isPrivate}, {amountOfWords}); SELECT LAST_INSERT_ID()");
+                    sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, uploadDate, isPrivate, amountOfWords, isTeacher) VALUES ('{testName}', {testType}, 0, {testDifficulty},NOW(), {isPrivate}, {amountOfWords}, {isTeacher}); SELECT LAST_INSERT_ID()");
                     
                     string MySql = sb.ToString();
 
