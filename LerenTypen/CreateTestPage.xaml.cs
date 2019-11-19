@@ -149,7 +149,7 @@ namespace LerenTypen
                 textBoxValues.Add(t.Text);
             }
             
-            Database.AddTest(title, type, difficulty, privateTest, amountOfWords, textBoxValues, 0);
+            Database.AddTest(title, type, difficulty, privateTest, amountOfWords, textBoxValues, 0, "me");            
         }
 
         /// <summary>
