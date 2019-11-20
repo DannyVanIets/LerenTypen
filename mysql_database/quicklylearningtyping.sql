@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 18 nov 2019 om 12:25
+-- Gegenereerd op: 20 nov 2019 om 10:39
 -- Serverversie: 10.1.37-MariaDB
 -- PHP-versie: 7.3.0
 
@@ -53,17 +53,49 @@ INSERT INTO `accounts` (`accountID`, `accountType`, `accountUsername`, `accountP
 -- --------------------------------------------------------
 
 --
+-- Tabelstructuur voor tabel `testcontent`
+--
+
+CREATE TABLE `testcontent` (
+  `testContentID` int(11) NOT NULL,
+  `testID` int(11) NOT NULL,
+  `content` text NOT NULL COMMENT 'Hier komt het woord/zin in'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `testcontent`
+--
+
+INSERT INTO `testcontent` (`testContentID`, `testID`, `content`) VALUES
+(1, 1, 'Piet'),
+(2, 1, 'Klaas'),
+(3, 1, 'Jan');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `testresultcontent`
+--
+
+CREATE TABLE `testresultcontent` (
+  `testResultContentID` int(11) NOT NULL,
+  `testResultID` int(11) NOT NULL,
+  `answer` int(11) NOT NULL,
+  `answerType` tinyint(1) NOT NULL COMMENT '0 = goed antwoord, 1 = fout antwoord'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Tabelstructuur voor tabel `testresults`
 --
 
 CREATE TABLE `testresults` (
   `testResultID` int(11) NOT NULL,
-  `testID` int(11) NOT NULL COMMENT 'Klik op het nummer om naar die account toe te gaan.',
-  `accountID` int(11) NOT NULL COMMENT 'Klik op het nummer om naar die toets toe te gaan.',
-  `testWrongAnswers` enum('','','','') NOT NULL,
+  `testID` int(11) NOT NULL COMMENT 'Klik op het nummer om naar die test toe te gaan.',
+  `accountID` int(11) NOT NULL COMMENT 'Hier staat het persoon die het heeft geoefend',
   `testResultsDate` date NOT NULL,
   `wordsEachMinute` int(11) NOT NULL,
-  `numberOfErrors` int(11) NOT NULL,
   `pauses` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -71,8 +103,8 @@ CREATE TABLE `testresults` (
 -- Gegevens worden geëxporteerd voor tabel `testresults`
 --
 
-INSERT INTO `testresults` (`testResultID`, `testID`, `accountID`, `testWrongAnswers`, `testResultsDate`, `wordsEachMinute`, `numberOfErrors`, `pauses`) VALUES
-(1, 1, 1, '', '2019-11-18', 10, 11, 0);
+INSERT INTO `testresults` (`testResultID`, `testID`, `accountID`, `testResultsDate`, `wordsEachMinute`, `pauses`) VALUES
+(1, 1, 1, '2019-11-18', 10, 0);
 
 -- --------------------------------------------------------
 
@@ -82,9 +114,12 @@ INSERT INTO `testresults` (`testResultID`, `testID`, `accountID`, `testWrongAnsw
 
 CREATE TABLE `tests` (
   `testID` int(11) NOT NULL,
+  `accountID` int(11) NOT NULL COMMENT 'Dit is de persoon die de toets heeft gemaakt',
   `testName` text NOT NULL,
   `testType` tinyint(1) NOT NULL COMMENT '0 = woorden, 1 = zinnen',
-  `testContent` enum('Klaas','Piet','Danny','Klaas-Jan') NOT NULL,
+  `testDifficulty` tinyint(1) NOT NULL COMMENT '0 = makkelijk, 1 = middel, 2 = moeilijk',
+  `createDate` date NOT NULL,
+  `isPrivate` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = nee, publiek, 1 = ja, private',
   `archived` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = false, niet gearchiveerd, 1 = true, gearchiveerd'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -92,8 +127,8 @@ CREATE TABLE `tests` (
 -- Gegevens worden geëxporteerd voor tabel `tests`
 --
 
-INSERT INTO `tests` (`testID`, `testName`, `testType`, `testContent`, `archived`) VALUES
-(1, 'Leren oefenen met namen!', 0, 'Klaas', 0);
+INSERT INTO `tests` (`testID`, `accountID`, `testName`, `testType`, `testDifficulty`, `createDate`, `isPrivate`, `archived`) VALUES
+(1, 1, 'Leren oefenen met namen!', 0, 0, '0000-00-00', 0, 0);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -106,18 +141,33 @@ ALTER TABLE `accounts`
   ADD PRIMARY KEY (`accountID`);
 
 --
+-- Indexen voor tabel `testcontent`
+--
+ALTER TABLE `testcontent`
+  ADD PRIMARY KEY (`testContentID`),
+  ADD KEY `FK_testID_testContent` (`testID`);
+
+--
+-- Indexen voor tabel `testresultcontent`
+--
+ALTER TABLE `testresultcontent`
+  ADD PRIMARY KEY (`testResultContentID`),
+  ADD KEY `FK_testResultID_testResultContent` (`testResultID`);
+
+--
 -- Indexen voor tabel `testresults`
 --
 ALTER TABLE `testresults`
   ADD PRIMARY KEY (`testResultID`),
-  ADD KEY `testID_foreign_key` (`testID`),
-  ADD KEY `accountID_foreign_key` (`accountID`);
+  ADD KEY `FK_testID_testResults` (`testID`) USING BTREE,
+  ADD KEY `FK_accountID_testResults` (`accountID`) USING BTREE;
 
 --
 -- Indexen voor tabel `tests`
 --
 ALTER TABLE `tests`
-  ADD PRIMARY KEY (`testID`);
+  ADD PRIMARY KEY (`testID`),
+  ADD KEY `FK_accountID_tests` (`accountID`);
 
 --
 -- AUTO_INCREMENT voor geëxporteerde tabellen
@@ -128,6 +178,18 @@ ALTER TABLE `tests`
 --
 ALTER TABLE `accounts`
   MODIFY `accountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT voor een tabel `testcontent`
+--
+ALTER TABLE `testcontent`
+  MODIFY `testContentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT voor een tabel `testresultcontent`
+--
+ALTER TABLE `testresultcontent`
+  MODIFY `testResultContentID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT voor een tabel `testresults`
@@ -146,11 +208,29 @@ ALTER TABLE `tests`
 --
 
 --
+-- Beperkingen voor tabel `testcontent`
+--
+ALTER TABLE `testcontent`
+  ADD CONSTRAINT `FK_testID_testContent` FOREIGN KEY (`testID`) REFERENCES `tests` (`testID`);
+
+--
+-- Beperkingen voor tabel `testresultcontent`
+--
+ALTER TABLE `testresultcontent`
+  ADD CONSTRAINT `FK_testResultID_testResultContent` FOREIGN KEY (`testResultID`) REFERENCES `testresults` (`testResultID`);
+
+--
 -- Beperkingen voor tabel `testresults`
 --
 ALTER TABLE `testresults`
   ADD CONSTRAINT `accountID_foreign_key` FOREIGN KEY (`accountID`) REFERENCES `accounts` (`accountID`),
   ADD CONSTRAINT `testID_foreign_key` FOREIGN KEY (`testID`) REFERENCES `tests` (`testID`);
+
+--
+-- Beperkingen voor tabel `tests`
+--
+ALTER TABLE `tests`
+  ADD CONSTRAINT `FK_accountID_tests` FOREIGN KEY (`accountID`) REFERENCES `accounts` (`accountID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
