@@ -39,6 +39,11 @@ namespace LerenTypen
             ChangePage(new LoginPage(), loginPageButton);
         }
 
+        private void EditAccountPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(new EditAccountPage(), editAccountPageButton);
+        }
+
         /// <summary>
         /// Changes the page to the specified page if this page is not 
         /// already open and updates the menu buttons accordingly
@@ -93,6 +98,10 @@ namespace LerenTypen
                 else if (pageToChangeTo is LoginPage)
                 {
                     pageToggleButton = loginPageButton;
+                }
+                else if (pageToChangeTo is EditAccountPage)
+                {
+                    pageToggleButton = editAccountPageButton;
                 }
 
                 if (pageToggleButton != null)
