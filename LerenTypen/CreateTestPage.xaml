@@ -8,37 +8,51 @@
       d:DesignHeight="570" d:DesignWidth="1050" Background="White"
       Title="Page3" ShowsNavigationUI="False">
 
-    <StackPanel x:Name="mainPanel" Orientation="Vertical">
-        <StackPanel x:Name="titlePane" HorizontalAlignment="Left" Height="80" VerticalAlignment="Top" Width="1050" Margin="0,0,-0.4,0">
+    <Grid x:Name="mainPanel">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="titlePane" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="0,0,-0.4,0">
             <Label Content="Toets Aanmaken" Margin="20,5,0,0" FontSize="32" FontWeight="Bold"/>
         </StackPanel>
-        <StackPanel x:Name="optionsPane" Orientation="Horizontal" HorizontalAlignment="Left" Height="60" Margin="0,0,0,0" VerticalAlignment="Top" Width="1050">
-            <Label Content="Toets naam" FontSize="15" Margin="50,0,0,0" VerticalAlignment="Center"/>
+        <StackPanel x:Name="optionsPane" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Left"  Margin="0,0,0,0" VerticalAlignment="Top" >
+            <Label Content="Naam:" FontSize="15" Margin="50,0,0,0" VerticalAlignment="Center"/>
             <TextBox x:Name="textInputTestName" TextWrapping="Wrap" Width="240" Height="25" Margin="20,0,0,0" VerticalAlignment="Center"/>
-            <Label Content="Type:" FontSize="15" Margin="20,0,20,0" VerticalAlignment="Center"/>
-            <ComboBox x:Name="comboBoxType" Width="120" Margin="20" VerticalAlignment="Center" SelectedIndex="0">
+            <Label Content="Type:" FontSize="15" Margin="150,0,0,0" VerticalAlignment="Center"/>
+            <ComboBox x:Name="comboBoxType" Width="120" Margin="10" VerticalAlignment="Center" SelectedIndex="0">
                 <ListBoxItem x:Name="itemSentence" Content="Zinnen"/>
                 <ListBoxItem x:Name="ItemWord" Content="Woorden"/>
             </ComboBox>
-            <Label Content="Moeilijkheidsgraad:" FontSize="15" Margin="20,0,20,0" VerticalAlignment="Center"/>
-            <ComboBox x:Name="comboBoxDifficulty" Width="120" Margin="20" VerticalAlignment="Center" SelectedIndex="0">
+            <Label Content="Moeilijkheidsgraad:" FontSize="15" Margin="20,0,0,0" VerticalAlignment="Center"/>
+            <ComboBox x:Name="comboBoxDifficulty" Width="120" Margin="10" VerticalAlignment="Center" SelectedIndex="0">
                 <ListBoxItem x:Name="itemEasy" Content="Makkelijk"/>
                 <ListBoxItem x:Name="ItemMedium" Content="Middel"/>
                 <ListBoxItem x:Name="ItemHard" Content="Moeilijk"/>
             </ComboBox>
         </StackPanel>
-        <StackPanel x:Name="testLinesTitlePane" HorizontalAlignment="Left" Height="40" Margin="0,0,0,0" VerticalAlignment="Top" Width="1050">
-            <Label Content="Toetsregels:" Margin="50,0,0,0" FontSize="20" VerticalAlignment="Center"/>
+        <StackPanel x:Name="testLinesTitlePane" Grid.Row="2" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" >
+            <Label Content="Inhoud:" Margin="50,0,0,0" FontSize="20" VerticalAlignment="Center"/>
         </StackPanel>
-        <ScrollViewer x:Name="scrollViewer" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="300" VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
-            <StackPanel x:Name="testLinesPane"  HorizontalAlignment="Left"  Margin="0,0,0,0" VerticalAlignment="Top" Width="1050">
-                <TextBlock x:Name="addLineLink" TextWrapping="Wrap" Margin="50,0,50,0"><Hyperlink x:Name="addLine" Click="addLine_Click" ><Run Text="Voeg nieuwe regel toe"/></Hyperlink></TextBlock>
+        <ScrollViewer x:Name="scrollViewer" HorizontalAlignment="Left" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Top"  VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
+            <StackPanel x:Name="testLinesPane"  HorizontalAlignment="Left"  Margin="0,0,0,0" VerticalAlignment="Top" >
+                <TextBlock x:Name="addLineLink" TextWrapping="Wrap" Margin="50,0,50,0"><Hyperlink x:Name="addLine" Click="AddLine_Click" ><Run Text="Voeg nieuwe regel toe"/></Hyperlink></TextBlock>
             </StackPanel>
         </ScrollViewer>
-        <StackPanel x:Name="uploadPane" Orientation ="Horizontal" HorizontalAlignment="Left" Height="90" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="1050">
-            <RadioButton x:Name="publicRadio" Content="Publiek" Margin="750,0,0,0" Width="80" VerticalAlignment="Center"/>
+        <StackPanel x:Name="uploadPane" Grid.Row="4" Grid.Column="2" Orientation ="Horizontal"  Margin="0,0,0,0" VerticalAlignment="Center" >
+            <RadioButton x:Name="publicRadio" Content="Publiek" Margin="0,0,0,0" Width="80" VerticalAlignment="Center"/>
             <RadioButton x:Name="privateRadio" Content="Prive" Margin="10,0,0,0" Width="80" VerticalAlignment="Center" IsChecked="True"/>
-            <Button x:Name="saveButton" Content="Opslaan" Height="20" Margin="10,0,0,0" VerticalAlignment="Center" Click="saveButton_Click"/>
+            <Button x:Name="saveButton" Content="Opslaan" Height="20" Margin="10,0,0,0" VerticalAlignment="Center" Click="SaveButton_Click"/>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </Page>
