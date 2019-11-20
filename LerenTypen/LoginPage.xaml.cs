@@ -1,9 +1,9 @@
-﻿
 using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace LerenTypen
 {
@@ -12,9 +12,12 @@ namespace LerenTypen
     /// </summary>
     public partial class LoginPage : Page
     {
-        public LoginPage()
+        private MainWindow MainWindow;
+
+        public LoginPage(MainWindow mainWindow)
         {
             InitializeComponent();
+            MainWindow = mainWindow;
 
         }
         static string ComputeSha256Hash(string plainData)
@@ -66,7 +69,23 @@ namespace LerenTypen
             }
 
         }
-        //De button word niet clickable als de checkbox unchecked is.
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string gebruikersnaam = gebruikernaam.Text;
+            string voorn = voornaam.Text;
+            string achtern = achternaam.Text;
+            string ww = wachtwoord.Text;
+            string wwherh = wachtwoordherh.Text;
+            string geboort = geboortedatum.Text;
+            string security = securityvraag.Text;
+        }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
+        
         private void CheckBox_unChecked(object sender, System.Windows.RoutedEventArgs e)
         {
             if (checkboxakkoord.IsChecked == false)
@@ -74,13 +93,12 @@ namespace LerenTypen
                 accountmaken.IsEnabled = false;
             }
         }
-        //De button word clickable als de checkbox checked is.
+        
         private void CheckBox_Checked(object sender, System.Windows.RoutedEventArgs e)
         {
             if (checkboxakkoord.IsChecked == true)
             {
                 accountmaken.IsEnabled = true;
-
             }
         }
 
@@ -88,7 +106,7 @@ namespace LerenTypen
         {
             var newWindow = new Privacystatement();
             newWindow.Show();
-           }
+        }
 
         protected void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -100,7 +118,26 @@ namespace LerenTypen
             string geboorte = birthdate.Text;
             string securtiyvraag = securityvraag.Text;
             string securityans = securityvraag.Text;
+        }
 
+        private void forgot_password_button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            MainWindow.ChangePage(new ForgotPasswordPage());
+        }
+
+        private void login_click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            string loginUsername = username_login_textbox.Text;
+            string loginPassword = password_login_textbox.Password;
+
+            if (string.IsNullOrEmpty(loginUsername) || string.IsNullOrEmpty(loginPassword))
+            {
+                MessageBox.Show("U moet een gebruikersnaam en wachtwoord invoeren!", "Error");
+            }
+            else
+            {
+
+            }
         }
     }
 }
