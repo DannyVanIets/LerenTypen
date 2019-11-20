@@ -68,5 +68,10 @@ namespace LerenTypen
 
             buttonToSwitchTo.IsChecked = true;
         }
+
+        private void Button_Click()
+        {
+
+        }
     }
 }
