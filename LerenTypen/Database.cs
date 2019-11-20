@@ -16,7 +16,7 @@ namespace LerenTypen
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    String query = "Select @username from accounts";
+                    String query = "Select accountUsername from accounts where accountUsername = @username";
                     using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
                     {
                         usernamecheck.Parameters.AddWithValue("@username", user);
