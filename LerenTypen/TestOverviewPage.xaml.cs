@@ -6,37 +6,77 @@ using System.Linq;
 namespace LerenTypen
 {
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// Page for the overview of all the tests
     /// </summary>
     public partial class TestOverviewPage : Page
     {
+        /// <summary>
+        /// A list with all the data
+        /// </summary>
         List<TestTable> TableContent;
+
+        /// <summary>
+        /// A list with the currently displayed data
+        /// </summary>
         List<TestTable> CurrentContent = new List<TestTable>();
+
+        /// <summary>
+        /// A list with the searchresult data
+        /// </summary>
         List<TestTable> SearchResult = new List<TestTable>();
+
+        /// <summary>
+        /// bool to tell the app if it has loaded for the first time
+        /// </summary>
         bool isInitialized = false;
+
+        /// <summary>
+        /// number that corresponds to a filter
+        /// </summary>
         int ActiveFilter = 0;
+
+        /// <summary>
+        /// Startvalue of the amount of words in the filter
+        /// </summary>
         int StartValue = 0;
+
+        /// <summary>
+        /// Endvalue of the amount of words in the filter
+        /// </summary>
         int EndValue = 999999;
+
+        /// <summary>
+        /// Combines startvalue and endValue
+        /// </summary>
         int[] StartAndEnd = new int[2];
         public TestOverviewPage()
         {
             InitializeComponent();
 
-
-
             TableContent = new List<TestTable>();
+
+            // Temporary TestData
             TableContent.Add(new TestTable(1, "BramsToets", 50, 0, 100, "makkelijk", "Bram"));
             TableContent.Add(new TestTable(2, "Danny heeft dit gemaakt", 2, 0, 151, "gemiddeld", "Bram"));
             TableContent.Add(new TestTable(3, "Tristan opdracht 3", 49, 0, 10, "makkelijk", "Danny"));
             TableContent.Add(new TestTable(4, "Mark oefententamen", 8, 0, 400, "moeilijk", "Tristan"));
             TableContent.Add(new TestTable(5, "Hugo opdracht 3", 99, 0, 94, "makkelijk", "Bram"));
 
+            //add the data to the datagrid and refresh to show
             AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
+            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            
+            //Bool to prevent the select event/ToonAlles_event at startup app
             isInitialized = true;
             CurrentContent = TableContent;
 
 
         }
+        /// <summary>
+        /// Filter to show everything
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToonAlles_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             if (isInitialized)
@@ -51,14 +91,13 @@ namespace LerenTypen
                 }
                 ActiveFilter = 0;
                 Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-
-                //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
-                //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-                ////CurrentContent = TableContent;
-
             }
         }
-
+        /// <summary>
+        /// Filters everything less than 50
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LessThan50_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
 
@@ -73,23 +112,12 @@ namespace LerenTypen
             }
             ActiveFilter = 1;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-            //foreach (var item in CurrentContent)
-            //{
-            //    if (item.AmountOfWords < 50)
-            //    {
-            //        ItemsLessThan50.Add(item);
-            //    }
-            //}
-            //                ActiveFilter = 0;
-            //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsLessThan50;
-            //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-
-            //CurrentContent = ItemsLessThan50;
-
         }
-
-
-
+        /// <summary>
+        /// Filters everything between 50 and 100
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Between50And100_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween50And100 = new List<TestTable>();
@@ -103,20 +131,12 @@ namespace LerenTypen
             }
             ActiveFilter = 2;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-
-            //foreach (var item in CurrentContent)
-            //{
-            //    if (item.AmountOfWords > 49 && item.AmountOfWords < 100)
-            //    {
-            //        ItemsBetween50And100.Add(item);
-            //    }
-            //}
-            //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsBetween50And100;
-            //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-            ////CurrentContent = ItemsBetween50And100;
-
         }
-
+        /// <summary>
+        /// filters everything between 100 and 150
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Between100And150_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween100And150 = new List<TestTable>();
@@ -130,20 +150,12 @@ namespace LerenTypen
             }
             ActiveFilter = 3;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-
-            //foreach (var item in CurrentContent)
-            //{
-            //    if (item.AmountOfWords > 99 && item.AmountOfWords < 150)
-            //    {
-            //        ItemsBetween100And150.Add(item);
-            //    }
-            //}
-            //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsBetween100And150;
-            //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-            ////CurrentContent = ItemsBetween100And150;
-
         }
-
+        /// <summary>
+        /// filters everything between 150 and 200
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Between150And200_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween150And200 = new List<TestTable>();
@@ -157,21 +169,12 @@ namespace LerenTypen
             }
             ActiveFilter = 4;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-
-            //foreach (var item in CurrentContent)
-            //{
-            //    if (item.AmountOfWords > 149 && item.AmountOfWords < 200)
-            //    {
-            //        ItemsBetween150And200.Add(item);
-            //    }
-            //}
-
-            //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsBetween150And200;
-            //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-            ////CurrentContent = ItemsBetween150And200;
-
         }
-
+        /// <summary>
+        /// filters for items with more than 200 words
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MoreThan200_Clicker(object sender, System.Windows.RoutedEventArgs e)
         {
             List<TestTable> ItemsMoreThan200 = new List<TestTable>();
@@ -185,29 +188,18 @@ namespace LerenTypen
             }
             ActiveFilter = 5;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-
-            //foreach (var item in CurrentContent)
-            //{
-            //    if (item.AmountOfWords > 200)
-            //    {
-            //        ItemsMoreThan200.Add(item);
-            //    }
-            //}
-            //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = ItemsMoreThan200;
-            //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-            ////CurrentContent = ItemsMoreThan200;
-
         }
-
+        /// <summary>
+        /// Function that happens when the user uses the searchbar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Search_Event(object sender, TextChangedEventArgs e)
         {
             if (AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = TableContent;
                 Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-                //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
-                //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-
             }
 
             if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
@@ -220,14 +212,15 @@ namespace LerenTypen
 
                 CurrentContent = SearchResult;
                 Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-                //AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = SearchResult;
-                //AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-
             }
 
         }
 
-
+        /// <summary>
+        /// Function that removes the standard text the first time the user clicks the searchbar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Search_Remove_Event(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam"))
@@ -235,28 +228,16 @@ namespace LerenTypen
                 AllTestsOverview_TextBox_Search.Text = "";
             }
         }
-
+        /// <summary>
+        /// Function that filters based on the parameters and displays the results
+        /// </summary>
+        /// <param name="startValue"></param>
+        /// <param name="endValue"></param>
         private void Filter(int startValue, int endValue)
         {
             List<TestTable> FilterList = new List<TestTable>();
 
-                    foreach (var item in CurrentContent)
-                    {
-                        if (item.AmountOfWords > startValue && item.AmountOfWords < endValue)
-                        {
-                            FilterList.Add(item);
-                        }
-                    }
-                    AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = FilterList;
-                    AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-
-
-        }
-        private void Filter(int startValue, int endValue, List<TestTable> searchList)
-        {
-            List<TestTable> FilterList = new List<TestTable>();
-
-            foreach (var item in searchList)
+            foreach (var item in CurrentContent)
             {
                 if (item.AmountOfWords > startValue && item.AmountOfWords < endValue)
                 {
@@ -266,7 +247,13 @@ namespace LerenTypen
             AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = FilterList;
             AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
         }
-            private int[] FindFilter(int activeFilter)
+
+        /// <summary>
+        /// Function that finds the corresponding startvalue/endvalue based on which active filternumber is given and returns these values.
+        /// </summary>
+        /// <param name="activeFilter"></param>
+        /// <returns></returns>
+        private int[] FindFilter(int activeFilter)
         {
             switch (activeFilter)
             {
