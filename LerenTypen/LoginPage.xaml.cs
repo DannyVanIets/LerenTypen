@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
@@ -51,6 +52,21 @@ namespace LerenTypen
         private void forgot_password_button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             MainWindow.ChangePage(new ForgotPasswordPage());
+        }
+
+        private void login_click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            string loginUsername = username_login_textbox.Text;
+            string loginPassword = password_login_textbox.Password;
+
+            if (string.IsNullOrEmpty(loginUsername) || string.IsNullOrEmpty(loginPassword))
+            {
+                MessageBox.Show("U moet een gebruikersnaam en wachtwoord invoeren!", "Error");
+            }
+            else
+            {
+
+            }
         }
     }
 }

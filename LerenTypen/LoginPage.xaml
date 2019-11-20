@@ -19,20 +19,20 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Gebruikersnaam:&#xD;&#xA;" Canvas.Left="612" Canvas.Top="69" Width="162" FontSize="14" Margin="0,0,0,0" HorizontalAlignment="Center"/>
-                <TextBox x:Name="gebruikernaam_inloggen" Height="31" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="63" Width="162"/>
+                <TextBox x:Name="username_login_textbox" Height="31" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="63" Width="162"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Wachtwoord:" Canvas.Left="612" Canvas.Top="255" Width="162" FontSize="14"/>
-                <TextBox x:Name="wachtwoord_inloggen" Height="31" Canvas.Left="795" TextWrapping="Wrap" Canvas.Top="255" Width="162"/>
+                <PasswordBox x:Name="password_login_textbox" Height="31" Canvas.Left="795" Canvas.Top="255" Width="162"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Name="forgot_password_button" Content="Wachtwoord vergeten" Height="20" Width="120" Margin="160, 5, 5, 5" Cursor="Hand" Background="White" BorderBrush="White" Click="forgot_password_button_Click"/>
+                <Button Name="forgot_password_button" Content="Wachtwoord vergeten" Height="20" Width="125" Margin="160, 5, 5, 5" Cursor="Hand" Background="White" BorderBrush="White" Click="forgot_password_button_Click"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="Inloggen" Height="30" Width="80" Margin="5" Cursor="Hand"/>
+                <Button x:Name="inloggen_button" Content="Inloggen" Height="30" Width="80" Margin="5" Cursor="Hand" Click="login_click"/>
             </StackPanel>
 
         </StackPanel>
