@@ -13,7 +13,7 @@
             <Label Content="Toets Aanmaken" Margin="20,5,0,0" FontSize="32" FontWeight="Bold"/>
         </StackPanel>
         <StackPanel x:Name="optionsPane" Orientation="Horizontal" HorizontalAlignment="Left" Height="60" Margin="0,0,0,0" VerticalAlignment="Top" Width="1050">
-            <Label Content="Naam" FontSize="15" Margin="50,0,0,0" VerticalAlignment="Center"/>
+            <Label Content="Naam:" FontSize="15" Margin="50,0,0,0" VerticalAlignment="Center"/>
             <TextBox x:Name="textInputTestName" TextWrapping="Wrap" Width="240" Height="25" Margin="20,0,0,0" VerticalAlignment="Center"/>
             <Label Content="Type:" FontSize="15" Margin="150,0,0,0" VerticalAlignment="Center"/>
             <ComboBox x:Name="comboBoxType" Width="120" Margin="10" VerticalAlignment="Center" SelectedIndex="0">

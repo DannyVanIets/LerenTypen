@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -20,7 +21,7 @@ namespace LerenTypen
         {
             InitializeComponent();
             textBoxes = new List<TextBox>();
-            textBoxValues = new List<string>();
+            textBoxValues = new List<string>();            
             CreateInputLine();
             CreateInputLine();
             CreateInputLine();
@@ -62,7 +63,12 @@ namespace LerenTypen
                     textBoxes.Remove(t);
                     break;
                 }
-            }
+            }          
+
+            addLineLink.IsEnabled = true;
+            Run run = new Run("Voeg een nieuwe regel toe");
+            addLine.Inlines.Clear();
+            addLine.Inlines.Add(run);
 
             testLinesPane.Children.Add(addLineLink);
         }
@@ -85,6 +91,7 @@ namespace LerenTypen
             removeLink.Click += RemoveLine_Click;
             tbl.Inlines.Add(removeLink);
             tb.Height = 25;
+            tb.MaxLength = 280;
             panel.Orientation = Orientation.Horizontal;
             tbl.VerticalAlignment = VerticalAlignment.Center;
 
@@ -92,16 +99,24 @@ namespace LerenTypen
             margin.Right = 20;
             margin.Top = 0;
             margin.Bottom = 10;
-            tb.Width = 800;
+            tb.Width = 900;
             tb.Margin = margin;
             tb.Name = "textBox" + i;
-            textBoxes.Add(tb);
+            textBoxes.Add(tb);           
             
             panel.Children.Add(tb);
             panel.Children.Add(tbl);
 
             testLinesPane.Children.Remove(addLineLink);
             testLinesPane.Children.Add(panel);
+
+            if (textBoxes.Count > 50) {
+                addLineLink.IsEnabled = false;
+                Run run = new Run("Max aantal regels bereikt (50)");
+                addLine.Inlines.Clear();
+                addLine.Inlines.Add(run);               
+            }
+
             testLinesPane.Children.Add(addLineLink);
             i++;
             scrollViewer.ScrollToEnd();
@@ -130,13 +145,14 @@ namespace LerenTypen
                 privateTest = 1;
             }
             
-            int amountOfWords = 0;
+            //int amountOfWords = 0;
 
             // Text.Split splits the text into words using spaces
-            // empty words are not added to the counter amountOfWords
+            // Empty words are not added to the counter amountOfWords
+            // Decision was made to count words from db so function is not used
             foreach(TextBox t in textBoxes)
             {
-                string[] words = t.Text.Split();
+               /* string[] words = t.Text.Split();
 
                 foreach(string word in words)
                 {
@@ -145,11 +161,12 @@ namespace LerenTypen
                         amountOfWords++;
                     }
                 }
+                */
                 
                 textBoxValues.Add(t.Text);
-            }
+            }            
             
-            Database.AddTest(title, type, difficulty, privateTest, amountOfWords, textBoxValues, 0, "me");            
+            Database.AddTest(title, type, difficulty, privateTest, textBoxValues, 1);            
         }
 
         /// <summary>
