@@ -17,11 +17,11 @@ namespace LerenTypen
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     String query = "Select @username from accounts";
-                    using (MySqlCommand username = new MySqlCommand(query, connection))
+                    using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
                     {
-                        username.Parameters.AddWithValue("@username", user);
+                        usernamecheck.Parameters.AddWithValue("@username", user);
                         connection.Open();
-                        using (MySqlDataReader reader = username.ExecuteReader())
+                        using (MySqlDataReader reader = usernamecheck.ExecuteReader())
                         {
                             if (reader.HasRows)
                             {

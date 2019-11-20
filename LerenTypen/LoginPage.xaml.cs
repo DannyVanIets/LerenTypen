@@ -37,13 +37,13 @@ namespace LerenTypen
         // Er word gekeken als de velden ingevuld zijn, anders word alles afgebroken
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (gebruikernaam.Text.Trim() == "" || voornaam.Text.Trim() == "" || achternaam.Text.Trim() == "" || wachtwoordd.Password.Trim() == "" || wachtwoordd.Password.Trim() == "" || geboortedatum.Text.Trim() == "" || securityans.Text.Trim() == "")
+            if (username.Text.Trim() == "" || firstname.Text.Trim() == "" || lastname.Text.Trim() == "" || password.Password.Trim() == "" || passwordherh.Password.Trim() == "" || birthdate.Text.Trim() == "" || securityans.Text.Trim() == "")
             {
                 MessageBox.Show("Vul alle velden in!", "Velden niet ingevuld!");
                 return;
             }
 
-            if (Database.UserExists(gebruikernaam.Text))
+            if (Database.UserExists(username.Text))
             {
                 MessageBox.Show("Deze gebruikersnaam is al in gebruik!","Gebruikersnaam in gebruik");
                 return;
@@ -51,14 +51,14 @@ namespace LerenTypen
 
             /*Het wachtwoord en wachtwoord herhalen field worden vergeleken, als ze anders zijn krijg je melding.
             Klik op de registreer button en het wachtwoord word gehasht.*/
-            if (wachtwoordd.Password == wachtwoordherh.Password)
+            if (password.Password == passwordherh.Password)
             {  
-                string hashedpw = ComputeSha256Hash(wachtwoordd.Password);
-                Database.Registrer(gebruikernaam.Text, hashedpw.ToString(), geboortedatum.SelectedDate.Value.Date , voornaam.Text, achternaam.Text, securityvraag.Text, securityans.Text);
+                string hashedpw = ComputeSha256Hash(password.Password);
+                Database.Registrer(username.Text, hashedpw.ToString(), birthdate.SelectedDate.Value.Date , firstname.Text, lastname.Text, securityvraag.Text, securityans.Text);
                 MessageBox.Show("Er is succesvol geregistreerd!" , "Succesvol Geregistreerd!");
-                gebruikernaam.Text = string.Empty; achternaam.Text = string.Empty;
-                voornaam.Text = string.Empty; wachtwoordd.Password = string.Empty;
-                wachtwoordherh.Password = string.Empty; geboortedatum.Text = string.Empty; securityans.Text = string.Empty;
+                username.Text = string.Empty; lastname.Text = string.Empty;
+                firstname.Text = string.Empty; password.Password = string.Empty;
+                passwordherh.Password = string.Empty; birthdate.Text = string.Empty; securityans.Text = string.Empty;
             }
             else
             {
@@ -92,12 +92,12 @@ namespace LerenTypen
 
         protected void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string gebruiker = gebruikernaam.Text;
-            string voorna = voornaam.Text;
-            string achtern = achternaam.Text;
-            string password = wachtwoordd.Password;
-            string passherh = wachtwoordherh.Password;
-            string geboorte = geboortedatum.Text;
+            string gebruiker = username.Text;
+            string voorna = firstname.Text;
+            string achtern = lastname.Text;
+            string passwordd = password.Password;
+            string passherh = passwordherh.Password;
+            string geboorte = birthdate.Text;
             string securtiyvraag = securityvraag.Text;
             string securityans = securityvraag.Text;
 
