@@ -50,8 +50,9 @@
                 <DataGridTextColumn Header="Aantal keren gemaakt" Width="150*" Binding="{Binding WPFTimesMade}"/>
                 <DataGridTextColumn Header="Highscore" Width="100*" Binding="{Binding Highscore}"/>
                 <DataGridTextColumn Header="Aantal woorden" Width="120*" Binding="{Binding AmountOfWords}"/>
-                <DataGridTextColumn Header="Moeilijkheidsgraad" Width="125*" Binding="{Binding Difficulty}"/>
+                <DataGridTextColumn Header="Moeilijkheidsgraad" Width="125*" Binding="{Binding Difficulty}" SortMemberPath="DifficultyBinder"/>
                 <DataGridTextColumn Header="Geüpload door" Width="100*" Binding="{Binding Uploader}"/>
+                <DataGridTextColumn Header="DifficultyBinder" Width="0*" Binding="{Binding DifficultyBinder}" Visibility="Hidden"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

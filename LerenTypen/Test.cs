@@ -41,6 +41,8 @@ namespace LerenTypen
 
         public string Difficulty { get; set; }
         public string Uploader { get; set; }
+
+        public int DifficultyBinder { get; set; }
         public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, string difficulty, string uploader)
         {
             this.WPFNumber = number;
@@ -50,6 +52,18 @@ namespace LerenTypen
             this.AmountOfWords = amountOfWords;
             this.Difficulty = difficulty;
             this.Uploader = uploader;
+            if(difficulty == "makkelijk")
+            {
+                DifficultyBinder = 1;
+            }
+            else if(difficulty == "gemiddeld")
+            {
+                DifficultyBinder = 2;
+            }
+            else
+            {
+                DifficultyBinder = 3;
+            }
         }
         
     }
