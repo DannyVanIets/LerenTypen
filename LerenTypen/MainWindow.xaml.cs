@@ -122,6 +122,7 @@ namespace LerenTypen
             tipPageButton.IsChecked = false;
             leaderboardPageButton.IsChecked = false;
             loginPageButton.IsChecked = false;
+            editAccountPageButton.IsChecked = false;
 
             buttonToSwitchTo.IsChecked = true;
         }
