@@ -26,7 +26,7 @@ namespace LerenTypen
 
                     // Select last insert id is used to insert the tests content into a seperate table with the same id
                     sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, uploadDate, isPrivate, amountOfWords, isTeacher, uploadedBy) " +
-                        $"VALUES (@testName, @testType, 0, @testDifficulty,NOW(), @isPrivate , @amountOfWords, @isTeacher, @uploadedBy); SELECT LAST_INSERT_ID()");
+                        $"VALUES (@testName, @testType, 0, @testDifficulty, NOW(), @isPrivate , @amountOfWords, @isTeacher, @uploadedBy); SELECT LAST_INSERT_ID()");
                     
                     string MySql = sb.ToString();
 
