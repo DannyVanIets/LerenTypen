@@ -20,7 +20,6 @@ namespace LerenTypen
         /// <summary>
         /// Method for adding tests to database. 
         /// </summary>
-
         public static void TestQuery()
         {
             try
@@ -50,7 +49,8 @@ namespace LerenTypen
             }
         }
 
-        public static int SelectUsernameAndPasswordQuery(string AccountUsername, string Password)
+        //Database query used by login. We're gonna check if the username and hashedpassword match any existing data. If it does, we will return the accountID.
+        public static int GetAccountIDForLogin(string AccountUsername, string Password)
         {
             try
             {
@@ -59,8 +59,8 @@ namespace LerenTypen
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
 
-                    // Commentaar hier
-                    sb.Append($"SELECT `accountID` FROM accounts WHERE accountUsername = @accountusername AND accountPassword = @accountpassword;");
+                    // We only return the accountID, in case the logged in user's account information changes. That way nothing that may change is stored. ID's will always stay the same. We also check if the account is not archived.
+                    sb.Append($"SELECT `accountID` FROM accounts WHERE accountUsername = @accountusername AND accountPassword = @accountpassword AND archived = 0;");
 
                     string MySql = sb.ToString();
 

@@ -9,7 +9,7 @@ namespace LerenTypen
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int ingelogd { get; set; }
+        public int Ingelogd { get; set; }
 
         public MainWindow()
         {
@@ -36,16 +36,17 @@ namespace LerenTypen
             ChangePage(new LeaderboardPage(), leaderboardPageButton);
         }
 
+        //In this method we will first check if the user is logged in, if that's the case it means they want to logout. We will first ask a confirmation, then update the property, make sure the loginPageButton texts changes and then put them on the homepage. If the user is not logged in, it will direct them to the login page.
         private void LoginPageButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ingelogd > 0)
+            if (Ingelogd > 0)
             {
                 MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je wilt uitloggen?", "Uitloggen", System.Windows.MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    ingelogd = 0;
-                    menuIngelogdCheck();
-                    MessageBox.Show("U bent succescol uitgelogd! U wordt nu gestuurd naar de homepagina.", "Succes");
+                    Ingelogd = 0;
+                    UpdateLoginText();
+                    MessageBox.Show("U bent succesvol uitgelogd! U wordt nu doorgestuurd naar de homepagina.", "Succes");
                     ChangePage(new HomePage());
                 }
             }
@@ -133,9 +134,10 @@ namespace LerenTypen
             buttonToSwitchTo.IsChecked = true;
         }
 
-        public void menuIngelogdCheck()
+        //This method is used to change the text of the loginPageButton, used if you login and logout.
+        public void UpdateLoginText()
         {
-            if (ingelogd > 0)
+            if (Ingelogd > 0)
             {
                 loginPageButton.Content = "Uitloggen";
             }
