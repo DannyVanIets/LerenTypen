@@ -12,7 +12,7 @@ namespace LerenTypen
     /// </summary>
     public partial class TestExercise : Page
     {
-        private int k = 0;
+        private int k = 4;
         private int i = 0;
         private int j = 0;
         private Line secondLine;
@@ -22,6 +22,7 @@ namespace LerenTypen
         public TestExercise()
         {
             InitializeComponent();
+            Overlay.Visibility = System.Windows.Visibility.Visible;
             t1 = new DispatcherTimer();
             t1.Interval = new TimeSpan(0,0,1);
             t1.Start();
@@ -33,9 +34,6 @@ namespace LerenTypen
             el.Width = 100;
             el.Height = 100;
             clock.Children.Add(el);
-
-           
-            
             
             for (int i = 0; i < 60; i++)
             {
@@ -81,15 +79,17 @@ namespace LerenTypen
        
 
         private void StartTimer(object sender, EventArgs e)
-        {            
-            k++;
-            if (k.Equals(3))
+        {
+            countDown.Content = k-1;           
+            k--;
+
+            if (k.Equals(0))
             {
+                Overlay.Visibility = System.Windows.Visibility.Collapsed;
                 t1.Tick -= StartTimer;
                 t1.Tick += UpdateTimer;
                 t1.Tick += UpdateCanvas;
             }
-
         }
 
         private void UpdateTimer(object sender, EventArgs e)
