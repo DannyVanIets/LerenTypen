@@ -11,5 +11,10 @@ namespace LerenTypen
         {
             InitializeComponent();
         }
+
+        public void GetUsers()
+        {
+
+        }
     }
 }

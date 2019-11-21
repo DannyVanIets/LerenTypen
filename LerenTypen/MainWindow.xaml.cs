@@ -38,6 +38,10 @@ namespace LerenTypen
         {
             ChangePage(new LoginPage(), loginPageButton);
         }
+        private void AlleUsers_Click(object sender,RoutedEventArgs e)
+        {
+            ChangePage(new AlleUsers(), allegebruikers);
+        }
 
         /// <summary>
         /// Changes the page to the specified page if this page is not 
