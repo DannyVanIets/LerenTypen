@@ -137,7 +137,7 @@ namespace LerenTypen
 
         private void NextLineButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            NextLine();
         }
 
         private void PauseButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -168,6 +168,28 @@ namespace LerenTypen
             {
                 //do yes stuff
             }
+        }
+
+        private void MuteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if(e.Key == System.Windows.Input.Key.Enter)
+            {
+                NextLine();
+            }
+        }
+        private void NextLine()
+        {
+            CheckInput();
+            Console.WriteLine("jo");
+        }
+        private void CheckInput()
+        {
+            
         }
     }
 }
