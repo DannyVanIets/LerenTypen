@@ -22,17 +22,20 @@ namespace LerenTypen
         private DispatcherTimer t1;
         private int currentLine;
         private List<string> lines;
-        private int wrongAnswers;
+        private List<string> wrongAnswers;
+        private List<string> rightAnswers;
+        private int amountOfPauses;
         private int testID;
 
         public TestExercise()
         {
             InitializeComponent();
-            
-            
-            wrongAnswers = 0;
+
+            amountOfPauses = 0;
+            wrongAnswers = new List<string>();
+            rightAnswers = new List<string>();
             currentLine = 0;
-            wrongCounter.Content = wrongAnswers;
+            wrongCounter.Content = wrongAnswers.Count;
             lines = new List<string>();
 
             lines.Add("jo waddup jo");
@@ -171,6 +174,7 @@ namespace LerenTypen
         private void PauseButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             t1.Stop();
+            amountOfPauses++;
             ShowResumeButton();
         }
 
@@ -220,8 +224,7 @@ namespace LerenTypen
             currentLine++;
 
             if (currentLine < lines.Count)
-            {
-                
+            {                
                 testLine.Content = lines[currentLine];
                 lineNumber.Content = $"{currentLine+1}/{lines.Count}";
             }
@@ -234,20 +237,22 @@ namespace LerenTypen
         private void CheckInput(string input)
         {
             if (input.Equals(lines[currentLine]))
-            {
-
+            {                
+                rightAnswers.Add(input);
             }
             else
-            {
-                wrongAnswers++;
-                wrongCounter.Content = wrongAnswers;
+            {                
+                wrongAnswers.Add(input);
+                wrongCounter.Content = wrongAnswers.Count;
                 lines.Add(lines[currentLine]);
             } 
         }
 
         private void CloseTest()
         {
+            t1.Stop();
             Console.WriteLine("close");
+            
         }
     }
 }
