@@ -17,7 +17,7 @@ namespace LerenTypen
         private int j = 0;
         private Line secondLine;
         private Line minuteLine;
-        private DispatcherTimer t1;
+        private DispatcherTimer t1;        
 
         public TestExercise()
         {
@@ -89,7 +89,16 @@ namespace LerenTypen
                 t1.Tick -= StartTimer;
                 t1.Tick += UpdateTimer;
                 t1.Tick += UpdateCanvas;
+                k = 4;
+                countDown.Content = "";
             }
+        }
+        private void ShowResumeButton()
+        {
+            Overlay.Visibility = System.Windows.Visibility.Visible;
+            resumeButton.Visibility = System.Windows.Visibility.Visible;
+
+
         }
 
         private void UpdateTimer(object sender, EventArgs e)
@@ -127,6 +136,24 @@ namespace LerenTypen
 
         private void NextLineButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+
+        }
+
+        private void PauseButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            t1.Stop();
+            ShowResumeButton();
+        }
+
+        private void ResumeButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            resumeButton.Visibility = System.Windows.Visibility.Collapsed;
+            t1.Tick -= UpdateTimer;
+            t1.Tick -= UpdateCanvas;
+            t1.Tick += StartTimer;
+            t1.Start();
+            
+           
 
         }
     }
