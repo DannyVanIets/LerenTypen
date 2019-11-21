@@ -13,7 +13,7 @@
         <TextBox HorizontalAlignment="Left" Height="34" Margin="176,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131" />
         <Label Content="Account zoeken:" HorizontalAlignment="Left" Height="34" Margin="62,94,0,0" VerticalAlignment="Top" Width="109"/>
         
-        <DataGrid x:Name="AllTestsOverview_DataGrid_AllTestsTable" AutoGenerateColumns="False" Margin="0,135,-0.4,0.6">
+        <DataGrid x:Name="DGV1" AutoGenerateColumns="True" Margin="0,135,-0.4,0.6">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" Width="30*" Binding="{Binding accountnumber}"/>
                 <DataGridTextColumn Header="Gebruikersnaam" Width="200*" Binding="{Binding username}"/>
@@ -23,10 +23,5 @@
                 <DataGridTextColumn Header="Bewerken" Width="150*" Binding="{Binding edit}" SortMemberPath="DifficultyBinder"/>
              </DataGrid.Columns>
         </DataGrid>
-
-
-
-
-
-    </Grid>
+     </Grid>
 </Page>

@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace LerenTypen
@@ -9,32 +10,39 @@ namespace LerenTypen
         private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
 
 
-        public static void GetUsers(int userid, string username, int usertype, string firstname, string lastname)
+        public static List<Users> GetUsers()
         {
+            List<Users> queryResult = new List<Users>();
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    string query = "select @accountid , @username, @accounttype, @fname, @lname from accounts";
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("select accountID, accountType,accountUsername, accountFirstname , accountSurname from accounts");
+                    string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
-                        //a shorter syntax to adding parameters
-
-                        command.Parameters.AddWithValue("@accountid", userid);
-                        command.Parameters.AddWithValue("@username", username);
-                        command.Parameters.AddWithValue("@accounttype", usertype);
-                        command.Parameters.AddWithValue("@fname", firstname);
-                        command.Parameters.AddWithValue("@lname", lastname);
-                        //make sure you open and close(after executing) the connection
-                        connection.Open();
-                        command.ExecuteNonQuery();
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    queryResult.Add(new Users(reader.GetInt32(0), reader.GetInt32(2), reader.GetString(1), reader.GetString(4), reader.GetString(5)));
+                                }
+                                reader.NextResult();
+                            }
+                        }
                     }
                 }
+                return queryResult;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                System.Console.WriteLine(e);
+                Console.WriteLine(e);
+                return null;
             }
         }
     }
