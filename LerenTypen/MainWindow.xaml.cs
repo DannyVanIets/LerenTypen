@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
@@ -18,7 +18,7 @@ namespace LerenTypen
 
         private void TestOverviewPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new TestOverviewPage(), testOverviewPageButton);
+            ChangePage(new TestOverviewPage(this), testOverviewPageButton);
         }
 
         private void TrendingTestsPageButton_Click(object sender, RoutedEventArgs e)
@@ -130,6 +130,7 @@ namespace LerenTypen
             tipPageButton.IsChecked = false;
             leaderboardPageButton.IsChecked = false;
             loginPageButton.IsChecked = false;
+            TestButton.IsChecked = false;
 
             buttonToSwitchTo.IsChecked = true;
         }
@@ -146,5 +147,20 @@ namespace LerenTypen
                 loginPageButton.Content = "Inloggen/registeren";
             }
         }
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            //ChangePage(new CreateTestPage(), TestButton);
+            //string tekst = "";
+            //foreach (var item in Database.TestQuery())
+            //{
+            //    tekst += item;
+            //}
+            //System.Windows.MessageBox.Show(tekst);
+            System.Windows.MessageBox.Show(Database.GetAmountOfWordsFromTest(3).ToString());
+
+            
+        }
+
     }
 }
