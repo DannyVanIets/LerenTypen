@@ -47,14 +47,7 @@ namespace LerenTypen
         {
             if (Ingelogd > 0)
             {
-                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je wilt uitloggen?", "Uitloggen", System.Windows.MessageBoxButton.YesNo);
-                if (messageBoxResult == MessageBoxResult.Yes)
-                {
-                    Ingelogd = 0;
-                    UpdateLoginText();
-                    MessageBox.Show("U bent succesvol uitgelogd! U wordt nu doorgestuurd naar de homepagina.", "Succes");
-                    ChangePage(new HomePage(this));
-                }
+                loginPageButton.ContextMenu.IsOpen = true;
             }
             else
             {
@@ -141,16 +134,30 @@ namespace LerenTypen
             buttonToSwitchTo.IsChecked = true;
         }
 
-        //This method is used to change the text of the loginPageButton, used if you login and logout.
-        public void UpdateLoginText()
+        //This method is used to change the the loginPageButton (change its text and add a submenu), used if you login and logout.
+        public void UpdateLoginButton()
         {
             if (Ingelogd > 0)
             {
-                loginPageButton.Content = "Uitloggen";
+                loginPageButton.Content = $"Welkom {Database.GetAccountUsername(Ingelogd)}";
+                loginPageButton.ContextMenu = (ContextMenu)FindResource("accountMenu");
             }
             else
             {
                 loginPageButton.Content = "Inloggen/registeren";
+                loginPageButton.ContextMenu = null;
+            }
+        }
+
+        private void LogoutMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je wilt uitloggen?", "Uitloggen", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                Ingelogd = 0;
+                UpdateLoginButton();
+                MessageBox.Show("U bent succesvol uitgelogd! U wordt nu doorgestuurd naar de homepagina.", "Succes");
+                ChangePage(new HomePage(this));
             }
         }
     }
