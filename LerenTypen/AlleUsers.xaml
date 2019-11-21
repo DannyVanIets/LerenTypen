@@ -15,12 +15,12 @@
         
         <DataGrid x:Name="AllTestsOverview_DataGrid_AllTestsTable" AutoGenerateColumns="False" Margin="0,135,-0.4,0.6">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="#" Width="30*" Binding="{Binding accountnummer}"/>
-                <DataGridTextColumn Header="Gebruikersnaam" Width="200*" Binding="{Binding gebruikernaam}"/>
-                <DataGridTextColumn Header="Gebruiker Type" Width="150*" Binding="{Binding gebruikertype}"/>
-                <DataGridTextColumn Header="Voornaam" Width="150*" Binding="{Binding voornaam}"/>
-                <DataGridTextColumn Header="Achternaam" Width="150*" Binding="{Binding achternaam}"/>
-                <DataGridTextColumn Header="Bewerken" Width="150*" Binding="{Binding bewerken}" SortMemberPath="DifficultyBinder"/>
+                <DataGridTextColumn Header="#" Width="30*" Binding="{Binding accountnumber}"/>
+                <DataGridTextColumn Header="Gebruikersnaam" Width="200*" Binding="{Binding username}"/>
+                <DataGridTextColumn Header="Gebruiker Type" Width="150*" Binding="{Binding usertype}"/>
+                <DataGridTextColumn Header="Voornaam" Width="150*" Binding="{Binding firstname}"/>
+                <DataGridTextColumn Header="Achternaam" Width="150*" Binding="{Binding lastname}"/>
+                <DataGridTextColumn Header="Bewerken" Width="150*" Binding="{Binding edit}" SortMemberPath="DifficultyBinder"/>
              </DataGrid.Columns>
         </DataGrid>
 
