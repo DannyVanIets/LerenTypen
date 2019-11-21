@@ -69,9 +69,9 @@ namespace LerenTypen
             buttonToSwitchTo.IsChecked = true;
         }
 
-        private void Button_Click()
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            ChangePage(new TestExercise(), Test);
         }
     }
 }

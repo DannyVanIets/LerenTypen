@@ -5,9 +5,9 @@ namespace LerenTypen
     /// <summary>
     /// Interaction logic for Page1.xaml
     /// </summary>
-    public partial class TrendingTestsPage : Page
+    public partial class TestExercise : Page
     {
-        public TrendingTestsPage()
+        public TestExercise()
         {
             InitializeComponent();
         }
