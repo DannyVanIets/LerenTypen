@@ -19,7 +19,6 @@ namespace LerenTypen
         private Line minuteLine;
         private DispatcherTimer t1;
 
-
         public TestExercise()
         {
             InitializeComponent();
