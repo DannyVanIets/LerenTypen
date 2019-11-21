@@ -121,6 +121,15 @@ namespace LerenTypen
         private void Test_Click(object sender, RoutedEventArgs e)
         {
             //ChangePage(new CreateTestPage(), TestButton);
+            //string tekst = "";
+            //foreach (var item in Database.TestQuery())
+            //{
+            //    tekst += item;
+            //}
+            //System.Windows.MessageBox.Show(tekst);
+            System.Windows.MessageBox.Show(Database.GetAmountOfWordsFromTest(3).ToString());
+
+            
         }
 
       

@@ -59,14 +59,23 @@ namespace LerenTypen
             TableContent = new List<TestTable>();
 
             // Temporary TestData
-            TableContent.Add(new TestTable(1, "BramsToets", 50, 0, 100, "makkelijk", "Bram"));
-            TableContent.Add(new TestTable(2, "Danny heeft dit gemaakt", 2, 0, 151, "gemiddeld", "Bram"));
-            TableContent.Add(new TestTable(3, "Tristan opdracht 3", 49, 0, 10, "makkelijk", "Danny"));
-            TableContent.Add(new TestTable(4, "Mark oefententamen", 8, 0, 400, "moeilijk", "Tristan"));
-            TableContent.Add(new TestTable(5, "Hugo opdracht 3", 99, 0, 94, "makkelijk", "Bram"));
+            //TableContent.Add(new TestTable(1, "BramsToets", 50, 0, 100, "makkelijk", "Bram"));
+            //TableContent.Add(new TestTable(2, "Danny heeft dit gemaakt", 2, 0, 151, "gemiddeld", "Bram"));
+            //TableContent.Add(new TestTable(3, "Tristan opdracht 3", 49, 0, 10, "makkelijk", "Danny"));
+            //TableContent.Add(new TestTable(4, "Mark oefententamen", 8, 0, 400, "moeilijk", "Tristan"));
+            //TableContent.Add(new TestTable(5, "Hugo opdracht 3", 99, 0, 94, "makkelijk", "Bram"));
 
-            //add the data to the datagrid and refresh to show
+            ////add the data to the datagrid and refresh to show
+
+            TableContent = Database.GetAllTests();
+            int counter = 1;
+            foreach (var item in TableContent)
+            {
+                item.WPFNumber = counter;
+                counter++;
+            }
             AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
+
             AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
             
             //Bool to prevent the select event/ToonAlles_event at startup app
@@ -305,5 +314,6 @@ namespace LerenTypen
         {
             MainWindow.ChangePage(new CreateTestPage());
         }
+
     }
 }

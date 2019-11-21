@@ -43,26 +43,28 @@ namespace LerenTypen
         public string Uploader { get; set; }
 
         public int DifficultyBinder { get; set; }
-        public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, string difficulty, string uploader)
+        public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, int difficulty, string uploader)
         {
             this.WPFNumber = number;
             this.WPFName = name;
             this.WPFTimesMade = timesMade;
             this.Highscore = highscore;
             this.AmountOfWords = amountOfWords;
-            this.Difficulty = difficulty;
             this.Uploader = uploader;
-            if(difficulty == "makkelijk")
+            if(difficulty == 0)
             {
                 DifficultyBinder = 1;
+                Difficulty = "makkelijk";
             }
-            else if(difficulty == "gemiddeld")
+            else if(difficulty == 1)
             {
                 DifficultyBinder = 2;
+                Difficulty = "gemiddeld";
             }
             else
             {
                 DifficultyBinder = 3;
+                Difficulty = "moeilijk";
             }
         }
         

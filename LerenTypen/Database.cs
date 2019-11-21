@@ -82,31 +82,40 @@ namespace LerenTypen
             }
         }
 
-        public static void TestQuery() {
+        public static List<string> TestQuery() {
+            List<string> resultset = new List<string>();
             try
+
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("INSERT INTO tests VALUES (2, 'Test', 'words', 1, 0)");
+                    sb.Append("select testID, t.accountID, testName, testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID");
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            //while (reader.Read())
-                            //{
+                            while (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    resultset.Add(reader.GetString(2));
 
-                            //}
+                                }
+                                reader.NextResult();
+                            }
                         }
                     }
                 }
+                return resultset;
             }
             catch (MySqlException e)
             {
                 System.Console.WriteLine(e.Message);
+                return null;
             }
         }
 
@@ -119,7 +128,43 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("SELECT * FROM tests");
+                    sb.Append("select testID, t.accountID, testName, testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    queryResult.Add(new TestTable(0, reader.GetString(2), reader.GetInt32(4), 0, GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6)));
+                                }
+                                reader.NextResult();
+                            }
+                        }
+                    }
+                }
+                return queryResult;
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        public static int GetAmountOfWordsFromTest(int testId)
+        {
+            int amountOfWords = 0;
+            string fullResult = "";
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("SELECT content FROM testcontent WHERE testID=" + testId);
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
@@ -128,17 +173,19 @@ namespace LerenTypen
                         {
                             while (reader.Read())
                             {
-//queryResult.Add(reader.GetUInt32(0), reader.GetName(2), reader.)
+                               fullResult = reader.GetString(0);
+                               amountOfWords += fullResult.Trim().Split().Length;
+
                             }
                         }
                     }
                 }
-                return null;
+                return amountOfWords;
             }
             catch (MySqlException e)
             {
                 System.Console.WriteLine(e.Message);
-                return null;
+                return 0;
             }
         }
     }
