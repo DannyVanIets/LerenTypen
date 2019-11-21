@@ -18,6 +18,7 @@
             <ToggleButton x:Name="tipPageButton" Margin="15" Width="100" Click="TipPageButton_Click" Content="Tips/advies"/>
             <ToggleButton x:Name="leaderboardPageButton" Margin="15" Width="100" Click="LeaderboardPageButton_Click" Content="Leaderboard"/>
             <ToggleButton x:Name="loginPageButton" Margin="15" Width="150" Click="LoginPageButton_Click" Content="Inloggen/registreren"/>
+            <ToggleButton x:Name="allegebruikers" Margin="15" Width="150" Click="LoginPageButton_Click" Content="Alle gebruikers" Visibility="Hidden"/>
         </StackPanel>
 
         <Frame x:Name="frame" Source="HomePage.xaml" MinWidth="842" MinHeight="370" Grid.Row="1">
