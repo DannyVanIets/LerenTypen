@@ -12,20 +12,21 @@ namespace LerenTypen
     /// </summary>
     public partial class TestExercise : Page
     {
+        private int k = 0;
         private int i = 0;
         private int j = 0;
-        private Line l1;
-        private Line l4;
+        private Line secondeWijzer;
+        private Line minutenWijzer;
+        private DispatcherTimer t1;
 
 
         public TestExercise()
         {
             InitializeComponent();
-            DispatcherTimer t1 = new DispatcherTimer();
+            t1 = new DispatcherTimer();
             t1.Interval = new TimeSpan(0,0,1);
             t1.Start();
-            t1.Tick += UpdateTimer;
-            t1.Tick += UpdateCanvas;
+            t1.Tick += StartTimer;
 
             Ellipse el = new Ellipse();
             el.StrokeThickness = 2;
@@ -58,27 +59,38 @@ namespace LerenTypen
                 l3.RenderTransform = new RotateTransform(rotation, 50, 50);
                 clock.Children.Add(l3);
             }
-            l4 = new Line();
-            l4.Stroke = Brushes.Black;
-            l4.X1 = 50;
-            l4.X2 = 50;
-            l4.Y1 = 50;
-            l4.Y2 = 0;
-            l4.StrokeThickness = 2;
-            clock.Children.Add(l4);
+            minutenWijzer = new Line();
+            minutenWijzer.Stroke = Brushes.Black;
+            minutenWijzer.X1 = 50;
+            minutenWijzer.X2 = 50;
+            minutenWijzer.Y1 = 50;
+            minutenWijzer.Y2 = 0;
+            minutenWijzer.StrokeThickness = 2;
+            clock.Children.Add(minutenWijzer);
 
-
-
-            l1 = new Line();
-            l1.Stroke = Brushes.Red;
-            l1.X1 = 50;
-            l1.X2 = 50;
-            l1.Y1 = 50;
-            l1.Y2 = 10;
-            l1.StrokeThickness = 1;
-            clock.Children.Add(l1);
+            secondeWijzer = new Line();
+            secondeWijzer.Stroke = Brushes.Red;
+            secondeWijzer.X1 = 50;
+            secondeWijzer.X2 = 50;
+            secondeWijzer.Y1 = 50;
+            secondeWijzer.Y2 = 10;
+            secondeWijzer.StrokeThickness = 1;
+            clock.Children.Add(secondeWijzer);
 
            
+        }
+       
+
+        private void StartTimer(object sender, EventArgs e)
+        {            
+            k++;
+            if (k.Equals(3))
+            {
+                t1.Tick -= StartTimer;
+                t1.Tick += UpdateTimer;
+                t1.Tick += UpdateCanvas;
+            }
+
         }
 
         private void UpdateTimer(object sender, EventArgs e)
@@ -105,8 +117,11 @@ namespace LerenTypen
             int rotationS = 360 / 60 * i;
             int rotationM = 360 / 60 * j;
 
-            l1.RenderTransform = new RotateTransform(rotationS, 50, 50);
-            l4.RenderTransform = new RotateTransform(rotationM, 50, 50);
+            secondeWijzer.RenderTransform = new RotateTransform(rotationS, 50, 50);
+            if (i.Equals(0))
+            {
+                minutenWijzer.RenderTransform = new RotateTransform(rotationM, 50, 50);
+            }
             
             
         }
