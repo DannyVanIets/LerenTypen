@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Timers;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -155,6 +156,18 @@ namespace LerenTypen
             
            
 
+        }
+
+        private void StopButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Weet je zeker dat je de toets wilt verlaten?", "Toets verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+                //do no stuff
+            }
+            else
+            {
+                //do yes stuff
+            }
         }
     }
 }
