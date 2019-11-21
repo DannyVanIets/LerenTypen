@@ -9,6 +9,8 @@ namespace LerenTypen
     /// </summary>
     public partial class MainWindow : Window
     {
+        public int ingelogd { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -36,7 +38,21 @@ namespace LerenTypen
 
         private void LoginPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new LoginPage(this), loginPageButton);
+            if (ingelogd > 0)
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je wilt uitloggen?", "Uitloggen", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    ingelogd = 0;
+                    menuIngelogdCheck();
+                    MessageBox.Show("U bent succescol uitgelogd! U wordt nu gestuurd naar de homepagina.", "Succes");
+                    ChangePage(new HomePage());
+                }
+            }
+            else
+            {
+                ChangePage(new LoginPage(this), loginPageButton);
+            }
         }
 
         /// <summary>
@@ -115,6 +131,18 @@ namespace LerenTypen
             loginPageButton.IsChecked = false;
 
             buttonToSwitchTo.IsChecked = true;
+        }
+
+        public void menuIngelogdCheck()
+        {
+            if (ingelogd > 0)
+            {
+                loginPageButton.Content = "Uitloggen";
+            }
+            else
+            {
+                loginPageButton.Content = "Inloggen/registeren";
+            }
         }
     }
 }
