@@ -12,8 +12,8 @@ namespace LerenTypen
     /// </summary>
     public partial class TestExercise : Page
     {
-        private static int i = 0;
-        private static int j = 0;
+        private int i = 0;
+        private int j = 0;
         private Line l1;
         private Line l4;
 
@@ -24,8 +24,8 @@ namespace LerenTypen
             DispatcherTimer t1 = new DispatcherTimer();
             t1.Interval = new TimeSpan(0,0,1);
             t1.Start();
-            t1.Tick += updateTimer;
-            t1.Tick += updateCanvas;
+            t1.Tick += UpdateTimer;
+            t1.Tick += UpdateCanvas;
 
             Ellipse el = new Ellipse();
             el.StrokeThickness = 2;
@@ -81,7 +81,7 @@ namespace LerenTypen
            
         }
 
-        private void updateTimer(object sender, EventArgs e)
+        private void UpdateTimer(object sender, EventArgs e)
         {
             i++;
             if (i.Equals(60))
@@ -100,7 +100,7 @@ namespace LerenTypen
             }
 
         }
-        private void updateCanvas(object sender, EventArgs e)
+        private void UpdateCanvas(object sender, EventArgs e)
         {
             int rotationS = 360 / 60 * i;
             int rotationM = 360 / 60 * j;
@@ -111,7 +111,7 @@ namespace LerenTypen
             
         }
 
-        private void nextLineButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void NextLineButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
 
         }
