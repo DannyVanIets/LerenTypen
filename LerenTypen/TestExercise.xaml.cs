@@ -40,8 +40,16 @@ namespace LerenTypen
 
             lines.Add("jo waddup jo");
             lines.Add("waddup jojo");
+            lines.Add("waddup jojo");
+            lines.Add("waddup jojo");
+            lines.Add("waddup jojo");
+            lines.Add("waddup jojo");
+            lines.Add("waddup jojo");
+            lines.Add("waddup jojo");
+            lines.Add("waddup jojo");
+            lines.Add("waddup jojo");
 
-           
+
 
             if (!lines.Count.Equals(0))
             {
@@ -237,15 +245,22 @@ namespace LerenTypen
         private void CheckInput(string input)
         {
             if (input.Equals(lines[currentLine]))
-            {                
+            {
                 rightAnswers.Add(input);
             }
             else
-            {                
+            {
                 wrongAnswers.Add(input);
                 wrongCounter.Content = wrongAnswers.Count;
-                lines.Add(lines[currentLine]);
-            } 
+                if (currentLine + 4 < lines.Count)
+                {
+                    lines.Insert(currentLine + 4, lines[currentLine]);
+                }
+                else
+                {
+                    lines.Add(lines[currentLine]);
+                }
+            }
         }
 
         private void CloseTest()
