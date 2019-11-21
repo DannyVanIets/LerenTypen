@@ -53,7 +53,7 @@ namespace LerenTypen
                     Ingelogd = 0;
                     UpdateLoginText();
                     MessageBox.Show("U bent succesvol uitgelogd! U wordt nu doorgestuurd naar de homepagina.", "Succes");
-                    ChangePage(new HomePage());
+                    ChangePage(new HomePage(this));
                 }
             }
             else

@@ -8,24 +8,17 @@ namespace LerenTypen
     /// </summary>
     public partial class HomePage : Page
     {
-        private List<Test> trendingTests = new List<Test>()
-        {
-            new Test() { Name = "Een heleboel woorden", Author = "Slimpie" },
-            new Test() { Name = "Nog meer woorden", Author = "Slimpie2" },
-            new Test() { Name = "Zinnen", Author = "Slimpie3" },
-        };
         private MainWindow mainWindow;
 
         public HomePage(MainWindow mainWindow)
         {
             InitializeComponent();
-            trendingTestsListView.ItemsSource = trendingTests;
             this.mainWindow = mainWindow;           
         }
 
         private void LoginRegisterButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            mainWindow.ChangePage(new LoginPage());
+            mainWindow.ChangePage(new LoginPage(mainWindow));
         }
 
         private void MoreTrendingTestsLink_Click(object sender, System.Windows.RoutedEventArgs e)
