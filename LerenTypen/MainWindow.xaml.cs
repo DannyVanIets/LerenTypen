@@ -91,7 +91,7 @@ namespace LerenTypen
                 ToggleButton pageToggleButton = null;
                 if (pageToChangeTo is HomePage)
                 {
-                    //pageToggleButton = homePageButton;
+                    pageToggleButton = homePageButton;
                 }
                 else if (pageToChangeTo is TestOverviewPage)
                 {
