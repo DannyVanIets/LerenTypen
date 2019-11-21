@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,11 +19,38 @@ namespace LerenTypen
         private int j = 0;
         private Line secondLine;
         private Line minuteLine;
-        private DispatcherTimer t1;        
+        private DispatcherTimer t1;
+        private int currentLine;
+        private List<string> lines;
+        private int wrongAnswers;
+        private int testID;
 
         public TestExercise()
         {
             InitializeComponent();
+            
+            
+            wrongAnswers = 0;
+            currentLine = 0;
+            wrongCounter.Content = wrongAnswers;
+            lines = new List<string>();
+
+            lines.Add("jo waddup jo");
+            lines.Add("waddup jojo");
+
+           
+
+            if (!lines.Count.Equals(0))
+            {
+                testLine.Content = lines[currentLine];
+                lineNumber.Content = $"1/{lines.Count}";
+            }
+            else
+            {
+                MessageBox.Show("Geen regels gevonden", "Error");
+                CloseTest();
+            }
+
             Overlay.Visibility = System.Windows.Visibility.Visible;
             t1 = new DispatcherTimer();
             t1.Interval = new TimeSpan(0,0,1);
@@ -148,25 +176,27 @@ namespace LerenTypen
 
         private void ResumeButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            Resume();        
+           
+        }
+        private void Resume()
+        {
             resumeButton.Visibility = System.Windows.Visibility.Collapsed;
             t1.Tick -= UpdateTimer;
             t1.Tick -= UpdateCanvas;
             t1.Tick += StartTimer;
             t1.Start();
-            
-           
-
         }
 
         private void StopButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             if (MessageBox.Show("Weet je zeker dat je de toets wilt verlaten?", "Toets verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
             {
-                //do no stuff
+                
             }
             else
             {
-                //do yes stuff
+                CloseTest();
             }
         }
 
@@ -184,12 +214,40 @@ namespace LerenTypen
         }
         private void NextLine()
         {
-            CheckInput();
-            Console.WriteLine("jo");
+            string input = textInputBox.Text;
+            textInputBox.Text = "";
+            CheckInput(input);
+            currentLine++;
+
+            if (currentLine < lines.Count)
+            {
+                
+                testLine.Content = lines[currentLine];
+                lineNumber.Content = $"{currentLine+1}/{lines.Count}";
+            }
+            else
+            {
+                CloseTest();
+            }
+                     
         }
-        private void CheckInput()
+        private void CheckInput(string input)
         {
-            
+            if (input.Equals(lines[currentLine]))
+            {
+
+            }
+            else
+            {
+                wrongAnswers++;
+                wrongCounter.Content = wrongAnswers;
+                lines.Add(lines[currentLine]);
+            } 
+        }
+
+        private void CloseTest()
+        {
+            Console.WriteLine("close");
         }
     }
 }
