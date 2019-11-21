@@ -49,9 +49,12 @@ namespace LerenTypen
         /// Combines startvalue and endValue
         /// </summary>
         int[] StartAndEnd = new int[2];
-        public TestOverviewPage()
+
+        private MainWindow MainWindow { get; set; }
+        public TestOverviewPage(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.MainWindow = mainWindow;
 
             TableContent = new List<TestTable>();
 
@@ -296,6 +299,11 @@ namespace LerenTypen
                 default:
                     return null;
             }
+        }
+
+        private void AllTestsOverview_Button_MakeOwnTest_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            MainWindow.ChangePage(new CreateTestPage());
         }
     }
 }

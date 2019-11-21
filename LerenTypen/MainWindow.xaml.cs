@@ -16,7 +16,7 @@ namespace LerenTypen
 
         private void TestOverviewPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new TestOverviewPage(), testOverviewPageButton);
+            ChangePage(new TestOverviewPage(this), testOverviewPageButton);
         }
 
         private void TrendingTestsPageButton_Click(object sender, RoutedEventArgs e)
@@ -120,7 +120,7 @@ namespace LerenTypen
 
         private void Test_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new CreateTestPage(), TestButton);
+            //ChangePage(new CreateTestPage(), TestButton);
         }
 
       

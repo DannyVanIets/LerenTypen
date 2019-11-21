@@ -109,5 +109,37 @@ namespace LerenTypen
                 System.Console.WriteLine(e.Message);
             }
         }
+
+        public static List<TestTable> GetAllTests()
+        {
+            List<TestTable> queryResult = new List<TestTable>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("SELECT * FROM tests");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+//queryResult.Add(reader.GetUInt32(0), reader.GetName(2), reader.)
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+                return null;
+            }
+        }
     }
 }
