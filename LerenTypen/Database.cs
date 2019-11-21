@@ -51,7 +51,7 @@ namespace LerenTypen
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    String query = "INSERT INTO accounts(accountType, accountUsername, accountPassword, accountBirthdate, accountFirstname, accountSurname, AccountSecurityQuestion, " +
+                    string query = "INSERT INTO accounts(accountType, accountUsername, accountPassword, accountBirthdate, accountFirstname, accountSurname, AccountSecurityQuestion, " +
                         "AccountSecurityAnswer, archived) VALUES (0 , @username, @pwhash, @bday, @fname, @lname,  @secvraag, @secans, 0)";
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
