@@ -15,8 +15,8 @@ namespace LerenTypen
         private int k = 0;
         private int i = 0;
         private int j = 0;
-        private Line secondeWijzer;
-        private Line minutenWijzer;
+        private Line secondLine;
+        private Line minuteLine;
         private DispatcherTimer t1;
 
 
@@ -59,23 +59,23 @@ namespace LerenTypen
                 l3.RenderTransform = new RotateTransform(rotation, 50, 50);
                 clock.Children.Add(l3);
             }
-            minutenWijzer = new Line();
-            minutenWijzer.Stroke = Brushes.Black;
-            minutenWijzer.X1 = 50;
-            minutenWijzer.X2 = 50;
-            minutenWijzer.Y1 = 50;
-            minutenWijzer.Y2 = 0;
-            minutenWijzer.StrokeThickness = 2;
-            clock.Children.Add(minutenWijzer);
+            minuteLine = new Line();
+            minuteLine.Stroke = Brushes.Black;
+            minuteLine.X1 = 50;
+            minuteLine.X2 = 50;
+            minuteLine.Y1 = 50;
+            minuteLine.Y2 = 0;
+            minuteLine.StrokeThickness = 2;
+            clock.Children.Add(minuteLine);
 
-            secondeWijzer = new Line();
-            secondeWijzer.Stroke = Brushes.Red;
-            secondeWijzer.X1 = 50;
-            secondeWijzer.X2 = 50;
-            secondeWijzer.Y1 = 50;
-            secondeWijzer.Y2 = 10;
-            secondeWijzer.StrokeThickness = 1;
-            clock.Children.Add(secondeWijzer);
+            secondLine = new Line();
+            secondLine.Stroke = Brushes.Red;
+            secondLine.X1 = 50;
+            secondLine.X2 = 50;
+            secondLine.Y1 = 50;
+            secondLine.Y2 = 10;
+            secondLine.StrokeThickness = 1;
+            clock.Children.Add(secondLine);
 
            
         }
@@ -117,10 +117,10 @@ namespace LerenTypen
             int rotationS = 360 / 60 * i;
             int rotationM = 360 / 60 * j;
 
-            secondeWijzer.RenderTransform = new RotateTransform(rotationS, 50, 50);
+            secondLine.RenderTransform = new RotateTransform(rotationS, 50, 50);
             if (i.Equals(0))
             {
-                minutenWijzer.RenderTransform = new RotateTransform(rotationM, 50, 50);
+                minuteLine.RenderTransform = new RotateTransform(rotationM, 50, 50);
             }
             
             
