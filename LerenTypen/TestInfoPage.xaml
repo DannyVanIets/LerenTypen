@@ -1,0 +1,110 @@
+﻿<Page x:Class="LerenTypen.TestInfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LerenTypen"
+      mc:Ignorable="d" 
+      d:DesignHeight="570" d:DesignWidth="1050" Background="White"
+      Title="Page4" ShowsNavigationUI="False">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3">
+            <Label x:Name="testNameLabel" FontSize="32" Margin="20,5,0,0" 
+               FontWeight="Bold">Toetsnaam</Label>
+            <Label x:Name="difficultyLabel" Margin="10,0,0,0" 
+                   VerticalAlignment="Center">Moeilijkheidsgraad</Label>
+        </StackPanel>
+        <Label x:Name="testVersionLabel" HorizontalAlignment="Right" VerticalAlignment="Center" 
+               Grid.Column="3" Margin="0,0,20,0">Toetsversie</Label>
+
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="20,0,0,0">
+            <StackPanel Orientation="Horizontal">
+                <Label FontWeight="Bold">Auteur:</Label>
+                <TextBlock Height="18">
+                    <Hyperlink x:Name="usernameLink">gebruikersnaam</Hyperlink>
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label FontWeight="Bold">Aantal woorden:</Label>
+                <Label x:Name="amountOfWordsLabel">100</Label>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label FontWeight="Bold">Aantal keer geoefend:</Label>
+                <Label x:Name="timesMadeLabel">5</Label>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label FontWeight="Bold">Gemiddelde score:</Label>
+                <Label x:Name="avarageScoreLabel">66%</Label>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label FontWeight="Bold">Highscore:</Label>
+                <Label x:Name="highscoreLabel">84%</Label>
+            </StackPanel>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" Grid.Column="0" Margin="20,0,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Mijn beste resultaten W/S" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid Grid.Row="2" Grid.Column="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Mijn beste resultaten %" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid Grid.Row="2" Grid.Column="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Snelste typers" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid Grid.Row="2" Grid.Column="3" Margin="0,0,20,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Beste % foutloos" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,0,0">
+            <Label FontSize="14" FontWeight="Bold">Opties</Label>
+            <CheckBox x:Name="randomCheckBox">Willekeurige volgorde</CheckBox>
+            <CheckBox x:Name="continueUntilAllCorrectCheckBox">Doorgaan tot alle vragen goed beantwoord zijn</CheckBox>
+            <StackPanel Orientation="Horizontal" Height="20">
+                <CheckBox x:Name="timeLimitCheckBox">Tijdslimiet:</CheckBox>
+                <TextBox x:Name="timeLimitTextBox" Width="50" Height="15" Margin="10,0,0,0"/>
+                <Label FontSize="8">minuten</Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="20">
+                <CheckBox x:Name="questionTimeLimitCheckBox">Volgende vraag na:</CheckBox>
+                <TextBox x:Name="questionTimeLimitTextBox" Width="50" Height="15" Margin="10,0,0,0"/>
+                <Label FontSize="8">seconden</Label>
+            </StackPanel>
+            <CheckBox x:Name="showResultsAfterQuestionCheckBox">Resultaten ook na elke vraag tonen</CheckBox>
+            <CheckBox x:Name="readQuestionsAloudCHeckBox">Vragen voorlezen</CheckBox>
+            <CheckBox x:Name="checkPunctuationCheckBox">Controleer op leestekens</CheckBox>
+        </StackPanel>
+
+        <Button x:Name="startTestButton" Grid.Row="4" Grid.Column="3" Width="100" Height="30"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Margin="0,0,20,20">Toets starten</Button>
+    </Grid>
+</Page>
