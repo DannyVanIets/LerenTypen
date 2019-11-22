@@ -21,6 +21,15 @@ namespace LerenTypen
         private void DeleteAccountButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             deleteAccountButton.Foreground = Brushes.White;
-        }  
+        }
+
+        private void SaveButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            string firstname = firstNameTextBox.Text;
+            string lastname = lastNameTextbox.Text;
+            string firstname = usernameTextBox.Text;
+            string firstname = passwordTextBox.Password;
+            string firstname = firstNameTextBox.Text;
+        }
     }
 }
