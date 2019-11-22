@@ -38,5 +38,35 @@ namespace LerenTypen
                 System.Console.WriteLine(e.Message);
             }
         }
+        public static void GetTestContent(int testID)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("Select * from testContent Where testID = @testID");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+
+                        command.Parameters.AddWithValue("@testID", testID);
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            //while (reader.Read())
+                            //{
+
+                            //}
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+        }
     }
 }
