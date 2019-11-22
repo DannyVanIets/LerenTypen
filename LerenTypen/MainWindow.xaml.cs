@@ -48,6 +48,7 @@ namespace LerenTypen
             if (Ingelogd > 0)
             {
                 loginPageButton.ContextMenu.IsOpen = true;
+                loginPageButton.IsChecked = false;
             }
             else
             {
