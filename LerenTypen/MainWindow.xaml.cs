@@ -9,6 +9,7 @@ namespace LerenTypen
     /// </summary>
     public partial class MainWindow : Window
     {
+        // The account ID if the user is logged in, otherwise 0
         public int Ingelogd { get; set; }
 
         public MainWindow()
@@ -135,12 +136,14 @@ namespace LerenTypen
             buttonToSwitchTo.IsChecked = true;
         }
 
-        //This method is used to change the the loginPageButton (change its text and add a submenu), used if you login and logout.
+        /// <summary>
+        /// This method is used to change the the loginPageButton (change its text and add a submenu), used if you login and logout.
+        /// </summary>
         public void UpdateLoginButton()
         {
             if (Ingelogd > 0)
             {
-                loginPageButton.Content = $"Welkom {Database.GetAccountUsername(Ingelogd)}";
+                loginPageButton.Content = $"Welkom {Database.GetAccountUsername(Ingelogd)} ▼";
                 loginPageButton.ContextMenu = (ContextMenu)FindResource("accountMenu");
             }
             else

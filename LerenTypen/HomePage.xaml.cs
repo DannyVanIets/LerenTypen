@@ -13,7 +13,16 @@ namespace LerenTypen
         public HomePage(MainWindow mainWindow)
         {
             InitializeComponent();
-            this.mainWindow = mainWindow;           
+            this.mainWindow = mainWindow;  
+            
+            if (mainWindow.Ingelogd > 0)
+            {
+                loginRegisterButton.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                loginRegisterButton.Visibility = System.Windows.Visibility.Visible;
+            }
         }
 
         private void LoginRegisterButton_Click(object sender, System.Windows.RoutedEventArgs e)
