@@ -26,21 +26,21 @@
         <StackPanel x:Name="titlePane" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="0,0,-0.4,0">
             <Label Content="Toets Aanmaken" Margin="20,5,0,0" FontSize="32" FontWeight="Bold"/>
         </StackPanel>
-        <StackPanel x:Name="optionsPane" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Left"  Margin="0,0,0,0" VerticalAlignment="Top" >
+        <DockPanel x:Name="optionsPane" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  Margin="0,0,0,0" VerticalAlignment="Top" >
             <Label Content="Naam:" FontSize="15" Margin="50,0,0,0" VerticalAlignment="Center"/>
-            <TextBox x:Name="textInputTestName" TextWrapping="Wrap" Width="240" Height="25" Margin="20,0,0,0" VerticalAlignment="Center"/>
-            <Label Content="Type:" FontSize="15" Margin="150,0,0,0" VerticalAlignment="Center"/>
-            <ComboBox x:Name="comboBoxType" Width="120" Margin="10" VerticalAlignment="Center" SelectedIndex="0">
+            <TextBox x:Name="textInputTestName" TextWrapping="Wrap" MinWidth="140" MaxWidth="240" Height="25" Margin="20,0,0,0" VerticalAlignment="Center"/>
+            <Label Content="Type:" FontSize="15" Margin="200,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ComboBox x:Name="comboBoxType" MaxWidth="100" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" SelectedIndex="0">
                 <ListBoxItem x:Name="itemSentence" Content="Zinnen"/>
                 <ListBoxItem x:Name="ItemWord" Content="Woorden"/>
             </ComboBox>
-            <Label Content="Moeilijkheidsgraad:" FontSize="15" Margin="20,0,0,0" VerticalAlignment="Center"/>
-            <ComboBox x:Name="comboBoxDifficulty" Width="120" Margin="10" VerticalAlignment="Center" SelectedIndex="0">
+            <Label Content="Moeilijkheidsgraad:" FontSize="15" Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <ComboBox x:Name="comboBoxDifficulty"  MaxWidth="140"  Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectedIndex="0"  >
                 <ListBoxItem x:Name="itemEasy" Content="Makkelijk"/>
                 <ListBoxItem x:Name="ItemMedium" Content="Middel"/>
                 <ListBoxItem x:Name="ItemHard" Content="Moeilijk"/>
             </ComboBox>
-        </StackPanel>
+        </DockPanel>
         <StackPanel x:Name="testLinesTitlePane" Grid.Row="2" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" >
             <Label Content="Inhoud:" Margin="50,0,0,0" FontSize="20" VerticalAlignment="Center"/>
         </StackPanel>

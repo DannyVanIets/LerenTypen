@@ -69,10 +69,17 @@ namespace LerenTypen
 
             TableContent = Database.GetAllTests();
             int counter = 1;
-            foreach (var item in TableContent)
+            try
             {
-                item.WPFNumber = counter;
-                counter++;
+                foreach (var item in TableContent)
+                {
+                    item.WPFNumber = counter;
+                    counter++;
+                }
+            }
+            catch (NullReferenceException)
+            {
+                Console.WriteLine("Geen toetsen gevonden");
             }
             AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
 
@@ -312,7 +319,7 @@ namespace LerenTypen
 
         private void AllTestsOverview_Button_MakeOwnTest_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MainWindow.ChangePage(new CreateTestPage());
+            MainWindow.ChangePage(new CreateTestPage(MainWindow));
         }
 
     }
