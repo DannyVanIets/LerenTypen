@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
@@ -9,6 +9,8 @@ namespace LerenTypen
     /// </summary>
     public partial class MainWindow : Window
     {
+        public int Ingelogd { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -16,7 +18,7 @@ namespace LerenTypen
 
         private void TestOverviewPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new TestOverviewPage(), testOverviewPageButton);
+            ChangePage(new TestOverviewPage(this), testOverviewPageButton);
         }
 
         private void TrendingTestsPageButton_Click(object sender, RoutedEventArgs e)
@@ -33,10 +35,25 @@ namespace LerenTypen
         {
             ChangePage(new LeaderboardPage(), leaderboardPageButton);
         }
-     
+
+        //In this method we will first check if the user is logged in, if that's the case it means they want to logout. We will first ask a confirmation, then update the property, make sure the loginPageButton texts changes and then put them on the homepage. If the user is not logged in, it will direct them to the login page.
         private void LoginPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new LoginPage(), loginPageButton);
+            if (Ingelogd > 0)
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je wilt uitloggen?", "Uitloggen", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    Ingelogd = 0;
+                    UpdateLoginText();
+                    MessageBox.Show("U bent succesvol uitgelogd! U wordt nu doorgestuurd naar de homepagina.", "Succes");
+                    ChangePage(new HomePage());
+                }
+            }
+            else
+            {
+                ChangePage(new LoginPage(this), loginPageButton);
+            }
         }
 
         /// <summary>
@@ -51,7 +68,7 @@ namespace LerenTypen
             {
                 frame.Navigate(pageToChangeTo);
                 SwitchMenuButtons(pageToggleButton);
-            }           
+            }
         }
 
         /// <summary>
@@ -118,11 +135,32 @@ namespace LerenTypen
             buttonToSwitchTo.IsChecked = true;
         }
 
-        private void Test_Click(object sender, RoutedEventArgs e)
+        //This method is used to change the text of the loginPageButton, used if you login and logout.
+        public void UpdateLoginText()
         {
-            ChangePage(new CreateTestPage(), TestButton);
+            if (Ingelogd > 0)
+            {
+                loginPageButton.Content = "Uitloggen";
+            }
+            else
+            {
+                loginPageButton.Content = "Inloggen/registeren";
+            }
         }
 
-      
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            //ChangePage(new CreateTestPage(), TestButton);
+            //string tekst = "";
+            //foreach (var item in Database.TestQuery())
+            //{
+            //    tekst += item;
+            //}
+            //System.Windows.MessageBox.Show(tekst);
+            System.Windows.MessageBox.Show(Database.GetAmountOfWordsFromTest(3).ToString());
+
+            
+        }
+
     }
 }
