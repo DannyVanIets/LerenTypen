@@ -9,11 +9,18 @@ namespace LerenTypen
     /// </summary>
     public partial class MainWindow : Window
     {
+        // The account ID if the user is logged in, otherwise 0
         public int Ingelogd { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
+            frame.Navigate(new HomePage(this));
+        }
+
+        private void HomePageButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(new HomePage(this), homePageButton);
         }
 
         private void TestOverviewPageButton_Click(object sender, RoutedEventArgs e)
@@ -41,14 +48,8 @@ namespace LerenTypen
         {
             if (Ingelogd > 0)
             {
-                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je wilt uitloggen?", "Uitloggen", System.Windows.MessageBoxButton.YesNo);
-                if (messageBoxResult == MessageBoxResult.Yes)
-                {
-                    Ingelogd = 0;
-                    UpdateLoginText();
-                    MessageBox.Show("U bent succesvol uitgelogd! U wordt nu doorgestuurd naar de homepagina.", "Succes");
-                    ChangePage(new HomePage());
-                }
+                loginPageButton.ContextMenu.IsOpen = true;
+                loginPageButton.IsChecked = false;
             }
             else
             {
@@ -85,7 +86,7 @@ namespace LerenTypen
                 ToggleButton pageToggleButton = null;
                 if (pageToChangeTo is HomePage)
                 {
-                    //pageToggleButton = homePageButton;
+                    pageToggleButton = homePageButton;
                 }
                 else if (pageToChangeTo is TestOverviewPage)
                 {
@@ -125,6 +126,7 @@ namespace LerenTypen
         /// <param name="buttonToSwitchTo">The ToggleButton to check</param>
         private void SwitchMenuButtons(ToggleButton buttonToSwitchTo)
         {
+            homePageButton.IsChecked = false;
             testOverviewPageButton.IsChecked = false;
             trendingTestsPageButton.IsChecked = false;
             tipPageButton.IsChecked = false;
@@ -134,16 +136,32 @@ namespace LerenTypen
             buttonToSwitchTo.IsChecked = true;
         }
 
-        //This method is used to change the text of the loginPageButton, used if you login and logout.
-        public void UpdateLoginText()
+        /// <summary>
+        /// This method is used to change the the loginPageButton (change its text and add a submenu), used if you login and logout.
+        /// </summary>
+        public void UpdateLoginButton()
         {
             if (Ingelogd > 0)
             {
-                loginPageButton.Content = "Uitloggen";
+                loginPageButton.Content = $"Welkom {Database.GetAccountUsername(Ingelogd)} ▼";
+                loginPageButton.ContextMenu = (ContextMenu)FindResource("accountMenu");
             }
             else
             {
                 loginPageButton.Content = "Inloggen/registeren";
+                loginPageButton.ContextMenu = null;
+            }
+        }
+
+        private void LogoutMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je wilt uitloggen?", "Uitloggen", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                Ingelogd = 0;
+                UpdateLoginButton();
+                MessageBox.Show("U bent succesvol uitgelogd! U wordt nu doorgestuurd naar de homepagina.", "Succes");
+                ChangePage(new HomePage(this));
             }
         }
     }
