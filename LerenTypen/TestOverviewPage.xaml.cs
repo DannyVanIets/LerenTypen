@@ -69,19 +69,24 @@ namespace LerenTypen
 
             TableContent = Database.GetAllTests();
             int counter = 1;
-            foreach (var item in TableContent)
+            try
             {
-                item.WPFNumber = counter;
-                counter++;
+                foreach (var item in TableContent)
+                {
+                    item.WPFNumber = counter;
+                    counter++;
+                }
+                AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
+
+                AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+
+                //Bool to prevent the select event/ToonAlles_event at startup app
+                isInitialized = true;
+                CurrentContent = TableContent;
+            } catch(NullReferenceException nre)
+            {
+
             }
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
-
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-            
-            //Bool to prevent the select event/ToonAlles_event at startup app
-            isInitialized = true;
-            CurrentContent = TableContent;
-
 
         }
         /// <summary>

@@ -53,17 +53,17 @@ namespace LerenTypen
             this.Uploader = uploader;
             if(difficulty == 0)
             {
-                DifficultyBinder = 1;
+                DifficultyBinder = 0;
                 Difficulty = "makkelijk";
             }
             else if(difficulty == 1)
             {
-                DifficultyBinder = 2;
+                DifficultyBinder = 1;
                 Difficulty = "gemiddeld";
             }
-            else
+            else if(difficulty == 2)
             {
-                DifficultyBinder = 3;
+                DifficultyBinder = 2;
                 Difficulty = "moeilijk";
             }
         }
