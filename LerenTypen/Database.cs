@@ -1,6 +1,6 @@
-using Microsoft.OData.Edm;
 using System;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Text;
 
 namespace LerenTypen
@@ -44,7 +44,7 @@ namespace LerenTypen
 
         public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
-            Date res = birthday.Date;
+            SqlDateTime res = birthday.Date;
 
             try
             {
@@ -121,7 +121,7 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append($"SELECT `accountUsername` FROM accounts WHERE accountID = @id;");
+                    sb.Append($"SELECT accountUsername FROM accounts WHERE accountID = @id;");
 
                     string Sql = sb.ToString();
 
