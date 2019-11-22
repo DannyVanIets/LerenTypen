@@ -19,7 +19,7 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("select accountID, accountType,accountUsername, accountFirstname , accountSurname from accounts");
+                    sb.Append("select accountID,accountUsername, accountType, accountFirstname , accountSurname from accounts");
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
@@ -30,7 +30,7 @@ namespace LerenTypen
                             {
                                 while (reader.Read())
                                 {
-                                    queryResult.Add(new Users(reader.GetInt32(0), reader.GetInt32(2), reader.GetString(1), reader.GetString(4), reader.GetString(5)));
+                                    queryResult.Add(new Users(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4) , "Edit"));
                                 }
                                 reader.NextResult();
                             }

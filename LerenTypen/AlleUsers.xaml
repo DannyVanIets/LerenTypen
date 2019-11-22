@@ -13,15 +13,22 @@
         <TextBox HorizontalAlignment="Left" Height="34" Margin="176,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131" />
         <Label Content="Account zoeken:" HorizontalAlignment="Left" Height="34" Margin="62,94,0,0" VerticalAlignment="Top" Width="109"/>
         
-        <DataGrid x:Name="DGV1" AutoGenerateColumns="True" Margin="0,135,-0.4,0.6">
+        <DataGrid x:Name="DGV1" AutoGenerateColumns="False" Margin="0,135,-0.4,0.6" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" Width="30*" Binding="{Binding accountnumber}"/>
                 <DataGridTextColumn Header="Gebruikersnaam" Width="200*" Binding="{Binding username}"/>
                 <DataGridTextColumn Header="Gebruiker Type" Width="150*" Binding="{Binding usertype}"/>
                 <DataGridTextColumn Header="Voornaam" Width="150*" Binding="{Binding firstname}"/>
                 <DataGridTextColumn Header="Achternaam" Width="150*" Binding="{Binding lastname}"/>
-                <DataGridTextColumn Header="Bewerken" Width="150*" Binding="{Binding edit}" SortMemberPath="DifficultyBinder"/>
-             </DataGrid.Columns>
+                <DataGridHyperlinkColumn  ContentBinding="{Binding edit}" Binding="{Binding accountnumber}" Header="Bewerken" Width="150">
+                    <DataGridHyperlinkColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Tag" Value="{Binding accountnumber}"/>
+                            <EventSetter Event="Hyperlink.Click" Handler="DG_Hyperlink_click"/>
+                        </Style>
+                    </DataGridHyperlinkColumn.ElementStyle>
+                </DataGridHyperlinkColumn>
+            </DataGrid.Columns>
         </DataGrid>
      </Grid>
 </Page>

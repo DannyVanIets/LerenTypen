@@ -40,7 +40,7 @@ namespace LerenTypen
         }
         private void AlleUsers_Click(object sender,RoutedEventArgs e)
         {
-            ChangePage(new AlleUsers(), allegebruikers);
+            ChangePage(new AlleUsers(this), allegebruikers);
         }
 
         /// <summary>
