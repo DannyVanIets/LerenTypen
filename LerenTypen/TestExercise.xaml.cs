@@ -16,13 +16,16 @@ namespace LerenTypen
     /// </summary>
     public partial class TestExercise : Page
     {
+        // Integers for counters
         private int k = 4;
         private int i = 0;
         private int j = 0;
+
         private Line secondLine;
         private Line minuteLine;
+
         private DispatcherTimer t1;
-        DispatcherTimer t2;
+        private DispatcherTimer t2;
         private int currentLine;
         private List<string> lines;
         private List<string> wrongAnswers;
@@ -34,8 +37,10 @@ namespace LerenTypen
         public TestExercise()
         {
             InitializeComponent();
+            // Bool to stop timer when test is closed
             testClosed = false;
             textInputBox.Focus();
+            // List for lines to be written out by user
             lines = new List<string>();
             testID = 1;
             
@@ -45,6 +50,7 @@ namespace LerenTypen
             currentLine = 0;
             wrongCounter.Content = $"Aantal fouten: {wrongAnswers.Count}";
 
+            // Timer for game and showing answer
             t1 = new DispatcherTimer();
             t2 = new DispatcherTimer();
             t1.Interval = new TimeSpan(0, 0, 1);
@@ -53,6 +59,7 @@ namespace LerenTypen
 
             GetTest(testID);
 
+            // Check if lines are found
             if (!lines.Count.Equals(0))
             {
                 testLine.Content = lines[currentLine];
@@ -64,12 +71,17 @@ namespace LerenTypen
                 CloseTest();
             }
 
+            // Make startup overlay visible for countdown
             Overlay.Visibility = System.Windows.Visibility.Visible;
             DrawClock();           
         }
 
+        /// <summary>
+        /// Draw Clock for displaying time
+        /// </summary>
         private void DrawClock()
-        {
+        {         
+
             Ellipse el = new Ellipse();
             el.StrokeThickness = 2;
             el.Stroke = Brushes.Black;
