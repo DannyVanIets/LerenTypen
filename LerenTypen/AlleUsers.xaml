@@ -10,12 +10,27 @@
 
     <Grid>
         <Label Content="Alle Accounts" HorizontalAlignment="Left" Height="70" Margin="62,37,0,0" VerticalAlignment="Top" Width="245" FontSize="32" FontWeight="Bold"/>
+
         <TextBox HorizontalAlignment="Left" Height="34" Margin="176,112,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="131" TextChanged="TextBox_TextChanged"/>
         <Label Content="Account zoeken:" HorizontalAlignment="Left" Height="34" Margin="62,112,0,0" VerticalAlignment="Top" Width="109"/>
         <DataGrid HorizontalAlignment="Left" Height="350" Margin="171,193,0,0" VerticalAlignment="Top" Width="856"/>
-
-
-
-
-    </Grid>
+        
+        <DataGrid x:Name="DGV1" AutoGenerateColumns="False" Margin="0,135,-0.4,0.6" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="#" Width="30*" Binding="{Binding accountnumber}"/>
+                <DataGridTextColumn Header="Gebruikersnaam" Width="200*" Binding="{Binding username}"/>
+                <DataGridTextColumn Header="Gebruiker Type" Width="150*" Binding="{Binding usertype}"/>
+                <DataGridTextColumn Header="Voornaam" Width="150*" Binding="{Binding firstname}"/>
+                <DataGridTextColumn Header="Achternaam" Width="150*" Binding="{Binding lastname}"/>
+                <DataGridHyperlinkColumn  ContentBinding="{Binding edit}" Binding="{Binding accountnumber}" Header="Bewerken" Width="150">
+                    <DataGridHyperlinkColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Tag" Value="{Binding accountnumber}"/>
+                            <EventSetter Event="Hyperlink.Click" Handler="DG_Hyperlink_click"/>
+                        </Style>
+                    </DataGridHyperlinkColumn.ElementStyle>
+                </DataGridHyperlinkColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+     </Grid>
 </Page>

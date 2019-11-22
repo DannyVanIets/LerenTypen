@@ -110,6 +110,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="ForgotPasswordPage.xaml">
+=======
+    <Page Include="AlleUsers.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -117,6 +119,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AlleUsers.xaml.cs">
+      <DependentUpon>AlleUsers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
