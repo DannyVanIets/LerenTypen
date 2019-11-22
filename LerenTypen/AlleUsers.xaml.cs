@@ -23,21 +23,14 @@ namespace LerenTypen
             this.Mainwindow = mainwindow;
             Usercontent = new List<Users>();
 
-            /*
-            Usercontent.Add(new Users(1,0, "BramsToets", "makkelijk", "Bram"));
-            Usercontent.Add(new Users(2,1, "Danny heeft dit gemaakt", "gemiddeld", "Bram"));
-            Usercontent.Add(new Users(3,2, "Tristan opdracht 3","makkelijk", "Danny"));
-            Usercontent.Add(new Users(4,0, "Mark oefententamen","moeilijk", "Tristan"));
-            Usercontent.Add(new Users(5, 1,"Hugo opdracht 3", "makkelijk", "Bram"));
-            */
-
+            //de info word uit de database gehaald
             Usercontent = Database.GetUsers();
-            // Usercontent = Database.GetUsers();
             DGV1.ItemsSource = Usercontent;
             DGV1.Items.Refresh();
             CurrentContent = Usercontent;
 
         }
+        //hier word de userid meegegven wanneer op edit word geklikt
         private void DG_Hyperlink_click(object sender , System.Windows.RoutedEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;

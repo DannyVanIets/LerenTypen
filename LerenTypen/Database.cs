@@ -9,7 +9,7 @@ namespace LerenTypen
     {
         private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
 
-
+        //Hier worden alle users opgehaald.
         public static List<Users> GetUsers()
         {
             List<Users> queryResult = new List<Users>();
