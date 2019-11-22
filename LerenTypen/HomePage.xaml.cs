@@ -35,15 +35,4 @@ namespace LerenTypen
             mainWindow.ChangePage(new TrendingTestsPage());
         }
     }
-
-    class Test
-    {
-        public string Name { get; set; }
-        public string Author { get; set; }
-
-        public override string ToString()
-        {
-            return $"{Name} door {Author}";
-        }
-    }
 }
