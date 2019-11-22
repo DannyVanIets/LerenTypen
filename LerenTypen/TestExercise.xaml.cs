@@ -4,6 +4,7 @@ using System.Threading;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
@@ -28,10 +29,12 @@ namespace LerenTypen
         private List<string> rightAnswers;
         private int amountOfPauses;
         private int testID;
+        private bool testClosed;
 
         public TestExercise()
         {
             InitializeComponent();
+            testClosed = false;
             textInputBox.Focus();
             lines = new List<string>();
             testID = 1;
@@ -40,8 +43,7 @@ namespace LerenTypen
             wrongAnswers = new List<string>();
             rightAnswers = new List<string>();
             currentLine = 0;
-            wrongCounter.Content = wrongAnswers.Count;
-
+            wrongCounter.Content = $"Aantal fouten: {wrongAnswers.Count}";
 
             t1 = new DispatcherTimer();
             t2 = new DispatcherTimer();
@@ -63,17 +65,18 @@ namespace LerenTypen
             }
 
             Overlay.Visibility = System.Windows.Visibility.Visible;
-            
+            DrawClock();           
+        }
 
-            
-
+        private void DrawClock()
+        {
             Ellipse el = new Ellipse();
             el.StrokeThickness = 2;
             el.Stroke = Brushes.Black;
             el.Width = 100;
             el.Height = 100;
             clock.Children.Add(el);
-            
+
             for (int i = 0; i < 60; i++)
             {
                 Line l3 = new Line();
@@ -112,8 +115,6 @@ namespace LerenTypen
             secondLine.Y2 = 10;
             secondLine.StrokeThickness = 1;
             clock.Children.Add(secondLine);
-
-           
         }
        
         private void GetTest(int testID)
@@ -206,10 +207,13 @@ namespace LerenTypen
             lineCheckLbl.Visibility = Visibility.Collapsed;
             lineCheckLbl.Content = "";
             countDown.Content = "";
-            countDown.Background = Brushes.White;
+            countDown.Foreground = Brushes.Black;
             textInputBox.IsEnabled = true;
             textInputBox.Focus();
-            t1.Start();
+            if (!testClosed)
+            {
+                t1.Start();
+            }
         }
 
         private void NextLineButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -290,7 +294,7 @@ namespace LerenTypen
             else
             {
                 wrongAnswers.Add(input);
-                wrongCounter.Content = wrongAnswers.Count;
+                wrongCounter.Content = $"Aantal fouten: {wrongAnswers.Count}";
                 if (currentLine + 4 < lines.Count)
                 {
                     lines.Insert(currentLine + 4, lines[currentLine]);
@@ -306,6 +310,7 @@ namespace LerenTypen
 
         private void CloseTest()
         {
+            testClosed = true;
             t1.Stop();
             Console.WriteLine("close");
             

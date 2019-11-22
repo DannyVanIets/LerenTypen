@@ -7,8 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="570" d:DesignWidth="1050" Background="White"
       Title="Page3" ShowsNavigationUI="False">
-    
-        <Grid x:Name="mainPanel">
+
+    <Grid x:Name="mainPanel">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="3*" />
@@ -19,7 +19,7 @@
             <RowDefinition Height="2*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Collapsed" Grid.ColumnSpan="3" Grid.RowSpan="3">
+        <Grid x:Name="Overlay" Panel.ZIndex="1" Visibility="Collapsed" Grid.ColumnSpan="3" Grid.RowSpan="3">
             <Grid.Background>
                 <SolidColorBrush Color="White" Opacity="1"/>
             </Grid.Background>
@@ -29,8 +29,8 @@
         </Grid>
         <TextBox x:Name="textInputBox" Grid.Column="1" Grid.Row="1" MaxLength="300" TextWrapping="Wrap" Text="" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600" Height="44" KeyDown="TextBox_KeyDown" />
         <Button x:Name="nextLineButton" Content="-&gt;" Grid.Column="2" HorizontalAlignment="Left"  Width="30"  Grid.Row="1" VerticalAlignment="Center" Click="NextLineButton_Click" Margin="0,0,0,0"/>
-        <Label x:Name="timer" Content="0:00" HorizontalAlignment="Center"  Margin="0,80,0,0 " VerticalAlignment="Center"/>
-        <Canvas x:Name="clock" HorizontalAlignment="Center" Height="100" Margin="0,0,0,0" Grid.RowSpan="1" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="timer" Content="0:00" HorizontalAlignment="Center"  Margin="0,100,0,0 " VerticalAlignment="Center"/>
+        <Canvas x:Name="clock" HorizontalAlignment="Center" Height="100" Margin="0,10,0,0" Grid.RowSpan="1" VerticalAlignment="Top" Width="100"/>
         <Button x:Name="pauseButton" Content="Pause" Grid.Column="2" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center" Width="70" Click="PauseButton_Click"/>
         <Button x:Name="stopButton" Content="Stop" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,40,0" VerticalAlignment="Center" Width="40" Click="StopButton_Click"/>
         <Label x:Name="lineNumber" Content="RegelNummer" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
