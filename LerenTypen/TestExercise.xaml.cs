@@ -30,26 +30,22 @@ namespace LerenTypen
         public TestExercise()
         {
             InitializeComponent();
-
+            lines = new List<string>();
+            testID = 1;
+            
             amountOfPauses = 0;
             wrongAnswers = new List<string>();
             rightAnswers = new List<string>();
             currentLine = 0;
             wrongCounter.Content = wrongAnswers.Count;
-            lines = new List<string>();
-
-            lines.Add("jo waddup jo");
-            lines.Add("waddup jojo");
-            lines.Add("waddup jojo");
-            lines.Add("waddup jojo");
-            lines.Add("waddup jojo");
-            lines.Add("waddup jojo");
-            lines.Add("waddup jojo");
-            lines.Add("waddup jojo");
-            lines.Add("waddup jojo");
-            lines.Add("waddup jojo");
 
 
+            t1 = new DispatcherTimer();
+            t1.Interval = new TimeSpan(0, 0, 1);
+            t1.Start();
+            t1.Tick += StartTimer;
+
+            GetTest(testID);
 
             if (!lines.Count.Equals(0))
             {
@@ -63,10 +59,9 @@ namespace LerenTypen
             }
 
             Overlay.Visibility = System.Windows.Visibility.Visible;
-            t1 = new DispatcherTimer();
-            t1.Interval = new TimeSpan(0,0,1);
-            t1.Start();
-            t1.Tick += StartTimer;
+            
+
+            
 
             Ellipse el = new Ellipse();
             el.StrokeThickness = 2;
@@ -117,7 +112,11 @@ namespace LerenTypen
            
         }
        
-
+        private void GetTest(int testID)
+        {
+            lines = Database.GetTestContent(testID);
+            testName.Content = Database.GetTestName(testID);
+        }
         private void StartTimer(object sender, EventArgs e)
         {
             countDown.Content = k-1;           
@@ -244,7 +243,7 @@ namespace LerenTypen
         }
         private void CheckInput(string input)
         {
-            if (input.Equals(lines[currentLine]))
+            if (input.Trim().Equals(lines[currentLine].Trim()))
             {
                 rightAnswers.Add(input);
             }
