@@ -182,15 +182,15 @@ namespace LerenTypen
             }
             else if (textBoxes.Count.Equals(0))
             {
-                MessageBox.Show("De toets bevat geen regels", "Voeg een regel toe");
+                MessageBox.Show("De toets bevat geen regels", "Error");
             }
             else if (textEmpty)
             {
-                MessageBox.Show("Vul alle toetsregels", "Er is iets fout gegaan");
+                MessageBox.Show("Vul alle toetsregels", "Error");
             }
             else
             {
-                MessageBox.Show("De toets heeft geen titel", "Er is iets fout gegaan");
+                MessageBox.Show("De toets heeft geen titel", "Error");
             }
             return false;
         }
