@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace LerenTypen
 {
@@ -7,9 +8,31 @@ namespace LerenTypen
     /// </summary>
     public partial class HomePage : Page
     {
-        public HomePage()
+        private MainWindow mainWindow;
+
+        public HomePage(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.mainWindow = mainWindow;  
+            
+            if (mainWindow.Ingelogd > 0)
+            {
+                loginRegisterButton.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                loginRegisterButton.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
+        private void LoginRegisterButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            mainWindow.ChangePage(new LoginPage(mainWindow));
+        }
+
+        private void MoreTrendingTestsLink_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            mainWindow.ChangePage(new TrendingTestsPage());
         }
     }
 }

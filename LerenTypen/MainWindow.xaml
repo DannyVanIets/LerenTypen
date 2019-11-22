@@ -13,15 +13,16 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Height="50" Grid.Row="0">
-            <ToggleButton x:Name="testOverviewPageButton" Margin="15" Width="150" Click="TestOverviewPageButton_Click" Content="Overzicht alle toetsen"/>
-            <ToggleButton x:Name="trendingTestsPageButton" Margin="15" Width="120" Click="TrendingTestsPageButton_Click" Content="Trending toetsen"/>
-            <ToggleButton x:Name="tipPageButton" Margin="15" Width="100" Click="TipPageButton_Click" Content="Tips/advies"/>
-            <ToggleButton x:Name="leaderboardPageButton" Margin="15" Width="100" Click="LeaderboardPageButton_Click" Content="Leaderboard"/>
-            <ToggleButton x:Name="loginPageButton" Margin="15" Width="150" Click="LoginPageButton_Click" Content="Inloggen/registreren"/>
+            <ToggleButton x:Name="homePageButton" Margin="10,10,0,10" Width="50" Click="HomePageButton_Click" Content="Home" IsChecked="True"/>
+            <ToggleButton x:Name="testOverviewPageButton" Margin="0,10" Width="150" Click="TestOverviewPageButton_Click" Content="Overzicht alle toetsen"/>
+            <ToggleButton x:Name="trendingTestsPageButton" Margin="0,10" Width="120" Click="TrendingTestsPageButton_Click" Content="Trending toetsen"/>
+            <ToggleButton x:Name="tipPageButton" Margin="0,10" Width="100" Click="TipPageButton_Click" Content="Tips/advies"/>
+            <ToggleButton x:Name="leaderboardPageButton" Margin="0,10" Width="100" Click="LeaderboardPageButton_Click" Content="Leaderboard"/>
+            <ToggleButton x:Name="loginPageButton" Margin="0,10" MinWidth="150" Click="LoginPageButton_Click" Content="Inloggen/registreren"/>
             <ToggleButton x:Name="allegebruikers" Margin="15" Width="150" Click="LoginPageButton_Click" Content="Alle gebruikers" Visibility="Hidden"/>
         </StackPanel>
 
-        <Frame x:Name="frame" Source="HomePage.xaml" MinWidth="842" MinHeight="370" Grid.Row="1">
+        <Frame x:Name="frame" MinWidth="842" MinHeight="370" Grid.Row="1">
             <Frame.Template>
                 <!-- ControlTemplate to remove the navigation UI of the frame,
                      both in the designer and the app itself -->
@@ -31,4 +32,12 @@
             </Frame.Template>
         </Frame>
     </Grid>
+
+    <Window.Resources>
+        <ContextMenu x:Key="accountMenu">
+            <MenuItem Header="Accountinformatie"></MenuItem>
+            <MenuItem Header="Account aanpassen"></MenuItem>
+            <MenuItem Header="Uitloggen" Click="LogoutMenuItem_Click"></MenuItem>
+        </ContextMenu>
+    </Window.Resources>
 </Window>

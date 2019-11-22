@@ -142,8 +142,8 @@ namespace LerenTypen
                 if (MainWindow.Ingelogd > 0)
                 {
                     MessageBox.Show("U bent succesvol ingelogd! U wordt nu doorgestuurd naar de homepagina.", "Succes");
-                    MainWindow.UpdateLoginText();
-                    MainWindow.ChangePage(new HomePage());
+                    MainWindow.UpdateLoginButton();
+                    MainWindow.ChangePage(new HomePage(MainWindow));
                 }
                 else
                 {

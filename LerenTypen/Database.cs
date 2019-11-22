@@ -115,8 +115,6 @@ namespace LerenTypen
             }
         }
 
-
-
         //Database query used by login. We're gonna check if the username and hashedpassword match any existing data. If it does, we will return the accountID.
         public static int GetAccountIDForLogin(string accountUsername, string password)
         {
@@ -155,7 +153,39 @@ namespace LerenTypen
             }
             return 0;
         }
+      
+        public static string GetAccountUsername(int accountID)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append($"SELECT `accountUsername` FROM accounts WHERE accountID = @id;");
 
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", accountID);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return reader[0].ToString();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return "";
+        }
 
     }
 }
