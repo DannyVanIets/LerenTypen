@@ -11,7 +11,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <StackPanel Orientation="Horizontal" Height="50" Grid.Row="0">
             <ToggleButton x:Name="testOverviewPageButton" Margin="15" Width="150" Click="TestOverviewPageButton_Click" Content="Overzicht alle toetsen"/>
             <ToggleButton x:Name="trendingTestsPageButton" Margin="15" Width="120" Click="TrendingTestsPageButton_Click" Content="Trending toetsen"/>
