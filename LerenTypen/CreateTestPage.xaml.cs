@@ -152,17 +152,6 @@ namespace LerenTypen
             // Decision was made to count words from db so function is not used
             foreach (TextBox t in textBoxes)
             {
-                /* string[] words = t.Text.Split();
-
-                 foreach(string word in words)
-                 {
-                     if (!word.Equals(""))
-                     {
-                         amountOfWords++;
-                     }
-                 }
-                 */
-
                 textBoxValues.Add(t.Text);
             }
             
