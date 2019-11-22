@@ -334,7 +334,7 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllTestsOverview_CheckBox_MadeBefore_Checked(object sender, System.Windows.RoutedEventArgs e)
         {
-            CurrentContent = Database.GetAllTestsAlreadyMade(1);
+            CurrentContent = Database.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
             //TableCounter(CurrentContent);
             AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
             AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
