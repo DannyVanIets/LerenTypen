@@ -56,6 +56,7 @@ namespace LerenTypen
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
+
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
 
@@ -63,6 +64,7 @@ namespace LerenTypen
                     sb.Append($"SELECT `accountID` FROM accounts WHERE accountUsername = @accountusername AND accountPassword = @accountpassword AND archived = 0;");
 
                     string MySql = sb.ToString();
+
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
