@@ -102,10 +102,11 @@ namespace LerenTypen
         }
 
 
-        private void Hyperlink_click(object sender , RoutedEventArgs e)
+        private void Hyperlink_click(object sender, RoutedEventArgs e)
         {
             var newWindow = new Privacystatement();
             newWindow.Show();
+        }
 
         //This method will be used once someone starts working on the forgot password.
         private void Forgot_password_button_Click(object sender, System.Windows.RoutedEventArgs e)
