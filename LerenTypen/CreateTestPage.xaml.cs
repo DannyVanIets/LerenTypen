@@ -147,8 +147,6 @@ namespace LerenTypen
                 privateTest = 1;
             }
 
-            //int amountOfWords = 0;
-
             // Text.Split splits the text into words using spaces
             // Empty words are not added to the counter amountOfWords
             // Decision was made to count words from db so function is not used
