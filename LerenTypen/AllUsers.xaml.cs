@@ -9,7 +9,7 @@ namespace LerenTypen
     /// <summary>
     /// Interaction logic for Page1.xaml
     /// </summary>
-    public partial class AlleUsers : Page
+    public partial class AllUsers : Page
     {
 
         List<Users> Usercontent;
@@ -17,7 +17,7 @@ namespace LerenTypen
         List<Users> CurrentContent = new List<Users>();
 
         public MainWindow Mainwindow { get; set; }
-        public AlleUsers(MainWindow mainwindow)
+        public AllUsers(MainWindow mainwindow)
         {
             InitializeComponent();
             this.Mainwindow = mainwindow;

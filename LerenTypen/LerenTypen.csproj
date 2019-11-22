@@ -106,7 +106,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AlleUsers.xaml">
+    <Page Include="AllUsers.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -114,8 +114,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AlleUsers.xaml.cs">
-      <DependentUpon>AlleUsers.xaml</DependentUpon>
+    <Compile Include="AllUsers.xaml.cs">
+      <DependentUpon>AllUsers.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

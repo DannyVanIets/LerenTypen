@@ -1,4 +1,4 @@
-﻿<Page x:Class="LerenTypen.AlleUsers"
+﻿<Page x:Class="LerenTypen.AllUsers"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -20,7 +20,7 @@
                 <DataGridTextColumn Header="Gebruiker Type" Width="150*" Binding="{Binding usertype}"/>
                 <DataGridTextColumn Header="Voornaam" Width="150*" Binding="{Binding firstname}"/>
                 <DataGridTextColumn Header="Achternaam" Width="150*" Binding="{Binding lastname}"/>
-                <DataGridHyperlinkColumn  ContentBinding="{Binding edit}" Binding="{Binding accountnumber}" Header="Bewerken" Width="150">
+                <DataGridHyperlinkColumn  ContentBinding="{Binding edit}" Header="Bewerken" Width="150">
                     <DataGridHyperlinkColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="Tag" Value="{Binding accountnumber}"/>
