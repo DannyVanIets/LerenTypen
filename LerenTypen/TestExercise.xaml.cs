@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +21,7 @@ namespace LerenTypen
         private Line secondLine;
         private Line minuteLine;
         private DispatcherTimer t1;
+        DispatcherTimer t2;
         private int currentLine;
         private List<string> lines;
         private List<string> wrongAnswers;
@@ -30,6 +32,7 @@ namespace LerenTypen
         public TestExercise()
         {
             InitializeComponent();
+            textInputBox.Focus();
             lines = new List<string>();
             testID = 1;
             
@@ -41,6 +44,7 @@ namespace LerenTypen
 
 
             t1 = new DispatcherTimer();
+            t2 = new DispatcherTimer();
             t1.Interval = new TimeSpan(0, 0, 1);
             t1.Start();
             t1.Tick += StartTimer;
@@ -173,6 +177,41 @@ namespace LerenTypen
             
         }
 
+        private void ShowRightOrWrong(Boolean right, string input)
+        {
+            textInputBox.IsEnabled = false;            
+            if (right){
+                countDown.Foreground = Brushes.Green;                
+            }
+            else
+            {
+                countDown.Foreground = Brushes.Red;
+            }
+            Overlay.Visibility = System.Windows.Visibility.Visible;
+            t1.Stop();
+
+            lineCheckLbl.Visibility = Visibility.Visible;
+            lineCheckLbl.Content = lines[currentLine];
+            countDown.Content = input;
+
+            t2.Interval = new TimeSpan(0, 0, 2);            
+            t2.Tick += StopShowingRightOrWrong;
+            t2.Start();             
+            
+        }
+        private void StopShowingRightOrWrong(object sender, EventArgs e)
+        {            
+            t2.Stop();            
+            Overlay.Visibility = System.Windows.Visibility.Collapsed;
+            lineCheckLbl.Visibility = Visibility.Collapsed;
+            lineCheckLbl.Content = "";
+            countDown.Content = "";
+            countDown.Background = Brushes.White;
+            textInputBox.IsEnabled = true;
+            textInputBox.Focus();
+            t1.Start();
+        }
+
         private void NextLineButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             NextLine();
@@ -187,8 +226,7 @@ namespace LerenTypen
 
         private void ResumeButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Resume();        
-           
+            Resume();           
         }
         private void Resume()
         {
@@ -227,7 +265,8 @@ namespace LerenTypen
         {
             string input = textInputBox.Text;
             textInputBox.Text = "";
-            CheckInput(input);
+            bool right = CheckInput(input);
+            ShowRightOrWrong(right, input);
             currentLine++;
 
             if (currentLine < lines.Count)
@@ -241,11 +280,12 @@ namespace LerenTypen
             }
                      
         }
-        private void CheckInput(string input)
+        private bool CheckInput(string input)
         {
             if (input.Trim().Equals(lines[currentLine].Trim()))
             {
                 rightAnswers.Add(input);
+                return true;
             }
             else
             {
@@ -259,7 +299,9 @@ namespace LerenTypen
                 {
                     lines.Add(lines[currentLine]);
                 }
+                
             }
+            return false;
         }
 
         private void CloseTest()

@@ -8,7 +8,7 @@
       d:DesignHeight="570" d:DesignWidth="1050" Background="White"
       Title="Page3" ShowsNavigationUI="False">
     
-        <Grid>
+        <Grid x:Name="mainPanel">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="3*" />
@@ -23,7 +23,7 @@
             <Grid.Background>
                 <SolidColorBrush Color="White" Opacity="1"/>
             </Grid.Background>
-            
+            <Label x:Name="lineCheckLbl" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Margin="0,-200,0,0" Visibility="Collapsed"></Label>
             <Label x:Name="countDown" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Content=""></Label>
             <Button x:Name="resumeButton" Width="100" Height="50" Content="Doorgaan" Margin="0,0,0,0" Visibility="Collapsed" Click="ResumeButton_Click"> </Button>
         </Grid>
@@ -34,8 +34,8 @@
         <Button x:Name="pauseButton" Content="Pause" Grid.Column="2" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Center" Width="70" Click="PauseButton_Click"/>
         <Button x:Name="stopButton" Content="Stop" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,40,0" VerticalAlignment="Center" Width="40" Click="StopButton_Click"/>
         <Label x:Name="lineNumber" Content="RegelNummer" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
-        <Label x:Name="testLine" Content="ToetsRegel"  Grid.Column="1" HorizontalAlignment="Center" Margin="0,-100,0,0" Grid.Row="1" VerticalAlignment="Center"/>
-        <Label x:Name="testName" Content="ToetsNaam" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"/>
+        <Label x:Name="testLine" Content="ToetsRegel"  Grid.Column="1" FontSize="20" HorizontalAlignment="Center" Margin="0,-150,0,0" Grid.Row="1" VerticalAlignment="Center"/>
+        <Label x:Name="testName" Content="ToetsNaam" FontSize="30" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"/>
         <Button x:Name="muteButton" Content="Mute" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="75" Click="MuteButton_Click"/>
         <Label x:Name="wrongCounter" Content="AantalFouten" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Row="1"/>
 
