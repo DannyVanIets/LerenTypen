@@ -98,6 +98,7 @@ namespace LerenTypen
                 l3.RenderTransform = new RotateTransform(rotation, 50, 50);
                 clock.Children.Add(l3);
             }
+
             minuteLine = new Line();
             minuteLine.Stroke = Brushes.Black;
             minuteLine.X1 = 50;
@@ -141,8 +142,6 @@ namespace LerenTypen
         {
             Overlay.Visibility = System.Windows.Visibility.Visible;
             resumeButton.Visibility = System.Windows.Visibility.Visible;
-
-
         }
 
         private void UpdateTimer(object sender, EventArgs e)
@@ -174,7 +173,6 @@ namespace LerenTypen
             {
                 minuteLine.RenderTransform = new RotateTransform(rotationM, 50, 50);
             }
-            
             
         }
 
@@ -312,8 +310,7 @@ namespace LerenTypen
         {
             testClosed = true;
             t1.Stop();
-            Console.WriteLine("close");
-            
+            Console.WriteLine("close");            
         }
     }
 }
