@@ -26,8 +26,8 @@
         <TextBox x:Name="AllTestsOverview_TextBox_Search" HorizontalAlignment="Left" Height="25" Grid.Row="2" TextWrapping="Wrap" Text="Zoek gebruiker/toetsnaam" BorderThickness="2" VerticalAlignment="Top" Width="155" Margin="10,3,0,0" TextChanged="Search_Event" PreviewMouseDown="Search_Remove_Event"/>
 
         <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
-            <CheckBox x:Name="AllTestsOverview_CheckBox_MadeBefore" Content="Toon geoefende toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Height="21" Width="152" Margin="0,2.2,0,0"/>
-            <Button x:Name="AllTestsOverview_Button_ShowOwnTestOnly" Content="Toon alleen eigen toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Width="170" Height="25" Margin="0,4,0,0"/>
+            <CheckBox x:Name="AllTestsOverview_CheckBox_MadeBefore" Content="Toon geoefende toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Height="21" Width="152" Margin="0,2.2,0,0" Checked="AllTestsOverview_CheckBox_MadeBefore_Checked" Unchecked="AllTestsOverview_CheckBox_MadeBefore_Unchecked"/>
+            <Button x:Name="AllTestsOverview_Button_ShowOwnTestOnly" Content="Toon alleen eigen toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Width="170" Height="25" Margin="0,4,0,0" Click="AllTestsOverview_Button_ShowOwnTestOnly_Click"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="2" Margin="0.6,0,-1.4,0">
@@ -52,7 +52,7 @@
                 <DataGridTextColumn Header="Aantal woorden" Width="120*" Binding="{Binding AmountOfWords}"/>
                 <DataGridTextColumn Header="Moeilijkheidsgraad" Width="125*" Binding="{Binding Difficulty}" SortMemberPath="DifficultyBinder"/>
                 <DataGridTextColumn Header="Geüpload door" Width="100*" Binding="{Binding Uploader}"/>
-                <DataGridTextColumn Header="DifficultyBinder" Width="40*" Binding="{Binding DifficultyBinder}"/>
+                <DataGridTextColumn Header="DifficultyBinder" Width="0*" Binding="{Binding DifficultyBinder}" Visibility="Hidden"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
