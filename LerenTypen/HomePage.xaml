@@ -32,7 +32,7 @@
             <Label HorizontalAlignment="Center">Coming soon!</Label>
             <!--<ListView x:Name="trendingTestsListView" Width="400" Margin="0,10,0,0"/>-->
             <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0">
-                <Hyperlink x:Name="moreTrendingTestsLink" Click="MoreTrendingTestsLink_Click" IsEnabled="False">Meer trending toetsen...</Hyperlink>
+                <Hyperlink x:Name="moreTrendingTestsLink" Click="MoreTrendingTestsLink_Click">Meer trending toetsen...</Hyperlink>
             </TextBlock>
         </StackPanel>
     </Grid>
