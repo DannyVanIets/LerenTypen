@@ -1,6 +1,5 @@
 using Microsoft.OData.Edm;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -14,14 +13,14 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     String query = "Select accountUsername from accounts where accountUsername = @username";
-                    using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
+                    using (SqlCommand usernamecheck = new SqlCommand(query, connection))
                     {
                         usernamecheck.Parameters.AddWithValue("@username", user);
                         connection.Open();
-                        using (MySqlDataReader reader = usernamecheck.ExecuteReader())
+                        using (SqlDataReader reader = usernamecheck.ExecuteReader())
                         {
                             if (reader.HasRows)
                             {
@@ -49,12 +48,12 @@ namespace LerenTypen
 
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     string query = "INSERT INTO accounts(accountType, accountUsername, accountPassword, accountBirthdate, accountFirstname, accountSurname, AccountSecurityQuestion, " +
                         "AccountSecurityAnswer, archived) VALUES (0 , @username, @pwhash, @bday, @fname, @lname,  @secvraag, @secans, 0)";
 
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         //a shorter syntax to adding parameters
                         command.Parameters.AddWithValue("@username", username);
@@ -118,19 +117,19 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append($"SELECT `accountUsername` FROM accounts WHERE accountID = @id;");
 
-                    string MySql = sb.ToString();
+                    string Sql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(Sql, connection))
                     {
                         command.Parameters.AddWithValue("@id", accountID);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -140,7 +139,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 System.Console.WriteLine(e.Message);
             }
