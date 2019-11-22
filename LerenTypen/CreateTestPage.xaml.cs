@@ -16,10 +16,12 @@ namespace LerenTypen
         private List<TextBox> textBoxes;
         private List<string> textBoxValues;
         static int i = 0;
+        private MainWindow m;
 
-        public CreateTestPage()
-        {
+        public CreateTestPage(MainWindow m)
+        {            
             InitializeComponent();
+            this.m = m;
             textBoxes = new List<TextBox>();
             textBoxValues = new List<string>();            
             CreateInputLine();
@@ -144,29 +146,30 @@ namespace LerenTypen
             {
                 privateTest = 1;
             }
-            
+
             //int amountOfWords = 0;
 
             // Text.Split splits the text into words using spaces
             // Empty words are not added to the counter amountOfWords
             // Decision was made to count words from db so function is not used
-            foreach(TextBox t in textBoxes)
+            foreach (TextBox t in textBoxes)
             {
-               /* string[] words = t.Text.Split();
+                /* string[] words = t.Text.Split();
 
-                foreach(string word in words)
-                {
-                    if (!word.Equals(""))
-                    {
-                        amountOfWords++;
-                    }
-                }
-                */
-                
+                 foreach(string word in words)
+                 {
+                     if (!word.Equals(""))
+                     {
+                         amountOfWords++;
+                     }
+                 }
+                 */
+
                 textBoxValues.Add(t.Text);
-            }            
+            }
             
-            Database.AddTest(title, type, difficulty, privateTest, textBoxValues, 1);            
+            int accountID = m.Ingelogd;            
+            Database.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID);            
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using System.Windows.Controls;
+using System.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,9 +62,11 @@ namespace LerenTypen
 
             TableContent = Database.GetAllTests();
 
+
             try
             {
                 //TableCounter(TableContent);
+
 
                 AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
 
@@ -312,7 +314,7 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllTestsOverview_Button_MakeOwnTest_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MainWindow.ChangePage(new CreateTestPage());
+            MainWindow.ChangePage(new CreateTestPage(MainWindow));
         }
 
         /// <summary>

@@ -31,7 +31,7 @@ namespace LerenTypen
 
                     // Select last insert id is used to insert the tests content into a seperate table with the same id
                     sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID) " +
-                        $"VALUES (@testName, @testType, 0, @testDifficulty, NOW(), @isPrivate , @accountID); SELECT LAST_INSERT_ID()");
+                        $"VALUES (@testName, @testType, 0, @testDifficulty, NOW(), @isPrivate , @uploadedBy); SELECT LAST_INSERT_ID()");
                     
                     string MySql = sb.ToString();
 
@@ -41,7 +41,7 @@ namespace LerenTypen
                         command.Parameters.AddWithValue("@testType", testType);
                         command.Parameters.AddWithValue("@testDifficulty", testDifficulty);
                         command.Parameters.AddWithValue("@isPrivate", isPrivate);                       
-                        command.Parameters.AddWithValue("@accountID", uploadedBy);
+                        command.Parameters.AddWithValue("@uploadedBy", uploadedBy);
 
                         object testID = command.ExecuteScalar();
                         int intTestID = int.Parse(testID.ToString());
@@ -84,6 +84,46 @@ namespace LerenTypen
             catch (MySqlException e)
             {
                 System.Console.WriteLine(e.Message);
+            }
+        }
+
+        public static List<string> GetAccountType(int accountID)
+        {
+            List<string> resultset = new List<string>();
+            try
+
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("select accountType from accounts Where accountID = @accountID");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@accountID", accountID);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    resultset.Add(reader.GetString(2));
+
+                                }
+                                reader.NextResult();
+                            }
+                        }
+                    }
+                }
+                return resultset;
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+                return null;
             }
         }
 
