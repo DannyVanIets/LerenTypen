@@ -163,7 +163,10 @@ namespace LerenTypen
                 return null;
             }
         }
-
+        /// <summary>
+        /// Returns every test in the database
+        /// </summary>
+        /// <returns></returns>
         public static List<TestTable> GetAllTests()
         {
             List<TestTable> queryResult = new List<TestTable>();
@@ -173,8 +176,9 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("select testID, t.accountID, testName, testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID");
+                    sb.Append("select testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID");
                     string MySql = sb.ToString();
+                    int counter = 1;
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
@@ -184,14 +188,21 @@ namespace LerenTypen
                             {
                                 while (reader.Read())
                                 {
-                                    queryResult.Add(new TestTable(0, reader.GetString(2), reader.GetInt32(4), 0, GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6)));
+                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6)));
+                                    counter++;
                                 }
                                 reader.NextResult();
+
                             }
                         }
                     }
                 }
+
+
+                
+
                 return queryResult;
+
             }
             catch (MySqlException e)
             {
@@ -199,6 +210,12 @@ namespace LerenTypen
                 return null;
             }
         }
+
+        /// <summary>
+        /// Get the amount of words from the contentTable for each test
+        /// </summary>
+        /// <param name="testId"></param>
+        /// <returns></returns>
         public static int GetAmountOfWordsFromTest(int testId)
         {
             int amountOfWords = 0;
@@ -222,8 +239,16 @@ namespace LerenTypen
                             while (reader.Read())
                             {
                                fullResult = reader.GetString(0);
-                               amountOfWords += fullResult.Trim().Split().Length;
 
+
+                                string[] words = fullResult.Trim().Split();
+                                foreach (var word in words)
+                                {
+                                    if (!word.Equals(""))
+                                    {
+                                        amountOfWords++;
+                                    }
+                                }
                             }
                         }
                     }
@@ -273,5 +298,98 @@ namespace LerenTypen
             }
             return 0;
         }
+
+        /// <summary>
+        /// function that returns a username based on the accountID
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <returns></returns>
+        public static string GetUserName(int accountId)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.Append($"SELECT `accountUsername` FROM accounts WHERE accountID = @accountID AND archived = 0;");
+
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@accountID", accountId);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return reader.GetString(0);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Returns all the tests that have been previously made by the user
+        /// </summary>
+        /// <param name="ingelogd"></param>
+        /// <returns></returns>
+        public static List<TestTable> GetAllTestsAlreadyMade(int ingelogd)
+        {
+            List<TestTable> queryResult = new List<TestTable>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("select t.testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID;");
+                    string MySql = sb.ToString();
+                    int counter = 1;
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+
+                        command.Parameters.AddWithValue("@accountID", ingelogd);
+
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6)));
+                                    counter++;
+                                }
+                                reader.NextResult();
+
+                            }
+                        }
+                    }
+                }
+
+
+
+
+                return queryResult;
+
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
     }
 }

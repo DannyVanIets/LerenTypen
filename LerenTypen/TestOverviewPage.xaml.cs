@@ -1,4 +1,4 @@
-﻿using System.Windows.Controls;
+using System.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,37 +58,28 @@ namespace LerenTypen
 
             TableContent = new List<TestTable>();
 
-            // Temporary TestData
-            //TableContent.Add(new TestTable(1, "BramsToets", 50, 0, 100, "makkelijk", "Bram"));
-            //TableContent.Add(new TestTable(2, "Danny heeft dit gemaakt", 2, 0, 151, "gemiddeld", "Bram"));
-            //TableContent.Add(new TestTable(3, "Tristan opdracht 3", 49, 0, 10, "makkelijk", "Danny"));
-            //TableContent.Add(new TestTable(4, "Mark oefententamen", 8, 0, 400, "moeilijk", "Tristan"));
-            //TableContent.Add(new TestTable(5, "Hugo opdracht 3", 99, 0, 94, "makkelijk", "Bram"));
-
             ////add the data to the datagrid and refresh to show
 
             TableContent = Database.GetAllTests();
-            int counter = 1;
+
+
             try
             {
-                foreach (var item in TableContent)
-                {
-                    item.WPFNumber = counter;
-                    counter++;
-                }
+                //TableCounter(TableContent);
+
+
+                AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
+
+                AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+
+                //Bool to prevent the select event/ToonAlles_event at startup app
+                isInitialized = true;
+                CurrentContent = TableContent;
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException nre)
             {
-                Console.WriteLine("Geen toetsen gevonden");
+
             }
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
-
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
-            
-            //Bool to prevent the select event/ToonAlles_event at startup app
-            isInitialized = true;
-            CurrentContent = TableContent;
-
 
         }
         /// <summary>
@@ -316,11 +307,52 @@ namespace LerenTypen
                     return null;
             }
         }
-
+        /// <summary>
+        /// Button to make a new test
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AllTestsOverview_Button_MakeOwnTest_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             MainWindow.ChangePage(new CreateTestPage(MainWindow));
         }
 
+        /// <summary>
+        /// button that filters tests only made by the user himself
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AllTestsOverview_Button_ShowOwnTestOnly_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            AllTestsOverview_TextBox_Search.Text = Database.GetUserName(MainWindow.Ingelogd);
+
+
+        }
+
+        /// <summary>
+        /// If checked, checkbox that shows tests previously made by the user
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AllTestsOverview_CheckBox_MadeBefore_Checked(object sender, System.Windows.RoutedEventArgs e)
+        {
+            CurrentContent = Database.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+            //TableCounter(CurrentContent);
+            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
+            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+        }
+
+        /// <summary>
+        /// Unchecks the box that only shows tests previously made by the user, therefore showing all the tests
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AllTestsOverview_CheckBox_MadeBefore_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
+
+            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+        }
     }
 }
