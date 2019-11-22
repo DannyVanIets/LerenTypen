@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.OData.Edm;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -48,6 +49,71 @@ namespace LerenTypen
                 System.Console.WriteLine(e.Message);
             }
         }
+        public static bool UserExists(string user)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    String query = "Select accountUsername from accounts where accountUsername = @username";
+                    using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
+                    {
+                        usernamecheck.Parameters.AddWithValue("@username", user);
+                        connection.Open();
+                        using (MySqlDataReader reader = usernamecheck.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            return false;
+        }
+
+        public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
+        {
+            Date res = birthday.Date;
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    string query = "INSERT INTO accounts(accountType, accountUsername, accountPassword, accountBirthdate, accountFirstname, accountSurname, AccountSecurityQuestion, " +
+                        "AccountSecurityAnswer, archived) VALUES (0 , @username, @pwhash, @bday, @fname, @lname,  @secvraag, @secans, 0)";
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        //a shorter syntax to adding parameters
+                        command.Parameters.AddWithValue("@username", username);
+                        command.Parameters.AddWithValue("@pwhash", password);
+                        command.Parameters.AddWithValue("@bday", res);
+                        command.Parameters.AddWithValue("@fname", firstname);
+                        command.Parameters.AddWithValue("@lname", lastname);
+                        command.Parameters.AddWithValue("@secvraag", securityvraag);
+                        command.Parameters.AddWithValue("@secans", securityanswer);
+                        //make sure you open and close(after executing) the connection
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
 
         //Database query used by login. We're gonna check if the username and hashedpassword match any existing data. If it does, we will return the accountID.
         public static int GetAccountIDForLogin(string accountUsername, string password)
@@ -56,6 +122,7 @@ namespace LerenTypen
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
+
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
 
@@ -63,6 +130,7 @@ namespace LerenTypen
                     sb.Append($"SELECT `accountID` FROM accounts WHERE accountUsername = @accountusername AND accountPassword = @accountpassword AND archived = 0;");
 
                     string MySql = sb.ToString();
+
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
@@ -85,7 +153,7 @@ namespace LerenTypen
             }
             return 0;
         }
-
+      
         public static string GetAccountUsername(int accountID)
         {
             try
@@ -118,5 +186,6 @@ namespace LerenTypen
             }
             return "";
         }
+
     }
 }
