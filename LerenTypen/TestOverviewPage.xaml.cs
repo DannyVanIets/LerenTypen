@@ -58,6 +58,14 @@ namespace LerenTypen
 
             TableContent = new List<TestTable>();
 
+            if(MainWindow.Ingelogd == 0)
+            {
+                AllTestsOverview_Button_MakeOwnTest.Visibility = System.Windows.Visibility.Hidden;
+                AllTestsOverview_Button_ShowOwnTestOnly.Visibility = System.Windows.Visibility.Hidden;
+                AllTestsOverview_CheckBox_MadeBefore.Visibility = System.Windows.Visibility.Hidden;
+            }
+
+
             ////add the data to the datagrid and refresh to show
 
             TableContent = Database.GetAllTests();
@@ -76,9 +84,9 @@ namespace LerenTypen
                 isInitialized = true;
                 CurrentContent = TableContent;
             }
-            catch (NullReferenceException nre)
+            catch (NullReferenceException)
             {
-
+                Console.WriteLine("Er zijn geen toetsen");
             }
 
         }
@@ -214,15 +222,29 @@ namespace LerenTypen
 
             if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
-                CurrentContent = TableContent;
-                string searchterm = AllTestsOverview_TextBox_Search.Text;
-                SearchResult = (from t in CurrentContent
-                                where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
-                                select t).ToList();
+                if (AllTestsOverview_TextBox_Search.Text.StartsWith("User: "))
+                {
+                    CurrentContent = TableContent;
+                    string searchterm = AllTestsOverview_TextBox_Search.Text.Substring(6);
+                    SearchResult = (from t in CurrentContent
+                                    where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                    select t).ToList();
 
-                CurrentContent = SearchResult;
-                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-            }
+                    CurrentContent = SearchResult;
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+                }
+                else
+                {
+                    CurrentContent = TableContent;
+                    string searchterm = AllTestsOverview_TextBox_Search.Text;
+                    SearchResult = (from t in CurrentContent
+                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                    select t).ToList();
+
+                    CurrentContent = SearchResult;
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+                }
+            } 
 
         }
 
@@ -314,7 +336,14 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllTestsOverview_Button_MakeOwnTest_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MainWindow.ChangePage(new CreateTestPage(MainWindow));
+            if (MainWindow.Ingelogd == 0)
+            {
+                Console.WriteLine("User niet ingelogd");
+            }
+            else
+            {
+                MainWindow.ChangePage(new CreateTestPage(MainWindow));
+            }
         }
 
         /// <summary>
@@ -324,8 +353,14 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllTestsOverview_Button_ShowOwnTestOnly_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            AllTestsOverview_TextBox_Search.Text = Database.GetUserName(MainWindow.Ingelogd);
-
+            if (MainWindow.Ingelogd == 0)
+            {
+                Console.WriteLine("User niet ingelogd");
+            }
+            else
+            {
+                AllTestsOverview_TextBox_Search.Text = $"User: {Database.GetUserName(MainWindow.Ingelogd)}";
+            }
 
         }
 
@@ -336,10 +371,17 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllTestsOverview_CheckBox_MadeBefore_Checked(object sender, System.Windows.RoutedEventArgs e)
         {
-            CurrentContent = Database.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
-            //TableCounter(CurrentContent);
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            if (MainWindow.Ingelogd == 0)
+            {
+                Console.WriteLine("User niet ingelogd");
+            }
+            else
+            {
+                CurrentContent = Database.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                //TableCounter(CurrentContent);
+                AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
+                AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            }
         }
 
         /// <summary>
