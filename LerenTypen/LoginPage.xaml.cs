@@ -3,7 +3,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace LerenTypen
 {
@@ -19,55 +18,6 @@ namespace LerenTypen
             InitializeComponent();
             //This variable is used if you want to change the page.
             MainWindow = mainWindow;
-        }
-
-        static string ComputeSha256Hash(string plainData)
-        {
-            // Create a SHA256   
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                // ComputeHash - returns byte array  
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(plainData));
-
-                // Convert byte array to a string   
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string gebruikersnaam = gebruikernaam.Text;
-            string voorn = voornaam.Text;
-            string achtern = achternaam.Text;
-            string ww = wachtwoord.Text;
-            string wwherh = wachtwoordherh.Text;
-            string geboort = geboortedatum.Text;
-            string security = securityvraag.Text;
-        }
-
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-
-        }
-        private void CheckBox_unChecked(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (checkboxakkoord.IsChecked == false)
-            {
-                accountmaken.IsEnabled = false;
-            }
-        }
-
-        private void CheckBox_Checked(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (checkboxakkoord.IsChecked == true)
-            {
-                accountmaken.IsEnabled = true;
-            }
         }
 
         //This method will be used once someone starts working on the forgot password.
