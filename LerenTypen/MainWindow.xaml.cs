@@ -59,7 +59,10 @@ namespace LerenTypen
 
         private void EditAccountPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new EditAccountPage(), editAccountPageButton);
+            if (Ingelogd > 0)
+            {
+                ChangePage(new EditAccountPage(this));
+            }
         }
 
         /// <summary>
@@ -117,10 +120,6 @@ namespace LerenTypen
                 {
                     pageToggleButton = loginPageButton;
                 }
-                else if (pageToChangeTo is EditAccountPage)
-                {
-                    pageToggleButton = editAccountPageButton;
-                }
 
                 if (pageToggleButton != null)
                 {
@@ -141,7 +140,6 @@ namespace LerenTypen
             tipPageButton.IsChecked = false;
             leaderboardPageButton.IsChecked = false;
             loginPageButton.IsChecked = false;
-            editAccountPageButton.IsChecked = false;
 
             buttonToSwitchTo.IsChecked = true;
         }

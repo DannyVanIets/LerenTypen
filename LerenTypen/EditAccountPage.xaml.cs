@@ -13,17 +13,30 @@ namespace LerenTypen
     {
         private MainWindow MainWindow;
         private List<string> AccountInformation = new List<string>();
+        private Account Account;
 
         public EditAccountPage(MainWindow mainWindow)
         {
             InitializeComponent();
             MainWindow = mainWindow;
 
-            AccountInformation = Database.GetAllAccountInformationExceptPassword(mainWindow.Ingelogd);
+            Console.WriteLine(mainWindow.Ingelogd);
 
-            foreach (string information in AccountInformation)
+            if (mainWindow.Ingelogd > 0)
             {
-                Console.WriteLine(information);
+                Account = Database.GetAllAccountInformationExceptPassword(mainWindow.Ingelogd);
+
+                firstNameTextBox.Text = Account.FirstName;
+                lastNameTextbox.Text = Account.Surname;
+                usernameTextBox.Text = Account.UserName;
+                birthdateDatePicker.DisplayDate = Account.Birthdate;
+                securityQuestionComboBox.Text = Account.SecurityQuestion;
+                securityAnswerTextBox.Text = Account.SecurityAnswer;
+            }
+            else
+            {
+                MessageBox.Show("U bent niet ingelogd!", "Error");
+                mainWindow.ChangePage(new HomePage(mainWindow));
             }
         }
 
@@ -42,6 +55,7 @@ namespace LerenTypen
             string firstname = firstNameTextBox.Text;
             string lastname = lastNameTextbox.Text;
             string username = usernameTextBox.Text;
+            DateTime birthdate = birthdateDatePicker.DisplayDate;
             string oldPassword = oldPasswordTextBox.Password;
             string newPassword = newPasswordTextBox.Password;
             string newPasswordRepeat = passwordRepeatTextBox.Password;

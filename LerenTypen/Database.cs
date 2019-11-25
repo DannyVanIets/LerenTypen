@@ -38,10 +38,11 @@ namespace LerenTypen
                         {
                             //while (reader.Read())
                             //{
-                                    
+
                             //}
                         }
                     }
+                    connection.Close();
                 }
             }
             catch (MySqlException e)
@@ -71,6 +72,7 @@ namespace LerenTypen
                                 return false;
                             }
                         }
+                        connection.Close();
                     }
                 }
             }
@@ -107,6 +109,7 @@ namespace LerenTypen
                         connection.Open();
                         command.ExecuteNonQuery();
                     }
+                    connection.Close();
                 }
             }
             catch (Exception e)
@@ -145,6 +148,7 @@ namespace LerenTypen
                             }
                         }
                     }
+                    connection.Close();
                 }
             }
             catch (MySqlException e)
@@ -153,7 +157,7 @@ namespace LerenTypen
             }
             return 0;
         }
-      
+
         public static string GetAccountUsername(int accountID)
         {
             try
@@ -178,6 +182,7 @@ namespace LerenTypen
                             }
                         }
                     }
+                    connection.Close();
                 }
             }
             catch (MySqlException e)
@@ -187,18 +192,19 @@ namespace LerenTypen
             return "";
         }
 
-        public static List<string> GetAllAccountInformationExceptPassword(int accountID)
+        public static Account GetAllAccountInformationExceptPassword(int accountID)
         {
-            List<string> accountInformation = new List<string>();
-            int counter = 0;
+            Account account = new Account();
 
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
+                    
                     connection.Open();
+
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("select accountUsername, accountBirthdate, accountFirstName, accountSurname, accountSecurityQuestion, accountSecurityAnswer from accounts WHERE accountID = @id AND archived = 0");
+                    sb.Append("SELECT accountUsername, accountBirthdate, accountFirstName, accountSurname, accountSecurityQuestion, accountSecurityAnswer FROM accounts WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
@@ -207,16 +213,14 @@ namespace LerenTypen
 
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            while (reader.HasRows)
+                            while (reader.Read())
                             {
-                                while (reader.Read())
-                                {
-                                    accountInformation.Add(reader[counter].ToString());
-                                    counter++;
-                                }
+                                account = new Account((string)reader[0], (DateTime)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], (string)reader[5]);
                             }
                         }
                     }
+                    connection.Close();
+                    return account;
                 }
             }
             catch (MySqlException e)
