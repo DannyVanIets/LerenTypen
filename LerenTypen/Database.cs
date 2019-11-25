@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Text;
 
 namespace LerenTypen
@@ -131,27 +132,30 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("SELECT testName, testType, accountID, timesMade, highscore, version, testDifficulty, isPrivate, createDate");
+                    sb.Append("SELECT testName, testType, accountID, timesMade, highscore, version, testDifficulty, isPrivate, createDate FROM tests WHERE testID = @testID");
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
+                        command.Parameters.AddWithValue("@testID", testID);
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
                                 string testName = reader[0].ToString();
-                                int testType = (int)reader[1];
-                                string authorUsername = GetAccountUsername((int)reader[2]);
+                                int testType = Convert.ToInt32(reader[1]);
+                                int authorID = Convert.ToInt32(reader[2]);
+                                string authorUsername = GetAccountUsername(authorID);
                                 int wordCount = GetAmountOfWordsFromTest(testID);
-                                int timesMade = (int)reader[3];
-                                double highscore = (double)reader[4];
-                                int version = (int)reader[5];
-                                int testDifficulty = (int)reader[5];
-                                bool isPrivate = (bool)reader[6];
+                                int timesMade = Convert.ToInt32(reader[3]);
+                                double highscore = Convert.ToDouble(reader[4]);
+                                int version = Convert.ToInt32(reader[5]);
+                                int testDifficulty = Convert.ToInt32(reader[5]);
+                                bool isPrivate = Convert.ToBoolean(reader[6]);
                                 string createdDateTime = (string)reader[7];
 
-                                return new Test(testName, testType, authorUsername, wordCount, timesMade, 0, highscore, version, testDifficulty, isPrivate, createdDateTime);
+                                return new Test(testName, testType, authorUsername, authorID, wordCount, timesMade, 0, highscore, version, testDifficulty, isPrivate, createdDateTime);
                             }
                         }
                     }

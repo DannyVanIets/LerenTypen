@@ -35,7 +35,9 @@
             <StackPanel Orientation="Horizontal">
                 <Label FontWeight="Bold">Auteur:</Label>
                 <TextBlock Height="18">
-                    <Hyperlink x:Name="usernameLink">gebruikersnaam</Hyperlink>
+                    <Hyperlink x:Name="usernameLink">
+                        <TextBlock x:Name="usernameLinkText">gebruikersnaam</TextBlock>
+                    </Hyperlink>
                 </TextBlock>
             </StackPanel>
 
