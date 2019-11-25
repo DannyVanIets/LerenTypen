@@ -80,8 +80,7 @@ namespace LerenTypen
         /// Draw Clock for displaying time
         /// </summary>
         private void DrawClock()
-        {         
-
+        {
             Ellipse el = new Ellipse();
             el.StrokeThickness = 2;
             el.Stroke = Brushes.Black;
@@ -191,7 +190,6 @@ namespace LerenTypen
             {
                 timer.Content = $"{j}:{i}";
             }
-
         }
 
         /// <summary>
@@ -206,8 +204,7 @@ namespace LerenTypen
             if (i.Equals(0))
             {
                 minuteLine.RenderTransform = new RotateTransform(rotationM, 50, 50);
-            }
-            
+            }            
         }
 
         /// <summary>
@@ -232,8 +229,7 @@ namespace LerenTypen
 
             t2.Interval = new TimeSpan(0, 0, 2);            
             t2.Tick += StopShowingRightOrWrong;
-            t2.Start();             
-            
+            t2.Start();            
         }
 
         /// <summary>
@@ -344,8 +340,7 @@ namespace LerenTypen
             else
             {
                 CloseTest();
-            }
-                     
+            }                     
         }
 
         /// <summary>
@@ -370,8 +365,7 @@ namespace LerenTypen
                 else
                 {
                     lines.Add(lines[currentLine]);
-                }
-                
+                }                
             }
             return false;
         }
