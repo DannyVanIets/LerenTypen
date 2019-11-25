@@ -15,7 +15,7 @@ namespace LerenTypen
         List<Users> Usercontent;
 
         List<Users> CurrentContent = new List<Users>();
-
+        public bool IsAdmin = false;
         public MainWindow Mainwindow { get; set; }
         public AllUsers(MainWindow mainwindow)
         {
@@ -31,7 +31,7 @@ namespace LerenTypen
 
         }
         //hier word de userid meegegven wanneer op edit word geklikt
-        private void DG_Hyperlink_click(object sender , System.Windows.RoutedEventArgs e)
+        private void DG_Hyperlink_click(object sender, System.Windows.RoutedEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;
             string id = textBlock.Tag.ToString();
@@ -46,7 +46,7 @@ namespace LerenTypen
         public string username { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
-        public  string edit { get; set; }
+        public string edit { get; set; }
 
 
         public Users(int accountnum, string usern, int acctype, string fname, string lname, string edit)
@@ -56,8 +56,29 @@ namespace LerenTypen
             this.username = usern;
             this.firstname = fname;
             this.lastname = lname;
-            this.edit = "edit";
+            this.edit = "Edit";
+        }
+
+        public bool IsAdminCheck(int acctype)
+        {
+            acctype = usertype;
+
+            if(acctype == 2)
+            {
+                IsAdmin = true;
+            }
+            else
+            {
+                IsAdmin= false;
+            }
+            {
+
+
+            }
+
+
+
+
         }
     }
-}
 
