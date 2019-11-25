@@ -28,11 +28,12 @@ namespace LerenTypen
         private DispatcherTimer t2;
         private int currentLine;
         private List<string> lines;
-        private List<string> wrongAnswers;
-        private List<string> rightAnswers;        
+        private Dictionary<int, string> wrongAnswers;
+        private List<string> rightAnswers;
         private int amountOfPauses;
         private int testID;
         private bool testClosed;
+        private string testName;
         private MainWindow m;
 
         public TestExercisePage(int testID, MainWindow m)
@@ -47,7 +48,7 @@ namespace LerenTypen
             this.m = m;
             
             amountOfPauses = 0;
-            wrongAnswers = new List<string>();
+            wrongAnswers = new Dictionary<int, string>();
             rightAnswers = new List<string>();            
             currentLine = 0;
             wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
@@ -61,7 +62,8 @@ namespace LerenTypen
 
             // Gets the tests name and content using the given testID
             lines = Database.GetTestContent(testID);
-            testNameLbl.Content = Database.GetTestName(testID);            
+            testName = Database.GetTestName(testID);
+            testNameLbl.Content = testName;           
 
             // Check if lines are found
             if (!lines.Count.Equals(0))
@@ -361,7 +363,7 @@ namespace LerenTypen
             }
             else
             {
-                wrongAnswers.Add(input);
+                wrongAnswers.Add(currentLine, input);                
                 wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
                 if (currentLine + 4 < lines.Count)
                 {
@@ -382,7 +384,7 @@ namespace LerenTypen
         {
             testClosed = true;
             t1.Stop();
-            TestResultsPage testResultsPage = new TestResultsPage(testID);
+            TestResultsPage testResultsPage = new TestResultsPage(testID, m, wrongAnswers, lines, rightAnswers);
             CreateResults(testResultsPage);
             m.frame.Navigate(testResultsPage);
         }
@@ -394,7 +396,7 @@ namespace LerenTypen
             decimal percentageRight = 0;
             try
             {
-                percentageRight = decimal.Divide(rightAnswers.Count, rightAnswers.Count + wrongAnswers.Count) * 100;
+                percentageRight = decimal.Divide(rightAnswers.Count, lines.Count) * 100;
             }
             catch (DivideByZeroException)
             {
@@ -425,6 +427,16 @@ namespace LerenTypen
                 wordsPerMinute = 0;
             }
             testResultsPage.wordsPerMinuteTbl.Text =  Math.Round(wordsPerMinute).ToString();
+                       
+            
+            testResultsPage.testNameLbl.Content = testName;
+
+            if (percentageRight.Equals(100))
+            {
+                testResultsPage.awardStack.Visibility = Visibility.Visible;
+            }
+
+
         }
     }
 }
