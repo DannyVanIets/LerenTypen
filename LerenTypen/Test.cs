@@ -18,9 +18,10 @@ namespace LerenTypen
         public int Version { get; private set; }
         public int Difficulty { get; private set; }
         public bool IsPrivate { get; private set; }
+        public string CreatedDateTime { get; private set; }
 
         public Test(string name, int type, string authorUsername, int wordCount, int timesMade, double averageScore, 
-            double highscore, int version, int difficulty, bool isPrivate)
+            double highscore, int version, int difficulty, bool isPrivate, string createdDateTime)
         {
             Name = name;
             Type = type;
@@ -32,7 +33,7 @@ namespace LerenTypen
             Version = version;
             Difficulty = difficulty;
             IsPrivate = isPrivate;
+            CreatedDateTime = createdDateTime;
         }
-    }
     }
 }
