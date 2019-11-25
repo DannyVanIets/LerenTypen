@@ -33,8 +33,9 @@ namespace LerenTypen
         private int amountOfPauses;
         private int testID;
         private bool testClosed;
+        private MainWindow m;
 
-        public TestExercisePage(int testID)
+        public TestExercisePage(int testID, MainWindow m)
         {
             InitializeComponent();
             // Bool to stop timer when test is closed
@@ -43,6 +44,7 @@ namespace LerenTypen
             // List for lines to be written out by user
             lines = new List<string>();
             this.testID = testID;
+            this.m = m;
             
             amountOfPauses = 0;
             wrongAnswers = new List<string>();
@@ -374,8 +376,7 @@ namespace LerenTypen
         private void CloseTest()
         {
             testClosed = true;
-            t1.Stop();
-            Console.WriteLine("close");            
+            t1.Stop();          
         }
     }
 }
