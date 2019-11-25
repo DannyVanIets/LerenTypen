@@ -56,7 +56,9 @@ namespace LerenTypen
                 System.Console.WriteLine(e.Message);
             }            
         }
-
+        /// <summary>
+        /// Method adds each line of content of a test to database using its tests ID. testcontent is stored in a separate db.
+        /// </summary>        
         private static void AddTestContent(int testID, List<string> content)
         {
             try
@@ -65,19 +67,15 @@ namespace LerenTypen
                 {
                     connection.Open();
                     
-                    foreach (string s in content)
+                    foreach (string contentLine in content)
                     {
-                        string MySql = $"INSERT INTO testContent (testID, content) VALUES (@testID,@s);";
+                        string MySql = $"INSERT INTO testContent (testID, content) VALUES (@testID,@contentLine);";
 
                         using (MySqlCommand command = new MySqlCommand(MySql, connection))
                         {
                             command.Parameters.AddWithValue("@testID", testID);
-                            command.Parameters.AddWithValue("@s", s);
-                            
-                            using (MySqlDataReader reader = command.ExecuteReader())
-                            {
+                            command.Parameters.AddWithValue("@contentLine", contentLine);                           
                            
-                            }
                         }
                     }
                 }
