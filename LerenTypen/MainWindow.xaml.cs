@@ -119,7 +119,7 @@ namespace LerenTypen
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new TestExercisePage(1), Test);
+            ChangePage(new TestExercisePage(1, this), Test);
         }
     }
 }

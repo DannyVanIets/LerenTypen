@@ -29,7 +29,7 @@ namespace LerenTypen
         private int currentLine;
         private List<string> lines;
         private List<string> wrongAnswers;
-        private List<string> rightAnswers;
+        private List<string> rightAnswers;        
         private int amountOfPauses;
         private int testID;
         private bool testClosed;
@@ -48,7 +48,7 @@ namespace LerenTypen
             
             amountOfPauses = 0;
             wrongAnswers = new List<string>();
-            rightAnswers = new List<string>();
+            rightAnswers = new List<string>();            
             currentLine = 0;
             wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
 
@@ -253,6 +253,10 @@ namespace LerenTypen
             {
                 t1.Start();
             }
+            else
+            {
+                CloseTest();
+            }
         }
 
         private void NextLineButton_Click(object sender, RoutedEventArgs e)
@@ -339,8 +343,9 @@ namespace LerenTypen
             }
             else
             {
-                CloseTest();
-            }                     
+                testClosed = true;
+            }
+            
         }
 
         /// <summary>
@@ -376,7 +381,50 @@ namespace LerenTypen
         private void CloseTest()
         {
             testClosed = true;
-            t1.Stop();          
+            t1.Stop();
+            TestResultsPage testResultsPage = new TestResultsPage(testID);
+            CreateResults(testResultsPage);
+            m.frame.Navigate(testResultsPage);
+        }
+        
+        private void CreateResults(TestResultsPage testResultsPage)
+        {
+            testResultsPage.amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
+            testResultsPage.amountOfBreaksTbl.Text = amountOfPauses.ToString();
+            decimal percentageRight = 0;
+            try
+            {
+                percentageRight = decimal.Divide(rightAnswers.Count, rightAnswers.Count + wrongAnswers.Count) * 100;
+            }
+            catch (DivideByZeroException)
+            {
+                percentageRight = 100;
+            }
+            testResultsPage.percentageRightTbl.Text = Math.Round(percentageRight).ToString() + "%";
+            decimal secondsToMinutes;           
+            try
+            {
+                secondsToMinutes = decimal.Divide(i ,60);
+            }catch(DivideByZeroException )
+            {
+                secondsToMinutes = 0;
+            }
+            catch (OverflowException)
+            {
+                secondsToMinutes = 0;
+            }
+            decimal minutesSpend = j + secondsToMinutes;
+            decimal wordsPerMinute = 0;
+
+            if (minutesSpend != 0)
+            {
+                 wordsPerMinute = rightAnswers.Count / minutesSpend;
+            }
+            else
+            {
+                wordsPerMinute = 0;
+            }
+            testResultsPage.wordsPerMinuteTbl.Text =  Math.Round(wordsPerMinute).ToString();
         }
     }
 }
