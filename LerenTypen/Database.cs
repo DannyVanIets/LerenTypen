@@ -31,8 +31,8 @@ namespace LerenTypen
 
                     // Select last insert id is used to insert the tests content into a seperate table with the same id
                     // NOW() is being used to get the local date.
-                    sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID, version) " +
-                        $"VALUES (@testName, @testType, 0, @testDifficulty, NOW(), @isPrivate , @uploadedBy, 1); SELECT LAST_INSERT_ID()");
+                    sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID) " +
+                        $"VALUES (@testName, @testType, 0, @testDifficulty, NOW(), @isPrivate , @uploadedBy); SELECT LAST_INSERT_ID()");
                     
                     string MySql = sb.ToString();
 
