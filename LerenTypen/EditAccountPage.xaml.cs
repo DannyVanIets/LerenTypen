@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -10,11 +12,19 @@ namespace LerenTypen
     public partial class EditAccountPage : Page
     {
         private MainWindow MainWindow;
+        private List<string> AccountInformation = new List<string>();
 
         public EditAccountPage(MainWindow mainWindow)
         {
             InitializeComponent();
             MainWindow = mainWindow;
+
+            AccountInformation = Database.GetAllAccountInformationExceptPassword(mainWindow.Ingelogd);
+
+            foreach (string information in AccountInformation)
+            {
+                Console.WriteLine(information);
+            }
         }
 
         private void DeleteAccountButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)

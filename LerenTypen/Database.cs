@@ -187,5 +187,43 @@ namespace LerenTypen
             return "";
         }
 
+        public static List<string> GetAllAccountInformationExceptPassword(int accountID)
+        {
+            List<string> accountInformation = new List<string>();
+            int counter = 0;
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("select accountUsername, accountBirthdate, accountFirstName, accountSurname, accountSecurityQuestion, accountSecurityAnswer from accounts WHERE accountID = @id AND archived = 0");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", accountID);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    accountInformation.Add(reader[counter].ToString());
+                                    counter++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return null;
+        }
     }
 }
