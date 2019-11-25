@@ -27,7 +27,7 @@ namespace LerenTypen
         //    return null;
         //}
 
-            
+
 
 
     }
@@ -43,6 +43,12 @@ namespace LerenTypen
         public string Uploader { get; set; }
 
         public int DifficultyBinder { get; set; }
+
+        public bool IsPrivate = true;
+        public string Edit { get; set; } = "bewerken";
+
+        public string Delete = "verwijder";
+
         public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, int testDifficulty, string uploader)
         {
             this.WPFNumber = number;
@@ -51,22 +57,22 @@ namespace LerenTypen
             this.Highscore = highscore;
             this.AmountOfWords = amountOfWords;
             this.Uploader = uploader;
-            if(testDifficulty == 0)
+            if (testDifficulty == 0)
             {
                 DifficultyBinder = 0;
                 Difficulty = "makkelijk";
             }
-            else if(testDifficulty == 1)
+            else if (testDifficulty == 1)
             {
                 DifficultyBinder = 1;
                 Difficulty = "gemiddeld";
             }
-else if(testDifficulty == 2)
+            else if (testDifficulty == 2)
             {
                 DifficultyBinder = 2;
                 Difficulty = "moeilijk";
             }
         }
-        
+
     }
 }

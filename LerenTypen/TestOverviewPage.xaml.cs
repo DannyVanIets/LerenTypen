@@ -58,7 +58,8 @@ namespace LerenTypen
 
             TableContent = new List<TestTable>();
 
-            if(MainWindow.Ingelogd == 0)
+            //Hide some buttons if a user hasnt logged in yet
+            if (MainWindow.Ingelogd == 0)
             {
                 AllTestsOverview_Button_MakeOwnTest.Visibility = System.Windows.Visibility.Hidden;
                 AllTestsOverview_Button_ShowOwnTestOnly.Visibility = System.Windows.Visibility.Hidden;
@@ -66,16 +67,11 @@ namespace LerenTypen
             }
 
 
-            ////add the data to the datagrid and refresh to show
+            //add the data to the datagrid and refresh to show
 
             TableContent = Database.GetAllTests();
-
-
             try
             {
-                //TableCounter(TableContent);
-
-
                 AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
 
                 AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
@@ -244,7 +240,7 @@ namespace LerenTypen
                     CurrentContent = SearchResult;
                     Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
                 }
-            } 
+            }
 
         }
 
@@ -359,7 +355,9 @@ namespace LerenTypen
             }
             else
             {
-                AllTestsOverview_TextBox_Search.Text = $"User: {Database.GetUserName(MainWindow.Ingelogd)}";
+
+                System.Windows.MessageBox.Show("Gaat naar pagina met eigen toetsen");
+                //MainWindow.ChangePage(new AllMyTestsOverviewPage(MainWindow));
             }
 
         }
@@ -395,6 +393,31 @@ namespace LerenTypen
             AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
 
             AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+        }
+
+        /// <summary>
+        /// Hyperlink so a user can click on a testname to go to its testinformation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DG_AllTestOverview_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            string id = textBlock.Tag.ToString();
+            System.Windows.MessageBox.Show(id);
+        }
+        
+        /// <summary>
+        /// Hyperlink that sends a user to the corresponding userPage
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DG_ATO_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            string id = textBlock.Tag.ToString();
+            System.Windows.MessageBox.Show(id);
+
         }
     }
 }

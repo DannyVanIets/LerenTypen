@@ -46,12 +46,26 @@
         <DataGrid x:Name="AllTestsOverview_DataGrid_AllTestsTable" AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" Width="30*" Binding="{Binding WPFNumber}"/>
-                <DataGridTextColumn Header="Naam" Width="435*" Binding="{Binding WPFName}"/>
+                <DataGridHyperlinkColumn ContentBinding="{Binding WPFName}" Header="Naam" Width="435*">
+                    <DataGridHyperlinkColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Tag" Value="{Binding AmountOfWords}"/>
+                            <EventSetter Event="Hyperlink.Click" Handler="DG_AllTestOverview_Hyperlink_Click"/>
+                        </Style>
+                    </DataGridHyperlinkColumn.ElementStyle>
+                </DataGridHyperlinkColumn>
                 <DataGridTextColumn Header="Aantal keren gemaakt" Width="150*" Binding="{Binding WPFTimesMade}"/>
                 <DataGridTextColumn Header="Highscore" Width="100*" Binding="{Binding Highscore}"/>
                 <DataGridTextColumn Header="Aantal woorden" Width="120*" Binding="{Binding AmountOfWords}"/>
                 <DataGridTextColumn Header="Moeilijkheidsgraad" Width="125*" Binding="{Binding Difficulty}" SortMemberPath="DifficultyBinder"/>
-                <DataGridTextColumn Header="Geüpload door" Width="100*" Binding="{Binding Uploader}"/>
+                <DataGridHyperlinkColumn Header="Geüpload door" Width="100*" ContentBinding="{Binding Uploader}">
+                    <DataGridHyperlinkColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Tag" Value="{Binding AmountOfWords}"/>
+                            <EventSetter Event="Hyperlink.Click" Handler="DG_ATO_Hyperlink_Click"/>
+                        </Style>
+                    </DataGridHyperlinkColumn.ElementStyle>
+                </DataGridHyperlinkColumn>
                 <DataGridTextColumn Header="DifficultyBinder" Width="0*" Binding="{Binding DifficultyBinder}" Visibility="Hidden"/>
             </DataGrid.Columns>
         </DataGrid>
