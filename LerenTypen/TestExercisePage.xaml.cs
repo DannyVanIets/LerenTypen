@@ -281,6 +281,7 @@ namespace LerenTypen
             resumeButton.Visibility = Visibility.Collapsed;
             lineCheckLbl.Content = "";
             lineCheckLbl.Visibility = Visibility.Collapsed;
+            textInputBox.Focus();
             t1.Tick -= UpdateTimer;
             t1.Tick -= UpdateCanvas;
             t1.Tick += StartTimer;
