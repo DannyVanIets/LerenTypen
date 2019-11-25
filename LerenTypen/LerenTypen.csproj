@@ -109,6 +109,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AllMyTestsOverviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="EditAccountPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -117,6 +121,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AllMyTestsOverviewPage.xaml.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -171,6 +176,7 @@
     <Compile Include="Privacystatement.xaml.cs">
       <DependentUpon>Privacystatement.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Test.cs" />
     <Compile Include="TipPage.xaml.cs">
       <DependentUpon>TipPage.xaml</DependentUpon>
     </Compile>

@@ -25,7 +25,8 @@ namespace LerenTypen
 
         private void TestOverviewPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new TestOverviewPage(), testOverviewPageButton);
+            //ChangePage(new TestOverviewPage(), testOverviewPageButton);
+            ChangePage(new AllMyTestsOverviewPage(this), testOverviewPageButton);
         }
 
         private void TrendingTestsPageButton_Click(object sender, RoutedEventArgs e)
@@ -93,7 +94,9 @@ namespace LerenTypen
                 {
                     pageToggleButton = homePageButton;
                 }
-                else if (pageToChangeTo is TestOverviewPage)
+
+                //temp
+                else if (pageToChangeTo is AllMyTestsOverviewPage)
                 {
                     pageToggleButton = testOverviewPageButton;
                 }

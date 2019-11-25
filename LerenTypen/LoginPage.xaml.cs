@@ -50,17 +50,17 @@ namespace LerenTypen
 
             if (Database.UserExists(username.Text))
             {
-                MessageBox.Show("Deze gebruikersnaam is al in gebruik!","Gebruikersnaam in gebruik");
+                MessageBox.Show("Deze gebruikersnaam is al in gebruik!", "Gebruikersnaam in gebruik");
                 return;
             }
 
             /*Het wachtwoord en wachtwoord herhalen field worden vergeleken, als ze anders zijn krijg je melding.
             Klik op de registreer button en het wachtwoord word gehasht.*/
             if (password.Password == passwordherh.Password)
-            {  
+            {
                 string hashedpw = ComputeSha256Hash(password.Password);
-                Database.Registrer(username.Text, hashedpw.ToString(), birthdate.SelectedDate.Value.Date , firstname.Text, lastname.Text, securityvraag.Text, securityans.Text);
-                MessageBox.Show("U bent succesvol ingelogd!"+"\n"+"U wordt nu doorgestuurd naar de homepagina." , "Succes");
+                Database.Registrer(username.Text, hashedpw.ToString(), birthdate.SelectedDate.Value.Date, firstname.Text, lastname.Text, securityvraag.Text, securityans.Text);
+                MessageBox.Show("U bent succesvol ingelogd!" + "\n" + "U wordt nu doorgestuurd naar de homepagina.", "Succes");
                 username.Text = string.Empty; lastname.Text = string.Empty;
                 firstname.Text = string.Empty; password.Password = string.Empty;
                 passwordherh.Password = string.Empty; birthdate.Text = string.Empty; securityans.Text = string.Empty;

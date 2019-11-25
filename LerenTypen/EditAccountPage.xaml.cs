@@ -28,10 +28,10 @@ namespace LerenTypen
             string firstname = firstNameTextBox.Text;
             string lastname = lastNameTextbox.Text;
             string username = usernameTextBox.Text;
-            string firstname = oldPasswordTextBox.Password;
-            string firstname = newPasswordTextBox.Password;
-            string firstname = passwordRepeatTextBox.Password;
-            string firstname = firstNameTextBox.Text;
+            //string firstname = oldPasswordTextBox.Password;
+            //string firstname = newPasswordTextBox.Password;
+            //string firstname = passwordRepeatTextBox.Password;
+            //string firstname = firstNameTextBox.Text;
         }
     }
 }

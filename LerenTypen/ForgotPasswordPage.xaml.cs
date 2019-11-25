@@ -10,7 +10,7 @@ namespace LerenTypen
     {
         public ForgotPasswordPage()
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
     }
 }
