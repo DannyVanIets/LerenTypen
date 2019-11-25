@@ -57,7 +57,9 @@ namespace LerenTypen
             t1.Start();
             t1.Tick += StartTimer;
 
-            GetTest(testID);
+            // Gets the tests name and content using the given testID
+            lines = Database.GetTestContent(testID);
+            testNameLbl.Content = Database.GetTestName(testID);            
 
             // Check if lines are found
             if (!lines.Count.Equals(0))
@@ -128,16 +130,7 @@ namespace LerenTypen
             secondLine.Y2 = 10;
             secondLine.StrokeThickness = 1;
             clock.Children.Add(secondLine);
-        }
-
-        /// <summary>
-        /// gets the tests name and content using the given testID
-        /// </summary>
-        private void GetTest(int testID)
-        {
-            lines = Database.GetTestContent(testID);
-            testNameLbl.Content = Database.GetTestName(testID);
-        }
+        }       
 
         /// <summary>
         /// Timer for countdown at the beginning of the exercise
@@ -150,7 +143,7 @@ namespace LerenTypen
             // Stop startTimer event and start events for the exercise
             if (k.Equals(0))
             {
-                Overlay.Visibility = System.Windows.Visibility.Collapsed;
+                Overlay.Visibility = Visibility.Collapsed;
                 t1.Tick -= StartTimer;
                 t1.Tick += UpdateTimer;
                 t1.Tick += UpdateCanvas;
@@ -159,13 +152,14 @@ namespace LerenTypen
                 countDownLbl.Content = "";
             }
         }
+
         /// <summary>
         /// Method for showing resume button in overlay grid
         /// </summary>
         private void ShowResumeButton()
         {
-            Overlay.Visibility = System.Windows.Visibility.Visible;
-            resumeButton.Visibility = System.Windows.Visibility.Visible;
+            Overlay.Visibility = Visibility.Visible;
+            resumeButton.Visibility = Visibility.Visible;
             lineCheckLbl.Content = "Toets gepauzeerd";
             lineCheckLbl.Visibility = Visibility.Visible;
         }
@@ -220,7 +214,7 @@ namespace LerenTypen
             {
                 countDownLbl.Foreground = Brushes.Red;
             }
-            Overlay.Visibility = System.Windows.Visibility.Visible;
+            Overlay.Visibility = Visibility.Visible;
             t1.Stop();
 
             lineCheckLbl.Visibility = Visibility.Visible;
@@ -238,7 +232,7 @@ namespace LerenTypen
         private void StopShowingRightOrWrong(object sender, EventArgs e)
         {            
             t2.Stop();            
-            Overlay.Visibility = System.Windows.Visibility.Collapsed;
+            Overlay.Visibility = Visibility.Collapsed;
             lineCheckLbl.Visibility = Visibility.Collapsed;
             lineCheckLbl.Content = "";
             countDownLbl.Content = "";
@@ -252,7 +246,7 @@ namespace LerenTypen
             }
         }
 
-        private void NextLineButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void NextLineButton_Click(object sender, RoutedEventArgs e)
         {
             NextLine();
         }
@@ -260,14 +254,14 @@ namespace LerenTypen
         /// <summary>
         /// Stops timer and adds one to amount of pauses
         /// </summary>       
-        private void PauseButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
             t1.Stop();
             amountOfPauses++;
             ShowResumeButton();
         }
 
-        private void ResumeButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void ResumeButton_Click(object sender, RoutedEventArgs e)
         {
             Resume();           
         }
@@ -277,7 +271,7 @@ namespace LerenTypen
         /// </summary>
         private void Resume()
         {
-            resumeButton.Visibility = System.Windows.Visibility.Collapsed;
+            resumeButton.Visibility = Visibility.Collapsed;
             lineCheckLbl.Content = "";
             lineCheckLbl.Visibility = Visibility.Collapsed;
             t1.Tick -= UpdateTimer;
@@ -310,11 +304,11 @@ namespace LerenTypen
         }
 
         /// <summary>
-        /// Allowes user to hit enter for next line.
+        /// Allows user to hit enter for next line.
         /// </summary>
         private void TextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 NextLine();
             }
