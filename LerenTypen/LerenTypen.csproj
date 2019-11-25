@@ -196,5 +196,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\stopButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\pauseButton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\resumeButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\nextButton.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

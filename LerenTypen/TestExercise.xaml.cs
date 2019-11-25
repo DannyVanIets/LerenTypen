@@ -34,7 +34,7 @@ namespace LerenTypen
         private int testID;
         private bool testClosed;
 
-        public TestExercise()
+        public TestExercise(int testID)
         {
             InitializeComponent();
             // Bool to stop timer when test is closed
@@ -42,7 +42,7 @@ namespace LerenTypen
             textInputBox.Focus();
             // List for lines to be written out by user
             lines = new List<string>();
-            testID = 1;
+            this.testID = testID;
             
             amountOfPauses = 0;
             wrongAnswers = new List<string>();
@@ -167,6 +167,8 @@ namespace LerenTypen
         {
             Overlay.Visibility = System.Windows.Visibility.Visible;
             resumeButton.Visibility = System.Windows.Visibility.Visible;
+            lineCheckLbl.Content = "Toets gepauzeerd";
+            lineCheckLbl.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -280,6 +282,8 @@ namespace LerenTypen
         private void Resume()
         {
             resumeButton.Visibility = System.Windows.Visibility.Collapsed;
+            lineCheckLbl.Content = "";
+            lineCheckLbl.Visibility = Visibility.Collapsed;
             t1.Tick -= UpdateTimer;
             t1.Tick -= UpdateCanvas;
             t1.Tick += StartTimer;
