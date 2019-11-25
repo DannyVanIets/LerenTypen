@@ -107,6 +107,7 @@ namespace LerenTypen
                 l3.Opacity = 0.5;
                 l3.StrokeThickness = 1;
                 int rotation = 360 / 60 * i;
+                //rotates each line to form clock lines
                 l3.RenderTransform = new RotateTransform(rotation, 50, 50);
                 clock.Children.Add(l3);
             }
@@ -129,33 +130,48 @@ namespace LerenTypen
             secondLine.StrokeThickness = 1;
             clock.Children.Add(secondLine);
         }
-       
+
+        /// <summary>
+        /// gets the tests name and content using the given testID
+        /// </summary>
         private void GetTest(int testID)
         {
             lines = Database.GetTestContent(testID);
             testName.Content = Database.GetTestName(testID);
         }
+
+        /// <summary>
+        /// Timer for countdown at the beginning of the exercise
+        /// </summary>        
         private void StartTimer(object sender, EventArgs e)
         {
             countDown.Content = k-1;           
             k--;
 
+            // Stop startTimer event and start events for the exercise
             if (k.Equals(0))
             {
                 Overlay.Visibility = System.Windows.Visibility.Collapsed;
                 t1.Tick -= StartTimer;
                 t1.Tick += UpdateTimer;
                 t1.Tick += UpdateCanvas;
+                // Reset startup values
                 k = 4;
                 countDown.Content = "";
             }
         }
+        /// <summary>
+        /// Method for showing resume button in overlay grid
+        /// </summary>
         private void ShowResumeButton()
         {
             Overlay.Visibility = System.Windows.Visibility.Visible;
             resumeButton.Visibility = System.Windows.Visibility.Visible;
         }
 
+        /// <summary>
+        /// Method for updating digital timer content using timer t1
+        /// </summary>
         private void UpdateTimer(object sender, EventArgs e)
         {
             i++;
@@ -175,6 +191,10 @@ namespace LerenTypen
             }
 
         }
+
+        /// <summary>
+        /// Method for updating the clock drawn in canvas using timer t1
+        /// </summary>
         private void UpdateCanvas(object sender, EventArgs e)
         {
             int rotationS = 360 / 60 * i;
@@ -188,6 +208,9 @@ namespace LerenTypen
             
         }
 
+        /// <summary>
+        /// Method for showing if input is right or wrong after user hits enter or next, answer is shown in overlay grid.
+        /// </summary>
         private void ShowRightOrWrong(Boolean right, string input)
         {
             textInputBox.IsEnabled = false;            
@@ -210,6 +233,10 @@ namespace LerenTypen
             t2.Start();             
             
         }
+
+        /// <summary>
+        /// Method for collapsing overlay and resetting variables after timer t2 fires event in showRightOrWrong
+        /// </summary>        
         private void StopShowingRightOrWrong(object sender, EventArgs e)
         {            
             t2.Stop();            
@@ -220,6 +247,7 @@ namespace LerenTypen
             countDown.Foreground = Brushes.Black;
             textInputBox.IsEnabled = true;
             textInputBox.Focus();
+            // Checking if last line has been answered to make sure timer is not started again after ending.
             if (!testClosed)
             {
                 t1.Start();
@@ -231,6 +259,9 @@ namespace LerenTypen
             NextLine();
         }
 
+        /// <summary>
+        /// Stops timer and adds one to amount of pauses
+        /// </summary>       
         private void PauseButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             t1.Stop();
@@ -242,6 +273,10 @@ namespace LerenTypen
         {
             Resume();           
         }
+
+        /// <summary>
+        /// Uses StartTimer to resume application with countdown, startTimer adds updateTimer and updateCanvas again after countdown.
+        /// </summary>
         private void Resume()
         {
             resumeButton.Visibility = System.Windows.Visibility.Collapsed;
@@ -250,7 +285,10 @@ namespace LerenTypen
             t1.Tick += StartTimer;
             t1.Start();
         }
-
+        
+        /// <summary>
+        /// Shows message box to ask if user is sure to quit, when answered yes method CloseTest is called.
+        /// </summary>        
         private void StopButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             if (MessageBox.Show("Weet je zeker dat je de toets wilt verlaten?", "Toets verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
@@ -263,11 +301,17 @@ namespace LerenTypen
             }
         }
 
+        /// <summary>
+        /// Empty method for now (other user story)
+        /// </summary>
         private void MuteButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Allowes user to hit enter for next line.
+        /// </summary>
         private void TextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if(e.Key == System.Windows.Input.Key.Enter)
@@ -275,6 +319,11 @@ namespace LerenTypen
                 NextLine();
             }
         }
+
+        /// <summary>
+        /// Shows next line and makes sure input is checked and if answer is right or wrong is shown.
+        /// If last line has been made, CloseTest is called.
+        /// </summary>
         private void NextLine()
         {
             string input = textInputBox.Text;
@@ -294,6 +343,11 @@ namespace LerenTypen
             }
                      
         }
+
+        /// <summary>
+        /// Checks if users input equals the currentLine when trimmed, if wrong input, 
+        /// amount of wrong answers gets added by one and the line is added to the test again to be made 4 lines later.
+        /// </summary>
         private bool CheckInput(string input)
         {
             if (input.Trim().Equals(lines[currentLine].Trim()))
@@ -318,6 +372,9 @@ namespace LerenTypen
             return false;
         }
 
+        /// <summary>
+        /// Method for closing test, cannot be made fully functional yet. (to be going to resultsPage)
+        /// </summary>
         private void CloseTest()
         {
             testClosed = true;
