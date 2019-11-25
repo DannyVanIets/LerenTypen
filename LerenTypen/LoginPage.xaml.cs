@@ -12,14 +12,13 @@ namespace LerenTypen
     public partial class LoginPage : Page
     {
         private MainWindow MainWindow;
-
         public LoginPage(MainWindow mainWindow)
         {
             InitializeComponent();
             //This variable is used if you want to change the page.
             MainWindow = mainWindow;
         }
-
+        
         //This method will be used once someone starts working on the forgot password.
         private void Forgot_password_button_Click(object sender, System.Windows.RoutedEventArgs e)
         {

@@ -50,9 +50,8 @@ namespace LerenTypen
                 ChangePage(new LoginPage(this), loginPageButton);
             }
         }
-        private void AlleUsers_Click(object sender,RoutedEventArgs e)
+        private void AlleUsers_Click(object sender, RoutedEventArgs e)
         {
-            
             ChangePage(new AllUsers(this), allegebruikers);
         }
 
@@ -134,10 +133,18 @@ namespace LerenTypen
             if (Ingelogd > 0)
             {
                 loginPageButton.Content = "Uitloggen";
+
+                if (Database.IsAdmin(Ingelogd))
+                {
+                    allegebruikers.Visibility = Visibility.Visible;
+                }
             }
             else
             {
                 loginPageButton.Content = "Inloggen/registeren";
+                
+                    allegebruikers.Visibility = Visibility.Collapsed;
+                
             }
         }
     }

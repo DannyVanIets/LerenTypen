@@ -51,11 +51,44 @@ namespace LerenTypen
         }
     
       
-      
-        //Hier worden alle users opgehaald.
-        public static List<Users> GetUsers()
+      public static bool IsAdmin(int accountnumber)
         {
-            List<Users> queryResult = new List<Users>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    String query = "Select accountUsername from accounts where accountType= 2 and accountID = @accountnumber ";
+                    using (MySqlCommand Isadmin = new MySqlCommand(query, connection))
+                    {
+                        Isadmin.Parameters.AddWithValue("@accountnumber", accountnumber );
+                        connection.Open();
+                        using (MySqlDataReader reader = Isadmin.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            return false;
+        }
+
+
+        //Hier worden alle users opgehaald.
+        public static List<User> GetUsers()
+        {
+            List<User> queryResult = new List<User>();
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -73,7 +106,7 @@ namespace LerenTypen
                             {
                                 while (reader.Read())
                                 {
-                                    queryResult.Add(new Users(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4) , "Edit"));
+                                    queryResult.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4) , "Edit"));
                                 }
                                 reader.NextResult();
                             }

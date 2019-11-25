@@ -12,16 +12,16 @@ namespace LerenTypen
     public partial class AllUsers : Page
     {
 
-        List<Users> Usercontent;
+        List<User> Usercontent;
 
-        List<Users> CurrentContent = new List<Users>();
+        List<User> CurrentContent = new List<User>();
         public bool IsAdmin = false;
         public MainWindow Mainwindow { get; set; }
         public AllUsers(MainWindow mainwindow)
         {
             InitializeComponent();
             this.Mainwindow = mainwindow;
-            Usercontent = new List<Users>();
+            Usercontent = new List<User>();
 
             //de info word uit de database gehaald
             Usercontent = Database.GetUsers();
@@ -38,7 +38,7 @@ namespace LerenTypen
             MessageBox.Show(id.ToString());
         }
     }
-    class Users
+   public class User
     {
 
         public int accountnumber { get; set; }
@@ -49,7 +49,10 @@ namespace LerenTypen
         public string edit { get; set; }
 
 
-        public Users(int accountnum, string usern, int acctype, string fname, string lname, string edit)
+
+
+
+        public User(int accountnum, string usern, int acctype, string fname, string lname, string edit)
         {
             this.accountnumber = accountnum;
             this.usertype = acctype;
@@ -57,23 +60,6 @@ namespace LerenTypen
             this.firstname = fname;
             this.lastname = lname;
             this.edit = "Edit";
-        }
-
-
-        private bool IsAdmin;
-        public bool IsAdminCheck(int acctype)
-        {
-            acctype = usertype;
-
-            if(acctype == 2)
-            {
-                IsAdmin = true;
-            }
-            else
-            {
-                IsAdmin= false;
-            }
-            return IsAdmin;
         }
     }
 }
