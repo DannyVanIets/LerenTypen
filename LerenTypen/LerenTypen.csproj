@@ -126,7 +126,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-      
     <Compile Include="AllUsers.xaml.cs">
       <DependentUpon>AllUsers.xaml</DependentUpon>
     </Compile>
@@ -158,15 +157,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CreateTestPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="TrendingTestsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TestOverviewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -189,14 +180,8 @@
     <Compile Include="TipPage.xaml.cs">
       <DependentUpon>TipPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CreateTestPage.xaml.cs">
-      <DependentUpon>CreateTestPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TrendingTestsPage.xaml.cs">
       <DependentUpon>TrendingTestsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TestOverviewPage.xaml.cs">
-      <DependentUpon>TestOverviewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>

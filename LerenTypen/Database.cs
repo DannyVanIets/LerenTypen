@@ -49,7 +49,7 @@ namespace LerenTypen
             }
             return 0;
         }
-    }
+    
       
       
         //Hier worden alle users opgehaald.
