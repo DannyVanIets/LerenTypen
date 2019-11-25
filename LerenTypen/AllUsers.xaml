@@ -5,8 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LerenTypen"
       mc:Ignorable="d" 
-      d:DesignHeight="570" d:DesignWidth="1050" Background="White"
-      Title="Page1" ShowsNavigationUI="False">
+      d:DesignHeight="570" d:DesignWidth="1050" Background="White"      Title="Page1" ShowsNavigationUI="False">
 
     <Grid>
         <Label Content="Alle Accounts" HorizontalAlignment="Left" Height="70" Margin="62,37,0,0" VerticalAlignment="Top" Width="245" FontSize="32" FontWeight="Bold"/>
@@ -32,3 +31,5 @@
         </DataGrid>
      </Grid>
 </Page>
+=======
+      Title="Page1" ShowsNavigationUI="False"/>
