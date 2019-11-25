@@ -1,4 +1,4 @@
-﻿
+using System.Collections.Generic;
 using Microsoft.OData.Edm;
 using MySql.Data.MySqlClient;
 using System;
@@ -9,7 +9,47 @@ namespace LerenTypen
 {
     static class Database
     {
-        private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
+       private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
+
+        //Hier worden alle users opgehaald.
+        public static List<Users> GetUsers()
+        {
+            List<Users> queryResult = new List<Users>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("select accountID,accountUsername, accountType, accountFirstname , accountSurname from accounts");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    queryResult.Add(new Users(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4) , "Edit"));
+                                }
+                                reader.NextResult();
+                            }
+                        }
+                    }
+                }
+                return queryResult;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+    }
+         
+     private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
 
         public static bool UserExists(string user)
         {
@@ -43,8 +83,8 @@ namespace LerenTypen
 
             return false;
         }
-
-        public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
+  
+     public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
             Date res = birthday.Date;
 
