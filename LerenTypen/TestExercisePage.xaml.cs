@@ -219,7 +219,14 @@ namespace LerenTypen
 
             lineCheckLbl.Visibility = Visibility.Visible;
             lineCheckLbl.Content = lines[currentLine];
-            countDownLbl.Content = input;
+            if (input.Equals(""))
+            {
+                countDownLbl.Content = "Geen invoer";
+            }
+            else
+            {
+                countDownLbl.Content = input;
+            }
 
             t2.Interval = new TimeSpan(0, 0, 2);            
             t2.Tick += StopShowingRightOrWrong;
@@ -283,14 +290,10 @@ namespace LerenTypen
         /// <summary>
         /// Shows message box to ask if user is sure to quit, when answered yes method CloseTest is called.
         /// </summary>        
-        private void StopButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Weet je zeker dat je de toets wilt verlaten?", "Toets verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
-            {
-                
-            }
-            else
-            {
+            if (MessageBox.Show("Weet je zeker dat je de toets wilt verlaten?", "Toets verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {          
                 CloseTest();
             }
         }
@@ -306,7 +309,7 @@ namespace LerenTypen
         /// <summary>
         /// Allows user to hit enter for next line.
         /// </summary>
-        private void TextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
