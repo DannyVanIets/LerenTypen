@@ -74,7 +74,7 @@ namespace LerenTypen
             }
 
             // Make startup overlay visible for countdown
-            Overlay.Visibility = System.Windows.Visibility.Visible;
+            Overlay.Visibility = Visibility.Visible;
             DrawClock();           
         }
 
@@ -219,7 +219,7 @@ namespace LerenTypen
 
             lineCheckLbl.Visibility = Visibility.Visible;
             lineCheckLbl.Content = lines[currentLine];
-            if (input.Equals(""))
+            if (input.Trim().Equals(""))
             {
                 countDownLbl.Content = "Geen invoer";
             }
