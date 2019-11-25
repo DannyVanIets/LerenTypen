@@ -17,5 +17,19 @@ namespace LerenTypen
         public int Version { get; private set; }
         public int Difficulty { get; private set; }
         public bool IsPrivate { get; private set; }
+
+        public Test(string name, string authorUsername, int wordCount, int timesMade, double averageScore, 
+            double highscore, int version, int difficulty, bool isPrivate)
+        {
+            Name = name;
+            AuthorUsername = authorUsername;
+            WordCount = wordCount;
+            TimesMade = timesMade;
+            AverageScore = averageScore;
+            Highscore = highscore;
+            Version = version;
+            Difficulty = difficulty;
+            IsPrivate = isPrivate;
+        }
     }
 }
