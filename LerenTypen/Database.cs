@@ -47,9 +47,7 @@ namespace LerenTypen
                 return null;
             }
         }
-    }
-         
-     private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
+    
 
         public static bool UserExists(string user)
         {

@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Controls;
+using System.Windows.Documents;+
 
 namespace LerenTypen
 {
@@ -60,6 +59,8 @@ namespace LerenTypen
             this.edit = "Edit";
         }
 
+
+        private bool IsAdmin;
         public bool IsAdminCheck(int acctype)
         {
             acctype = usertype;
@@ -72,21 +73,7 @@ namespace LerenTypen
             {
                 IsAdmin= false;
             }
-            {
-
-
-            }
-
-
-
-
-        }
-    }
-    public partial class HomePage : Page
-    {
-        public HomePage()
-        {
-            InitializeComponent();
+            return IsAdmin;
         }
     }
 }
