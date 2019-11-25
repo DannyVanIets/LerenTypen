@@ -9,6 +9,7 @@ namespace LerenTypen
     class Test
     {
         public string Name { get; private set; }
+        public int Type { get; private set; }
         public string AuthorUsername { get; private set; }
         public int WordCount { get; private set; }
         public int TimesMade { get; private set; }
@@ -18,10 +19,11 @@ namespace LerenTypen
         public int Difficulty { get; private set; }
         public bool IsPrivate { get; private set; }
 
-        public Test(string name, string authorUsername, int wordCount, int timesMade, double averageScore, 
+        public Test(string name, int type, string authorUsername, int wordCount, int timesMade, double averageScore, 
             double highscore, int version, int difficulty, bool isPrivate)
         {
             Name = name;
+            Type = type;
             AuthorUsername = authorUsername;
             WordCount = wordCount;
             TimesMade = timesMade;
@@ -31,5 +33,6 @@ namespace LerenTypen
             Difficulty = difficulty;
             IsPrivate = isPrivate;
         }
+    }
     }
 }
