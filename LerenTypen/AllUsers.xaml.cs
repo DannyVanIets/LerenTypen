@@ -15,7 +15,6 @@ namespace LerenTypen
         List<User> Usercontent;
 
         List<User> CurrentContent = new List<User>();
-        public bool IsAdmin = false;
         public MainWindow Mainwindow { get; set; }
         public AllUsers(MainWindow mainwindow)
         {
@@ -47,10 +46,6 @@ namespace LerenTypen
         public string firstname { get; set; }
         public string lastname { get; set; }
         public string edit { get; set; }
-
-
-
-
 
         public User(int accountnum, string usern, int acctype, string fname, string lname, string edit)
         {
