@@ -60,7 +60,7 @@
             </Grid.RowDefinitions>
             
             <Label Content="Antwoorden" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
-            <CheckBox x:Name="onlyWrongCb" Content="Alleen foute antwoorden" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,50,0"/>
+            <CheckBox x:Name="onlyWrongCb" Content="Alleen foute antwoorden" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,50,0" Checked="OnlyWrongCb_Checked" Unchecked="OnlyWrongCb_Unchecked"/>
             
             <ListView x:Name="AnswersLv" FontSize="20" Grid.Row="1" Selector.IsSelected="False" ></ListView>
             
