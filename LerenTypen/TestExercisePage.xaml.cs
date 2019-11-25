@@ -14,7 +14,7 @@ namespace LerenTypen
     /// <summary>
     /// Interaction logic for Page1.xaml
     /// </summary>
-    public partial class TestExercise : Page
+    public partial class TestExercisePage : Page
     {
         // Integers for counters
         private int k = 4;
@@ -34,7 +34,7 @@ namespace LerenTypen
         private int testID;
         private bool testClosed;
 
-        public TestExercise(int testID)
+        public TestExercisePage(int testID)
         {
             InitializeComponent();
             // Bool to stop timer when test is closed
@@ -48,7 +48,7 @@ namespace LerenTypen
             wrongAnswers = new List<string>();
             rightAnswers = new List<string>();
             currentLine = 0;
-            wrongCounter.Content = $"Aantal fouten: {wrongAnswers.Count}";
+            wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
 
             // Timer for game and showing answer
             t1 = new DispatcherTimer();
@@ -62,8 +62,8 @@ namespace LerenTypen
             // Check if lines are found
             if (!lines.Count.Equals(0))
             {
-                testLine.Content = lines[currentLine];
-                lineNumber.Content = $"1/{lines.Count}";
+                testLineLbl.Content = lines[currentLine];
+                lineNumberLbl.Content = $"1/{lines.Count}";
             }
             else
             {
@@ -136,7 +136,7 @@ namespace LerenTypen
         private void GetTest(int testID)
         {
             lines = Database.GetTestContent(testID);
-            testName.Content = Database.GetTestName(testID);
+            testNameLbl.Content = Database.GetTestName(testID);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace LerenTypen
         /// </summary>        
         private void StartTimer(object sender, EventArgs e)
         {
-            countDown.Content = k-1;           
+            countDownLbl.Content = k-1;           
             k--;
 
             // Stop startTimer event and start events for the exercise
@@ -156,7 +156,7 @@ namespace LerenTypen
                 t1.Tick += UpdateCanvas;
                 // Reset startup values
                 k = 4;
-                countDown.Content = "";
+                countDownLbl.Content = "";
             }
         }
         /// <summary>
@@ -184,11 +184,11 @@ namespace LerenTypen
 
             if (i < 10)
             {
-                timer.Content = $"{j}:0{i}";
+                timerLbl.Content = $"{j}:0{i}";
             }
             else
             {
-                timer.Content = $"{j}:{i}";
+                timerLbl.Content = $"{j}:{i}";
             }
         }
 
@@ -214,18 +214,18 @@ namespace LerenTypen
         {
             textInputBox.IsEnabled = false;            
             if (right){
-                countDown.Foreground = Brushes.Green;                
+                countDownLbl.Foreground = Brushes.Green;                
             }
             else
             {
-                countDown.Foreground = Brushes.Red;
+                countDownLbl.Foreground = Brushes.Red;
             }
             Overlay.Visibility = System.Windows.Visibility.Visible;
             t1.Stop();
 
             lineCheckLbl.Visibility = Visibility.Visible;
             lineCheckLbl.Content = lines[currentLine];
-            countDown.Content = input;
+            countDownLbl.Content = input;
 
             t2.Interval = new TimeSpan(0, 0, 2);            
             t2.Tick += StopShowingRightOrWrong;
@@ -241,8 +241,8 @@ namespace LerenTypen
             Overlay.Visibility = System.Windows.Visibility.Collapsed;
             lineCheckLbl.Visibility = Visibility.Collapsed;
             lineCheckLbl.Content = "";
-            countDown.Content = "";
-            countDown.Foreground = Brushes.Black;
+            countDownLbl.Content = "";
+            countDownLbl.Foreground = Brushes.Black;
             textInputBox.IsEnabled = true;
             textInputBox.Focus();
             // Checking if last line has been answered to make sure timer is not started again after ending.
@@ -314,7 +314,7 @@ namespace LerenTypen
         /// </summary>
         private void TextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if(e.Key == System.Windows.Input.Key.Enter)
+            if (e.Key == System.Windows.Input.Key.Enter)
             {
                 NextLine();
             }
@@ -334,8 +334,8 @@ namespace LerenTypen
 
             if (currentLine < lines.Count)
             {                
-                testLine.Content = lines[currentLine];
-                lineNumber.Content = $"{currentLine+1}/{lines.Count}";
+                testLineLbl.Content = lines[currentLine];
+                lineNumberLbl.Content = $"{currentLine+1}/{lines.Count}";
             }
             else
             {
@@ -357,7 +357,7 @@ namespace LerenTypen
             else
             {
                 wrongAnswers.Add(input);
-                wrongCounter.Content = $"Aantal fouten: {wrongAnswers.Count}";
+                wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
                 if (currentLine + 4 < lines.Count)
                 {
                     lines.Insert(currentLine + 4, lines[currentLine]);

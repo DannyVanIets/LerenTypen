@@ -131,7 +131,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestExercise.xaml">
+    <Page Include="TestExercisePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -158,8 +158,8 @@
     <Compile Include="TipPage.xaml.cs">
       <DependentUpon>TipPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestExercise.xaml.cs">
-      <DependentUpon>TestExercise.xaml</DependentUpon>
+    <Compile Include="TestExercisePage.xaml.cs">
+      <DependentUpon>TestExercisePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="TrendingTestsPage.xaml.cs">
       <DependentUpon>TrendingTestsPage.xaml</DependentUpon>
