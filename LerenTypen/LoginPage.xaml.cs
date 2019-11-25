@@ -21,7 +21,7 @@ namespace LerenTypen
             MainWindow = mainWindow;
         }
 
-        static string ComputeSha256Hash(string plainData)
+        public string ComputeSha256Hash(string plainData)
         {
             // Create a SHA256   
             using (SHA256 sha256Hash = SHA256.Create())
