@@ -13,13 +13,13 @@ namespace LerenTypen
     {
         private MainWindow MainWindow;
         private Account Account;
-        private Classes.Hashen Hashen;
+        private Classes.Converter Converter;
 
         public EditAccountPage(MainWindow mainWindow)
         {
             InitializeComponent();
             MainWindow = mainWindow;
-            Hashen = new Classes.Hashen();
+            Converter = new Classes.Converter();
 
             if (mainWindow.Ingelogd > 0)
             {
@@ -29,7 +29,7 @@ namespace LerenTypen
                 lastNameTextbox.Text = Account.Surname;
 
                 usernameTextBox.Text = Account.UserName;
-                birthdateDatePicker.DisplayDate = Account.Birthdate;
+                birthdateDatePicker.SelectedDate = Account.Birthdate;
 
                 securityQuestionComboBox.Text = Account.SecurityQuestion;
                 securityAnswerTextBox.Text = Account.SecurityAnswer;
@@ -61,9 +61,7 @@ namespace LerenTypen
             string newPassword = newPasswordTextBox.Password;
             string newPasswordRepeat = passwordRepeatTextBox.Password;
 
-            DateTime? birthdate = birthdateDatePicker.SelectedDate;
-            Console.WriteLine(birthdate.ToString());
-            Console.WriteLine(birthdateDatePicker.DisplayDate);
+            DateTime birthdate = (DateTime)birthdateDatePicker.SelectedDate;
             string securityQuestion = securityQuestionComboBox.Text;
             string securityAnswer = securityAnswerTextBox.Text;
 
@@ -90,7 +88,7 @@ namespace LerenTypen
                 //Here we are gonna give errors for the password
                 MessageBox.Show("U moet een nieuw wachtwoord en herhaling van het nieuwe wachtwoord invoeren!", "Error");
             }
-            else if (Hashen.ComputeSha256Hash(oldPassword) != Database.GetPasswordFromAccount(MainWindow.Ingelogd))
+            else if (Converter.ComputeSha256Hash(oldPassword) != Database.GetPasswordFromAccount(MainWindow.Ingelogd))
             {
                 MessageBox.Show("Dat is niet het goede oude wachtwoord!", "Error");
             }
@@ -101,7 +99,7 @@ namespace LerenTypen
             else
             {
                 //Hier wordt alles geüpdate!
-                string hashedNewPassword = Hashen.ComputeSha256Hash(newPassword);
+                string hashedNewPassword = Converter.ComputeSha256Hash(newPassword);
 
                 if (Database.UpdateAccountWithPassword(MainWindow.Ingelogd, username, hashedNewPassword, birthdate, firstname, surname, securityQuestion, securityAnswer))
                 {

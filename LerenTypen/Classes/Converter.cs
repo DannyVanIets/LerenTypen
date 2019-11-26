@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LerenTypen.Classes
 {
-    public class Hashen
+    public class Converter
     {
         public string ComputeSha256Hash(string plainData)
         {

@@ -28,6 +28,9 @@
         <Label FontSize="32" Margin="20,5,-0.4,0.2" 
                FontWeight="Bold" Grid.Row="0" Grid.ColumnSpan="2">Account aanpassen</Label>
 
+
+        <Label FontSize="11" Margin="20,55,0,25" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2">Je hoeft alleen je oude wachtwoord in te vullen als je een nieuw wachtwoord wilt instellen!</Label>
+
         <Label Grid.Column="0" Margin="10,75,10.2,30" Grid.RowSpan="3">Voornaam:</Label>
         <TextBox x:Name="firstNameTextBox" Height="20" Width="300" Grid.Row="1" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="175,4.8,0,5.6"/>
 
@@ -44,6 +47,10 @@
         <Label Grid.Row="5" Grid.Column="0" Margin="10,0.2,10.2,0.2">Nieuw wachtwoord:</Label>
         <PasswordBox Name="newPasswordTextBox" MaxLength="25" PasswordChar="*" Height="20" Width="162"
                      Grid.Row="5" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="175,5.2,0,5.2"/>
+
+        <Label Grid.Row="5" Grid.Column="0" Margin="10,30.2,0.2,29.2" Content="Nieuw wachtwoord heraling:" Grid.RowSpan="3"/>
+        <PasswordBox x:Name="passwordRepeatTextBox" MaxLength="25" PasswordChar="*" Height="20" Width="162"
+            Grid.Row="6" HorizontalAlignment="Left" Margin="175,4.8,0,5.2" Grid.ColumnSpan="2"/>
 
         <Label Grid.Row="6" Grid.Column="0" Margin="10,29.8,10.2,29.2" Grid.RowSpan="3">Geboortedatum:</Label>
         <DatePicker x:Name="birthdateDatePicker" Height="25" Width="162" 
@@ -66,8 +73,5 @@
         <Button x:Name="deleteAccountButton" Grid.Row="9" Grid.Column="1" Margin="0,50.8,10.6,73.2"
                 Width="125" Height="20" HorizontalAlignment="Right" 
                 Background="Red" Foreground="White" MouseEnter="DeleteAccountButton_MouseEnter" MouseLeave="DeleteAccountButton_MouseLeave">Verwijder account</Button>
-        <Label Grid.Row="5" Grid.Column="0" Margin="10,30.2,0.2,29.2" Content="Nieuw wachtwoord heraling:" Grid.RowSpan="3"/>
-        <PasswordBox x:Name="passwordRepeatTextBox" MaxLength="25" PasswordChar="*" Height="20" Width="162"
-            Grid.Row="6" HorizontalAlignment="Left" Margin="175,4.8,0,5.2" Grid.ColumnSpan="2"/>
     </Grid>
 </Page>
