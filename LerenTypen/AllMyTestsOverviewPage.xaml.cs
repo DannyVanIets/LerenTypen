@@ -413,7 +413,10 @@ namespace LerenTypen
 
         private void DG_Checkbox_Check(object sender, RoutedEventArgs e)
         {
-            Database.UpdateToPublic(MainWindow.Ingelogd);
+
+            
+            Database.UpdateToPublic(4);
+            
             
             //AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
 
@@ -422,7 +425,22 @@ namespace LerenTypen
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataGrid ThisGrid = (DataGrid)sender;
-           // Database.UpdateToPublic(MainWindow.Ingelogd);
+            bool check = (bool)ThisGrid.SelectedItem;
+            MessageBox.Show(check.ToString());
+
+            // Database.UpdateToPublic(MainWindow.Ingelogd);
         }
+
+        //SelectionChanged="DataGrid_SelectionChanged"
+
+        //        <DataGridTemplateColumn Header = "Is privé" Width="60*">
+        //    <DataGridTemplateColumn.CellTemplate>
+        //        <DataTemplate>
+        //            <CheckBox IsChecked = "{Binding Path=IsPrivate, UpdateSourceTrigger=PropertyChanged}" Name="theCheckbox" />
+        //        </DataTemplate>
+        //    </DataGridTemplateColumn.CellTemplate>
+        //</DataGridTemplateColumn>
+
+
     }
 }
