@@ -125,6 +125,41 @@ namespace LerenTypen
             }
         }
 
+        public static List<string> GetTestContent(int testID)
+        {
+            List<string> results = new List<string>();
+            try
+            {
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("Select content from testContent Where testID = @testID");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+
+                        command.Parameters.AddWithValue("@testID", testID);
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                results.Add(reader.GetString(0));
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return results;
+        }
+
         public static List<TestResult> GetAllTestResultsFromAccount(int accountID, int testID)
         {
             List<TestResult> results = new List<TestResult>();
@@ -137,7 +172,7 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // this query returns all the content from a given testId
-                    sb.Append($"SELECT testResultID, testResultsDate, wordPerMinute FROM testresults WHERE testID={testID} AND accountID={accountID}");
+                    sb.Append($"SELECT testResultID, testResultsDate, wordsEachMinute FROM testresults WHERE testID={testID} AND accountID={accountID}");
 
                     string mySql = sb.ToString();
 
@@ -162,7 +197,7 @@ namespace LerenTypen
             catch (MySqlException e)
             {
                 System.Console.WriteLine(e.Message);
-                return 0;
+                return null;
             }
         }
 

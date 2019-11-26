@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace LerenTypen
 {
@@ -32,6 +34,25 @@ namespace LerenTypen
 
             testVersionLabel.Content = $"Versie {test.Version} - {test.CreatedDateTime}";
 
+            string testTypeString = "";
+            switch (test.Type)
+            {
+                case 0:
+                    testTypeString = "woorden";
+                    break;
+                case 1:
+                    testTypeString = "zinnen";
+                    break;
+            }
+            testContentTextBox.AppendText($"Type toets: {testTypeString}\n");
+
+            testContentTextBox.AppendText("\nOpgaven:\n");
+            List<string> testContent = Database.GetTestContent(testID);
+            foreach (string line in testContent)
+            {
+                testContentTextBox.AppendText($"{line}\n");
+            }
+
             usernameLinkText.Text = test.AuthorUsername;
             usernameLink.Click += (s, e) =>
             {
@@ -41,7 +62,21 @@ namespace LerenTypen
             amountOfWordsLabel.Content = test.WordCount;
             timesMadeLabel.Content = test.TimesMade;
             avarageScoreLabel.Content = $"{test.AverageScore}%";
-            highscoreLabel.Content = $"{test.Highscore}%";         
+            highscoreLabel.Content = $"{test.Highscore}%";
+
+            myResultsListView.ItemsSource = Database.GetAllTestResultsFromAccount(test.AuthorID, testID);
+        }
+
+        private void MyResultsListView_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ListViewItem listViewItem = sender as ListViewItem;
+
+            if (listViewItem != null)
+            {
+                TestResult clickedResult = listViewItem.DataContext as TestResult;
+                MessageBox.Show(clickedResult.ID.ToString());
+                // Go to result page, use clickedResult.ID
+            }
         }
     }
 }

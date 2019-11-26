@@ -31,6 +31,8 @@
         <Label x:Name="testVersionLabel" HorizontalAlignment="Right" VerticalAlignment="Center" 
                Grid.Column="3" Margin="0,0,20,0">Toetsversie</Label>
 
+        <TextBox x:Name="testContentTextBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" IsReadOnly="True" Margin="0,0,20,10"/>
+
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="20,0,0,0">
             <StackPanel Orientation="Horizontal">
                 <Label FontWeight="Bold">Auteur:</Label>
@@ -62,12 +64,21 @@
             </StackPanel>
         </StackPanel>
 
-        <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,0,0">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Mijn resultaten" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-
+        <ListView x:Name="myResultsListView" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,0,0">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="Mijn resultaten" Width="480"/>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseDoubleClick" Handler="MyResultsListView_PreviewMouseDoubleClick"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+        
         <DataGrid Grid.Row="2" Grid.Column="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Snelste typers" Width="*"/>

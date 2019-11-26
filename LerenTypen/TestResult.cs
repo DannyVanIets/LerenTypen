@@ -14,5 +14,10 @@ namespace LerenTypen
             DateTime = dateTime;
             WordsPerMinute = wordsPerMinute;
         }
+
+        public override string ToString()
+        {
+            return $"{DateTime.ToString()}: {WordsPerMinute} woorden per minuut";
+        }
     }
 }
