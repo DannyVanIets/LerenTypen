@@ -100,7 +100,7 @@ namespace LerenTypen
             if (password.Password == passwordherh.Password)
             {  
                 string hashedpw = ComputeSha256Hash(password.Password);
-                Database.Registrer(username.Text, hashedpw.ToString(), birthdate.SelectedDate.Value.Date , firstname.Text, lastname.Text, securityvraag.Text, securityans.Text);
+                Database.Register(username.Text, hashedpw.ToString(), birthdate.SelectedDate.Value.Date , firstname.Text, lastname.Text, securityvraag.Text, securityans.Text);
                 MessageBox.Show("U bent succesvol geregistreerd!" , "Succesvol geregistreerd!");
                 username.Text = string.Empty; lastname.Text = string.Empty;
                 firstname.Text = string.Empty; password.Password = string.Empty;

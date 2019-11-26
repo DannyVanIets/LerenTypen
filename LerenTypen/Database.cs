@@ -1,19 +1,16 @@
 using System.Collections.Generic;
-using Microsoft.OData.Edm;
 using MySql.Data.MySqlClient;
 using System;
 using System.Text;
 using System.Windows;
+using Microsoft.OData.Edm;
 
 namespace LerenTypen
 {
     static class Database
     {
-
         private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
 
-      
-      
        public static int GetAccountIDForLogin(string accountUsername, string password)
         {
             try
@@ -22,12 +19,9 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-
                     // We only return the accountID, in case the logged in user's account information changes. That way nothing that may change is stored. ID's will always stay the same. We also check if the account is not archived.
                     sb.Append($"SELECT `accountID` FROM accounts WHERE accountUsername = @accountusername AND accountPassword = @accountpassword AND archived = 0;");
-
                     string MySql = sb.ToString();
-
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@accountusername", accountUsername);
@@ -49,9 +43,7 @@ namespace LerenTypen
             }
             return 0;
         }
-    
-      
-      public static bool IsAdmin(int accountnumber)
+    public static bool IsAdmin(int accountnumber)
         {
             try
             {
@@ -121,8 +113,7 @@ namespace LerenTypen
                 return null;
             }
         }
-    
-
+   
         public static bool UserExists(string user)
         {
             try
@@ -156,10 +147,9 @@ namespace LerenTypen
             return false;
         }
   
-     public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
+     public static void Register(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
             Date res = birthday.Date;
-
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
