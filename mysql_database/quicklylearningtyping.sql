@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 25 nov 2019 om 15:03
--- Serverversie: 10.1.35-MariaDB
--- PHP-versie: 7.2.9
+-- Gegenereerd op: 26 nov 2019 om 14:09
+-- Serverversie: 10.1.36-MariaDB
+-- PHP-versie: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -69,7 +69,10 @@ CREATE TABLE `testcontent` (
 INSERT INTO `testcontent` (`testContentID`, `testID`, `content`) VALUES
 (1, 1, 'Piet'),
 (2, 1, 'Klaas'),
-(3, 1, 'Jan');
+(3, 1, 'Jan'),
+(4, 2, 'test'),
+(5, 2, 'tdfewdety'),
+(6, 2, 'ytfiwewhowheiwhf');
 
 -- --------------------------------------------------------
 
@@ -122,7 +125,7 @@ CREATE TABLE `tests` (
   `isPrivate` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = nee, publiek, 1 = ja, private',
   `archived` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = false, niet gearchiveerd, 1 = true, gearchiveerd',
   `timesMade` int(11) DEFAULT '0',
-  `highscore` int(11) DEFAULT NULL,
+  `highscore` int(11) DEFAULT '0',
   `version` int(11) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -131,7 +134,8 @@ CREATE TABLE `tests` (
 --
 
 INSERT INTO `tests` (`testID`, `accountID`, `testName`, `testType`, `testDifficulty`, `createDate`, `isPrivate`, `archived`, `timesMade`, `highscore`, `version`) VALUES
-(1, 1, 'Leren oefenen met namen!', 0, 0, '0000-00-00', 0, 0, 0, 0, 1);
+(1, 1, 'Leren oefenen met namen!', 0, 0, '2019-11-26', 0, 0, 0, 0, 1),
+(2, 3, 'Test', 0, 2, '2019-11-26', 0, 0, 0, NULL, 1);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -186,7 +190,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT voor een tabel `testcontent`
 --
 ALTER TABLE `testcontent`
-  MODIFY `testContentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `testContentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT voor een tabel `testresultcontent`
@@ -204,7 +208,7 @@ ALTER TABLE `testresults`
 -- AUTO_INCREMENT voor een tabel `tests`
 --
 ALTER TABLE `tests`
-  MODIFY `testID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `testID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
