@@ -40,8 +40,8 @@ namespace LerenTypen
 
             amountOfWordsLabel.Content = test.WordCount;
             timesMadeLabel.Content = test.TimesMade;
-            avarageScoreLabel.Content = $"{test.AverageScore} %";
-            highscoreLabel.Content = $"{test.Highscore} %";         
+            avarageScoreLabel.Content = $"{test.AverageScore}%";
+            highscoreLabel.Content = $"{test.Highscore}%";         
         }
     }
 }

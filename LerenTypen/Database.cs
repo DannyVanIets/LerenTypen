@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace LerenTypen
@@ -116,6 +117,47 @@ namespace LerenTypen
                     }
                 }
                 return amountOfWords;
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+                return 0;
+            }
+        }
+
+        public static List<TestResult> GetAllTestResultsFromAccount(int accountID, int testID)
+        {
+            List<TestResult> results = new List<TestResult>();
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    // this query returns all the content from a given testId
+                    sb.Append($"SELECT testResultID, testResultsDate, wordPerMinute FROM testresults WHERE testID={testID} AND accountID={accountID}");
+
+                    string mySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int id = Convert.ToInt32(reader[0]);
+                                DateTime dateTime = (DateTime)reader[1];
+                                int wordsPerMin = Convert.ToInt32(reader[2]);
+
+                                results.Add(new TestResult(id, dateTime, wordsPerMin));
+                            }
+                        }
+                    }
+                }
+
+                return results;
             }
             catch (MySqlException e)
             {

@@ -62,15 +62,9 @@
             </StackPanel>
         </StackPanel>
 
-        <DataGrid Grid.Row="2" Grid.Column="0" Margin="20,0,0,0">
+        <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,0,0">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Mijn beste resultaten W/S" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <DataGrid Grid.Row="2" Grid.Column="1">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Mijn beste resultaten %" Width="*"/>
+                <DataGridTextColumn Header="Mijn resultaten" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 

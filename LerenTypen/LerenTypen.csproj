@@ -159,6 +159,7 @@
     <Compile Include="TestInfoPage.xaml.cs">
       <DependentUpon>TestInfoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestResult.cs" />
     <Compile Include="TipPage.xaml.cs">
       <DependentUpon>TipPage.xaml</DependentUpon>
     </Compile>
