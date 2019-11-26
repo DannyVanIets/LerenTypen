@@ -7,9 +7,18 @@ namespace LerenTypen
     /// </summary>
     public partial class HomePage : Page
     {
+        private MainWindow mainWindow;
+
         public HomePage()
         {
             InitializeComponent();
+        }
+
+        public HomePage(MainWindow mainWindow)
+        {
+            InitializeComponent();
+            this.mainWindow = mainWindow;
+
         }
     }
 }

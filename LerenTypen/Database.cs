@@ -11,7 +11,7 @@ namespace LerenTypen
     {
         private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
 
-       public static int GetAccountIDForLogin(string accountUsername, string password)
+        public static int GetAccountIDForLogin(string accountUsername, string password)
         {
             try
             {
@@ -43,8 +43,81 @@ namespace LerenTypen
             }
             return 0;
         }
-    public static bool IsAdmin(int accountnumber)
+
+        public static Account GetUserAccount(int accountID)
         {
+            Account account = new Account();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+
+                    connection.Open();
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("SELECT accountFirstName, accountSurname, accountUsername, accountBirthdate FROM accounts WHERE accountID = @id AND archived = 0");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", accountID);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                account = new Account((string)reader[0], (string)reader[1], (string)reader[2],(DateTime)reader[3]);
+                            }
+                        }
+                    }
+                    connection.Close();
+                    return account;
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return null;
+        }
+
+        public static bool AdminUpdateAccount(int accountID, string userName, DateTime birthday, string firstName, string surname)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("UPDATE accounts SET accountFirstname = @firstname, accountSurname = @surname, accountUsername = @username, accountBirthdate = @birthday WHERE accountID = @id AND archived = 0");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", accountID);
+                        command.Parameters.AddWithValue("@firstname", firstName);
+                        command.Parameters.AddWithValue("@surname", surname);
+                        command.Parameters.AddWithValue("@username", userName);
+                        command.Parameters.AddWithValue("@birthday", birthday);
+
+                        command.ExecuteReader();
+                    }
+                    connection.Close();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return false;
+        }
+
+
+        public static bool IsAdmin(int accountnumber)
+        {
+
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -52,7 +125,7 @@ namespace LerenTypen
                     String query = "Select accountUsername from accounts where accountType= 2 and accountID = @accountnumber ";
                     using (MySqlCommand Isadmin = new MySqlCommand(query, connection))
                     {
-                        Isadmin.Parameters.AddWithValue("@accountnumber", accountnumber );
+                        Isadmin.Parameters.AddWithValue("@accountnumber", accountnumber);
                         connection.Open();
                         using (MySqlDataReader reader = Isadmin.ExecuteReader())
                         {
@@ -98,7 +171,7 @@ namespace LerenTypen
                             {
                                 while (reader.Read())
                                 {
-                                    queryResult.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4) , "Edit"));
+                                    queryResult.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4), "Edit"));
                                 }
                                 reader.NextResult();
                             }
@@ -113,7 +186,7 @@ namespace LerenTypen
                 return null;
             }
         }
-   
+
         public static bool UserExists(string user)
         {
             try
@@ -135,7 +208,7 @@ namespace LerenTypen
                             {
                                 return false;
                             }
-                       }
+                        }
                     }
                 }
             }
@@ -145,8 +218,8 @@ namespace LerenTypen
             }
             return false;
         }
-  
-     public static void Register(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
+
+        public static void Register(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
             Date res = birthday.Date;
             try

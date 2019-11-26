@@ -11,8 +11,8 @@ namespace LerenTypen
     /// </summary>
     public partial class AllUsers : Page
     {
-       private List<User> Usercontent;
-       List<User> CurrentContent = new List<User>();
+        private List<User> Usercontent;
+        List<User> CurrentContent = new List<User>();
         public MainWindow Mainwindow { get; set; }
         public AllUsers(MainWindow mainwindow)
         {
@@ -30,10 +30,12 @@ namespace LerenTypen
         {
             TextBlock textBlock = (TextBlock)sender;
             string id = textBlock.Tag.ToString();
-            MessageBox.Show(id.ToString());
+            Database.GetUserAccount(int.Parse(id));
+            var newWindow = new AdminUserPanel(int.Parse(id));
+            newWindow.Show();
         }
     }
-   public class User
+    public class User
     {
         public int accountnumber { get; set; }
         public int usertype { get; set; }

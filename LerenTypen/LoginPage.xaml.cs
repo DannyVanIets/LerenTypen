@@ -17,9 +17,8 @@ namespace LerenTypen
             InitializeComponent();
             //This variable is used if you want to change the page.
             MainWindow = mainWindow;
-        }
-        
-        //This method will be used once someone starts working on the forgot password.
+        }  
+       //This method will be used once someone starts working on the forgot password.
         private void Forgot_password_button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             MainWindow.ChangePage(new ForgotPasswordPage());
@@ -123,8 +122,7 @@ namespace LerenTypen
             string geboorte = birthdate.Text;
             string securtiyvraag = securityvraag.Text;
             string securityans = securityvraag.Text;
-        }
-        
+        }  
         
         private void CheckBox_unChecked(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -133,7 +131,6 @@ namespace LerenTypen
                 accountmaken.IsEnabled = false;
             }
         }
-        
         private void CheckBox_Checked(object sender, System.Windows.RoutedEventArgs e)
         {
             if (checkboxakkoord.IsChecked == true)
