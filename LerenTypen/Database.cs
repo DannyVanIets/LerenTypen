@@ -133,9 +133,9 @@ namespace LerenTypen
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("SELECT testName, testType, accountID, timesMade, highscore, version, testDifficulty, isPrivate, createDate FROM tests WHERE testID = @testID");
-                    string MySql = sb.ToString();
+                    string mySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
                     {
                         command.Parameters.AddWithValue("@testID", testID);
 
@@ -151,9 +151,9 @@ namespace LerenTypen
                                 int timesMade = Convert.ToInt32(reader[3]);
                                 double highscore = Convert.ToDouble(reader[4]);
                                 int version = Convert.ToInt32(reader[5]);
-                                int testDifficulty = Convert.ToInt32(reader[5]);
-                                bool isPrivate = Convert.ToBoolean(reader[6]);
-                                string createdDateTime = (string)reader[7];
+                                int testDifficulty = Convert.ToInt32(reader[6]);
+                                bool isPrivate = Convert.ToBoolean(reader[7]);
+                                string createdDateTime = reader[8].ToString();
 
                                 return new Test(testName, testType, authorUsername, authorID, wordCount, timesMade, 0, highscore, version, testDifficulty, isPrivate, createdDateTime);
                             }
