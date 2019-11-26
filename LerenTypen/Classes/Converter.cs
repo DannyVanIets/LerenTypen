@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace LerenTypen.Classes
 {
+    //This class is being used to convert for example strings to hashed passwords.
     public class Converter
     {
         public string ComputeSha256Hash(string plainData)

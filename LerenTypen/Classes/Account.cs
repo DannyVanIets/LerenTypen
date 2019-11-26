@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LerenTypen
 {
+    //In this class we will store all the information from an account that we can later one use in EditAccountPage to fill in the textboxes with all the correct information.
     class Account
     {
         public string UserName { get; set; }

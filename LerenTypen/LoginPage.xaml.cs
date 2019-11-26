@@ -18,8 +18,9 @@ namespace LerenTypen
         public LoginPage(MainWindow mainWindow)
         {
             InitializeComponent();
-            //This variable is used if you want to change the page.
+            //This Class is used if you want to change the page.
             MainWindow = mainWindow;
+            //This Class is used to Hash the password
             Converter = new Classes.Converter();
         }
 

@@ -191,8 +191,11 @@ namespace LerenTypen
             return "";
         }
 
+        //In this query we will get all the information from one account. This is used in EditAccountPage to fill in the textboxes with the existing information.
+        //Password, type and if it's archived is not selected.
         public static Account GetAllAccountInformationExceptPassword(int accountID)
         {
+            //Everything will be stored in the class Account so that it can be easily used later in the EditAccountPage.
             Account account = new Account();
 
             try
@@ -213,6 +216,7 @@ namespace LerenTypen
                         {
                             while (reader.Read())
                             {
+                                //We convert everything to strings, except for the birthdate so we can easily store it in a textbox.
                                 account = new Account((string)reader[0], (DateTime)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], (string)reader[5]);
                             }
                         }
@@ -228,6 +232,8 @@ namespace LerenTypen
             return null;
         }
 
+        //In this query we will get the hashed password from an account. This is used in EditAccountPage to check if the old password is correctly filled in before
+        //we update the password with a new one.
         public static string GetPasswordFromAccount(int accountID)
         {
             string results = "";
@@ -264,6 +270,8 @@ namespace LerenTypen
             return results;
         }
 
+        //In this query we will update an account with everything from EditAccountPage, except the password.
+        //We also return a bool to check if the account is succesfully updated or not.
         public static bool UpdateAccountWithoutPassword(int accountID, string userName, DateTime birthday, string firstName, string surname, string securityQuestion, string securityAnswer)
         {
             try
@@ -289,6 +297,7 @@ namespace LerenTypen
                         command.Parameters.AddWithValue("@securityquestion", securityQuestion);
                         command.Parameters.AddWithValue("@securityanswer", securityAnswer);
 
+                        //command.executeReader() is used to launch the query to the database.
                         command.ExecuteReader();
                     }
                     connection.Close();
@@ -302,6 +311,8 @@ namespace LerenTypen
             return false;
         }
 
+        //Same query as UpdateAccountWithoutPassword, except this one also updated the password. Also used in EditAccountPage.
+        //We also return a bool to check if the account is succesfully updated or not.
         public static bool UpdateAccountWithPassword(int accountID, string userName, string password, DateTime birthday, string firstName, string surname, string securityQuestion, string securityAnswer)
         {
             try
