@@ -11,21 +11,21 @@ namespace LerenTypen
     /// </summary>
     public partial class AllUsers : Page
     {
-        List<User> Usercontent;
-        List<User> CurrentContent = new List<User>();
+       private List<User> Usercontent;
+       List<User> CurrentContent = new List<User>();
         public MainWindow Mainwindow { get; set; }
         public AllUsers(MainWindow mainwindow)
         {
             InitializeComponent();
             this.Mainwindow = mainwindow;
             Usercontent = new List<User>();
-            //de info word uit de database gehaald
+            //Info loaded in from database
             Usercontent = Database.GetUsers();
             DGV1.ItemsSource = Usercontent;
             DGV1.Items.Refresh();
             CurrentContent = Usercontent;
         }
-        //hier word de userid meegegven wanneer op edit word geklikt
+        //This gives UserID when Edit is clicked
         private void DG_Hyperlink_click(object sender, System.Windows.RoutedEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;

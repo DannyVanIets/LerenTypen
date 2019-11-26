@@ -143,7 +143,6 @@ namespace LerenTypen
             {
                 Console.WriteLine(e.ToString());
             }
-
             return false;
         }
   
