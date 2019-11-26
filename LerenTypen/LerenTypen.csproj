@@ -114,10 +114,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="EditAccountPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -127,12 +123,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Database.cs" />
-    <Compile Include="ForgotPasswordPage.xaml.cs">
-      <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EditAccountPage.xaml.cs">
-      <DependentUpon>EditAccountPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

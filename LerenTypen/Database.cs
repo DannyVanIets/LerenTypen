@@ -1,5 +1,4 @@
-﻿using Microsoft.OData.Edm;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -294,7 +293,7 @@ namespace LerenTypen
 
         public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
-            Date res = birthday.Date;
+            DateTime res = birthday.Date;
 
             try
             {
