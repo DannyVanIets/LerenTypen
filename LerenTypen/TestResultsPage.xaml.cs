@@ -11,40 +11,47 @@ namespace LerenTypen
     {
         private int testID;
         private MainWindow m;
-        private Dictionary<int, string> wrongAnswers;
-        private List<string> rightAnswers;
-        private List<string> lines;
-        private int amountOfPauses;
-        private int amountOfSeconds;
-        private int amountOfMinutes;
-        public TestResultsPage(int testID, MainWindow m, Dictionary<int, string> wrongAnswers, List<string> lines, List<string> rightAnswers, int amountOfPauses, int amountOfMinutes, int amountOfSeconds)
+        private List<string> wrongAnswers;
+        private List<string> hadToBe;
+        private List<string> rightAnswers;        
+        private int accountID = 1;
+        public TestResultsPage(int testID, MainWindow m)
         {
             InitializeComponent();
             this.testID = testID;
             this.m = m;
-            this.wrongAnswers = wrongAnswers;
-            this.rightAnswers = rightAnswers;
-            this.lines = lines;
-            this.amountOfSeconds = amountOfSeconds;
-            this.amountOfMinutes = amountOfMinutes;
-            this.amountOfPauses = amountOfPauses;
-            FillAnswerList(false);
 
-            /*List<int> testInformation = Database.GetTestInformation(testID);
-            foreach(int info in testInformation)
+            wrongAnswers = new List<string>();
+            hadToBe = new List<string>();
+            rightAnswers = new List<string>();
+
+            
+            FillAnswerList(false);
+            GetResults();
+            List<int> testInformation = Database.GetTestInformation(testID);
+            string difficulty;
+            if (testInformation[1].Equals(0))
             {
-                Console.WriteLine(info);
+                difficulty = "Makkelijk";
+            }else if (testInformation[1].Equals(1))
+            {
+                difficulty = "Midden";
             }
-            */
+            else
+            {
+                difficulty = "Moeilijk";
+            }
+            difficultyLbl.Content = difficulty;
         }
 
         private void FillAnswerList(bool check)
         {
             AnswersLv.Items.Clear();
-
-            foreach (KeyValuePair<int, string> answer in wrongAnswers)
-            {
-                AnswersLv.Items.Add($"{answer.Value} \nJuiste antwoord: {lines[answer.Key]}");
+            int i = 0;
+            foreach (string answer in wrongAnswers)
+            {                
+                AnswersLv.Items.Add($"{answer} \nJuiste antwoord: {hadToBe[i]}");
+                i++;
             }
             if (!check)
             {
@@ -70,46 +77,39 @@ namespace LerenTypen
             FillAnswerList(false);
         }
 
-        private void CreateResults()
+        private void GetResults()
         {
+            string percentageRight = CalculatePercentageRight();
             amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
-            amountOfBreaksTbl.Text = amountOfPauses.ToString();
-            decimal percentageRight = 0;
-            try
+            
+            Tuple<List<string>,int> testResults = Database.GetTestResults(accountID, testID);
+            int testResultID = testResults.Item2;
+            List<string> testResultsContent = Database.GetTestResultsContent(testResultID);
+            int i = 0;
+            foreach (string result in testResultsContent)
             {
-                percentageRight = decimal.Divide(rightAnswers.Count, lines.Count) * 100;
+                if (i % 1 == 0)
+                {
+                    if (result.Equals(null))
+                    {
+                        rightAnswers.Add(testResultsContent[i - 1]);
+                    }
+                    else
+                    {
+                        wrongAnswers.Add(testResultsContent[i - 1]);
+                        hadToBe.Add(result);
+                    }
+                }
+                i++;
             }
-            catch (DivideByZeroException)
-            {
-                percentageRight = 100;
-            }
-            percentageRightTbl.Text = Math.Round(percentageRight).ToString() + "%";
-            decimal secondsToMinutes;
-            try
-            {
-                secondsToMinutes = decimal.Divide(amountOfSeconds, 60);
-            }
-            catch (DivideByZeroException)
-            {
-                secondsToMinutes = 0;
-            }
-            catch (OverflowException)
-            {
-                secondsToMinutes = 0;
-            }
-            decimal minutesSpend = amountOfMinutes + secondsToMinutes;
-            decimal wordsPerMinute = 0;
+            List<string> testResultsItem = testResults.Item1;
+            Console.WriteLine(testResultsItem.Count);
 
-            if (minutesSpend != 0)
-            {
-                wordsPerMinute = rightAnswers.Count / minutesSpend;
-            }
-            else
-            {
-                wordsPerMinute = 0;
-            }
-            wordsPerMinuteTbl.Text = Math.Round(wordsPerMinute).ToString();
-           
+            int amountOfPauses = int.Parse(testResultsItem[0]);
+            int wordsPerMinute = int.Parse(testResults.Item1[1]);
+            amountOfBreaksTbl.Text = amountOfPauses.ToString();
+            wordsPerMinuteTbl.Text = wordsPerMinute.ToString();
+
 
             if (percentageRight.Equals(100))
             {
@@ -117,6 +117,21 @@ namespace LerenTypen
             }
 
 
+        }
+        private string CalculatePercentageRight()
+        {
+            decimal percentageRight = 0;
+            try
+            {
+                percentageRight = decimal.Divide(rightAnswers.Count,rightAnswers.Count+wrongAnswers.Count) * 100;
+            }
+            catch (DivideByZeroException)
+            {
+                percentageRight = 100;
+            }
+            string percentageRightStr = Math.Round(percentageRight).ToString() + "%";
+
+            return percentageRightStr;
         }
 
     }

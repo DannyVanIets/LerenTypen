@@ -198,9 +198,6 @@ namespace LerenTypen
                             command.Parameters.AddWithValue("@answerType", 0);
                             command.ExecuteNonQuery();
                         }
-                       
-
-
                     }
 
                 }
@@ -238,6 +235,117 @@ namespace LerenTypen
                 }
             }
         }
+
+        public static List<string> GetTestResults(int accountID, int testID, int testResultsID)
+        {
+            List<string> results = new List<string>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    
+                        sb.Append("Select wordsEachMinute, pauses from testresults where testID = @testID and accountID = @accountID and testResultsID = @testResultsID");
+                    
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                results.Add(reader["wordsEachMinute"].ToString()); 
+                                results.Add( reader["pauses"].ToString());
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return results;
+        }
+
+        public static Tuple<List<string>, int> GetTestResults(int accountID, int testID)
+        {
+            List<string> results = new List<string>();
+            int testResultID = 0;
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.Append("Select wordsEachMinute, pauses from testresults where testID = @testID and accountID = @accountID and testResultsID = Max(testResultsID); Select LAST_INSERT_ID()");
+
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                results.Add(reader["wordsEachMinute"].ToString());
+                                results.Add(reader["pauses"].ToString());
+
+                                testResultID = int.Parse(command.ExecuteScalar().ToString());
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return Tuple.Create(results, testResultID);
+        }
+
+        public static List<string> GetTestResultsContent(int testResultID)
+        {
+            List<string> results = new List<string>();
+            try
+            {
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("Select answer, rightAnswer from testContent Where testResultID = @testResultID");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+
+                        command.Parameters.AddWithValue("@testResultID", testResultID);
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {                                
+                                results.Add(reader["answer"].ToString());                                
+                                results.Add(reader["rightAnswer"].ToString());
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return results;
+        }
+       
+
+
+
 
     }
 }

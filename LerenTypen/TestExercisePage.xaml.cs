@@ -385,35 +385,20 @@ namespace LerenTypen
         {
             testClosed = true;
             t1.Stop();
-            TestResultsPage testResultsPage = new TestResultsPage(testID, m, wrongAnswers, lines, rightAnswers, amountOfPauses, j,i);
+            TestResultsPage testResultsPage = new TestResultsPage(testID, m);
             SaveResults();
             m.frame.Navigate(testResultsPage);
         }
         
         private void SaveResults()
         {
-            int amountOfWrong = wrongAnswers.Count;
-            string percentageRight = CalculatePercentageRight();
+            int amountOfWrong = wrongAnswers.Count;            
             decimal wordsPerMinute = CalculateWordsPerMinute();    
 
             Database.InsertResults(testID, 1, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines);
         }
 
-        private string CalculatePercentageRight()
-        {
-            decimal percentageRight = 0;
-            try
-            {
-                percentageRight = decimal.Divide(rightAnswers.Count, lines.Count) * 100;
-            }
-            catch (DivideByZeroException)
-            {
-                percentageRight = 100;
-            }
-            string percentageRightStr = Math.Round(percentageRight).ToString() + "%";
-            
-            return percentageRightStr;
-        }
+       
         private decimal CalculateWordsPerMinute()
         {
             decimal secondsToMinutes;
