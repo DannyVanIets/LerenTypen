@@ -49,6 +49,8 @@ namespace LerenTypen
 
         public string Delete { get; set; } = "verwijder";
 
+        public int TestId { get; set; }
+
         public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, int testDifficulty, string uploader)
         {
             this.WPFNumber = number;
@@ -74,7 +76,7 @@ namespace LerenTypen
             }
 
         }
-        public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, int testDifficulty, string uploader, int isPrivate)
+        public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, int testDifficulty, string uploader, int isPrivate, int testId)
         {
             this.WPFNumber = number;
             this.WPFName = name;
@@ -105,6 +107,7 @@ namespace LerenTypen
             {
                 this.IsPrivate = true;
             }
+            this.TestId = testId;
 
         }
 

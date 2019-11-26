@@ -65,14 +65,11 @@ namespace LerenTypen
             {
                 TableContent = Database.GetAllTestswithIsPrivate();
                 
-                //Good version
-                //string searchterm = Database.GetUserName(MainWindow.Ingelogd);
-                //testversion
-                string searchterm = Database.GetUserName(4);
+                string searchterm = Database.GetUserName(MainWindow.Ingelogd);
+
                 SearchResult = (from t in TableContent
                                 where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
                                 select t).ToList();
-                MessageBox.Show(searchterm);
                 TableContent = SearchResult;
 
                 //TableCounter(TableContent);
@@ -417,6 +414,15 @@ namespace LerenTypen
         private void DG_Checkbox_Check(object sender, RoutedEventArgs e)
         {
             Database.UpdateToPublic(MainWindow.Ingelogd);
+            
+            //AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid ThisGrid = (DataGrid)sender;
+           // Database.UpdateToPublic(MainWindow.Ingelogd);
         }
     }
 }

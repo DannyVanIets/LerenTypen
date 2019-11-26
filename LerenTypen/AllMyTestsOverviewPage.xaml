@@ -43,7 +43,7 @@
             <Button x:Name="AllMyTestsOverviewPage_Button_MakeOwnTest" Content="Maak een nieuwe toets" VerticalAlignment="Top" Width="150" Height="25" Grid.Column="2" Grid.Row="1" Margin="10,3,10,0" Click="AllMyTestsOverviewPage_Button_MakeOwnTest_Click"/>
         </StackPanel>
 
-        <DataGrid x:Name="AllMyTestsOverviewPage_DataGrid_AllTestsTable" AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6" IsReadOnly="True">
+        <DataGrid x:Name="AllMyTestsOverviewPage_DataGrid_AllTestsTable" AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6" IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" Width="30*" Binding="{Binding WPFNumber}"/>
                 <DataGridHyperlinkColumn ContentBinding="{Binding WPFName}" Header="Naam" Width="300*">
@@ -67,14 +67,14 @@
                     </DataGridHyperlinkColumn.ElementStyle>
                 </DataGridHyperlinkColumn>
                 <DataGridTextColumn Header="DifficultyBinder" Width="0*" Binding="{Binding DifficultyBinder}" Visibility="Hidden"/>
-                <DataGridCheckBoxColumn Header="Is privé" IsThreeState="True" Binding="{Binding IsPrivate}" Width="80*" IsReadOnly="False">
-                    <DataGridCheckBoxColumn.CellStyle>
-                        <Style>
-                            <EventSetter Event="CheckBox.Checked" Handler="DG_Checkbox_Check"/>
-                        </Style>
-                    </DataGridCheckBoxColumn.CellStyle>
-                </DataGridCheckBoxColumn>
-                <DataGridHyperlinkColumn Header="Bewerken" ContentBinding="{Binding Edit}" Width="70*">
+                <DataGridTemplateColumn Header="Is privé" Width="60*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Path=Tag, UpdateSourceTrigger=PropertyChanged}" Name="theCheckbox" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridHyperlinkColumn Header="Bewerken" ContentBinding="{Binding Edit}" Width="70*">
                     <DataGridHyperlinkColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="Tag" Value="{Binding AmountOfWords}"/>
