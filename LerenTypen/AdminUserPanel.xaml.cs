@@ -34,42 +34,40 @@ namespace LerenTypen
             }
         }
 
-
+        //When the Info Aanpassen button is clicked
         private void Save_Button_Click(object sender, RoutedEventArgs e)
         {
-            string firstname = firstNameTextBox.Text;
-            string surname = lastNameTextbox.Text;
-            string username = usernameTextBox.Text;
-
-            DateTime birthdate = birthdateDatePicker.DisplayDate;
-
-
-            if (string.IsNullOrEmpty(firstname) || string.IsNullOrEmpty(surname) || string.IsNullOrEmpty(username))
+            try
             {
+                string firstname = firstNameTextBox.Text;
+                string surname = lastNameTextbox.Text;
+                string username = usernameTextBox.Text;
+                DateTime birthdate = birthdateDatePicker.DisplayDate;
 
-            }
-
-            else
-            {
-                //Hier wordt alles geüpdate!
-
-                if (Database.UpdateAccountWithPassword(, username, hashedNewPassword, birthdate, firstname, surname))
+                if (!string.IsNullOrEmpty(firstname) || !string.IsNullOrEmpty(surname) || !string.IsNullOrEmpty(username))
                 {
-                    MessageBox.Show("Het account wordt succesvol geüpdate!", "Succes");
+                    Database.AdminUpdateAccount(username, birthdate, firstname, surname);
+                    MessageBox.Show("Account Informatie Upgedate!", "Account Geupdate");
                 }
                 else
                 {
-                    MessageBox.Show("Het account kon niet worden geüpdate, probeer het opnieuw of neem contact op met de beheerders.", "Error");
+                    MessageBox.Show("Vul alle velden in!", "Vul alles in");
                 }
+
+            }
+            catch (Exception t)
+            {
+                Console.WriteLine(t);
             }
         }
-    }
-}
 
-private void Admin_Button_Click(object sender, RoutedEventArgs e)
-{
+        //When the make admin button is clicked
 
-}
+
+        private void Admin_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
 

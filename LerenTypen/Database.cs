@@ -44,6 +44,38 @@ namespace LerenTypen
             return 0;
         }
 
+        public static int GetAccountIDForUpdate(string accountUsername)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    // We only return the accountID, in case the logged in user's account information changes. That way nothing that may change is stored. ID's will always stay the same. We also check if the account is not archived.
+                    sb.Append($"SELECT `accountID` FROM accounts WHERE accountUsername = @accountusername AND archived = 0;");
+                    string MySql = sb.ToString();
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@accountusername", accountUsername);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return int.Parse(reader[0].ToString());
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return 0;
+        }
+
         public static Account GetUserAccount(int accountID)
         {
             Account account = new Account();
@@ -81,7 +113,7 @@ namespace LerenTypen
             return null;
         }
 
-        public static bool AdminUpdateAccount(int accountID, string userName, DateTime birthday, string firstName, string surname)
+        public static bool AdminUpdateAccount(string userName, DateTime birthday, string firstName, string surname)
         {
             try
             {
@@ -95,7 +127,7 @@ namespace LerenTypen
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
-                        command.Parameters.AddWithValue("@id", accountID);
+                        command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName ));
                         command.Parameters.AddWithValue("@firstname", firstName);
                         command.Parameters.AddWithValue("@surname", surname);
                         command.Parameters.AddWithValue("@username", userName);
