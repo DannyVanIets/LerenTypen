@@ -30,12 +30,12 @@ namespace LerenTypen
             this.amountOfPauses = amountOfPauses;
             FillAnswerList(false);
 
-            List<int> testInformation = Database.GetTestInformation(testID);
+            /*List<int> testInformation = Database.GetTestInformation(testID);
             foreach(int info in testInformation)
             {
                 Console.WriteLine(info);
             }
-
+            */
         }
 
         private void FillAnswerList(bool check)
@@ -70,10 +70,10 @@ namespace LerenTypen
             FillAnswerList(false);
         }
 
-        private void CreateResults(TestResultsPage testResultsPage)
+        private void CreateResults()
         {
-            testResultsPage.amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
-            testResultsPage.amountOfBreaksTbl.Text = amountOfPauses.ToString();
+            amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
+            amountOfBreaksTbl.Text = amountOfPauses.ToString();
             decimal percentageRight = 0;
             try
             {
@@ -83,7 +83,7 @@ namespace LerenTypen
             {
                 percentageRight = 100;
             }
-            testResultsPage.percentageRightTbl.Text = Math.Round(percentageRight).ToString() + "%";
+            percentageRightTbl.Text = Math.Round(percentageRight).ToString() + "%";
             decimal secondsToMinutes;
             try
             {
@@ -108,14 +108,12 @@ namespace LerenTypen
             {
                 wordsPerMinute = 0;
             }
-            testResultsPage.wordsPerMinuteTbl.Text = Math.Round(wordsPerMinute).ToString();
-
-
-            testResultsPage.testNameLbl.Content = testName;
+            wordsPerMinuteTbl.Text = Math.Round(wordsPerMinute).ToString();
+           
 
             if (percentageRight.Equals(100))
             {
-                testResultsPage.awardStack.Visibility = Visibility.Visible;
+                awardStack.Visibility = System.Windows.Visibility.Visible;
             }
 
 

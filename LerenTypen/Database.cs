@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -145,15 +146,16 @@ namespace LerenTypen
             }
             return results;
         }
-        public static void InsertResults(int testID, int accountID, int WordsEachMinute, int pauses)
-        {
+        public static void InsertResults(int testID, int accountID, int WordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
+        {            
+            Int32 testResultID = 0;
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("INSERT INTO testResultstestResultID 	(testID, accountID, testResultsDate, WordsEachMinute, pauses) VALUES (@testID, @accountID, NOW(), @WordsEachMinute, @pauses)");
+                    sb.Append("INSERT INTO testresults (testID, accountID, testResultsDate, WordsEachMinute, pauses) VALUES (@testID, @accountID, NOW(), @WordsEachMinute, @pauses); Select LAST_INSERT_ID();");
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
@@ -162,12 +164,75 @@ namespace LerenTypen
                         command.Parameters.AddWithValue("@accountID", accountID);
                         command.Parameters.AddWithValue("@WordsEachMinute", WordsEachMinute);
                         command.Parameters.AddWithValue("@pauses", pauses);
+
+                        testResultID = Convert.ToInt32(command.ExecuteScalar());
+
+
                     }
                 }
             }
             catch (MySqlException e)
             {
                 System.Console.WriteLine(e.Message);
+            }
+            //InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);
+        }
+
+        public static void InsertResultsContent(Int32 testResultID, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string>lines )
+        {
+            foreach (string rightAnswer in rightAnswers)
+            {               
+                try
+                {
+                    using (MySqlConnection connection = new MySqlConnection(connectionString))
+                    {
+                        connection.Open();
+                        StringBuilder sb = new StringBuilder();
+                        sb.Append("INSERT INTO testresultcontent (testResultID, answer, answerType) VALUES (@testResultID, @answer, @answerType)");
+                        string MySql = sb.ToString();
+
+                        using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                        {
+                            command.Parameters.AddWithValue("@testResultID", testResultID);
+                            command.Parameters.AddWithValue("@answer", rightAnswer);
+                            command.Parameters.AddWithValue("@answerType", 0);
+                        }
+
+
+                    }
+
+                }
+                catch (MySqlException e)
+                {
+                    System.Console.WriteLine(e.Message);
+                }
+            }
+            foreach (KeyValuePair<int, string> wrongAnswer in wrongAnswers)
+            {
+                try
+                {
+                    using (MySqlConnection connection = new MySqlConnection(connectionString))
+                    {
+                        connection.Open();
+                        StringBuilder sb = new StringBuilder();
+                        sb.Append("INSERT INTO testresultcontent (testResultID, answer, answerType, rightAnswer) VALUES (@testResultID, @answer, @answerType, @rightAnswer)");
+                        string MySql = sb.ToString();
+
+                        using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                        {
+                            command.Parameters.AddWithValue("@testResultID", testResultID);
+                            command.Parameters.AddWithValue("@answer", wrongAnswer.Value);
+                            command.Parameters.AddWithValue("@answerType", 0);
+                            command.Parameters.AddWithValue("@rightAnswer", lines[wrongAnswer.Key]);
+                        }
+                    }
+
+                }
+
+                catch (MySqlException e)
+                {
+                    System.Console.WriteLine(e.Message);
+                }
             }
         }
 

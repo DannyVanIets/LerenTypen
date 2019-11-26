@@ -242,7 +242,8 @@ namespace LerenTypen
         /// </summary>        
         private void StopShowingRightOrWrong(object sender, EventArgs e)
         {            
-            t2.Stop();            
+            t2.Stop();
+            t2.Tick -= StopShowingRightOrWrong;
             Overlay.Visibility = Visibility.Collapsed;
             lineCheckLbl.Visibility = Visibility.Collapsed;
             lineCheckLbl.Content = "";
@@ -391,7 +392,15 @@ namespace LerenTypen
         
         private void SaveResults()
         {
-            int amountOfWrong = wrongAnswers.Count;            
+            int amountOfWrong = wrongAnswers.Count;
+            string percentageRight = CalculatePercentageRight();
+            decimal wordsPerMinute = CalculateWordsPerMinute();    
+
+            Database.InsertResults(testID, 1, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines);
+        }
+
+        private string CalculatePercentageRight()
+        {
             decimal percentageRight = 0;
             try
             {
@@ -402,11 +411,17 @@ namespace LerenTypen
                 percentageRight = 100;
             }
             string percentageRightStr = Math.Round(percentageRight).ToString() + "%";
-            decimal secondsToMinutes;           
+            
+            return percentageRightStr;
+        }
+        private decimal CalculateWordsPerMinute()
+        {
+            decimal secondsToMinutes;
             try
             {
-                secondsToMinutes = decimal.Divide(i ,60);
-            }catch(DivideByZeroException )
+                secondsToMinutes = decimal.Divide(i, 60);
+            }
+            catch (DivideByZeroException)
             {
                 secondsToMinutes = 0;
             }
@@ -419,19 +434,14 @@ namespace LerenTypen
 
             if (minutesSpend != 0)
             {
-                 wordsPerMinute = rightAnswers.Count / minutesSpend;
+                wordsPerMinute = rightAnswers.Count / minutesSpend;
             }
             else
             {
                 wordsPerMinute = 0;
             }
-            wordsPerMinute =  Math.Round(wordsPerMinute);                    
-            
-            
-
-           
-
-
+            wordsPerMinute = Math.Round(wordsPerMinute);
+            return wordsPerMinute;
         }
     }
 }
