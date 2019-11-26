@@ -20,6 +20,7 @@ namespace LerenTypen
             InitializeComponent();
             //This variable is used if you want to change the page.
             MainWindow = mainWindow;
+            Hashen = new Classes.Hashen();
         }
 
         // Er word gekeken als de velden ingevuld zijn, anders word alles afgebroken
@@ -81,7 +82,6 @@ namespace LerenTypen
                 accountmaken.IsEnabled = true;
             }
         }
-
 
         private void Hyperlink_click(object sender, RoutedEventArgs e)
         {

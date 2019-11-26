@@ -19,6 +19,7 @@ namespace LerenTypen
         {
             InitializeComponent();
             MainWindow = mainWindow;
+            Hashen = new Classes.Hashen();
 
             if (mainWindow.Ingelogd > 0)
             {
@@ -26,16 +27,17 @@ namespace LerenTypen
 
                 firstNameTextBox.Text = Account.FirstName;
                 lastNameTextbox.Text = Account.Surname;
+
                 usernameTextBox.Text = Account.UserName;
                 birthdateDatePicker.DisplayDate = Account.Birthdate;
-                Console.WriteLine(Account.Birthdate);
+
                 securityQuestionComboBox.Text = Account.SecurityQuestion;
                 securityAnswerTextBox.Text = Account.SecurityAnswer;
             }
             else
             {
                 MessageBox.Show("U bent niet ingelogd!", "Error");
-                mainWindow.ChangePage(new HomePage(mainWindow));
+                MainWindow.ChangePage(new HomePage(mainWindow));
             }
         }
 
@@ -59,7 +61,9 @@ namespace LerenTypen
             string newPassword = newPasswordTextBox.Password;
             string newPasswordRepeat = passwordRepeatTextBox.Password;
 
-            DateTime birthdate = birthdateDatePicker.DisplayDate;
+            DateTime? birthdate = birthdateDatePicker.SelectedDate;
+            Console.WriteLine(birthdate.ToString());
+            Console.WriteLine(birthdateDatePicker.DisplayDate);
             string securityQuestion = securityQuestionComboBox.Text;
             string securityAnswer = securityAnswerTextBox.Text;
 
@@ -69,6 +73,7 @@ namespace LerenTypen
                 if (Database.UpdateAccountWithoutPassword(MainWindow.Ingelogd, username, birthdate, firstname, surname, securityQuestion, securityAnswer))
                 {
                     MessageBox.Show("Het account wordt succesvol geüpdate!", "Succes");
+                    MainWindow.ChangePage(new EditAccountPage(MainWindow));
                 }
                 else
                 {
@@ -85,11 +90,11 @@ namespace LerenTypen
                 //Here we are gonna give errors for the password
                 MessageBox.Show("U moet een nieuw wachtwoord en herhaling van het nieuwe wachtwoord invoeren!", "Error");
             }
-            else if (Hashen.ComputeSha256Hash(oldPassword) == Database.GetPasswordFromAccount(MainWindow.Ingelogd))
+            else if (Hashen.ComputeSha256Hash(oldPassword) != Database.GetPasswordFromAccount(MainWindow.Ingelogd))
             {
                 MessageBox.Show("Dat is niet het goede oude wachtwoord!", "Error");
             }
-            else if (newPassword == newPasswordRepeat)
+            else if (newPassword != newPasswordRepeat)
             {
                 MessageBox.Show("De nieuwe wachtwoorden komen niet overeen.", "Error");
             }
@@ -101,6 +106,7 @@ namespace LerenTypen
                 if (Database.UpdateAccountWithPassword(MainWindow.Ingelogd, username, hashedNewPassword, birthdate, firstname, surname, securityQuestion, securityAnswer))
                 {
                     MessageBox.Show("Het account wordt succesvol geüpdate!", "Succes");
+                    MainWindow.ChangePage(new EditAccountPage(MainWindow));
                 }
                 else
                 {
