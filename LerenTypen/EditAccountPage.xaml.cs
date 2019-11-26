@@ -12,15 +12,13 @@ namespace LerenTypen
     public partial class EditAccountPage : Page
     {
         private MainWindow MainWindow;
-        private List<string> AccountInformation = new List<string>();
+        private LoginPage LoginPage;
         private Account Account;
 
         public EditAccountPage(MainWindow mainWindow)
         {
             InitializeComponent();
             MainWindow = mainWindow;
-
-            Console.WriteLine(mainWindow.Ingelogd);
 
             if (mainWindow.Ingelogd > 0)
             {
@@ -30,6 +28,7 @@ namespace LerenTypen
                 lastNameTextbox.Text = Account.Surname;
                 usernameTextBox.Text = Account.UserName;
                 birthdateDatePicker.DisplayDate = Account.Birthdate;
+                Console.WriteLine(Account.Birthdate);
                 securityQuestionComboBox.Text = Account.SecurityQuestion;
                 securityAnswerTextBox.Text = Account.SecurityAnswer;
             }
@@ -53,19 +52,28 @@ namespace LerenTypen
         private void SaveButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             string firstname = firstNameTextBox.Text;
-            string lastname = lastNameTextbox.Text;
+            string surname = lastNameTextbox.Text;
             string username = usernameTextBox.Text;
-            DateTime birthdate = birthdateDatePicker.DisplayDate;
+
             string oldPassword = oldPasswordTextBox.Password;
             string newPassword = newPasswordTextBox.Password;
             string newPasswordRepeat = passwordRepeatTextBox.Password;
+
+            DateTime birthdate = birthdateDatePicker.DisplayDate;
             string securityQuestion = securityQuestionComboBox.Text;
             string securityAnswer = securityAnswerTextBox.Text;
 
             if (string.IsNullOrEmpty(oldPassword) && string.IsNullOrEmpty(newPassword) && string.IsNullOrEmpty(newPasswordRepeat))
             {
                 //Here we will update everything, except the password.
-                MessageBox.Show("Het account wordt succesvol geüpdate!", "Succes");
+                if (Database.UpdateAccountWithoutPassword(MainWindow.Ingelogd, username, birthdate, firstname, surname, securityQuestion, securityAnswer))
+                {
+                    MessageBox.Show("Het account wordt succesvol geüpdate!", "Succes");
+                }
+                else
+                {
+                    MessageBox.Show("Het account kon niet worden geüpdate, probeer het opnieuw of neem contact op met de beheerders.", "Error");
+                }
             }
             else if (string.IsNullOrEmpty(oldPassword) && (!string.IsNullOrEmpty(newPassword) || !string.IsNullOrEmpty(newPasswordRepeat)))
             {
@@ -77,10 +85,27 @@ namespace LerenTypen
                 //Here we are gonna give errors for the password
                 MessageBox.Show("U moet een nieuw wachtwoord en herhaling van het nieuwe wachtwoord invoeren!", "Error");
             }
+            else if (LoginPage.ComputeSha256Hash(oldPassword) == Database.GetPasswordFromAccount(MainWindow.Ingelogd))
+            {
+                MessageBox.Show("Dat is niet het goede oude wachtwoord!", "Error");
+            }
+            else if (newPassword == newPasswordRepeat)
+            {
+                MessageBox.Show("De nieuwe wachtwoorden komen niet overeen.", "Error");
+            }
             else
             {
                 //Hier wordt alles geüpdate!
-                MessageBox.Show("Het account wordt succesvol geüpdate!", "Succes");
+                string hashedNewPassword = LoginPage.ComputeSha256Hash(newPassword);
+
+                if (Database.UpdateAccountWithPassword(MainWindow.Ingelogd, username, hashedNewPassword, birthdate, firstname, surname, securityQuestion, securityAnswer))
+                {
+                    MessageBox.Show("Het account wordt succesvol geüpdate!", "Succes");
+                }
+                else
+                {
+                    MessageBox.Show("Het account kon niet worden geüpdate, probeer het opnieuw of neem contact op met de beheerders.", "Error");
+                }
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using Microsoft.OData.Edm;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -86,7 +85,7 @@ namespace LerenTypen
 
         public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
-            Date res = birthday.Date;
+            DateTime res = birthday.Date;
 
             try
             {
@@ -200,7 +199,6 @@ namespace LerenTypen
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    
                     connection.Open();
 
                     StringBuilder sb = new StringBuilder();
@@ -228,6 +226,119 @@ namespace LerenTypen
                 System.Console.WriteLine(e.Message);
             }
             return null;
+        }
+
+        public static string GetPasswordFromAccount(int accountID)
+        {
+            string results = "";
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("SELECT accountPassword FROM accounts WHERE accountID = @id AND archived = 0");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", accountID);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                results = reader[0].ToString();
+                            }
+                        }
+                    }
+                    connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return results;
+        }
+
+        public static bool UpdateAccountWithoutPassword(int accountID, string userName, DateTime birthday, string firstName, string surname, string securityQuestion, string securityAnswer)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("UPDATE accounts SET accountUsername = @username, accountBirthdate = @birthday, accountFirstname = @firstname, accountSurname = @surname, " +
+                        "AccountSecurityQuestion = @securityquestion, AccountSecurityAnswer = @securityanswer WHERE accountID = @id AND archived = 0");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", accountID);
+                        command.Parameters.AddWithValue("@username", userName);
+                        command.Parameters.AddWithValue("@birthday", birthday);
+
+                        command.Parameters.AddWithValue("@firstname", firstName);
+                        command.Parameters.AddWithValue("@surname", surname);
+
+                        command.Parameters.AddWithValue("@securityquestion", securityQuestion);
+                        command.Parameters.AddWithValue("@securityanswer", securityAnswer);
+
+                        command.ExecuteReader();
+                    }
+                    connection.Close();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return false;
+        }
+
+        public static bool UpdateAccountWithPassword(int accountID, string userName, string password, DateTime birthday, string firstName, string surname, string securityQuestion, string securityAnswer)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("UPDATE accounts SET accountUsername = @username, accountPassword = @password, accountBirthdate = @birthday, accountFirstname = @firstname, " +
+                        "accountSurname = @surname, AccountSecurityQuestion = @securityquestion, AccountSecurityAnswer = @securityanswer WHERE accountID = @id AND archived = 0");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", accountID);
+                        command.Parameters.AddWithValue("@username", userName);
+                        command.Parameters.AddWithValue("@password", password);
+
+                        command.Parameters.AddWithValue("@birthday", birthday);
+                        command.Parameters.AddWithValue("@firstname", firstName);
+                        command.Parameters.AddWithValue("@surname", surname);
+
+                        command.Parameters.AddWithValue("@securityquestion", securityQuestion);
+                        command.Parameters.AddWithValue("@securityanswer", securityAnswer);
+
+                        command.ExecuteReader();
+                    }
+                    connection.Close();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return false;
         }
     }
 }
