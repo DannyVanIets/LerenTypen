@@ -146,7 +146,7 @@ namespace LerenTypen
             }
             return results;
         }
-        public static void InsertResults(int testID, int accountID, int WordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
+        public static void InsertResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
         {            
             Int32 testResultID = 0;
             try
@@ -155,17 +155,17 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("INSERT INTO testresults (testID, accountID, testResultsDate, WordsEachMinute, pauses) VALUES (@testID, @accountID, NOW(), @WordsEachMinute, @pauses); Select LAST_INSERT_ID();");
+                    sb.Append("INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses) VALUES (@testID, @accountID, NOW(), @WordsEachMinute, @pauses); Select LAST_INSERT_ID();");
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@testID", testID);
                         command.Parameters.AddWithValue("@accountID", accountID);
-                        command.Parameters.AddWithValue("@WordsEachMinute", WordsEachMinute);
+                        command.Parameters.AddWithValue("@wordsEachMinute", wordsEachMinute);
                         command.Parameters.AddWithValue("@pauses", pauses);
 
-                        testResultID = Convert.ToInt32(command.ExecuteScalar());
+                       testResultID = Convert.ToInt32(command.ExecuteScalar());
 
 
                     }
@@ -175,7 +175,7 @@ namespace LerenTypen
             {
                 System.Console.WriteLine(e.Message);
             }
-            //InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);
+            InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);
         }
 
         public static void InsertResultsContent(Int32 testResultID, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string>lines )
@@ -196,7 +196,9 @@ namespace LerenTypen
                             command.Parameters.AddWithValue("@testResultID", testResultID);
                             command.Parameters.AddWithValue("@answer", rightAnswer);
                             command.Parameters.AddWithValue("@answerType", 0);
+                            command.ExecuteNonQuery();
                         }
+                       
 
 
                     }
@@ -224,6 +226,7 @@ namespace LerenTypen
                             command.Parameters.AddWithValue("@answer", wrongAnswer.Value);
                             command.Parameters.AddWithValue("@answerType", 0);
                             command.Parameters.AddWithValue("@rightAnswer", lines[wrongAnswer.Key]);
+                            command.ExecuteNonQuery();
                         }
                     }
 
