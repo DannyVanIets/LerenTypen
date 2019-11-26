@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace LerenTypen
@@ -13,7 +14,10 @@ namespace LerenTypen
         private Dictionary<int, string> wrongAnswers;
         private List<string> rightAnswers;
         private List<string> lines;
-        public TestResultsPage(int testID, MainWindow m, Dictionary<int, string> wrongAnswers, List<string> lines, List<string> rightAnswers)
+        private int amountOfPauses;
+        private int amountOfSeconds;
+        private int amountOfMinutes;
+        public TestResultsPage(int testID, MainWindow m, Dictionary<int, string> wrongAnswers, List<string> lines, List<string> rightAnswers, int amountOfPauses, int amountOfMinutes, int amountOfSeconds)
         {
             InitializeComponent();
             this.testID = testID;
@@ -21,8 +25,16 @@ namespace LerenTypen
             this.wrongAnswers = wrongAnswers;
             this.rightAnswers = rightAnswers;
             this.lines = lines;
+            this.amountOfSeconds = amountOfSeconds;
+            this.amountOfMinutes = amountOfMinutes;
+            this.amountOfPauses = amountOfPauses;
             FillAnswerList(false);
 
+            List<int> testInformation = Database.GetTestInformation(testID);
+            foreach(int info in testInformation)
+            {
+                Console.WriteLine(info);
+            }
 
         }
 
@@ -57,5 +69,57 @@ namespace LerenTypen
         {
             FillAnswerList(false);
         }
+
+        private void CreateResults(TestResultsPage testResultsPage)
+        {
+            testResultsPage.amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
+            testResultsPage.amountOfBreaksTbl.Text = amountOfPauses.ToString();
+            decimal percentageRight = 0;
+            try
+            {
+                percentageRight = decimal.Divide(rightAnswers.Count, lines.Count) * 100;
+            }
+            catch (DivideByZeroException)
+            {
+                percentageRight = 100;
+            }
+            testResultsPage.percentageRightTbl.Text = Math.Round(percentageRight).ToString() + "%";
+            decimal secondsToMinutes;
+            try
+            {
+                secondsToMinutes = decimal.Divide(amountOfSeconds, 60);
+            }
+            catch (DivideByZeroException)
+            {
+                secondsToMinutes = 0;
+            }
+            catch (OverflowException)
+            {
+                secondsToMinutes = 0;
+            }
+            decimal minutesSpend = amountOfMinutes + secondsToMinutes;
+            decimal wordsPerMinute = 0;
+
+            if (minutesSpend != 0)
+            {
+                wordsPerMinute = rightAnswers.Count / minutesSpend;
+            }
+            else
+            {
+                wordsPerMinute = 0;
+            }
+            testResultsPage.wordsPerMinuteTbl.Text = Math.Round(wordsPerMinute).ToString();
+
+
+            testResultsPage.testNameLbl.Content = testName;
+
+            if (percentageRight.Equals(100))
+            {
+                testResultsPage.awardStack.Visibility = Visibility.Visible;
+            }
+
+
+        }
+
     }
 }

@@ -40,6 +40,44 @@ namespace LerenTypen
             }
         }
 
+        public static List<int> GetTestInformation(int testID)
+        {
+            List<int> results = new List<int>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("Select accountID, testDifficulty from tests where testID = @testID");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@testID", testID);
+                        
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var accountID = reader["accountID"];
+                                var testDifficulty = reader["testDifficulty"];
+
+                                results.Add((int)accountID);
+                                results.Add((int)testDifficulty);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            
+            return results;
+        }
+
         public static string GetTestName(int testID)
         {
             string title = "";
@@ -107,5 +145,31 @@ namespace LerenTypen
             }
             return results;
         }
+        public static void InsertResults(int testID, int accountID, int WordsEachMinute, int pauses)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("INSERT INTO testResultstestResultID 	(testID, accountID, testResultsDate, WordsEachMinute, pauses) VALUES (@testID, @accountID, NOW(), @WordsEachMinute, @pauses)");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@testID", testID);
+                        command.Parameters.AddWithValue("@accountID", accountID);
+                        command.Parameters.AddWithValue("@WordsEachMinute", WordsEachMinute);
+                        command.Parameters.AddWithValue("@pauses", pauses);
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+        }
+
     }
 }

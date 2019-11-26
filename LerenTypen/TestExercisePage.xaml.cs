@@ -384,15 +384,14 @@ namespace LerenTypen
         {
             testClosed = true;
             t1.Stop();
-            TestResultsPage testResultsPage = new TestResultsPage(testID, m, wrongAnswers, lines, rightAnswers);
-            CreateResults(testResultsPage);
+            TestResultsPage testResultsPage = new TestResultsPage(testID, m, wrongAnswers, lines, rightAnswers, amountOfPauses, j,i);
+            SaveResults();
             m.frame.Navigate(testResultsPage);
         }
         
-        private void CreateResults(TestResultsPage testResultsPage)
+        private void SaveResults()
         {
-            testResultsPage.amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
-            testResultsPage.amountOfBreaksTbl.Text = amountOfPauses.ToString();
+            int amountOfWrong = wrongAnswers.Count;            
             decimal percentageRight = 0;
             try
             {
@@ -402,7 +401,7 @@ namespace LerenTypen
             {
                 percentageRight = 100;
             }
-            testResultsPage.percentageRightTbl.Text = Math.Round(percentageRight).ToString() + "%";
+            string percentageRightStr = Math.Round(percentageRight).ToString() + "%";
             decimal secondsToMinutes;           
             try
             {
@@ -426,15 +425,11 @@ namespace LerenTypen
             {
                 wordsPerMinute = 0;
             }
-            testResultsPage.wordsPerMinuteTbl.Text =  Math.Round(wordsPerMinute).ToString();
-                       
+            wordsPerMinute =  Math.Round(wordsPerMinute);                    
             
-            testResultsPage.testNameLbl.Content = testName;
+            
 
-            if (percentageRight.Equals(100))
-            {
-                testResultsPage.awardStack.Visibility = Visibility.Visible;
-            }
+           
 
 
         }
