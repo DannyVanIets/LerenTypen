@@ -50,17 +50,18 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("select accountUsername from accounts where accountID = @accountID")
+                    sb.Append("select accountUsername from accounts where accountID = @accountID");
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
+                        command.Parameters.AddWithValue("@accountID", accountID);
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            command.Parameters.AddWithValue("@accountID", accountID);
+                            
                             while (reader.Read())
                             {
-                                result = reader.GetString(1);
+                                result = reader.GetString(0);
                             }
                         }
                     }
@@ -70,6 +71,7 @@ namespace LerenTypen
             {
                 System.Console.WriteLine(e.Message);
             }
+            Console.WriteLine(result);
             return result;
         }
 

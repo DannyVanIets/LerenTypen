@@ -28,13 +28,16 @@ namespace LerenTypen
             rightAnswers = new List<string>();
 
             testNameLbl.Content = Database.GetTestName(testID);
-            
-            amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
-         
+
+
             GetResults();
+
             FillAnswerList(false);
+            amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
+
 
             List<int> testInformation = Database.GetTestInformation(testID);
+            Console.WriteLine(Database.GetUserName(testInformation[0]));
             createrRun.Text = Database.GetUserName(testInformation[0]);
             string difficulty;
             if (testInformation[1].Equals(0))
