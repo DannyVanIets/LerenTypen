@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 26 nov 2019 om 14:09
+-- Gegenereerd op: 26 nov 2019 om 14:15
 -- Serverversie: 10.1.36-MariaDB
 -- PHP-versie: 7.2.10
 
@@ -69,10 +69,7 @@ CREATE TABLE `testcontent` (
 INSERT INTO `testcontent` (`testContentID`, `testID`, `content`) VALUES
 (1, 1, 'Piet'),
 (2, 1, 'Klaas'),
-(3, 1, 'Jan'),
-(4, 2, 'test'),
-(5, 2, 'tdfewdety'),
-(6, 2, 'ytfiwewhowheiwhf');
+(3, 1, 'Jan');
 
 -- --------------------------------------------------------
 
@@ -134,8 +131,7 @@ CREATE TABLE `tests` (
 --
 
 INSERT INTO `tests` (`testID`, `accountID`, `testName`, `testType`, `testDifficulty`, `createDate`, `isPrivate`, `archived`, `timesMade`, `highscore`, `version`) VALUES
-(1, 1, 'Leren oefenen met namen!', 0, 0, '2019-11-26', 0, 0, 0, 0, 1),
-(2, 3, 'Test', 0, 2, '2019-11-26', 0, 0, 0, NULL, 1);
+(1, 1, 'Leren oefenen met namen!', 0, 0, '2019-11-26', 0, 0, 0, 0, 1);
 
 --
 -- Indexen voor geëxporteerde tabellen
