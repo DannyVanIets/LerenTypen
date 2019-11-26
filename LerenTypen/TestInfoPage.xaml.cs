@@ -13,7 +13,23 @@ namespace LerenTypen
 
             Test test = Database.GetTest(testID);
             testNameLabel.Content = test.Name;
-            difficultyLabel.Content = test.Difficulty;
+
+            string difficultyString = "";
+            switch (test.Difficulty)
+            {
+                case 0:
+                    difficultyString = "makkelijk";
+                    break;
+                case 1:
+                    difficultyString = "gemiddeld";
+                    break;
+                case 2:
+                    difficultyString = "moeilijk";
+                    break;
+
+            }
+            difficultyLabel.Content = $"Moeilijkheidsgraad: {difficultyString}";
+
             testVersionLabel.Content = $"{test.Version} {test.CreatedDateTime}";
 
             usernameLinkText.Text = test.AuthorUsername;
