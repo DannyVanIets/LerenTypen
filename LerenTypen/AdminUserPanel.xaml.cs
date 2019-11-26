@@ -55,9 +55,9 @@ namespace LerenTypen
                 }
 
             }
-            catch (Exception t)
+            catch
             {
-                Console.WriteLine(t);
+                MessageBox.Show("Er is iets mis gegaan... Hallo product demo..", "Error");
             }
         }
 
@@ -66,6 +66,17 @@ namespace LerenTypen
 
         private void Admin_Button_Click(object sender, RoutedEventArgs e)
         {
+            string username = usernameTextBox.Text;
+            try
+            {
+                Database.MaakAdmin(username);
+                MessageBox.Show("Persoon is nu admin!", "Admin gemaakt");
+            }
+            catch(Exception q)
+            {
+                Console.WriteLine(q);
+                MessageBox.Show("Er is iets mis gegaan... Hallo product demo..", "Error");
+            }
 
         }
     }

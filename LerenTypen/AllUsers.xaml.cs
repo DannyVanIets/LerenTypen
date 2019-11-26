@@ -38,15 +38,26 @@ namespace LerenTypen
     public class User
     {
         public int accountnumber { get; set; }
-        public int usertype { get; set; }
+        public string usertype { get; set; }
         public string username { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
         public string edit { get; set; }
-        public User(int accountnum, string usern, int acctype, string fname, string lname, string edit)
+        public User(int accountnum, string usern, string acctype, string fname, string lname, string edit)
         {
             this.accountnumber = accountnum;
-            this.usertype = acctype;
+            if (int.Parse(acctype) == 0)
+            {
+                this.usertype = "Student";
+            }
+            else if (int.Parse(acctype) == 1)
+            {
+                this.usertype = "Docent";
+            }
+            else
+            {
+                this.usertype = "Admin";
+            }
             this.username = usern;
             this.firstname = fname;
             this.lastname = lname;

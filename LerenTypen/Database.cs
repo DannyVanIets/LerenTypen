@@ -98,7 +98,7 @@ namespace LerenTypen
                         {
                             while (reader.Read())
                             {
-                                account = new Account((string)reader[0], (string)reader[1], (string)reader[2],(DateTime)reader[3]);
+                                account = new Account((string)reader[0], (string)reader[1], (string)reader[2], (DateTime)reader[3]);
                             }
                         }
                     }
@@ -127,7 +127,7 @@ namespace LerenTypen
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
-                        command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName ));
+                        command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
                         command.Parameters.AddWithValue("@firstname", firstName);
                         command.Parameters.AddWithValue("@surname", surname);
                         command.Parameters.AddWithValue("@username", userName);
@@ -146,6 +146,32 @@ namespace LerenTypen
             return false;
         }
 
+        public static bool MaakAdmin(string userName)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("UPDATE accounts SET accountType = 2 WHERE accountID = @id AND archived = 0");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
+                        command.ExecuteReader();
+                    }
+                    connection.Close();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return false;
+        }
 
         public static bool IsAdmin(int accountnumber)
         {
@@ -203,7 +229,7 @@ namespace LerenTypen
                             {
                                 while (reader.Read())
                                 {
-                                    queryResult.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4), "Edit"));
+                                    queryResult.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), "Edit"));
                                 }
                                 reader.NextResult();
                             }
