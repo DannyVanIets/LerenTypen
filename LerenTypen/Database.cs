@@ -1,4 +1,5 @@
-﻿using Microsoft.OData.Edm;
+﻿
+using Microsoft.OData.Edm;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -494,6 +495,83 @@ namespace LerenTypen
                 System.Console.WriteLine(e.Message);
             }
             return "";
+        }
+
+
+        //Functions for US#11
+        public static bool UpdateToPublic(int accountID)
+        {
+            try
+            {
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+
+                    String query = "update tests set isPrivate=0 where accountId=@id;";
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        
+                        command.Parameters.AddWithValue("@id", accountID);
+
+                       
+                        connection.Open();
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            return false;
+        }
+
+        public static List<TestTable> GetAllTestswithIsPrivate()
+        {
+            List<TestTable> queryResult = new List<TestTable>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("select testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0;");
+                    string MySql = sb.ToString();
+                    int counter = 1;
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    //adds all the found data to a list
+                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6), reader.GetInt32(7)));
+                                    counter++;
+                                }
+                                reader.NextResult();
+
+                            }
+                        }
+                    }
+                }
+
+
+
+
+                return queryResult;
+
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+                return null;
+            }
         }
 
 

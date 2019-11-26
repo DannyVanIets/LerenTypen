@@ -61,16 +61,17 @@ namespace LerenTypen
 
             ////add the data to the datagrid and refresh to show
 
-            TableContent = Database.GetAllTests();
-            string searchterm = Database.GetUserName(MainWindow.Ingelogd);
-            SearchResult = (from t in TableContent
-                            where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
-                            select t).ToList();
-
-            TableContent = SearchResult;
-
             try
             {
+                TableContent = Database.GetAllTestswithIsPrivate();
+                //string searchterm = Database.GetUserName(MainWindow.Ingelogd);
+                string searchterm = Database.GetUserName(1);
+                SearchResult = (from t in TableContent
+                                where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                select t).ToList();
+                MessageBox.Show(searchterm);
+                TableContent = SearchResult;
+
                 //TableCounter(TableContent);
 
 
@@ -82,7 +83,7 @@ namespace LerenTypen
                 isInitialized = true;
                 CurrentContent = SearchResult;
             }
-            catch (NullReferenceException)
+            catch (Exception)
             {
                 Console.WriteLine("Er zijn geen toetsen");
             }
@@ -220,15 +221,15 @@ namespace LerenTypen
 
             if (!AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && !AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
-                    CurrentContent = TableContent;
-                    string searchterm = AllMyTestsOverviewPage_TextBox_Search.Text;
-                    SearchResult = (from t in CurrentContent
-                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
-                                    select t).ToList();
+                CurrentContent = TableContent;
+                string searchterm = AllMyTestsOverviewPage_TextBox_Search.Text;
+                SearchResult = (from t in CurrentContent
+                                where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                select t).ToList();
 
-                    CurrentContent = SearchResult;
-                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-                
+                CurrentContent = SearchResult;
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
             }
 
         }
@@ -410,9 +411,9 @@ namespace LerenTypen
             System.Windows.MessageBox.Show(id);
         }
 
-        private void DG_Checkbox_Checked(object sender, System.Windows.RoutedEventArgs e)
+        private void DG_Checkbox_Check(object sender, RoutedEventArgs e)
         {
-
+            Database.UpdateToPublic(MainWindow.Ingelogd);
         }
     }
 }

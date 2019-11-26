@@ -44,10 +44,10 @@ namespace LerenTypen
 
         public int DifficultyBinder { get; set; }
 
-        public bool IsPrivate = true;
+        public bool IsPrivate { get; set; }
         public string Edit { get; set; } = "bewerken";
 
-        public string Delete = "verwijder";
+        public string Delete { get; set; } = "verwijder";
 
         public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, int testDifficulty, string uploader)
         {
@@ -72,6 +72,40 @@ namespace LerenTypen
                 DifficultyBinder = 2;
                 Difficulty = "moeilijk";
             }
+
+        }
+        public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, int testDifficulty, string uploader, int isPrivate)
+        {
+            this.WPFNumber = number;
+            this.WPFName = name;
+            this.WPFTimesMade = timesMade;
+            this.Highscore = highscore;
+            this.AmountOfWords = amountOfWords;
+            this.Uploader = uploader;
+            if (testDifficulty == 0)
+            {
+                DifficultyBinder = 0;
+                Difficulty = "makkelijk";
+            }
+            else if (testDifficulty == 1)
+            {
+                DifficultyBinder = 1;
+                Difficulty = "gemiddeld";
+            }
+            else if (testDifficulty == 2)
+            {
+                DifficultyBinder = 2;
+                Difficulty = "moeilijk";
+            }
+            if (isPrivate == 0)
+            {
+                this.IsPrivate = false;
+            }
+            else
+            {
+                this.IsPrivate = true;
+            }
+
         }
 
     }
