@@ -64,8 +64,11 @@ namespace LerenTypen
             try
             {
                 TableContent = Database.GetAllTestswithIsPrivate();
+                
+                //Good version
                 //string searchterm = Database.GetUserName(MainWindow.Ingelogd);
-                string searchterm = Database.GetUserName(1);
+                //testversion
+                string searchterm = Database.GetUserName(4);
                 SearchResult = (from t in TableContent
                                 where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
                                 select t).ToList();
