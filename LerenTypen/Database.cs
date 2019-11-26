@@ -41,6 +41,38 @@ namespace LerenTypen
             }
         }
 
+        public static string GetUserName(int accountID)
+        {
+            string result = null;
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("select accountUsername from accounts where accountID = @accountID")
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            command.Parameters.AddWithValue("@accountID", accountID);
+                            while (reader.Read())
+                            {
+                                result = reader.GetString(1);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return result;
+        }
+
         public static List<int> GetTestInformation(int testID)
         {
             List<int> results = new List<int>();
@@ -146,7 +178,7 @@ namespace LerenTypen
             }
             return results;
         }
-        public static void InsertResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
+        public static Int32 InsertResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
         {            
             Int32 testResultID = 0;
             try
@@ -166,6 +198,7 @@ namespace LerenTypen
                         command.Parameters.AddWithValue("@pauses", pauses);
 
                        testResultID = Convert.ToInt32(command.ExecuteScalar());
+                        
 
 
                     }
@@ -176,6 +209,8 @@ namespace LerenTypen
                 System.Console.WriteLine(e.Message);
             }
             InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);
+            return testResultID;
+            
         }
 
         public static void InsertResultsContent(Int32 testResultID, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string>lines )
@@ -221,7 +256,7 @@ namespace LerenTypen
                         {
                             command.Parameters.AddWithValue("@testResultID", testResultID);
                             command.Parameters.AddWithValue("@answer", wrongAnswer.Value);
-                            command.Parameters.AddWithValue("@answerType", 0);
+                            command.Parameters.AddWithValue("@answerType", 1);
                             command.Parameters.AddWithValue("@rightAnswer", lines[wrongAnswer.Key]);
                             command.ExecuteNonQuery();
                         }
@@ -269,11 +304,10 @@ namespace LerenTypen
             }
             return results;
         }
-
-        public static Tuple<List<string>, int> GetTestResults(int accountID, int testID)
+        
+        public static List<string> GetTestResults(int accountID, int testID)
         {
-            List<string> results = new List<string>();
-            int testResultID = 0;
+            List<string> results = new List<string>();            
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -281,20 +315,21 @@ namespace LerenTypen
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
 
-                    sb.Append("Select wordsEachMinute, pauses from testresults where testID = @testID and accountID = @accountID and testResultsID = Max(testResultsID); Select LAST_INSERT_ID()");
+                    sb.Append("Select wordsEachMinute, pauses from testresults where testID = @testID and accountID = @accountID Order By testResultID desc limit 1; ");
 
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
+                        command.Parameters.AddWithValue("@testID", testID);
+                        command.Parameters.AddWithValue("@accountID", accountID);
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
                                 results.Add(reader["wordsEachMinute"].ToString());
                                 results.Add(reader["pauses"].ToString());
-
-                                testResultID = int.Parse(command.ExecuteScalar().ToString());
+                                
                             }
                         }
                     }
@@ -304,10 +339,10 @@ namespace LerenTypen
             {
                 System.Console.WriteLine(e.Message);
             }
-            return Tuple.Create(results, testResultID);
+            return results;
         }
 
-        public static List<string> GetTestResultsContent(int testResultID)
+        public static List<string> GetTestResultsContentRight(int testResultID)
         {
             List<string> results = new List<string>();
             try
@@ -317,7 +352,7 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("Select answer, rightAnswer from testContent Where testResultID = @testResultID");
+                    sb.Append("Select answer from testResultContent Where testResultID = @testResultID and answerType = 0");
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
@@ -329,6 +364,78 @@ namespace LerenTypen
                             while (reader.Read())
                             {                                
                                 results.Add(reader["answer"].ToString());                                
+                               
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return results;
+        }
+        public static List<string> GetTestResultsContentWrong(int testResultID)
+        {
+            List<string> results = new List<string>();
+            try
+            {
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("Select answer from testResultContent Where testResultID = @testResultID and answerType = 1");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+
+                        command.Parameters.AddWithValue("@testResultID", testResultID);
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                results.Add(reader["answer"].ToString());
+                                
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            return results;
+        }
+        public static List<string> GetTestResultsContentHadToBe(int testResultID)
+        {
+            List<string> results = new List<string>();
+            try
+            {
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("Select rightAnswer from testResultContent Where testResultID = @testResultID and answerType = 1");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+
+                        command.Parameters.AddWithValue("@testResultID", testResultID);
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                
                                 results.Add(reader["rightAnswer"].ToString());
                             }
                         }
@@ -336,13 +443,14 @@ namespace LerenTypen
                 }
 
             }
+
             catch (MySqlException e)
             {
                 System.Console.WriteLine(e.Message);
             }
             return results;
         }
-       
+
 
 
 

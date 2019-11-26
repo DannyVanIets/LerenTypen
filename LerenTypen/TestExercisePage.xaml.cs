@@ -384,18 +384,19 @@ namespace LerenTypen
         private void CloseTest()
         {
             testClosed = true;
-            t1.Stop();
-            TestResultsPage testResultsPage = new TestResultsPage(testID, m);
-            SaveResults();
+            t1.Stop();            
+            int resultID = SaveResults();
+            TestResultsPage testResultsPage = new TestResultsPage(testID, m, resultID);
             m.frame.Navigate(testResultsPage);
         }
         
-        private void SaveResults()
+        private int SaveResults()
         {
             int amountOfWrong = wrongAnswers.Count;            
             decimal wordsPerMinute = CalculateWordsPerMinute();    
 
-            Database.InsertResults(testID, 1, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines);
+            int resultID = Database.InsertResults(testID, 1, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines);
+            return resultID;
         }
 
        

@@ -26,7 +26,7 @@
             <Label x:Name="testNameLbl" Content="ToetsNaam" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20"/>
             <TextBlock HorizontalAlignment="Center" FontSize="20">
                 <Hyperlink>
-                    <Run Text="GemaaktDoor" />
+                    <Run x:Name="createrRun" Text="GemaaktDoor" />
                 </Hyperlink>
             </TextBlock>
             <Label x:Name="difficultyLbl" Content="Moeilijkheidsgraad" FontSize="20" HorizontalContentAlignment="Center"/>

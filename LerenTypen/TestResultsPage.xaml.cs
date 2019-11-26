@@ -15,20 +15,27 @@ namespace LerenTypen
         private List<string> hadToBe;
         private List<string> rightAnswers;        
         private int accountID = 1;
-        public TestResultsPage(int testID, MainWindow m)
+        private int testResultID;
+        public TestResultsPage(int testID, MainWindow m ,int testResultID)
         {
             InitializeComponent();
             this.testID = testID;
+            this.testResultID = testResultID;
             this.m = m;
 
             wrongAnswers = new List<string>();
             hadToBe = new List<string>();
             rightAnswers = new List<string>();
 
+            testNameLbl.Content = Database.GetTestName(testID);
             
-            FillAnswerList(false);
+            amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
+         
             GetResults();
+            FillAnswerList(false);
+
             List<int> testInformation = Database.GetTestInformation(testID);
+            createrRun.Text = Database.GetUserName(testInformation[0]);
             string difficulty;
             if (testInformation[1].Equals(0))
             {
@@ -42,6 +49,7 @@ namespace LerenTypen
                 difficulty = "Moeilijk";
             }
             difficultyLbl.Content = difficulty;
+           
         }
 
         private void FillAnswerList(bool check)
@@ -79,37 +87,22 @@ namespace LerenTypen
 
         private void GetResults()
         {
-            string percentageRight = CalculatePercentageRight();
+            
             amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
             
-            Tuple<List<string>,int> testResults = Database.GetTestResults(accountID, testID);
-            int testResultID = testResults.Item2;
-            List<string> testResultsContent = Database.GetTestResultsContent(testResultID);
-            int i = 0;
-            foreach (string result in testResultsContent)
-            {
-                if (i % 1 == 0)
-                {
-                    if (result.Equals(null))
-                    {
-                        rightAnswers.Add(testResultsContent[i - 1]);
-                    }
-                    else
-                    {
-                        wrongAnswers.Add(testResultsContent[i - 1]);
-                        hadToBe.Add(result);
-                    }
-                }
-                i++;
-            }
-            List<string> testResultsItem = testResults.Item1;
-            Console.WriteLine(testResultsItem.Count);
+            List<string> testResults = Database.GetTestResults(accountID, testID);           
+            
+            rightAnswers = Database.GetTestResultsContentRight(testResultID);
+            wrongAnswers = Database.GetTestResultsContentWrong(testResultID);
+            hadToBe = Database.GetTestResultsContentHadToBe(testResultID);               
 
-            int amountOfPauses = int.Parse(testResultsItem[0]);
-            int wordsPerMinute = int.Parse(testResults.Item1[1]);
+            int amountOfPauses = int.Parse(testResults[1]);
+            int wordsPerMinute = int.Parse(testResults[0]);
             amountOfBreaksTbl.Text = amountOfPauses.ToString();
             wordsPerMinuteTbl.Text = wordsPerMinute.ToString();
-
+            decimal percentageRight = CalculatePercentageRight();
+            string percentageRightStr = Math.Round(percentageRight).ToString() + "%";
+            percentageRightTbl.Text = percentageRightStr;
 
             if (percentageRight.Equals(100))
             {
@@ -118,9 +111,9 @@ namespace LerenTypen
 
 
         }
-        private string CalculatePercentageRight()
+        private decimal CalculatePercentageRight()
         {
-            decimal percentageRight = 0;
+            decimal percentageRight;
             try
             {
                 percentageRight = decimal.Divide(rightAnswers.Count,rightAnswers.Count+wrongAnswers.Count) * 100;
@@ -129,9 +122,9 @@ namespace LerenTypen
             {
                 percentageRight = 100;
             }
-            string percentageRightStr = Math.Round(percentageRight).ToString() + "%";
+            
 
-            return percentageRightStr;
+            return percentageRight;
         }
 
     }
