@@ -71,7 +71,7 @@ namespace LerenTypen
             {
                 System.Console.WriteLine(e.Message);
             }
-            Console.WriteLine(result);
+            
             return result;
         }
 
