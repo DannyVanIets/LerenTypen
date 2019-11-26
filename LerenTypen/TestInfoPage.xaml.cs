@@ -30,7 +30,7 @@ namespace LerenTypen
             }
             difficultyLabel.Content = $"Moeilijkheidsgraad: {difficultyString}";
 
-            testVersionLabel.Content = $"{test.Version} {test.CreatedDateTime}";
+            testVersionLabel.Content = $"Versie {test.Version} - {test.CreatedDateTime}";
 
             usernameLinkText.Text = test.AuthorUsername;
             usernameLink.Click += (s, e) =>
@@ -41,7 +41,7 @@ namespace LerenTypen
             amountOfWordsLabel.Content = test.WordCount;
             timesMadeLabel.Content = test.TimesMade;
             avarageScoreLabel.Content = $"{test.AverageScore} %";
-            highscoreLabel.Content = $"{test.Highscore}";         
+            highscoreLabel.Content = $"{test.Highscore} %";         
         }
     }
 }

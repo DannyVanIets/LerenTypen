@@ -18,14 +18,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition Height="140"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="150"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3">
             <Label x:Name="testNameLabel" FontSize="32" Margin="20,5,0,0" 
                FontWeight="Bold">Toetsnaam</Label>
-            <Label x:Name="difficultyLabel" Margin="10,0,0,0" 
+            <Label x:Name="difficultyLabel" FontSize="14" Margin="10,0,0,0" 
                    VerticalAlignment="Center">Moeilijkheidsgraad</Label>
         </StackPanel>
         <Label x:Name="testVersionLabel" HorizontalAlignment="Right" VerticalAlignment="Center" 
@@ -86,23 +86,23 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,0,0">
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,10,0,0">
             <Label FontSize="14" FontWeight="Bold">Opties</Label>
-            <CheckBox x:Name="randomCheckBox">Willekeurige volgorde</CheckBox>
-            <CheckBox x:Name="continueUntilAllCorrectCheckBox">Doorgaan tot alle vragen goed beantwoord zijn</CheckBox>
-            <StackPanel Orientation="Horizontal" Height="20">
+            <CheckBox x:Name="randomCheckBox" Margin="0 2">Willekeurige volgorde</CheckBox>
+            <CheckBox x:Name="continueUntilAllCorrectCheckBox" Margin="0 2">Doorgaan tot alle vragen goed beantwoord zijn</CheckBox>
+            <StackPanel Orientation="Horizontal" Margin="0 2" Height="20">
                 <CheckBox x:Name="timeLimitCheckBox">Tijdslimiet:</CheckBox>
-                <TextBox x:Name="timeLimitTextBox" Width="50" Height="15" Margin="10,0,0,0"/>
-                <Label FontSize="8">minuten</Label>
+                <TextBox x:Name="timeLimitTextBox" Width="50" Height="20" Margin="10,0,0,0"/>
+                <Label FontSize="11" Height="25" Margin="0 -2">minuten</Label>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Height="20">
+            <StackPanel Orientation="Horizontal" Margin="0 2" Height="20">
                 <CheckBox x:Name="questionTimeLimitCheckBox">Volgende vraag na:</CheckBox>
-                <TextBox x:Name="questionTimeLimitTextBox" Width="50" Height="15" Margin="10,0,0,0"/>
-                <Label FontSize="8">seconden</Label>
+                <TextBox x:Name="questionTimeLimitTextBox" Width="50" Height="20" Margin="10,0,0,0"/>
+                <Label FontSize="11" Height="25" Margin="0 -2">seconden</Label>
             </StackPanel>
-            <CheckBox x:Name="showResultsAfterQuestionCheckBox">Resultaten ook na elke vraag tonen</CheckBox>
-            <CheckBox x:Name="readQuestionsAloudCHeckBox">Vragen voorlezen</CheckBox>
-            <CheckBox x:Name="checkPunctuationCheckBox">Controleer op leestekens</CheckBox>
+            <CheckBox x:Name="showResultsAfterQuestionCheckBox" Margin="0 2">Resultaten ook na elke vraag tonen</CheckBox>
+            <CheckBox x:Name="readQuestionsAloudCHeckBox" Margin="0 2">Vragen voorlezen</CheckBox>
+            <CheckBox x:Name="checkPunctuationCheckBox" Margin="0 2">Controleer op leestekens</CheckBox>
         </StackPanel>
 
         <Button x:Name="startTestButton" Grid.Row="4" Grid.Column="3" Width="100" Height="30"
