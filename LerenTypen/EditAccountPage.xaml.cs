@@ -12,8 +12,8 @@ namespace LerenTypen
     public partial class EditAccountPage : Page
     {
         private MainWindow MainWindow;
-        private LoginPage LoginPage;
         private Account Account;
+        private Classes.Hashen Hashen;
 
         public EditAccountPage(MainWindow mainWindow)
         {
@@ -85,7 +85,7 @@ namespace LerenTypen
                 //Here we are gonna give errors for the password
                 MessageBox.Show("U moet een nieuw wachtwoord en herhaling van het nieuwe wachtwoord invoeren!", "Error");
             }
-            else if (LoginPage.ComputeSha256Hash(oldPassword) == Database.GetPasswordFromAccount(MainWindow.Ingelogd))
+            else if (Hashen.ComputeSha256Hash(oldPassword) == Database.GetPasswordFromAccount(MainWindow.Ingelogd))
             {
                 MessageBox.Show("Dat is niet het goede oude wachtwoord!", "Error");
             }
@@ -96,7 +96,7 @@ namespace LerenTypen
             else
             {
                 //Hier wordt alles geüpdate!
-                string hashedNewPassword = LoginPage.ComputeSha256Hash(newPassword);
+                string hashedNewPassword = Hashen.ComputeSha256Hash(newPassword);
 
                 if (Database.UpdateAccountWithPassword(MainWindow.Ingelogd, username, hashedNewPassword, birthdate, firstname, surname, securityQuestion, securityAnswer))
                 {
