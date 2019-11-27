@@ -83,5 +83,10 @@ namespace LerenTypen
                 mainWindow.ChangePage(new TestResultsPage(testID, mainWindow, clickedResult.ID));
             }
         }
+
+        private void StartTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.ChangePage(new TestExercisePage(testID, mainWindow));
+        }
     }
 }
