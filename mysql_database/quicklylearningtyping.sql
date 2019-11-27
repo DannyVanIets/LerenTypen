@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 26 nov 2019 om 14:15
--- Serverversie: 10.1.36-MariaDB
--- PHP-versie: 7.2.10
+-- Gegenereerd op: 27 nov 2019 om 11:06
+-- Serverversie: 10.1.35-MariaDB
+-- PHP-versie: 7.2.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -80,8 +80,9 @@ INSERT INTO `testcontent` (`testContentID`, `testID`, `content`) VALUES
 CREATE TABLE `testresultcontent` (
   `testResultContentID` int(11) NOT NULL,
   `testResultID` int(11) NOT NULL,
-  `answer` int(11) NOT NULL,
-  `answerType` tinyint(1) NOT NULL COMMENT '0 = goed antwoord, 1 = fout antwoord'
+  `answer` text NOT NULL,
+  `answerType` tinyint(1) NOT NULL COMMENT '0 = goed antwoord, 1 = fout antwoord',
+  `rightAnswer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
