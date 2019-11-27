@@ -90,6 +90,7 @@
                         </Style>
                     </DataGridHyperlinkColumn.ElementStyle>
                 </DataGridHyperlinkColumn>
+                <DataGridTextColumn x:Name="AllMyTestsOverviewPage_DG_TestId" Header="TestId" Width="40*" Binding="{Binding TestId}" Visibility="Visible" IsReadOnly="True"/>
 
             </DataGrid.Columns>
         </DataGrid>

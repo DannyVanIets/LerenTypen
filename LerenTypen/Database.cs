@@ -499,7 +499,7 @@ namespace LerenTypen
 
 
         //Functions for US#11
-        public static bool UpdateToPublic(int accountID)
+        public static bool UpdateTestToPublic(int testId)
         {
             try
             {
@@ -507,11 +507,11 @@ namespace LerenTypen
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
 
-                    String query = "update tests set isPrivate=0 where accountId=@id;";
+                    String query = "update tests set isPrivate=0 where testId=@test;";
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
                         
-                        command.Parameters.AddWithValue("@id", accountID);
+                        command.Parameters.AddWithValue("@test", testId);
 
                        
                         connection.Open();

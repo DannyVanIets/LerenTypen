@@ -413,10 +413,10 @@ namespace LerenTypen
 
         private void DG_Checkbox_Check(object sender, RoutedEventArgs e)
         {
-
-            
-            Database.UpdateToPublic(4);
-            
+            DataGridCell dgr = sender as DataGridCell;
+            TestTable tt = dgr.DataContext as TestTable;           
+            int id = tt.TestId;
+            MessageBox.Show(id.ToString());
             
             //AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
 
