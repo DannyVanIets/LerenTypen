@@ -13,30 +13,15 @@ namespace LerenTypen
     public partial class LoginPage : Page
     {
         private MainWindow MainWindow;
+        private Classes.Converter Converter;
 
         public LoginPage(MainWindow mainWindow)
         {
             InitializeComponent();
-            //This variable is used if you want to change the page.
+            //This Class is used if you want to change the page.
             MainWindow = mainWindow;
-        }
-
-        private string ComputeSha256Hash(string plainData)
-        {
-            // Create a SHA256   
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                // ComputeHash - returns byte array  
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(plainData));
-
-                // Convert byte array to a string   
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
+            //This Class is used to Hash the password
+            Converter = new Classes.Converter();
         }
 
         // Er word gekeken als de velden ingevuld zijn, anders word alles afgebroken
@@ -58,7 +43,7 @@ namespace LerenTypen
             Klik op de registreer button en het wachtwoord word gehasht.*/
             if (password.Password == passwordherh.Password)
             {  
-                string hashedpw = ComputeSha256Hash(password.Password);
+                string hashedpw = Converter.ComputeSha256Hash(password.Password);
                 Database.Register(username.Text, hashedpw.ToString(), birthdate.SelectedDate.Value.Date , firstname.Text, lastname.Text, securityvraag.Text, securityans.Text);
                 MessageBox.Show("U bent succesvol ingelogd!"+"\n"+"U wordt nu doorgestuurd naar de homepagina." , "Succes");
                 username.Text = string.Empty; lastname.Text = string.Empty;
@@ -69,9 +54,7 @@ namespace LerenTypen
             {
                 MessageBox.Show("De wachtwoorden zijn niet gelijk!", "Wachtwoorden ongelijk!");
             }
-
         }
-
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -100,7 +83,6 @@ namespace LerenTypen
                 accountmaken.IsEnabled = true;
             }
         }
-
 
         private void Hyperlink_click(object sender, RoutedEventArgs e)
         {
@@ -136,7 +118,7 @@ namespace LerenTypen
             {
                 //In here we're first gonna hash the password and then send the username and hashedpassword to the database. We will return a number and if that number is higher than 0, it means we're logged in. We will send a message to the student and send them to the homepage. If not, we will send a message to the user telling that that account doesn't exist.
 
-                string hashedpw = ComputeSha256Hash(loginPassword);
+                string hashedpw = Converter.ComputeSha256Hash(loginPassword);
                 MainWindow.Ingelogd = Database.GetAccountIDForLogin(loginUsername, hashedpw);
 
                 if (MainWindow.Ingelogd > 0)
@@ -150,7 +132,6 @@ namespace LerenTypen
                     MessageBox.Show("Er bestaat geen account met deze gegevens!", "Error");
                 }
             }
-
         }
     }
 }

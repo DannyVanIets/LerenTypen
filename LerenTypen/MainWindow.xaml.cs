@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -54,6 +56,15 @@ namespace LerenTypen
             else
             {
                 ChangePage(new LoginPage(this), loginPageButton);
+            }
+        }
+
+        //Checks if the user is logged in and sends them to the EditAccountPage if so.
+        private void EditAccountPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Ingelogd > 0)
+            {
+                ChangePage(new EditAccountPage(this));
             }
         }
 
