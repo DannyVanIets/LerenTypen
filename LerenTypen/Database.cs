@@ -76,6 +76,7 @@ namespace LerenTypen
             return 0;
         }
 
+        //Get the Users account
         public static Account GetUserAccount(int accountID)
         {
             Account account = new Account();
@@ -113,6 +114,7 @@ namespace LerenTypen
             return null;
         }
 
+        //Let the admin update the account info
         public static bool AdminUpdateAccount(string userName, string firstName, string surname)
         {
             try
@@ -120,11 +122,9 @@ namespace LerenTypen
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-
                     StringBuilder sb = new StringBuilder();
                     sb.Append("UPDATE accounts SET accountFirstname = @firstname, accountSurname = @surname, accountUsername = @username WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
-
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
@@ -144,7 +144,7 @@ namespace LerenTypen
             return false;
         }
 
-
+        //make the user a student
         public static bool MaakStudent(string userName)
         {
             try
@@ -171,7 +171,7 @@ namespace LerenTypen
             }
             return false;
         }
-
+        //make the user docent
         public static bool MaakDocent(string userName)
         {
             try
@@ -199,7 +199,7 @@ namespace LerenTypen
             return false;
         }
 
-
+        //make the user Admin
         public static bool MaakAdmin(string userName)
         {
             try
@@ -227,10 +227,9 @@ namespace LerenTypen
             return false;
         }
 
-
+        //check if person is admin
         public static bool IsAdmin(int accountnumber)
         {
-
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -258,12 +257,11 @@ namespace LerenTypen
             {
                 Console.WriteLine(e.ToString());
             }
-
             return false;
         }
 
 
-        //Hier worden alle users opgehaald.
+        //All user info received
         public static List<User> GetUsers()
         {
             List<User> queryResult = new List<User>();

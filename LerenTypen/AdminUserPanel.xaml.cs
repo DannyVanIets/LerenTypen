@@ -11,16 +11,12 @@ namespace LerenTypen
     public partial class AdminUserPanel : Window
     {
         private Account Account;
-
-
         public AdminUserPanel(int id)
         {
             InitializeComponent();
             try
             {
-
                 Account = Database.GetUserAccount(id);
-
                 firstNameTextBox.Text = Account.FirstName;
                 lastNameTextbox.Text = Account.Surname;
                 Gebruikernaam.Text = Account.UserName;
@@ -40,10 +36,8 @@ namespace LerenTypen
             string surname = lastNameTextbox.Text;
             string username = Account.UserName;
             string v = ((ComboBoxItem)GebruikersRol.SelectedItem).Tag.ToString();
-
             try
             {
-
                 if (!string.IsNullOrEmpty(firstname) || !string.IsNullOrEmpty(surname) || !string.IsNullOrEmpty(username))
                 {
                     Database.AdminUpdateAccount(username, firstname, surname);
@@ -73,7 +67,6 @@ namespace LerenTypen
                     MessageBox.Show("Geen geldige rol", "Error");
                 }
             }
-
             catch (Exception q)
             {
                 Console.WriteLine(q);
