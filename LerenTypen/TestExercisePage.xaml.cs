@@ -389,6 +389,10 @@ namespace LerenTypen
             m.frame.Navigate(testResultsPage);
         }
 
+        /// <summary>
+        /// Results are stored in database after exercising test
+        /// </summary>
+        /// <returns></returns>
         private int SaveResults()
         {
             int amountOfWrong = wrongAnswers.Count;
@@ -398,7 +402,10 @@ namespace LerenTypen
             return resultID;
         }
 
-
+        /// <summary>
+        /// Words per minute are calculated to be stored in database
+        /// </summary>
+        /// <returns></returns>
         private decimal CalculateWordsPerMinute()
         {
             decimal secondsToMinutes;
