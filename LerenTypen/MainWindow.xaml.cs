@@ -113,10 +113,7 @@ namespace LerenTypen
                     pageToggleButton = loginPageButton;
                 }
 
-                if (pageToggleButton != null)
-                {
-                    SwitchMenuButtons(pageToggleButton);
-                }
+                SwitchMenuButtons(pageToggleButton);
             }
         }
 
@@ -133,7 +130,10 @@ namespace LerenTypen
             leaderboardPageButton.IsChecked = false;
             loginPageButton.IsChecked = false;
 
-            buttonToSwitchTo.IsChecked = true;
+            if (buttonToSwitchTo != null)
+            {
+                buttonToSwitchTo.IsChecked = true;
+            }
         }
 
         /// <summary>
