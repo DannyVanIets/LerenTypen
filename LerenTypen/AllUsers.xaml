@@ -21,7 +21,7 @@
                 <DataGridHyperlinkColumn  ContentBinding="{Binding Edit}" Header="Bewerken" Width="150">
                     <DataGridHyperlinkColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Tag" Value="{Binding Accountnumber}"/>
+                            <Setter Property="Tag" Value="{Binding}"/>
                             <EventSetter Event="Hyperlink.Click" Handler="DG_Hyperlink_click"/>
                         </Style>
                     </DataGridHyperlinkColumn.ElementStyle>

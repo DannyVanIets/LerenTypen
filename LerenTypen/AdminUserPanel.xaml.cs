@@ -11,7 +11,7 @@ namespace LerenTypen
     public partial class AdminUserPanel : Window
     {
         private Account account;
-        public AdminUserPanel(int id)
+        public AdminUserPanel(int id , int acctype)
         {
             InitializeComponent();
             try
@@ -20,6 +20,17 @@ namespace LerenTypen
                 firstNameTextBox.Text = account.FirstName;
                 lastNameTextbox.Text = account.Surname;
                 Gebruikernaam.Text = account.UserName;
+                if (acctype == 0)
+                {
+                    GebruikersRol.SelectedItem = 0;
+                }
+                else if (acctype == 1)
+                {
+                    GebruikersRol.SelectedItem = 1;
+                } else if(acctype == 2)
+                {
+                    GebruikersRol.SelectedItem = 2;
+                }
             }
             catch (Exception e)
             {

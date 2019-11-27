@@ -28,10 +28,13 @@ namespace LerenTypen
         //This gives UserID when Edit is clicked
         private void DG_Hyperlink_click(object sender, System.Windows.RoutedEventArgs e)
         {
+
             TextBlock textBlock = (TextBlock)sender;
-            string id = textBlock.Tag.ToString();
+            User user = (User)textBlock.Tag;
+            string id = user.Accountnumber.ToString();
+            string usertype = user.Usertype.ToString();
             Database.GetUserAccount(int.Parse(id));
-            var newWindow = new AdminUserPanel(int.Parse(id));
+            var newWindow = new AdminUserPanel(int.Parse(id), int.Parse(usertype));
             newWindow.Show();
         }
     }
