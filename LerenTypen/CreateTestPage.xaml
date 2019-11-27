@@ -51,8 +51,8 @@
         </ScrollViewer>
         <StackPanel x:Name="uploadPane" Grid.Row="4" Grid.Column="2" Orientation ="Horizontal"  Margin="0,0,0,0" VerticalAlignment="Center" >
             <RadioButton x:Name="publicRadio" Content="Publiek" Margin="0,0,0,0" Width="80" VerticalAlignment="Center"/>
-            <RadioButton x:Name="privateRadio" Content="Prive" Margin="10,0,0,0" Width="80" VerticalAlignment="Center" IsChecked="True"/>
-            <Button x:Name="saveButton" Content="Opslaan" Height="20" Margin="10,0,0,0" VerticalAlignment="Center" Click="SaveButton_Click"/>
+            <RadioButton x:Name="privateRadio" Content="Privé" Margin="10,0,0,0" Width="80" VerticalAlignment="Center" IsChecked="True"/>
+            <Button x:Name="saveButton" Content="Opslaan" Height="20" Width="100" Margin="10,0,0,0" VerticalAlignment="Center" Click="SaveButton_Click"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -1,8 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
 
 namespace LerenTypen
 {
@@ -30,9 +28,10 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // Select last insert id is used to insert the tests content into a seperate table with the same id
+                    // NOW() is being used to get the local date.
                     sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID) " +
                         $"VALUES (@testName, @testType, 0, @testDifficulty, NOW(), @isPrivate , @uploadedBy); SELECT LAST_INSERT_ID()");
-                    
+
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
@@ -40,22 +39,24 @@ namespace LerenTypen
                         command.Parameters.AddWithValue("@testName", testName);
                         command.Parameters.AddWithValue("@testType", testType);
                         command.Parameters.AddWithValue("@testDifficulty", testDifficulty);
-                        command.Parameters.AddWithValue("@isPrivate", isPrivate);                       
+                        command.Parameters.AddWithValue("@isPrivate", isPrivate);
                         command.Parameters.AddWithValue("@uploadedBy", uploadedBy);
 
                         object testID = command.ExecuteScalar();
                         int intTestID = int.Parse(testID.ToString());
 
-                        AddTestContent(intTestID, content);                      
+                        AddTestContent(intTestID, content);
                     }
                 }
             }
             catch (MySqlException e)
             {
                 System.Console.WriteLine(e.Message);
-            }            
+            }
         }
-
+        /// <summary>
+        /// Method adds each line of content of a test to database using its tests ID. testcontent is stored in a separate db.
+        /// </summary>        
         private static void AddTestContent(int testID, List<string> content)
         {
             try
@@ -63,20 +64,16 @@ namespace LerenTypen
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    
-                    foreach (string s in content)
+
+                    foreach (string contentLine in content)
                     {
-                        string MySql = $"INSERT INTO testContent (testID, content) VALUES (@testID,@s);";
+                        string MySql = $"INSERT INTO testContent (testID, content) VALUES (@testID,@contentLine);";
 
                         using (MySqlCommand command = new MySqlCommand(MySql, connection))
                         {
                             command.Parameters.AddWithValue("@testID", testID);
-                            command.Parameters.AddWithValue("@s", s);
-                            
-                            using (MySqlDataReader reader = command.ExecuteReader())
-                            {
-                           
-                            }
+                            command.Parameters.AddWithValue("@contentLine", contentLine);
+                            command.ExecuteNonQuery();
                         }
                     }
                 }
@@ -127,7 +124,8 @@ namespace LerenTypen
             }
         }
 
-        public static List<string> TestQuery() {
+        public static List<string> TestQuery()
+        {
             List<string> resultset = new List<string>();
             try
 
@@ -235,7 +233,7 @@ namespace LerenTypen
 
                             while (reader.Read())
                             {
-                               fullResult = reader.GetString(0);
+                                fullResult = reader.GetString(0);
 
                                 // Checks the string for any excess spaces and deletes them
                                 string[] words = fullResult.Trim().Split();
@@ -452,14 +450,14 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
                     // This query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
                     sb.Append("select t.testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0 and t.isPrivate=0;");
-                    
+
                     string MySql = sb.ToString();
                     int counter = 1;
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
 
-                       command.Parameters.AddWithValue("@accountID", ingelogd);
+                        command.Parameters.AddWithValue("@accountID", ingelogd);
 
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {

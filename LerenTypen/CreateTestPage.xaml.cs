@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -19,16 +16,17 @@ namespace LerenTypen
         private MainWindow m;
 
         public CreateTestPage(MainWindow m)
-        {            
+        {
             InitializeComponent();
             this.m = m;
             textBoxes = new List<TextBox>();
-            textBoxValues = new List<string>();            
+            textBoxValues = new List<string>();
             CreateInputLine();
             CreateInputLine();
             CreateInputLine();
+            textInputTestName.MaxLength = 50;
         }
-        
+
         private void AddLine_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             CreateInputLine();
@@ -65,7 +63,7 @@ namespace LerenTypen
                     textBoxes.Remove(t);
                     break;
                 }
-            }          
+            }
 
             addLineLink.IsEnabled = true;
             Run run = new Run("Voeg een nieuwe regel toe");
@@ -82,7 +80,7 @@ namespace LerenTypen
         private void CreateInputLine()
         {
             Thickness margin = new Thickness();
-            StackPanel panel = new StackPanel(); 
+            StackPanel panel = new StackPanel();
             TextBlock tbl = new TextBlock();
             TextBox tb = new TextBox();
             Hyperlink removeLink = new Hyperlink();
@@ -93,7 +91,7 @@ namespace LerenTypen
             removeLink.Click += RemoveLine_Click;
             tbl.Inlines.Add(removeLink);
             tb.Height = 25;
-            tb.MaxLength = 280;
+            tb.MaxLength = 200;
             panel.Orientation = Orientation.Horizontal;
             tbl.VerticalAlignment = VerticalAlignment.Center;
 
@@ -104,38 +102,44 @@ namespace LerenTypen
             tb.Width = 900;
             tb.Margin = margin;
             tb.Name = "textBox" + i;
-            textBoxes.Add(tb);           
-            
+            textBoxes.Add(tb);
+
             panel.Children.Add(tb);
             panel.Children.Add(tbl);
 
             testLinesPane.Children.Remove(addLineLink);
             testLinesPane.Children.Add(panel);
 
-            if (textBoxes.Count > 50) {
+            if (textBoxes.Count > 50)
+            {
                 addLineLink.IsEnabled = false;
                 Run run = new Run("Max aantal regels bereikt (50)");
                 addLine.Inlines.Clear();
-                addLine.Inlines.Add(run);               
+                addLine.Inlines.Add(run);
             }
 
             testLinesPane.Children.Add(addLineLink);
             i++;
             scrollViewer.ScrollToEnd();
         }
-               
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (TextFieldCheck())
             {
-                SaveToDatabase();
+                if (SaveToDatabase())
+                {
+                    MessageBox.Show("Uw toets is succesvol opgeslagen", "Succesvol opgeslagen");
+                    m.frame.Navigate(new CreateTestPage(m));
+                }
             }
+
         }
 
         /// <summary>
         /// Method for sending the test to the database.
         /// </summary>
-        private void SaveToDatabase()
+        private bool SaveToDatabase()
         {
             string title = textInputTestName.Text;
             int difficulty = comboBoxDifficulty.SelectedIndex;
@@ -147,29 +151,22 @@ namespace LerenTypen
                 privateTest = 1;
             }
 
-            //int amountOfWords = 0;
-
             // Text.Split splits the text into words using spaces
             // Empty words are not added to the counter amountOfWords
             // Decision was made to count words from db so function is not used
             foreach (TextBox t in textBoxes)
             {
-                /* string[] words = t.Text.Split();
-
-                 foreach(string word in words)
-                 {
-                     if (!word.Equals(""))
-                     {
-                         amountOfWords++;
-                     }
-                 }
-                 */
-
+                if (t.Text.Contains(" ") && comboBoxType.SelectedIndex.Equals(1))
+                {
+                    MessageBox.Show("Er mogen geen spaties gebruikt worden voor toetstype woorden", "Error");
+                    return false;
+                }
                 textBoxValues.Add(t.Text);
             }
-            
-            int accountID = m.Ingelogd;            
-            Database.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID);            
+
+            int accountID = m.Ingelogd;
+            Database.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID);
+            return true;
         }
 
         /// <summary>
@@ -195,15 +192,15 @@ namespace LerenTypen
             }
             else if (textBoxes.Count.Equals(0))
             {
-                MessageBox.Show("De toets bevat geen regels", "Voeg een regel toe");
+                MessageBox.Show("De toets bevat geen regels", "Error");
             }
             else if (textEmpty)
             {
-                MessageBox.Show("Vul alle toetsregels", "Er is iets fout gegaan");
+                MessageBox.Show("Vul alle toetsregels", "Error");
             }
             else
             {
-                MessageBox.Show("De toets heeft geen titel", "Er is iets fout gegaan");
+                MessageBox.Show("De toets heeft geen titel", "Error");
             }
             return false;
         }
