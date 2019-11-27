@@ -378,7 +378,7 @@ namespace LerenTypen
         }
 
         /// <summary>
-        /// Method for closing test, cannot be made fully functional yet. (to be going to resultsPage)
+        /// Method for closing test and navigating to resultspage
         /// </summary>
         private void CloseTest()
         {
