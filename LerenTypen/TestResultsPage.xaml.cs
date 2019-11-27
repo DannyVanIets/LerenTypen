@@ -30,12 +30,9 @@ namespace LerenTypen
             rightAnswers = new List<string>();
 
             testNameLbl.Content = Database.GetTestName(testID);
-
             GetResults();
-
             FillAnswerList(false);
             amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
-
             List<int> testInformation = Database.GetTestInformation(testID);
             createrRun.Text = Database.GetUserName(testInformation[0]);
 
@@ -53,7 +50,6 @@ namespace LerenTypen
                 difficulty = "Moeilijk";
             }
             difficultyLbl.Content = difficulty;
-
         }
 
         /// <summary>
@@ -113,11 +109,9 @@ namespace LerenTypen
         /// </summary>
         private void GetResults()
         {
-
             amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
 
             List<string> testResults = Database.GetTestResults(testResultID);
-
             rightAnswers = Database.GetTestResultsContentRight(testResultID);
             wrongAnswers = Database.GetTestResultsContentWrong(testResultID);
             hadToBe = Database.GetTestResultsContentHadToBe(testResultID);
