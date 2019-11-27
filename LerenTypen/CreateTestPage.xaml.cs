@@ -130,6 +130,7 @@ namespace LerenTypen
                 if (SaveToDatabase())
                 {
                     MessageBox.Show("Uw toets is succesvol opgeslagen", "Succesvol opgeslagen");
+                    m.frame.Navigate(new CreateTestPage(m));
                 }
             }
 
