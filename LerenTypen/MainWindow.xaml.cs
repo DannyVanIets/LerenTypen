@@ -59,6 +59,7 @@ namespace LerenTypen
             }
         }
 
+        //Checks if the user is logged in and sends them to the EditAccountPage if so.
         private void EditAccountPageButton_Click(object sender, RoutedEventArgs e)
         {
             if (Ingelogd > 0)
