@@ -58,16 +58,20 @@ namespace LerenTypen
 
             TableContent = new List<TestTable>();
 
-            ////add the data to the datagrid and refresh to show
+            //Hide some buttons if a user hasnt logged in yet
+            if (MainWindow.Ingelogd == 0)
+            {
+                AllTestsOverview_Button_MakeOwnTest.Visibility = System.Windows.Visibility.Hidden;
+                AllTestsOverview_Button_ShowOwnTestOnly.Visibility = System.Windows.Visibility.Hidden;
+                AllTestsOverview_CheckBox_MadeBefore.Visibility = System.Windows.Visibility.Hidden;
+            }
+
+
+            //add the data to the datagrid and refresh to show
 
             TableContent = Database.GetAllTests();
-
-
             try
             {
-                //TableCounter(TableContent);
-
-
                 AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
 
                 AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
@@ -76,9 +80,9 @@ namespace LerenTypen
                 isInitialized = true;
                 CurrentContent = TableContent;
             }
-            catch (NullReferenceException nre)
+            catch (NullReferenceException)
             {
-
+                Console.WriteLine("Er zijn geen toetsen");
             }
 
         }
@@ -214,14 +218,28 @@ namespace LerenTypen
 
             if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
-                CurrentContent = TableContent;
-                string searchterm = AllTestsOverview_TextBox_Search.Text;
-                SearchResult = (from t in CurrentContent
-                                where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
-                                select t).ToList();
+                if (AllTestsOverview_TextBox_Search.Text.StartsWith("User: "))
+                {
+                    CurrentContent = TableContent;
+                    string searchterm = AllTestsOverview_TextBox_Search.Text.Substring(6);
+                    SearchResult = (from t in CurrentContent
+                                    where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                    select t).ToList();
 
-                CurrentContent = SearchResult;
-                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+                    CurrentContent = SearchResult;
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+                }
+                else
+                {
+                    CurrentContent = TableContent;
+                    string searchterm = AllTestsOverview_TextBox_Search.Text;
+                    SearchResult = (from t in CurrentContent
+                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                    select t).ToList();
+
+                    CurrentContent = SearchResult;
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+                }
             }
 
         }
@@ -314,7 +332,14 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllTestsOverview_Button_MakeOwnTest_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MainWindow.ChangePage(new CreateTestPage(MainWindow));
+            if (MainWindow.Ingelogd == 0)
+            {
+                Console.WriteLine("User niet ingelogd");
+            }
+            else
+            {
+                MainWindow.ChangePage(new CreateTestPage(MainWindow));
+            }
         }
 
         /// <summary>
@@ -324,8 +349,16 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllTestsOverview_Button_ShowOwnTestOnly_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            AllTestsOverview_TextBox_Search.Text = Database.GetUserName(MainWindow.Ingelogd);
+            if (MainWindow.Ingelogd == 0)
+            {
+                Console.WriteLine("User niet ingelogd");
+            }
+            else
+            {
 
+                System.Windows.MessageBox.Show("Gaat naar pagina met eigen toetsen");
+                //MainWindow.ChangePage(new AllMyTestsOverviewPage(MainWindow));
+            }
 
         }
 
@@ -336,10 +369,17 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllTestsOverview_CheckBox_MadeBefore_Checked(object sender, System.Windows.RoutedEventArgs e)
         {
-            CurrentContent = Database.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
-            //TableCounter(CurrentContent);
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            if (MainWindow.Ingelogd == 0)
+            {
+                Console.WriteLine("User niet ingelogd");
+            }
+            else
+            {
+                CurrentContent = Database.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                //TableCounter(CurrentContent);
+                AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
+                AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            }
         }
 
         /// <summary>
@@ -353,6 +393,31 @@ namespace LerenTypen
             AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
 
             AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+        }
+
+        /// <summary>
+        /// Hyperlink so a user can click on a testname to go to its testinformation
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DG_AllTestOverview_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            string id = textBlock.Tag.ToString();
+            System.Windows.MessageBox.Show(id);
+        }
+        
+        /// <summary>
+        /// Hyperlink that sends a user to the corresponding userPage
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DG_ATO_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            TextBlock textBlock = (TextBlock)sender;
+            string id = textBlock.Tag.ToString();
+            System.Windows.MessageBox.Show(id);
+
         }
     }
 }
