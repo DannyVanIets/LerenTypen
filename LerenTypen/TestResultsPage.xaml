@@ -66,10 +66,10 @@
             
         </Grid>
         <StackPanel x:Name="awardStack" Grid.Row="2" Visibility="Collapsed">
-            <Label  Margin="30">
+            <Label  Margin="60" >
                 <Image Source="img/awardBadge.png"></Image>
             </Label>
-            <Label HorizontalAlignment="Center" FontSize="20" Content="Perfecte score!"></Label>
+            <Label HorizontalAlignment="Center" FontSize="20" Margin="0,-50,0,0" Content="Perfecte score!"></Label>
         </StackPanel>
     </Grid>
 </Page>

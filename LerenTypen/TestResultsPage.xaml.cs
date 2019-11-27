@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace LerenTypen
 {
@@ -13,10 +14,11 @@ namespace LerenTypen
         private MainWindow m;
         private List<string> wrongAnswers;
         private List<string> hadToBe;
-        private List<string> rightAnswers;        
+        private List<string> rightAnswers;
         private int accountID = 1;
         private int testResultID;
-        public TestResultsPage(int testID, MainWindow m ,int testResultID)
+
+        public TestResultsPage(int testID, MainWindow m, int testResultID)
         {
             InitializeComponent();
             this.testID = testID;
@@ -34,13 +36,15 @@ namespace LerenTypen
             FillAnswerList(false);
             amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
 
-            List<int> testInformation = Database.GetTestInformation(testID);           
+            List<int> testInformation = Database.GetTestInformation(testID);
             createrRun.Text = Database.GetUserName(testInformation[0]);
+
             string difficulty;
             if (testInformation[1].Equals(0))
             {
                 difficulty = "Makkelijk";
-            }else if (testInformation[1].Equals(1))
+            }
+            else if (testInformation[1].Equals(1))
             {
                 difficulty = "Midden";
             }
@@ -49,7 +53,7 @@ namespace LerenTypen
                 difficulty = "Moeilijk";
             }
             difficultyLbl.Content = difficulty;
-           
+
         }
 
         private void FillAnswerList(bool check)
@@ -57,15 +61,30 @@ namespace LerenTypen
             AnswersLv.Items.Clear();
             int i = 0;
             foreach (string answer in wrongAnswers)
-            {                
-                AnswersLv.Items.Add($"{answer} \nJuiste antwoord: {hadToBe[i]}");
+            {
+                ListViewItem li = new ListViewItem();
+                li.Foreground = Brushes.Red;
+
+                if (!answer.Trim().Equals(""))
+                {
+                    li.Content = $"{answer} \nJuiste antwoord: {hadToBe[i]}";
+                    AnswersLv.Items.Add(li);
+                }
+                else
+                {
+                    li.Content = $"Geen invoer \nJuiste antwoord: {hadToBe[i]}";
+                    AnswersLv.Items.Add(li);
+                }
                 i++;
             }
             if (!check)
             {
                 foreach (string answer in rightAnswers)
                 {
-                    AnswersLv.Items.Add($"{answer} \nGoed gedaan!");
+                    ListViewItem li = new ListViewItem();
+                    li.Foreground = Brushes.Green;
+                    li.Content = $"{answer} \nGoed gedaan!";
+                    AnswersLv.Items.Add(li);
                 }
             }
         }
@@ -87,14 +106,14 @@ namespace LerenTypen
 
         private void GetResults()
         {
-            
+
             amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
-            
-            List<string> testResults = Database.GetTestResults(accountID, testID);           
-            
+
+            List<string> testResults = Database.GetTestResults(accountID, testID);
+
             rightAnswers = Database.GetTestResultsContentRight(testResultID);
             wrongAnswers = Database.GetTestResultsContentWrong(testResultID);
-            hadToBe = Database.GetTestResultsContentHadToBe(testResultID);               
+            hadToBe = Database.GetTestResultsContentHadToBe(testResultID);
 
             int amountOfPauses = int.Parse(testResults[1]);
             int wordsPerMinute = int.Parse(testResults[0]);
@@ -108,24 +127,19 @@ namespace LerenTypen
             {
                 awardStack.Visibility = System.Windows.Visibility.Visible;
             }
-
-
         }
         private decimal CalculatePercentageRight()
         {
             decimal percentageRight;
             try
             {
-                percentageRight = decimal.Divide(rightAnswers.Count,rightAnswers.Count+wrongAnswers.Count) * 100;
+                percentageRight = decimal.Divide(rightAnswers.Count, rightAnswers.Count + wrongAnswers.Count) * 100;
             }
             catch (DivideByZeroException)
             {
                 percentageRight = 100;
             }
-            
-
             return percentageRight;
         }
-
     }
 }

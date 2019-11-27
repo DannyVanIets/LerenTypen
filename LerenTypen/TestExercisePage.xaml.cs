@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -46,10 +44,10 @@ namespace LerenTypen
             lines = new List<string>();
             this.testID = testID;
             this.m = m;
-            
+
             amountOfPauses = 0;
             wrongAnswers = new Dictionary<int, string>();
-            rightAnswers = new List<string>();            
+            rightAnswers = new List<string>();
             currentLine = 0;
             wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
 
@@ -63,7 +61,7 @@ namespace LerenTypen
             // Gets the tests name and content using the given testID
             lines = Database.GetTestContent(testID);
             testName = Database.GetTestName(testID);
-            testNameLbl.Content = testName;           
+            testNameLbl.Content = testName;
 
             // Check if lines are found
             if (!lines.Count.Equals(0))
@@ -79,7 +77,7 @@ namespace LerenTypen
 
             // Make startup overlay visible for countdown
             Overlay.Visibility = Visibility.Visible;
-            DrawClock();           
+            DrawClock();
         }
 
         /// <summary>
@@ -134,14 +132,14 @@ namespace LerenTypen
             secondLine.Y2 = 10;
             secondLine.StrokeThickness = 1;
             clock.Children.Add(secondLine);
-        }       
+        }
 
         /// <summary>
         /// Timer for countdown at the beginning of the exercise
         /// </summary>        
         private void StartTimer(object sender, EventArgs e)
         {
-            countDownLbl.Content = k-1;           
+            countDownLbl.Content = k - 1;
             k--;
 
             // Stop startTimer event and start events for the exercise
@@ -177,7 +175,7 @@ namespace LerenTypen
             if (i.Equals(60))
             {
                 i = 0;
-                j++;                
+                j++;
             }
 
             if (i < 10)
@@ -202,7 +200,7 @@ namespace LerenTypen
             if (i.Equals(0))
             {
                 minuteLine.RenderTransform = new RotateTransform(rotationM, 50, 50);
-            }            
+            }
         }
 
         /// <summary>
@@ -210,9 +208,10 @@ namespace LerenTypen
         /// </summary>
         private void ShowRightOrWrong(Boolean right, string input)
         {
-            textInputBox.IsEnabled = false;            
-            if (right){
-                countDownLbl.Foreground = Brushes.Green;                
+            textInputBox.IsEnabled = false;
+            if (right)
+            {
+                countDownLbl.Foreground = Brushes.Green;
             }
             else
             {
@@ -232,16 +231,16 @@ namespace LerenTypen
                 countDownLbl.Content = input;
             }
 
-            t2.Interval = new TimeSpan(0, 0, 2);            
+            t2.Interval = new TimeSpan(0, 0, 2);
             t2.Tick += StopShowingRightOrWrong;
-            t2.Start();            
+            t2.Start();
         }
 
         /// <summary>
         /// Method for collapsing overlay and resetting variables after timer t2 fires event in showRightOrWrong
         /// </summary>        
         private void StopShowingRightOrWrong(object sender, EventArgs e)
-        {            
+        {
             t2.Stop();
             t2.Tick -= StopShowingRightOrWrong;
             Overlay.Visibility = Visibility.Collapsed;
@@ -279,7 +278,7 @@ namespace LerenTypen
 
         private void ResumeButton_Click(object sender, RoutedEventArgs e)
         {
-            Resume();           
+            Resume();
         }
 
         /// <summary>
@@ -296,14 +295,14 @@ namespace LerenTypen
             t1.Tick += StartTimer;
             t1.Start();
         }
-        
+
         /// <summary>
         /// Shows message box to ask if user is sure to quit, when answered yes method CloseTest is called.
         /// </summary>        
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Weet je zeker dat je de toets wilt verlaten?", "Toets verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-            {          
+            {
                 CloseTest();
             }
         }
@@ -340,15 +339,15 @@ namespace LerenTypen
             currentLine++;
 
             if (currentLine < lines.Count)
-            {                
+            {
                 testLineLbl.Content = lines[currentLine];
-                lineNumberLbl.Content = $"{currentLine+1}/{lines.Count}";
+                lineNumberLbl.Content = $"{currentLine + 1}/{lines.Count}";
             }
             else
             {
                 testClosed = true;
             }
-            
+
         }
 
         /// <summary>
@@ -364,7 +363,7 @@ namespace LerenTypen
             }
             else
             {
-                wrongAnswers.Add(currentLine, input);                
+                wrongAnswers.Add(currentLine, input);
                 wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
                 if (currentLine + 4 < lines.Count)
                 {
@@ -373,7 +372,7 @@ namespace LerenTypen
                 else
                 {
                     lines.Add(lines[currentLine]);
-                }                
+                }
             }
             return false;
         }
@@ -384,22 +383,22 @@ namespace LerenTypen
         private void CloseTest()
         {
             testClosed = true;
-            t1.Stop();            
+            t1.Stop();
             int resultID = SaveResults();
             TestResultsPage testResultsPage = new TestResultsPage(testID, m, resultID);
             m.frame.Navigate(testResultsPage);
         }
-        
+
         private int SaveResults()
         {
-            int amountOfWrong = wrongAnswers.Count;            
-            decimal wordsPerMinute = CalculateWordsPerMinute();    
+            int amountOfWrong = wrongAnswers.Count;
+            decimal wordsPerMinute = CalculateWordsPerMinute();
 
             int resultID = Database.InsertResults(testID, 1, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines);
             return resultID;
         }
 
-       
+
         private decimal CalculateWordsPerMinute()
         {
             decimal secondsToMinutes;

@@ -5,15 +5,20 @@ using System.Text;
 
 namespace LerenTypen
 {
-    static class Database { 
+    static class Database
+    {
         private static MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder()
         {
-            Server = "localhost", UserID = "root", Password = "", Database = "quicklylearningtyping"
+            Server = "localhost",
+            UserID = "root",
+            Password = "",
+            Database = "quicklylearningtyping"
         };
 
         private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
 
-        public static void TestQuery() {
+        public static void TestQuery()
+        {
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -58,7 +63,6 @@ namespace LerenTypen
                         command.Parameters.AddWithValue("@accountID", accountID);
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            
                             while (reader.Read())
                             {
                                 result = reader.GetString(0);
@@ -71,7 +75,6 @@ namespace LerenTypen
             {
                 System.Console.WriteLine(e.Message);
             }
-            
             return result;
         }
 
@@ -90,7 +93,7 @@ namespace LerenTypen
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@testID", testID);
-                        
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -109,7 +112,7 @@ namespace LerenTypen
             {
                 System.Console.WriteLine(e.Message);
             }
-            
+
             return results;
         }
 
@@ -151,9 +154,9 @@ namespace LerenTypen
             List<string> results = new List<string>();
             try
             {
-                
+
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {                    
+                {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("Select content from testContent Where testID = @testID");
@@ -161,7 +164,6 @@ namespace LerenTypen
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
-
                         command.Parameters.AddWithValue("@testID", testID);
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
@@ -172,7 +174,7 @@ namespace LerenTypen
                         }
                     }
                 }
-                
+
             }
             catch (MySqlException e)
             {
@@ -181,7 +183,7 @@ namespace LerenTypen
             return results;
         }
         public static Int32 InsertResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
-        {            
+        {
             Int32 testResultID = 0;
             try
             {
@@ -199,10 +201,7 @@ namespace LerenTypen
                         command.Parameters.AddWithValue("@wordsEachMinute", wordsEachMinute);
                         command.Parameters.AddWithValue("@pauses", pauses);
 
-                       testResultID = Convert.ToInt32(command.ExecuteScalar());
-                        
-
-
+                        testResultID = Convert.ToInt32(command.ExecuteScalar());
                     }
                 }
             }
@@ -212,13 +211,13 @@ namespace LerenTypen
             }
             InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);
             return testResultID;
-            
+
         }
 
-        public static void InsertResultsContent(Int32 testResultID, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string>lines )
+        public static void InsertResultsContent(Int32 testResultID, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
         {
             foreach (string rightAnswer in rightAnswers)
-            {               
+            {
                 try
                 {
                     using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -282,9 +281,9 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    
-                        sb.Append("Select wordsEachMinute, pauses from testresults where testID = @testID and accountID = @accountID and testResultsID = @testResultsID");
-                    
+
+                    sb.Append("Select wordsEachMinute, pauses from testresults where testID = @testID and accountID = @accountID and testResultsID = @testResultsID");
+
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
@@ -293,8 +292,8 @@ namespace LerenTypen
                         {
                             while (reader.Read())
                             {
-                                results.Add(reader["wordsEachMinute"].ToString()); 
-                                results.Add( reader["pauses"].ToString());
+                                results.Add(reader["wordsEachMinute"].ToString());
+                                results.Add(reader["pauses"].ToString());
                             }
                         }
                     }
@@ -306,10 +305,10 @@ namespace LerenTypen
             }
             return results;
         }
-        
+
         public static List<string> GetTestResults(int accountID, int testID)
         {
-            List<string> results = new List<string>();            
+            List<string> results = new List<string>();
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -331,7 +330,6 @@ namespace LerenTypen
                             {
                                 results.Add(reader["wordsEachMinute"].ToString());
                                 results.Add(reader["pauses"].ToString());
-                                
                             }
                         }
                     }
@@ -364,9 +362,8 @@ namespace LerenTypen
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
-                            {                                
-                                results.Add(reader["answer"].ToString());                                
-                               
+                            {
+                                results.Add(reader["answer"].ToString());
                             }
                         }
                     }
@@ -395,19 +392,16 @@ namespace LerenTypen
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
-
                         command.Parameters.AddWithValue("@testResultID", testResultID);
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
                                 results.Add(reader["answer"].ToString());
-                                
                             }
                         }
                     }
                 }
-
             }
 
             catch (MySqlException e)
@@ -421,7 +415,6 @@ namespace LerenTypen
             List<string> results = new List<string>();
             try
             {
-
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
@@ -431,19 +424,17 @@ namespace LerenTypen
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
-
                         command.Parameters.AddWithValue("@testResultID", testResultID);
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                
+
                                 results.Add(reader["rightAnswer"].ToString());
                             }
                         }
                     }
                 }
-
             }
 
             catch (MySqlException e)
@@ -452,10 +443,5 @@ namespace LerenTypen
             }
             return results;
         }
-
-
-
-
-
     }
 }
