@@ -303,8 +303,16 @@ namespace LerenTypen
         {
             if (MessageBox.Show("Weet je zeker dat je de toets wilt verlaten?", "Toets verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                CloseTest();
+                StopTest();
             }
+        }
+
+        /// <summary>
+        /// Method for early closing test, user is navigated to testoverview
+        /// </summary>
+        private void StopTest()
+        {
+            m.frame.Navigate(new TestOverviewPage());
         }
 
         /// <summary>
