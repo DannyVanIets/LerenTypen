@@ -7,7 +7,7 @@ using System.Windows.Media;
 namespace LerenTypen
 {
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// On this page everything about an user editing their own account will be displayed.
     /// </summary>
     public partial class EditAccountPage : Page
     {
@@ -45,6 +45,7 @@ namespace LerenTypen
             }
         }
 
+        //This is used to change the colors of the button. Same as DeleteAccountButton_MouseLeave.
         private void DeleteAccountButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             deleteAccountButton.Foreground = Brushes.Black;
