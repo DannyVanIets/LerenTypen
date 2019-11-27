@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="570" d:DesignWidth="1050" Background="White"
       Title="Page4" ShowsNavigationUI="False">
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -49,7 +48,6 @@
                 <TextBlock Grid.Column="1" Margin="10" Text="Woorden per minuut"/>
                 <TextBlock Grid.Column="2" Margin="10" Text="Aantal pauzes"/>
                 <TextBlock Grid.Column="3" Margin="10" Text="Percentage goed"/>
-
                 <TextBlock x:Name="amountOfWrongTbl" Grid.Column="0" Grid.Row="1" Margin="10" Text="Aantal fouten"/>
                 <TextBlock x:Name="wordsPerMinuteTbl" Grid.Column="1" Grid.Row="1" Margin="10" Text="Woorden per minuut"/>
                 <TextBlock x:Name="amountOfBreaksTbl" Grid.Column="2" Grid.Row="1" Margin="10" Text="Aantal pauzes"/>
@@ -59,13 +57,10 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="3*"/>
-            </Grid.RowDefinitions>
-            
+            </Grid.RowDefinitions>            
             <Label Content="Antwoorden" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
             <CheckBox x:Name="onlyWrongCb" Content="Alleen foute antwoorden" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,50,0" Checked="OnlyWrongCb_Checked" Unchecked="OnlyWrongCb_Unchecked"/>
-            
-            <ListView x:Name="AnswersLv" FontSize="20" Grid.Row="1" Selector.IsSelected="False" ></ListView>
-            
+            <ListView x:Name="AnswersLv" FontSize="20" Grid.Row="1" Selector.IsSelected="False" ></ListView>            
         </Grid>
         <StackPanel x:Name="awardStack" Grid.Row="2" Visibility="Collapsed">
             <Label  Margin="60" >

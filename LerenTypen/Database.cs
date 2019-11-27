@@ -117,7 +117,6 @@ namespace LerenTypen
             {
                 System.Console.WriteLine(e.Message);
             }
-
             return results;
         }
 
@@ -188,7 +187,6 @@ namespace LerenTypen
                         }
                     }
                 }
-
             }
             catch (MySqlException e)
             {
@@ -236,7 +234,6 @@ namespace LerenTypen
             }
             InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);
             return testResultID;
-
         }
 
         public static void InsertResultsContent(Int32 testResultID, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
@@ -288,9 +285,7 @@ namespace LerenTypen
                             command.ExecuteNonQuery();
                         }
                     }
-
                 }
-
                 catch (MySqlException e)
                 {
                     System.Console.WriteLine(e.Message);
@@ -350,7 +345,6 @@ namespace LerenTypen
             List<string> results = new List<string>();
             try
             {
-
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
@@ -360,7 +354,6 @@ namespace LerenTypen
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
-
                         command.Parameters.AddWithValue("@testResultID", testResultID);
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
@@ -371,9 +364,7 @@ namespace LerenTypen
                         }
                     }
                 }
-
             }
-
             catch (MySqlException e)
             {
                 System.Console.WriteLine(e.Message);
@@ -387,7 +378,6 @@ namespace LerenTypen
             List<string> results = new List<string>();
             try
             {
-
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
@@ -408,7 +398,6 @@ namespace LerenTypen
                     }
                 }
             }
-
             catch (MySqlException e)
             {
                 System.Console.WriteLine(e.Message);
@@ -443,7 +432,6 @@ namespace LerenTypen
                     }
                 }
             }
-
             catch (MySqlException e)
             {
                 System.Console.WriteLine(e.Message);
