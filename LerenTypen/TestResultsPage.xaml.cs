@@ -116,7 +116,7 @@ namespace LerenTypen
 
             amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
 
-            List<string> testResults = Database.GetTestResults(accountID, testID);
+            List<string> testResults = Database.GetTestResults(testResultID);
 
             rightAnswers = Database.GetTestResultsContentRight(testResultID);
             wrongAnswers = Database.GetTestResultsContentWrong(testResultID);

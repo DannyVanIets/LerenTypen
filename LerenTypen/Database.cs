@@ -299,7 +299,7 @@ namespace LerenTypen
         }
 
         /// <summary>
-        /// To be used by mark for test overview page
+        /// Gets the results using resultsID
         /// </summary>
         /// <param name="accountID"></param>
         /// <param name="testID"></param>
@@ -315,55 +315,13 @@ namespace LerenTypen
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
 
-                    sb.Append("Select wordsEachMinute, pauses from testresults where testResultsID = @testResultsID");
+                    sb.Append("Select wordsEachMinute, pauses from testresults where testResultID = @testResultID");
 
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
-                        command.Parameters.AddWithValue("@testResultsID", testResultsID);
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                results.Add(reader["wordsEachMinute"].ToString());
-                                results.Add(reader["pauses"].ToString());
-                            }
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            return results;
-        }
-
-        /// <summary>
-        /// Gets last test results using only accountID and testID
-        /// </summary>
-        /// <param name="accountID"></param>
-        /// <param name="testID"></param>
-        /// <returns></returns>
-        public static List<string> GetTestResults(int accountID, int testID)
-        {
-            List<string> results = new List<string>();
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-
-                    sb.Append("Select wordsEachMinute, pauses from testresults where testID = @testID and accountID = @accountID Order By testResultID desc limit 1; ");
-
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@testID", testID);
-                        command.Parameters.AddWithValue("@accountID", accountID);
+                        command.Parameters.AddWithValue("@testResultID", testResultsID);
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
