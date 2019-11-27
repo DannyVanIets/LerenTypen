@@ -416,7 +416,16 @@ namespace LerenTypen
             DataGridCell dgr = sender as DataGridCell;
             TestTable tt = dgr.DataContext as TestTable;           
             int id = tt.TestId;
-            MessageBox.Show(id.ToString());
+            if (tt.IsPrivate)
+            {
+                Database.UpdateTestToPrivate(id);
+            }
+            else
+            {
+                Database.UpdateTestToPublic(id);
+            }
+            AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+
             
             //AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
 

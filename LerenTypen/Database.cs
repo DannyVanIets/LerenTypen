@@ -498,8 +498,8 @@ namespace LerenTypen
         }
 
 
-        //Functions for US#11
-        public static bool UpdateTestToPublic(int testId)
+        // Functions for US#11
+        public static void UpdateTestToPublic(int testId)
         {
             try
             {
@@ -525,10 +525,34 @@ namespace LerenTypen
             {
                 Console.WriteLine(e.ToString());
             }
-
-            return false;
         }
+        public static void UpdateTestToPrivate(int testId)
+        {
+            try
+            {
 
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+
+                    String query = "update tests set isPrivate=1 where testId=@test;";
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+
+                        command.Parameters.AddWithValue("@test", testId);
+
+
+                        connection.Open();
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
         public static List<TestTable> GetAllTestswithIsPrivate()
         {
             List<TestTable> queryResult = new List<TestTable>();

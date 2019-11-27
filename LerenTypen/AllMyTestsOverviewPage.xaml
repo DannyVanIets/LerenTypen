@@ -67,7 +67,7 @@
                     </DataGridHyperlinkColumn.ElementStyle>
                 </DataGridHyperlinkColumn>
                 <DataGridTextColumn Header="DifficultyBinder" Width="0*" Binding="{Binding DifficultyBinder}" Visibility="Hidden" IsReadOnly="True"/>
-                <DataGridCheckBoxColumn Header = "is privé" Width="60*" Binding="{Binding IsPrivate}">
+                <DataGridCheckBoxColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header = "is privé" Width="60*" Binding="{Binding IsPrivate}">
                     <DataGridCheckBoxColumn.CellStyle>
                         <Style>
                             <EventSetter Event = "CheckBox.Click" Handler="DG_Checkbox_Check"/>
