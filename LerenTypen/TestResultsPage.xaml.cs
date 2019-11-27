@@ -56,6 +56,10 @@ namespace LerenTypen
 
         }
 
+        /// <summary>
+        /// Fills the answer list with answers, bool check is to check if only wrong answers have to be shown
+        /// </summary>
+        /// <param name="check"></param>
         private void FillAnswerList(bool check)
         {
             AnswersLv.Items.Clear();
@@ -104,6 +108,9 @@ namespace LerenTypen
             FillAnswerList(false);
         }
 
+        /// <summary>
+        /// Gets the results from the database and adds an awardsticker if percentage right is 100
+        /// </summary>
         private void GetResults()
         {
 
@@ -128,6 +135,11 @@ namespace LerenTypen
                 awardStack.Visibility = System.Windows.Visibility.Visible;
             }
         }
+
+        /// <summary>
+        /// Calculates the percentage of answers answered right
+        /// </summary>
+        /// <returns></returns>
         private decimal CalculatePercentageRight()
         {
             decimal percentageRight;

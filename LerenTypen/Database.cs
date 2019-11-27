@@ -159,12 +159,16 @@ namespace LerenTypen
             return title;
         }
 
+        /// <summary>
+        /// Gets all of the content having this testID
+        /// </summary>
+        /// <param name="testID"></param>
+        /// <returns></returns>
         public static List<string> GetTestContent(int testID)
         {
             List<string> results = new List<string>();
             try
             {
-
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
@@ -192,6 +196,17 @@ namespace LerenTypen
             }
             return results;
         }
+        /// <summary>
+        /// inserts results of the test after the test has been made and adds the users input to testresultcontent right after, using the same testresult id
+        /// </summary>
+        /// <param name="testID"></param>
+        /// <param name="accountID"></param>
+        /// <param name="wordsEachMinute"></param>
+        /// <param name="pauses"></param>
+        /// <param name="rightAnswers"></param>
+        /// <param name="wrongAnswers"></param>
+        /// <param name="lines"></param>
+        /// <returns></returns>
         public static Int32 InsertResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
         {
             Int32 testResultID = 0;
@@ -252,6 +267,7 @@ namespace LerenTypen
                     System.Console.WriteLine(e.Message);
                 }
             }
+            // Position of right answer in lines is stored in keyvaluepairs int
             foreach (KeyValuePair<int, string> wrongAnswer in wrongAnswers)
             {
                 try
@@ -282,7 +298,14 @@ namespace LerenTypen
             }
         }
 
-        public static List<string> GetTestResults(int accountID, int testID, int testResultsID)
+        /// <summary>
+        /// To be used by mark for test overview page
+        /// </summary>
+        /// <param name="accountID"></param>
+        /// <param name="testID"></param>
+        /// <param name="testResultsID"></param>
+        /// <returns></returns>
+        public static List<string> GetTestResults(int testResultsID)
         {
             List<string> results = new List<string>();
             try
@@ -292,12 +315,13 @@ namespace LerenTypen
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
 
-                    sb.Append("Select wordsEachMinute, pauses from testresults where testID = @testID and accountID = @accountID and testResultsID = @testResultsID");
+                    sb.Append("Select wordsEachMinute, pauses from testresults where testResultsID = @testResultsID");
 
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
+                        command.Parameters.AddWithValue("@testResultsID", testResultsID);
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -316,6 +340,12 @@ namespace LerenTypen
             return results;
         }
 
+        /// <summary>
+        /// Gets last test results using only accountID and testID
+        /// </summary>
+        /// <param name="accountID"></param>
+        /// <param name="testID"></param>
+        /// <returns></returns>
         public static List<string> GetTestResults(int accountID, int testID)
         {
             List<string> results = new List<string>();
@@ -352,6 +382,11 @@ namespace LerenTypen
             return results;
         }
 
+        /// <summary>
+        /// Gets the right answers of a testResult using testResultID
+        /// </summary>
+        /// <param name="testResultID"></param>
+        /// <returns></returns>
         public static List<string> GetTestResultsContentRight(int testResultID)
         {
             List<string> results = new List<string>();
@@ -387,6 +422,8 @@ namespace LerenTypen
             }
             return results;
         }
+
+        // Gets the wrong answers of a testResult using testResultID
         public static List<string> GetTestResultsContentWrong(int testResultID)
         {
             List<string> results = new List<string>();
@@ -420,6 +457,8 @@ namespace LerenTypen
             }
             return results;
         }
+
+        // Gets the answers the wrong answers had to be
         public static List<string> GetTestResultsContentHadToBe(int testResultID)
         {
             List<string> results = new List<string>();
