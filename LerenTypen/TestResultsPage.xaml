@@ -15,23 +15,23 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="0" HorizontalAlignment="Center">
-        <Label FontSize="50" Content="Resultaat"  VerticalAlignment="Center"/>            
+        <Label FontSize="40" Content="Resultaat"  VerticalAlignment="Center"/>            
         </StackPanel>
         <Button x:Name="restartButton" Background="Transparent" BorderThickness="0" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="1" Grid.Row="0" Width="50" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,50,0" Click="RestartButton_Click">
             <Image Source="img/restartButton.png"/>
         </Button>
         <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center">
-            <Label x:Name="testNameLbl" Content="ToetsNaam" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20"/>
-            <TextBlock HorizontalAlignment="Center" FontSize="20">
+            <Label x:Name="testNameLbl" Content="ToetsNaam" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="18"/>
+            <TextBlock HorizontalAlignment="Center" FontSize="16">
                 <Hyperlink>
                     <Run x:Name="createrRun" Text="GemaaktDoor" />
                 </Hyperlink>
             </TextBlock>
-            <Label x:Name="difficultyLbl" Content="Moeilijkheidsgraad" FontSize="20" HorizontalContentAlignment="Center"/>
-            <Label x:Name="amountOfWordsLbl" Content="AantalWoorden" FontSize="20" HorizontalContentAlignment="Center"/>
+            <Label x:Name="difficultyLbl" Content="Moeilijkheidsgraad" FontSize="16" HorizontalContentAlignment="Center"/>
+            <Label x:Name="amountOfWordsLbl" Content="AantalWoorden" FontSize="16" HorizontalContentAlignment="Center"/>
             </StackPanel>        
         <Grid Grid.Column="1" Grid.Row="1">             
                 <Grid.ColumnDefinitions>                    
@@ -41,26 +41,26 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Margin="10" Text="Aantal fouten"/>
-                <TextBlock Grid.Column="1" Margin="10" Text="Woorden per minuut"/>
-                <TextBlock Grid.Column="2" Margin="10" Text="Aantal pauzes"/>
-                <TextBlock Grid.Column="3" Margin="10" Text="Percentage goed"/>
-                <TextBlock x:Name="amountOfWrongTbl" Grid.Column="0" Grid.Row="1" Margin="10" Text="Aantal fouten"/>
-                <TextBlock x:Name="wordsPerMinuteTbl" Grid.Column="1" Grid.Row="1" Margin="10" Text="Woorden per minuut"/>
-                <TextBlock x:Name="amountOfBreaksTbl" Grid.Column="2" Grid.Row="1" Margin="10" Text="Aantal pauzes"/>
-                <TextBlock x:Name="percentageRightTbl" Grid.Column="3" Grid.Row="1" Margin="10" Text="Percentage goed"/>
+            <TextBlock Grid.Column="0" Margin="0" FontWeight="Bold" FontSize="14" Text="Aantal fouten"/>
+            <TextBlock Grid.Column="1" Margin="0" FontWeight="Bold" FontSize="14" Text="Woorden per minuut"/>
+            <TextBlock Grid.Column="2" Margin="0" FontWeight="Bold" FontSize="14" Text="Aantal pauzes"/>
+            <TextBlock Grid.Column="3" Margin="0" FontWeight="Bold" FontSize="14" Text="Percentage goed"/>
+                <TextBlock x:Name="amountOfWrongTbl" Grid.Column="0" Grid.Row="1"  FontSize="14" Text="Aantal fouten"/>
+            <TextBlock x:Name="wordsPerMinuteTbl" Grid.Column="1" Grid.Row="1" Margin="0" FontSize="14" Text="Woorden per minuut"/>
+            <TextBlock x:Name="amountOfBreaksTbl" Grid.Column="2" Grid.Row="1" Margin="0" FontSize="14" Text="Aantal pauzes"/>
+            <TextBlock x:Name="percentageRightTbl" Grid.Column="3" Grid.Row="1" Margin="0" FontSize="14" Text="Percentage goed"/>
             </Grid>        
         <Grid Grid.Column="1" Grid.Row="2" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>            
-            <Label Content="Antwoorden" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
+            <Label Content="Antwoorden" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
             <CheckBox x:Name="onlyWrongCb" Content="Alleen foute antwoorden" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,50,0" Checked="OnlyWrongCb_Checked" Unchecked="OnlyWrongCb_Unchecked"/>
-            <ListView x:Name="AnswersLv" FontSize="20" Grid.Row="1" Selector.IsSelected="False" ></ListView>            
+            <ListView x:Name="AnswersLv" FontSize="16" Grid.Row="1" Selector.IsSelected="False" ></ListView>            
         </Grid>
         <StackPanel x:Name="awardStack" Grid.Row="2" Visibility="Collapsed">
             <Label  Margin="60" >

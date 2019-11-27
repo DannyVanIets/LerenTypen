@@ -83,7 +83,7 @@ namespace LerenTypen
                 {
                     ListViewItem li = new ListViewItem();
                     li.Foreground = Brushes.Green;
-                    li.Content = $"{answer} \nGoed gedaan!";
+                    li.Content = $"{answer}";
                     AnswersLv.Items.Add(li);
                 }
             }
