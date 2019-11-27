@@ -81,7 +81,7 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Wachtwoord:" Canvas.Left="612" Canvas.Top="255" Width="162" FontSize="14"/>
-                <PasswordBox x:Name="password_login_textbox" Height="31" Canvas.Left="795" Canvas.Top="255" Width="162"/>
+                <PasswordBox x:Name="password_login_textbox" Height="31" Canvas.Left="795" Canvas.Top="255" Width="162" KeyDown="Password_login_textbox_KeyDown"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
