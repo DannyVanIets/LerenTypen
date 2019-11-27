@@ -38,15 +38,11 @@ namespace LerenTypen
         public int WPFTimesMade { get; set; }
         public int Highscore { get; set; }
         public int AmountOfWords { get; set; }
-
         public string Difficulty { get; set; }
         public string Uploader { get; set; }
-
         public int DifficultyBinder { get; set; }
-
         public bool IsPrivate = true;
         public string Edit { get; set; } = "bewerken";
-
         public string Delete = "verwijder";
 
         public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, int testDifficulty, string uploader)
