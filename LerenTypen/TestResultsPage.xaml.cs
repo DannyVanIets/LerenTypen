@@ -129,7 +129,14 @@ namespace LerenTypen
             decimal percentageRight = CalculatePercentageRight();
             string percentageRightStr = Math.Round(percentageRight).ToString() + "%";
             percentageRightTbl.Text = percentageRightStr;
-
+            if (percentageRight > 55)
+            {
+                percentageRightTbl.Foreground = Brushes.Green;
+            }
+            else
+            {
+                percentageRightTbl.Foreground = Brushes.Red;
+            }
             if (percentageRight.Equals(100))
             {
                 awardStack.Visibility = System.Windows.Visibility.Visible;
