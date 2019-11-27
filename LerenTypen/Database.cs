@@ -548,9 +548,10 @@ namespace LerenTypen
                             {
                                 int id = Convert.ToInt32(reader[0]);
                                 DateTime dateTime = (DateTime)reader[1];
+                                string date = dateTime.Date.ToString("dd/MM/yyyy");
                                 int wordsPerMin = Convert.ToInt32(reader[2]);
 
-                                results.Add(new TestResult(id, dateTime, wordsPerMin));
+                                results.Add(new TestResult(id, date, wordsPerMin));
                             }
                         }
                     }
@@ -594,9 +595,10 @@ namespace LerenTypen
                                 int version = Convert.ToInt32(reader[5]);
                                 int testDifficulty = Convert.ToInt32(reader[6]);
                                 bool isPrivate = Convert.ToBoolean(reader[7]);
-                                string createdDateTime = reader[8].ToString();
+                                DateTime createdDateTime = (DateTime)reader[8];
+                                string createdDateString = createdDateTime.Date.ToString("dd/MM/yyyy");
 
-                                return new Test(testName, testType, authorUsername, authorID, wordCount, timesMade, 0, highscore, version, testDifficulty, isPrivate, createdDateTime);
+                                return new Test(testName, testType, authorUsername, authorID, wordCount, timesMade, 0, highscore, version, testDifficulty, isPrivate, createdDateString);
                             }
                         }
                     }
