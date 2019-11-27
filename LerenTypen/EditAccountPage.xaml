@@ -48,7 +48,7 @@
         <PasswordBox Name="newPasswordTextBox" MaxLength="25" PasswordChar="*" Height="20" Width="260"
                      Grid.Row="5" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="175,5.2,0,5.2"/>
 
-        <Label Grid.Row="5" Grid.Column="0" Margin="10,30.2,0.2,29.2" Content="Nieuw wachtwoord heraling:" Grid.RowSpan="3"/>
+        <Label Grid.Row="5" Grid.Column="0" Margin="10,30.2,0.2,29.2" Content="Nieuw wachtwoord herhaling:" Grid.RowSpan="3"/>
         <PasswordBox x:Name="passwordRepeatTextBox" MaxLength="25" PasswordChar="*" Height="20" Width="260"
             Grid.Row="6" HorizontalAlignment="Left" Margin="175,4.8,0,5.6" Grid.ColumnSpan="2"/>
 
@@ -61,7 +61,7 @@
                   IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Grid.Row="8" Margin="175,6.4,0,3.6" Grid.ColumnSpan="2">
             <ComboBoxItem Content="Wat is je geboorteplaats?"/>
             <ComboBoxItem Content="Wat is de naam van je moeder?"/>
-            <ComboBoxItem Content="Naam van je eerste huisdier?"/>
+            <ComboBoxItem Content="Wat is de naam van je eerste huisdier?"/>
         </ComboBox>
 
         <Label Grid.Row="9" Grid.Column="0" Margin="10,4.8,10.2,108.2">Securityantwoord:</Label>
