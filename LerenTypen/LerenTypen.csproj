@@ -106,6 +106,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="TestResultsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -115,6 +119,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Database.cs" />
+    <Compile Include="TestResultsPage.xaml.cs">
+      <DependentUpon>TestResultsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -132,6 +139,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="TipPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestExercisePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -162,6 +173,9 @@
     <Compile Include="TestResult.cs" />
     <Compile Include="TipPage.xaml.cs">
       <DependentUpon>TipPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestExercisePage.xaml.cs">
+      <DependentUpon>TestExercisePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="TrendingTestsPage.xaml.cs">
       <DependentUpon>TrendingTestsPage.xaml</DependentUpon>
@@ -197,6 +211,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\stopButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\pauseButton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\resumeButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\nextButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\awardBadge.png" />
+    <Resource Include="img\restartButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
