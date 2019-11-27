@@ -9,9 +9,15 @@ namespace LerenTypen
     /// </summary>
     public partial class TestInfoPage : Page
     {
-        public TestInfoPage(int testID)
-        {
+        private MainWindow mainWindow;
+        private int testID;
+
+        public TestInfoPage(int testID, MainWindow mainWindow)
+        { 
             InitializeComponent();
+
+            this.mainWindow = mainWindow;
+            this.testID = testID;
 
             Test test = Database.GetTest(testID);
             testNameLabel.Content = test.Name;
@@ -74,8 +80,7 @@ namespace LerenTypen
             if (listViewItem != null)
             {
                 TestResult clickedResult = listViewItem.DataContext as TestResult;
-                MessageBox.Show(clickedResult.ID.ToString());
-                // Go to result page, use clickedResult.ID
+                mainWindow.ChangePage(new TestResultsPage(testID, mainWindow, clickedResult.ID));
             }
         }
     }

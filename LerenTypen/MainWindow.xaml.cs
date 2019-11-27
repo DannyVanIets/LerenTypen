@@ -41,7 +41,7 @@ namespace LerenTypen
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new TestInfoPage(1), testButton);
+            ChangePage(new TestInfoPage(1, this), testButton);
         }
 
         /// <summary>
