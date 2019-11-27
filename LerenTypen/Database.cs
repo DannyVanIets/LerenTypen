@@ -145,7 +145,7 @@ namespace LerenTypen
         }
 
         //make the user a student
-        public static bool MaakStudent(string userName)
+        public static bool MakeStudent(string userName)
         {
             try
             {
@@ -172,7 +172,7 @@ namespace LerenTypen
             return false;
         }
         //make the user docent
-        public static bool MaakDocent(string userName)
+        public static bool MakeTeacher(string userName)
         {
             try
             {
@@ -200,7 +200,7 @@ namespace LerenTypen
         }
 
         //make the user Admin
-        public static bool MaakAdmin(string userName)
+        public static bool MakeAdmin(string userName)
         {
             try
             {

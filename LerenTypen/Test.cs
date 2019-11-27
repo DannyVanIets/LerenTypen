@@ -22,7 +22,7 @@ namespace LerenTypen
             this.WordCount = wordCount;
             this.Difficulty = difficulty;
         }
-        //public int GetTimesTaken(Account account)
+        //public int GetTimesTaken(account account)
         //{
         //    return null;
         //}

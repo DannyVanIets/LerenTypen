@@ -10,16 +10,16 @@ namespace LerenTypen
 
     public partial class AdminUserPanel : Window
     {
-        private Account Account;
+        private Account account;
         public AdminUserPanel(int id)
         {
             InitializeComponent();
             try
             {
-                Account = Database.GetUserAccount(id);
-                firstNameTextBox.Text = Account.FirstName;
-                lastNameTextbox.Text = Account.Surname;
-                Gebruikernaam.Text = Account.UserName;
+                account = Database.GetUserAccount(id);
+                firstNameTextBox.Text = account.FirstName;
+                lastNameTextbox.Text = account.Surname;
+                Gebruikernaam.Text = account.UserName;
             }
             catch (Exception e)
             {
@@ -34,8 +34,8 @@ namespace LerenTypen
         {
             string firstname = firstNameTextBox.Text;
             string surname = lastNameTextbox.Text;
-            string username = Account.UserName;
-            string v = ((ComboBoxItem)GebruikersRol.SelectedItem).Tag.ToString();
+            string username = account.UserName;
+            string comboboxvalue = ((ComboBoxItem)GebruikersRol.SelectedItem).Tag.ToString();
             try
             {
                 if (!string.IsNullOrEmpty(firstname) || !string.IsNullOrEmpty(surname) || !string.IsNullOrEmpty(username))
@@ -47,20 +47,25 @@ namespace LerenTypen
                     MessageBox.Show("Vul alle velden in!", "Vul alles in");
                 }
 
-                if (v == "student")
+                if (comboboxvalue == "student")
                 {
-                    Database.MaakStudent(username);
+                    Database.MakeStudent(username);
                     MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                    this.Close();
                 }
-                else if (v == "docent")
+                else if (comboboxvalue == "docent")
                 {
-                    Database.MaakDocent(username);
+                    Database.MakeTeacher(username);
                     MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                    this.Close();
+
                 }
-                else if (v == "admin")
+                else if (comboboxvalue == "admin")
                 {
-                    Database.MaakAdmin(username);
+                    Database.MakeAdmin(username);
                     MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                    this.Close();
+
                 }
                 else
                 {

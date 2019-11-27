@@ -29,11 +29,11 @@
         <Label Grid.Row="2" Grid.Column="0" Margin="10,9.6,10.2,9.8">Achternaam:</Label>
         <TextBox x:Name="lastNameTextbox" Height="30" Width="300" Grid.Row="2" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="175,5.4,0,5"/>
         <Label Grid.Row="3" Grid.Column="0" Margin="10,10.2,10.2,10.2" Content="Rol :"/>
-        <Button x:Name="UpdateRol" Content="Update Info" Canvas.Left="612" Canvas.Top="486" Width="162" Click="Update_Button_Click"  Margin="375.8,83.8,10.2,-82.4" Grid.Row="4" Grid.Column="1"/>
+        <Button x:Name="UpdateRol" Content="Update Info" Canvas.Left="612" Canvas.Top="486" Click="Update_Button_Click"  Margin="386.8,81.8,10.2,-82.4" Grid.Row="4" Grid.Column="1" FontSize="16"/>
         <ComboBox x:Name="GebruikersRol" Height="28" Canvas.Left="795" Canvas.Top="351" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Grid.ColumnSpan="2" Margin="175,10.2,248.2,12.2" Grid.Row="3">
-            <ComboBoxItem Tag="student" Content="Student"/>
+            <ComboBoxItem Tag="student" Content="Student" />
             <ComboBoxItem Tag="docent" Content="Docent"/>
-            <ComboBoxItem Tag="admin" Content="Administrator"/>
+            <ComboBoxItem Tag="admin" Content="Administrator" />
         </ComboBox>
         <TextBox x:Name="Gebruikernaam" Width="399" HorizontalAlignment="Left" Margin="138.8,5,0,10" Grid.Column="1" BorderThickness="0" FontSize="36" FontWeight="Bold"/>
     </Grid>

@@ -11,19 +11,19 @@ namespace LerenTypen
     /// </summary>
     public partial class AllUsers : Page
     {
-        private List<User> Usercontent;
+        private List<User> usercontent;
         List<User> CurrentContent = new List<User>();
         public MainWindow Mainwindow { get; set; }
         public AllUsers(MainWindow mainwindow)
         {
             InitializeComponent();
             this.Mainwindow = mainwindow;
-            Usercontent = new List<User>();
+            usercontent = new List<User>();
             //Info loaded in from database
-            Usercontent = Database.GetUsers();
-            DGV1.ItemsSource = Usercontent;
+            usercontent = Database.GetUsers();
+            DGV1.ItemsSource = usercontent;
             DGV1.Items.Refresh();
-            CurrentContent = Usercontent;
+            CurrentContent = usercontent;
         }
         //This gives UserID when Edit is clicked
         private void DG_Hyperlink_click(object sender, System.Windows.RoutedEventArgs e)
@@ -37,31 +37,31 @@ namespace LerenTypen
     }
     public class User
     {
-        public int accountnumber { get; set; }
-        public string usertype { get; set; }
-        public string username { get; set; }
-        public string firstname { get; set; }
-        public string lastname { get; set; }
-        public string edit { get; set; }
+        public int Accountnumber { get; set; }
+        public string Usertype { get; set; }
+        public string Username { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Edit { get; set; }
         public User(int accountnum, string usern, string acctype, string fname, string lname, string edit)
         {
-            this.accountnumber = accountnum;
+            this.Accountnumber = accountnum;
             if (int.Parse(acctype) == 0)
             {
-                this.usertype = "Student";
+                this.Usertype = "Student";
             }
             else if (int.Parse(acctype) == 1)
             {
-                this.usertype = "Docent";
+                this.Usertype = "Docent";
             }
             else
             {
-                this.usertype = "Admin";
+                this.Usertype = "Admin";
             }
-            this.username = usern;
-            this.firstname = fname;
-            this.lastname = lname;
-            this.edit = "Bewerken";
+            this.Username = usern;
+            this.Firstname = fname;
+            this.Lastname = lname;
+            this.Edit = "Bewerken";
         }
     }
 }
