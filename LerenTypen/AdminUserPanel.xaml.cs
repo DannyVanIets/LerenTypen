@@ -23,8 +23,7 @@ namespace LerenTypen
 
                 firstNameTextBox.Text = Account.FirstName;
                 lastNameTextbox.Text = Account.Surname;
-                usernameTextBox.Text = Account.UserName;
-                birthdateDatePicker.SelectedDate = Account.Birthdate;
+                Gebruikernaam.Text = Account.UserName;
             }
             catch (Exception e)
             {
@@ -34,45 +33,48 @@ namespace LerenTypen
             }
         }
 
-        //When the Info Aanpassen button is clicked
-        private void Save_Button_Click(object sender, RoutedEventArgs e)
+        //When the make admin button is clicked
+        private void Update_Button_Click(object sender, RoutedEventArgs e)
         {
+            string firstname = firstNameTextBox.Text;
+            string surname = lastNameTextbox.Text;
+            string username = Account.UserName;
+            string v = ((ComboBoxItem)GebruikersRol.SelectedItem).Tag.ToString();
+
             try
             {
-                string firstname = firstNameTextBox.Text;
-                string surname = lastNameTextbox.Text;
-                string username = usernameTextBox.Text;
-                DateTime birthdate = birthdateDatePicker.DisplayDate;
 
                 if (!string.IsNullOrEmpty(firstname) || !string.IsNullOrEmpty(surname) || !string.IsNullOrEmpty(username))
                 {
-                    Database.AdminUpdateAccount(username, birthdate, firstname, surname);
-                    MessageBox.Show("Account Informatie Upgedate!", "Account Geupdate");
+                    Database.AdminUpdateAccount(username, firstname, surname);
                 }
                 else
                 {
                     MessageBox.Show("Vul alle velden in!", "Vul alles in");
                 }
 
+                if (v == "student")
+                {
+                    Database.MaakStudent(username);
+                    MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                }
+                else if (v == "docent")
+                {
+                    Database.MaakDocent(username);
+                    MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                }
+                else if (v == "admin")
+                {
+                    Database.MaakAdmin(username);
+                    MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                }
+                else
+                {
+                    MessageBox.Show("Geen geldige rol", "Error");
+                }
             }
-            catch
-            {
-                MessageBox.Show("Er is iets mis gegaan... Hallo product demo..", "Error");
-            }
-        }
 
-        //When the make admin button is clicked
-
-
-        private void Admin_Button_Click(object sender, RoutedEventArgs e)
-        {
-            string username = usernameTextBox.Text;
-            try
-            {
-                Database.MaakAdmin(username);
-                MessageBox.Show("Persoon is nu admin!", "Admin gemaakt");
-            }
-            catch(Exception q)
+            catch (Exception q)
             {
                 Console.WriteLine(q);
                 MessageBox.Show("Er is iets mis gegaan... Hallo product demo..", "Error");
@@ -81,4 +83,3 @@ namespace LerenTypen
         }
     }
 }
-

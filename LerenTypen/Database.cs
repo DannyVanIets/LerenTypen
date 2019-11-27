@@ -113,7 +113,7 @@ namespace LerenTypen
             return null;
         }
 
-        public static bool AdminUpdateAccount(string userName, DateTime birthday, string firstName, string surname)
+        public static bool AdminUpdateAccount(string userName, string firstName, string surname)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace LerenTypen
                     connection.Open();
 
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("UPDATE accounts SET accountFirstname = @firstname, accountSurname = @surname, accountUsername = @username, accountBirthdate = @birthday WHERE accountID = @id AND archived = 0");
+                    sb.Append("UPDATE accounts SET accountFirstname = @firstname, accountSurname = @surname, accountUsername = @username WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
@@ -131,8 +131,6 @@ namespace LerenTypen
                         command.Parameters.AddWithValue("@firstname", firstName);
                         command.Parameters.AddWithValue("@surname", surname);
                         command.Parameters.AddWithValue("@username", userName);
-                        command.Parameters.AddWithValue("@birthday", birthday);
-
                         command.ExecuteReader();
                     }
                     connection.Close();
@@ -145,6 +143,62 @@ namespace LerenTypen
             }
             return false;
         }
+
+
+        public static bool MaakStudent(string userName)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("UPDATE accounts SET accountType = 0 WHERE accountID = @id AND archived = 0");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
+                        command.ExecuteReader();
+                    }
+                    connection.Close();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return false;
+        }
+
+        public static bool MaakDocent(string userName)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("UPDATE accounts SET accountType = 1 WHERE accountID = @id AND archived = 0");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
+                        command.ExecuteReader();
+                    }
+                    connection.Close();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return false;
+        }
+
 
         public static bool MaakAdmin(string userName)
         {
@@ -172,6 +226,7 @@ namespace LerenTypen
             }
             return false;
         }
+
 
         public static bool IsAdmin(int accountnumber)
         {

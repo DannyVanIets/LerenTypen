@@ -61,7 +61,7 @@ namespace LerenTypen
             this.username = usern;
             this.firstname = fname;
             this.lastname = lname;
-            this.edit = "Edit";
+            this.edit = "Bewerken";
         }
     }
 }
