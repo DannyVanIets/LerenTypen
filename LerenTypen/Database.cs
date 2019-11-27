@@ -78,6 +78,11 @@ namespace LerenTypen
             return result;
         }
 
+        /// <summary>
+        /// Gets the accountID of the testcreater and the testDifficulty
+        /// </summary>
+        /// <param name="testID"></param>
+        /// <returns></returns>
         public static List<int> GetTestInformation(int testID)
         {
             List<int> results = new List<int>();
@@ -116,6 +121,11 @@ namespace LerenTypen
             return results;
         }
 
+        /// <summary>
+        /// Get the tests name using testID
+        /// </summary>
+        /// <param name="testID"></param>
+        /// <returns></returns>
         public static string GetTestName(int testID)
         {
             string title = "";
