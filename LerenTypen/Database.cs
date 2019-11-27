@@ -192,7 +192,7 @@ namespace LerenTypen
         }
 
         //In this query we will get all the information from one account. This is used in EditAccountPage to fill in the textboxes with the existing information.
-        //Password, type and if it's archived is not selected.
+        //Password, type and archived is not selected.
         public static Account GetAllAccountInformationExceptPassword(int accountID)
         {
             //Everything will be stored in the class Account so that it can be easily used later in the EditAccountPage.
