@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -124,43 +125,6 @@ namespace LerenTypen
             }
         }
 
-        public static List<string> TestQuery()
-        {
-            List<string> resultset = new List<string>();
-            try
-
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("select testID, t.accountID, testName, testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.HasRows)
-                            {
-                                while (reader.Read())
-                                {
-                                    resultset.Add(reader.GetString(2));
-
-                                }
-                                reader.NextResult();
-                            }
-                        }
-                    }
-                }
-                return resultset;
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-                return null;
-            }
-        }
         /// <summary>
         /// Returns every test in the database
         /// </summary>
@@ -289,10 +253,9 @@ namespace LerenTypen
             return false;
         }
 
-        public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
+        public static void Register(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
             DateTime res = birthday.Date;
-
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -322,8 +285,9 @@ namespace LerenTypen
             }
         }
 
-        // Database query used by login. We're gonna check if the username and hashedpassword match any existing data. If it does, we will return the accountID.
-        public static int GetAccountIDForLogin(string accountUsername, string password)
+
+    // Database query used by login. We're gonna check if the username and hashedpassword match any existing data. If it does, we will return the accountID.
+    public static int GetAccountIDForLogin(string accountUsername, string password)
         {
             try
             {
