@@ -329,7 +329,7 @@ namespace LerenTypen
 
         public static void Register(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
-            Date res = birthday.Date;
+            DateTime res = birthday.Date;
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
