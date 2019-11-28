@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Text;
-using System.Windows;
-using Microsoft.OData.Edm;
 
 namespace LerenTypen
 {
@@ -76,7 +74,7 @@ namespace LerenTypen
             return 0;
         }
 
-        //Get the Users account
+        // Get the Users account
         public static Account GetUserAccount(int accountID)
         {
             Account account = new Account();
@@ -84,9 +82,7 @@ namespace LerenTypen
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-
                     connection.Open();
-
                     StringBuilder sb = new StringBuilder();
                     sb.Append("SELECT accountFirstName, accountSurname, accountUsername, accountBirthdate FROM accounts WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
@@ -114,7 +110,7 @@ namespace LerenTypen
             return null;
         }
 
-        //Let the admin update the account info
+        // Let the admin update the account info
         public static bool AdminUpdateAccount(string userName, string firstName, string surname)
         {
             try
@@ -144,7 +140,7 @@ namespace LerenTypen
             return false;
         }
 
-        //make the user a student
+        // Make the user a student
         public static bool MakeStudent(string userName)
         {
             try
@@ -171,7 +167,8 @@ namespace LerenTypen
             }
             return false;
         }
-        //make the user docent
+
+        // Make the user teacher        
         public static bool MakeTeacher(string userName)
         {
             try
@@ -199,7 +196,7 @@ namespace LerenTypen
             return false;
         }
 
-        //make the user Admin
+        // Make the user Admin
         public static bool MakeAdmin(string userName)
         {
             try
@@ -227,7 +224,7 @@ namespace LerenTypen
             return false;
         }
 
-        //check if person is admin
+        // Check if person is admin
         public static bool IsAdmin(int accountnumber)
         {
             try

@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 
 namespace LerenTypen
 {
@@ -25,10 +22,9 @@ namespace LerenTypen
             DGV1.Items.Refresh();
             CurrentContent = usercontent;
         }
-        //This gives UserID when Edit is clicked
+        // This gives UserID when Edit is clicked
         private void DG_Hyperlink_click(object sender, System.Windows.RoutedEventArgs e)
         {
-
             TextBlock textBlock = (TextBlock)sender;
             User user = (User)textBlock.Tag;
             string id = user.Accountnumber.ToString();
@@ -55,7 +51,7 @@ namespace LerenTypen
             {
                 this.Usertype = "Student";
             }
-            else if (UserTypeID  == 1)
+            else if (UserTypeID == 1)
             {
                 this.Usertype = "Docent";
             }
