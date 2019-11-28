@@ -405,8 +405,9 @@ namespace LerenTypen
         {
             int amountOfWrong = wrongAnswers.Count;
             decimal wordsPerMinute = CalculateWordsPerMinute();
+            decimal percentageRight = CalculatePercentageRight();
 
-            int resultID = Database.InsertResults(testID, 1, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines);
+            int resultID = Database.InsertResults(testID, 1, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines, (int)percentageRight);
             return resultID;
         }
 
@@ -442,6 +443,24 @@ namespace LerenTypen
             }
             wordsPerMinute = Math.Round(wordsPerMinute);
             return wordsPerMinute;
+        }
+
+        /// <summary>
+        /// Calculates the percentage of answers answered right
+        /// </summary>
+        /// <returns></returns>
+        private decimal CalculatePercentageRight()
+        {
+            decimal percentageRight;
+            try
+            {
+                percentageRight = decimal.Divide(rightAnswers.Count, rightAnswers.Count + wrongAnswers.Count) * 100;
+            }
+            catch (DivideByZeroException)
+            {
+                percentageRight = 100;
+            }
+            return percentageRight;
         }
     }
 }

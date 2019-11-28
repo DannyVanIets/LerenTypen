@@ -205,7 +205,7 @@ namespace LerenTypen
         /// <param name="wrongAnswers"></param>
         /// <param name="lines"></param>
         /// <returns></returns>
-        public static Int32 InsertResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
+        public static Int32 InsertResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines, int score)
         {
             Int32 testResultID = 0;
             try
@@ -214,7 +214,7 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses) VALUES (@testID, @accountID, NOW(), @WordsEachMinute, @pauses); Select LAST_INSERT_ID();");
+                    sb.Append("INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score) VALUES (@testID, @accountID, NOW(), @WordsEachMinute, @pauses, @score); Select LAST_INSERT_ID();");
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
@@ -223,6 +223,7 @@ namespace LerenTypen
                         command.Parameters.AddWithValue("@accountID", accountID);
                         command.Parameters.AddWithValue("@wordsEachMinute", wordsEachMinute);
                         command.Parameters.AddWithValue("@pauses", pauses);
+                        command.Parameters.AddWithValue("@score", score);
 
                         testResultID = Convert.ToInt32(command.ExecuteScalar());
                     }
@@ -310,7 +311,7 @@ namespace LerenTypen
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
 
-                    sb.Append("Select wordsEachMinute, pauses from testresults where testResultID = @testResultID");
+                    sb.Append("Select wordsEachMinute, pauses, score from testresults where testResultID = @testResultID");
 
                     string MySql = sb.ToString();
 
@@ -323,6 +324,7 @@ namespace LerenTypen
                             {
                                 results.Add(reader["wordsEachMinute"].ToString());
                                 results.Add(reader["pauses"].ToString());
+                                results.Add(reader["score"].ToString());
                             }
                         }
                     }

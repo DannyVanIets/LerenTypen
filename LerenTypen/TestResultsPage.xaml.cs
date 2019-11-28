@@ -120,7 +120,7 @@ namespace LerenTypen
             int wordsPerMinute = int.Parse(testResults[0]);
             amountOfBreaksTbl.Text = amountOfPauses.ToString();
             wordsPerMinuteTbl.Text = wordsPerMinute.ToString();
-            decimal percentageRight = CalculatePercentageRight();
+            double percentageRight = double.Parse(testResults[2]);
             string percentageRightStr = Math.Round(percentageRight).ToString() + "%";
             percentageRightTbl.Text = percentageRightStr;
             if (percentageRight > 55)
@@ -135,24 +135,6 @@ namespace LerenTypen
             {
                 awardStack.Visibility = System.Windows.Visibility.Visible;
             }
-        }
-
-        /// <summary>
-        /// Calculates the percentage of answers answered right
-        /// </summary>
-        /// <returns></returns>
-        private decimal CalculatePercentageRight()
-        {
-            decimal percentageRight;
-            try
-            {
-                percentageRight = decimal.Divide(rightAnswers.Count, rightAnswers.Count + wrongAnswers.Count) * 100;
-            }
-            catch (DivideByZeroException)
-            {
-                percentageRight = 100;
-            }
-            return percentageRight;
         }
     }
 }
