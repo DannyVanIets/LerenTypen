@@ -35,7 +35,8 @@ namespace LerenTypen
             string usertype = user.UserTypeID.ToString();
             Database.GetUserAccount(int.Parse(id));
             var newWindow = new AdminUserPanel(int.Parse(id), int.Parse(usertype));
-            newWindow.Show();
+            newWindow.ShowDialog();
+            Mainwindow.ChangePage(new AllUsers(Mainwindow));
         }
     }
     public class User

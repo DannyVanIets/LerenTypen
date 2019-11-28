@@ -11,7 +11,7 @@ namespace LerenTypen
     public partial class AdminUserPanel : Window
     {
         private Account account;
-        public AdminUserPanel(int id , int acctype)
+        public AdminUserPanel(int id, int acctype)
         {
             InitializeComponent();
             try
@@ -59,6 +59,7 @@ namespace LerenTypen
                     Database.MakeTeacher(username);
                     MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
                     this.Close();
+
 
                 }
                 else if (comboboxvalue == "admin")
