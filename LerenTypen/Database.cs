@@ -566,6 +566,74 @@ namespace LerenTypen
             }
         }
 
+        public static int GetTestHighscore(int testID)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    // this query returns all the content from a given testId
+                    sb.Append($"SELECT MAX(score) FROM testresults WHERE testID={testID}");
+
+                    string mySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return Convert.ToInt32(reader[0]);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);              
+            }
+
+            return 0;
+        }
+
+        public static int GetTestAverageScore(int testID)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    // this query returns all the content from a given testId
+                    sb.Append($"SELECT AVG(score) FROM testresults WHERE testID={testID}");
+
+                    string mySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return Convert.ToInt32(reader[0]);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);              
+            }
+
+            return 0;
+        }
+
         public static Test GetTest(int testID)
         {
             try
@@ -598,7 +666,7 @@ namespace LerenTypen
                                 DateTime createdDateTime = (DateTime)reader[8];
                                 string createdDateString = createdDateTime.Date.ToString("dd/MM/yyyy");
 
-                                return new Test(testName, testType, authorUsername, authorID, wordCount, timesMade, 0, highscore, version, testDifficulty, isPrivate, createdDateString);
+                                return new Test(testID, testName, testType, authorID, authorUsername, wordCount, timesMade, version, testDifficulty, isPrivate, createdDateString);
                             }
                         }
                     }
@@ -624,7 +692,7 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // this query returns all the content from a given testId
-                    sb.Append($"SELECT MAX(wordsEachMinute) AS wordsEachMinute, accountID FROM testresults WHERE testID={testID} GROUP BY accountID DESC LIMIT 3 ");
+                    sb.Append($"SELECT MAX(wordsEachMinute), accountID FROM testresults WHERE testID={testID} GROUP BY accountID DESC LIMIT 3 ");
 
                     string mySql = sb.ToString();
 
@@ -664,7 +732,7 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // this query returns all the content from a given testId
-                    sb.Append($"SELECT MAX(score) AS score, accountID FROM testresults WHERE testID={testID} GROUP BY accountID DESC LIMIT 3 ");
+                    sb.Append($"SELECT MAX(score), accountID FROM testresults WHERE testID={testID} GROUP BY accountID DESC LIMIT 3 ");
 
                     string mySql = sb.ToString();
 

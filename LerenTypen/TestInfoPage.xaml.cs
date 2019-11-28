@@ -68,8 +68,8 @@ namespace LerenTypen
 
             amountOfWordsLabel.Content = test.WordCount;
             timesMadeLabel.Content = test.TimesMade;
-            avarageScoreLabel.Content = $"{(int)test.AverageScore}%";
-            highscoreLabel.Content = $"{(int)test.Highscore}%";
+            avarageScoreLabel.Content = $"{test.AverageScore}%";
+            highscoreLabel.Content = $"{test.Highscore}%";
 
             myResultsListView.ItemsSource = Database.GetAllTestResultsFromAccount(test.AuthorID, testID);
 
