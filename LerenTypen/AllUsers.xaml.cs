@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Controls;
-
 namespace LerenTypen
 {
     /// <summary>
@@ -16,6 +16,7 @@ namespace LerenTypen
         List<Users> Usercontent;
 
         List<Users> CurrentContent = new List<Users>();
+        private List<Users> SearchResult = new List<Users>();
         public bool IsAdmin = false;
         public MainWindow Mainwindow { get; set; }
         public AllUsers(MainWindow mainwindow)
@@ -38,55 +39,50 @@ namespace LerenTypen
             string id = textBlock.Tag.ToString();
             MessageBox.Show(id.ToString());
         }
-    }
-    class Users
-    {
 
-        public int accountnumber { get; set; }
-        public int usertype { get; set; }
-        public string username { get; set; }
-        public string firstname { get; set; }
-        public string lastname { get; set; }
-        public string edit { get; set; }
-
-
-        public Users(int accountnum, string usern, int acctype, string fname, string lname, string edit)
+        private void Search_Event(object sender, TextChangedEventArgs e)
         {
-            this.accountnumber = accountnum;
-            this.usertype = acctype;
-            this.username = usern;
-            this.firstname = fname;
-            this.lastname = lname;
-            this.edit = "Edit";
-        }
-
-        public bool IsAdminCheck(int acctype)
-        {
-            acctype = usertype;
-
-            if(acctype == 2)
+            if (Search_Username_Account.Text.Equals(""))
             {
-                IsAdmin = true;
+                CurrentContent = Usercontent;
+                DGV1.ItemsSource = CurrentContent;
+                DGV1.Items.Refresh();
             }
-            else
+            if (!Search_Username_Account.Text.Equals(""))
             {
-                IsAdmin= false;
+                CurrentContent = Usercontent;
+                string searchterm = Search_Username_Account.Text;
+                SearchResult = (from t in CurrentContent
+                                where t.firstname.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.lastname.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.username.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                select t).ToList();
+
+                CurrentContent = SearchResult;
+                DGV1.ItemsSource = CurrentContent;
+                DGV1.Items.Refresh();
             }
-            {
-
-
-            }
-
-
-
-
-        }
-    }
-    public partial class HomePage : Page
-    {
-        public HomePage()
-        {
-            InitializeComponent();
         }
     }
 }
+
+class Users
+{
+
+    public int accountnumber { get; set; }
+    public int usertype { get; set; }
+    public string username { get; set; }
+    public string firstname { get; set; }
+    public string lastname { get; set; }
+    public string edit { get; set; }
+
+
+    public Users(int accountnum, string usern, int acctype, string fname, string lname, string edit)
+    {
+        this.accountnumber = accountnum;
+        this.usertype = acctype;
+        this.username = usern;
+        this.firstname = fname;
+        this.lastname = lname;
+        this.edit = "Edit";
+    }
+}
+

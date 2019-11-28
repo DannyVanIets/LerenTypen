@@ -9,7 +9,7 @@ namespace LerenTypen
 {
     static class Database
     {
-       private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
+        private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
 
         //Hier worden alle users opgehaald.
         public static List<Users> GetUsers()
@@ -32,7 +32,7 @@ namespace LerenTypen
                             {
                                 while (reader.Read())
                                 {
-                                    queryResult.Add(new Users(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4) , "Edit"));
+                                    queryResult.Add(new Users(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(4), "Edit"));
                                 }
                                 reader.NextResult();
                             }
@@ -47,74 +47,71 @@ namespace LerenTypen
                 return null;
             }
         }
-    }
-         
-     private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
-
-        public static bool UserExists(string user)
-        {
-            try
+    
+            public static bool UserExists(string user)
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                try
                 {
-                    String query = "Select accountUsername from accounts where accountUsername = @username";
-                    using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
+                    using (MySqlConnection connection = new MySqlConnection(connectionString))
                     {
-                        usernamecheck.Parameters.AddWithValue("@username", user);
-                        connection.Open();
-                        using (MySqlDataReader reader = usernamecheck.ExecuteReader())
+                        String query = "Select accountUsername from accounts where accountUsername = @username";
+                        using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
                         {
-                            if (reader.HasRows)
+                            usernamecheck.Parameters.AddWithValue("@username", user);
+                            connection.Open();
+                            using (MySqlDataReader reader = usernamecheck.ExecuteReader())
                             {
-                                return true;
+                                if (reader.HasRows)
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
                             }
-                            else
-                            {
-                                return false;
-                            }
-                       }
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-            return false;
-        }
-  
-     public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
-        {
-            Date res = birthday.Date;
-
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                catch (Exception e)
                 {
-                    string query = "INSERT INTO accounts(accountType, accountUsername, accountPassword, accountBirthdate, accountFirstname, accountSurname, AccountSecurityQuestion, " +
-                        "AccountSecurityAnswer, archived) VALUES (0 , @username, @pwhash, @bday, @fname, @lname,  @secvraag, @secans, 0)";
+                    Console.WriteLine(e.ToString());
+                }
 
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                return false;
+            }
+
+            public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
+            {
+                Date res = birthday.Date;
+
+                try
+                {
+                    using (MySqlConnection connection = new MySqlConnection(connectionString))
                     {
-                        //a shorter syntax to adding parameters
-                        command.Parameters.AddWithValue("@username", username);
-                        command.Parameters.AddWithValue("@pwhash", password);
-                        command.Parameters.AddWithValue("@bday", res);
-                        command.Parameters.AddWithValue("@fname", firstname);
-                        command.Parameters.AddWithValue("@lname", lastname);
-                        command.Parameters.AddWithValue("@secvraag", securityvraag);
-                        command.Parameters.AddWithValue("@secans", securityanswer);
-                        //make sure you open and close(after executing) the connection
-                        connection.Open();
-                        command.ExecuteNonQuery();
+                        string query = "INSERT INTO accounts(accountType, accountUsername, accountPassword, accountBirthdate, accountFirstname, accountSurname, AccountSecurityQuestion, " +
+                            "AccountSecurityAnswer, archived) VALUES (0 , @username, @pwhash, @bday, @fname, @lname,  @secvraag, @secans, 0)";
+
+                        using (MySqlCommand command = new MySqlCommand(query, connection))
+                        {
+                            //a shorter syntax to adding parameters
+                            command.Parameters.AddWithValue("@username", username);
+                            command.Parameters.AddWithValue("@pwhash", password);
+                            command.Parameters.AddWithValue("@bday", res);
+                            command.Parameters.AddWithValue("@fname", firstname);
+                            command.Parameters.AddWithValue("@lname", lastname);
+                            command.Parameters.AddWithValue("@secvraag", securityvraag);
+                            command.Parameters.AddWithValue("@secans", securityanswer);
+                            //make sure you open and close(after executing) the connection
+                            connection.Open();
+                            command.ExecuteNonQuery();
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
     }
-}
