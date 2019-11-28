@@ -19,18 +19,8 @@ namespace LerenTypen
                 account = Database.GetUserAccount(id);
                 firstNameTextBox.Text = account.FirstName;
                 lastNameTextbox.Text = account.Surname;
-                Gebruikernaam.Text = account.UserName;
-                if (acctype == 0)
-                {
-                    GebruikersRol.SelectedItem = 0;
-                }
-                else if (acctype == 1)
-                {
-                    GebruikersRol.SelectedItem = 1;
-                } else if(acctype == 2)
-                {
-                    GebruikersRol.SelectedItem = 2;
-                }
+                EditPageUserName.Content += " " + account.UserName;
+                UserType.SelectedIndex = acctype;
             }
             catch (Exception e)
             {
@@ -46,7 +36,7 @@ namespace LerenTypen
             string firstname = firstNameTextBox.Text;
             string surname = lastNameTextbox.Text;
             string username = account.UserName;
-            string comboboxvalue = ((ComboBoxItem)GebruikersRol.SelectedItem).Tag.ToString();
+            string comboboxvalue = ((ComboBoxItem)UserType.SelectedItem).Tag.ToString();
             try
             {
                 if (!string.IsNullOrEmpty(firstname) || !string.IsNullOrEmpty(surname) || !string.IsNullOrEmpty(username))

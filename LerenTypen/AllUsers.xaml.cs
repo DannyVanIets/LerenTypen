@@ -32,7 +32,7 @@ namespace LerenTypen
             TextBlock textBlock = (TextBlock)sender;
             User user = (User)textBlock.Tag;
             string id = user.Accountnumber.ToString();
-            string usertype = user.Usertype.ToString();
+            string usertype = user.UserTypeID.ToString();
             Database.GetUserAccount(int.Parse(id));
             var newWindow = new AdminUserPanel(int.Parse(id), int.Parse(usertype));
             newWindow.Show();
@@ -41,6 +41,7 @@ namespace LerenTypen
     public class User
     {
         public int Accountnumber { get; set; }
+        public int UserTypeID { get; set; }
         public string Usertype { get; set; }
         public string Username { get; set; }
         public string Firstname { get; set; }
@@ -48,12 +49,13 @@ namespace LerenTypen
         public string Edit { get; set; }
         public User(int accountnum, string usern, string acctype, string fname, string lname, string edit)
         {
+            UserTypeID = int.Parse(acctype);
             this.Accountnumber = accountnum;
-            if (int.Parse(acctype) == 0)
+            if (UserTypeID == 0)
             {
                 this.Usertype = "Student";
             }
-            else if (int.Parse(acctype) == 1)
+            else if (UserTypeID  == 1)
             {
                 this.Usertype = "Docent";
             }
