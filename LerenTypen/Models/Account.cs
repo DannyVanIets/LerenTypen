@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LerenTypen
+namespace LerenTypen.Models
 {
     //In this class we will store all the information from an account that we can later one use in EditAccountPage to fill in the textboxes with all the correct information.
     class Account

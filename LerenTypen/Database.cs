@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using System.Windows;
+using LerenTypen.Models;
+
+
 namespace LerenTypen
 {
     static class Database
@@ -220,13 +224,14 @@ namespace LerenTypen
                 return 0;
             }
         }
+
         public static bool UserExists(string user)
         {
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    String query = "Select accountUsername from accounts where accountUsername = @username";
+                    string query = "Select accountUsername from accounts where accountUsername = @username";
                     using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
                     {
                         usernamecheck.Parameters.AddWithValue("@username", user);
