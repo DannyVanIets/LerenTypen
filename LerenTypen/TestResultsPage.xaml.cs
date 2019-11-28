@@ -14,7 +14,6 @@ namespace LerenTypen
         private List<string> wrongAnswers;
         private List<string> hadToBe;
         private List<string> rightAnswers;
-        private int accountID = 1;
         private int testResultID;
 
         public TestResultsPage(int testID, MainWindow m, int testResultID)

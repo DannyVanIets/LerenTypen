@@ -312,7 +312,7 @@ namespace LerenTypen
         /// </summary>
         private void StopTest()
         {
-            m.frame.Navigate(new TestOverviewPage());
+            m.frame.Navigate(new TestOverviewPage(m));
         }
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace LerenTypen
             int amountOfWrong = wrongAnswers.Count;
             decimal wordsPerMinute = CalculateWordsPerMinute();
             decimal percentageRight = CalculatePercentageRight();
-            int resultID = Database.InsertResults(testID, 1, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines, (int)percentageRight);
+            int resultID = Database.InsertResults(testID, m.Ingelogd, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines, (int)percentageRight);
             return resultID;
         }
 

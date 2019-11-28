@@ -608,38 +608,6 @@ namespace LerenTypen
             return false;
         }
 
-        public static string GetUserName(int accountID)
-        {
-            string result = null;
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("select accountUsername from accounts where accountID = @accountID");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@accountID", accountID);
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                result = reader.GetString(0);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            return result;
-        }
-
         /// <summary>
         /// Gets the accountID of the testcreater and the testDifficulty
         /// </summary>
