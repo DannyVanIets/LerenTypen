@@ -91,7 +91,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,10,0,0">
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,10,0,0" Visibility="Hidden">
             <Label FontSize="14" FontWeight="Bold">Opties</Label>
             <CheckBox x:Name="randomCheckBox" Margin="0 2">Willekeurige volgorde</CheckBox>
             <CheckBox x:Name="continueUntilAllCorrectCheckBox" Margin="0 2">Doorgaan tot alle vragen goed beantwoord zijn</CheckBox>
