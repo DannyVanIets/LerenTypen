@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using LerenTypen.Models;
 
 namespace LerenTypen
 {
@@ -13,7 +14,7 @@ namespace LerenTypen
     public partial class LoginPage : Page
     {
         private MainWindow MainWindow;
-        private Classes.Converter Converter;
+        private Converter Converter;
 
         public LoginPage(MainWindow mainWindow)
         {
@@ -21,7 +22,7 @@ namespace LerenTypen
             //This Class is used if you want to change the page.
             MainWindow = mainWindow;
             //This Class is used to Hash the password
-            Converter = new Classes.Converter();
+            Converter = new Converter();
         }
 
         // Er word gekeken als de velden ingevuld zijn, anders word alles afgebroken
