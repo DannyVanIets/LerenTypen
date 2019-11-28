@@ -87,11 +87,13 @@
             </ListView.View>
         </ListView>
 
-        <DataGrid x:Name="top3HighestScoresDataGrid" Grid.Row="2" Grid.Column="3" Margin="0,0,20,0" Background="White">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Top 3 hoogste scores" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <ListView x:Name="top3HighestScoresListView" Grid.Row="2" Grid.Column="3" Margin="0,0,20,0" Background="White">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="220">Top 3 hoogste scores</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
         <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,10,0,0" Visibility="Hidden">
             <Label FontSize="14" FontWeight="Bold">Opties</Label>

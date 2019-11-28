@@ -35,7 +35,7 @@ namespace LerenTypen
 
         public override string ToString()
         {
-            return $"{Date}: {WordsPerMinute} woorden per minuut ({CalculatePercentageRight()}% goed)";
+            return $"{Date}: {WordsPerMinute} woorden per minuut ({(int)CalculatePercentageRight()}% goed)";
         }
     }
 }

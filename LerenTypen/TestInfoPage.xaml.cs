@@ -68,8 +68,8 @@ namespace LerenTypen
 
             amountOfWordsLabel.Content = test.WordCount;
             timesMadeLabel.Content = test.TimesMade;
-            avarageScoreLabel.Content = $"{test.AverageScore}%";
-            highscoreLabel.Content = $"{test.Highscore}%";
+            avarageScoreLabel.Content = $"{(int)test.AverageScore}%";
+            highscoreLabel.Content = $"{(int)test.Highscore}%";
 
             myResultsListView.ItemsSource = Database.GetAllTestResultsFromAccount(test.AuthorID, testID);
 
@@ -79,6 +79,11 @@ namespace LerenTypen
                 top3FastestTypersListView.Items.Add($"{Database.GetUserName(kvp.Key)}: {kvp.Value} woorden per minuut");
             }
 
+            Dictionary<int, int> top3Highscore = Database.GetTop3Highscores(testID);
+            foreach (KeyValuePair<int, int> kvp in top3Fastest)
+            {
+                top3HighestScoresListView.Items.Add($"{Database.GetUserName(kvp.Key)}: {(int)kvp.Value}% goed");
+            }
         }
 
         private void MyResultsListView_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)

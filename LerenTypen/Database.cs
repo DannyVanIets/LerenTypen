@@ -651,5 +651,45 @@ namespace LerenTypen
                 return null;
             }
         }
+
+        public static Dictionary<int, int> GetTop3Highscores(int testID)
+        {
+            Dictionary<int, int> results = new Dictionary<int, int>();
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    // this query returns all the content from a given testId
+                    sb.Append($"SELECT MAX(score) AS score, accountID FROM testresults WHERE testID={testID} GROUP BY accountID DESC LIMIT 3 ");
+
+                    string mySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int score = Convert.ToInt32(reader[0]);
+                                int accountID = Convert.ToInt32(reader[1]);
+
+                                results.Add(accountID, score);
+                            }
+                        }
+                    }
+                }
+
+                return results;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
     }
 }
