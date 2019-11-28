@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using LerenTypen.Models;
 
 namespace LerenTypen
 {
@@ -13,15 +14,20 @@ namespace LerenTypen
     {
         private MainWindow MainWindow;
         private Account Account;
-        private Classes.Converter Converter;
+        private Converter Converter;
+        private Date Date;
 
         public EditAccountPage(MainWindow mainWindow)
         {
             InitializeComponent();
             //MainWindow is used to change pages.
             MainWindow = mainWindow;
+
+            //Here are all the constructors for Account, Converter and Date
             //Converter is used to convert strings to hashed passwords.
-            Converter = new Classes.Converter();
+            Converter = new Converter();
+            //Date is used to get the current date and the date from 100 years ago.
+            Date = new Date();
 
             //First we will check if the user is logged in, if not, they will be send back to the Homepage with a message that they're not logged in.
             //If a user is logged in, we will fill in all the information from his account into the textboxes.
@@ -34,6 +40,9 @@ namespace LerenTypen
 
                 usernameTextBox.Text = Account.UserName;
                 birthdateDatePicker.SelectedDate = Account.Birthdate;
+
+                birthdateDatePicker.DisplayDateStart = Date.dateOfToday;
+                birthdateDatePicker.DisplayDateEnd = Date.dateOfTodayHundredYearsAgo;
 
                 securityQuestionComboBox.Text = Account.SecurityQuestion;
                 securityAnswerTextBox.Text = Account.SecurityAnswer;
@@ -70,11 +79,22 @@ namespace LerenTypen
             DateTime birthdate = (DateTime)birthdateDatePicker.SelectedDate;
             string securityQuestion = securityQuestionComboBox.Text;
             string securityAnswer = securityAnswerTextBox.Text;
-
-            //We will first check if the textboxes that aren't passwords are empty. If they are, show a message that that is not allowed!
-            if (string.IsNullOrEmpty(firstname) || string.IsNullOrEmpty(surname) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(securityQuestion) || string.IsNullOrEmpty(securityAnswer))
+            
+            //Checks if the birthdate isn't younger than 1 year or older than 100 years.
+            //This also checks straight away if the birthdate is really a date.
+            if(birthdate > Date.dateOfToday || birthdate < Date.dateOfTodayHundredYearsAgo)
             {
-                MessageBox.Show("Je moet alle textvelden hebben ingevuld!", "Error");
+                MessageBox.Show($"Geboortedatum moet tussen {Date.dateOfTodayHundredYearsAgo.Day}-{Date.dateOfTodayHundredYearsAgo.Month}-{Date.dateOfTodayHundredYearsAgo.Year} en {Date.dateOfToday.Day}-{Date.dateOfToday.Month}-{Date.dateOfToday.Year} zijn.", "Error");
+            }
+            //This also checks straight away if the birthdate is really a date.
+            else if (birthdate > Date.dateOfToday || birthdate < Date.dateOfTodayHundredYearsAgo)
+            {
+                MessageBox.Show($"Geboortedatum moet tussen {Date.dateOfTodayHundredYearsAgo.Day}-{Date.dateOfTodayHundredYearsAgo.Month}-{Date.dateOfTodayHundredYearsAgo.Year} en {Date.dateOfToday.Day}-{Date.dateOfToday.Month}-{Date.dateOfToday.Year} zijn.", "Error");
+            }
+            //We will first check if the textboxes that aren't passwords are empty. If they are, show a message that that is not allowed!
+            else if (string.IsNullOrWhiteSpace(firstname) || string.IsNullOrWhiteSpace(surname) || string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(securityQuestion) || string.IsNullOrWhiteSpace(securityAnswer))
+            {
+                MessageBox.Show("Je moet alle textvelden hebben ingevuld, behalve de wachtwoord velden!", "Error");
             }
             else
             {

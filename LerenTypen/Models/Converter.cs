@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LerenTypen.Classes
+namespace LerenTypen.Models
 {
     //This class is being used to convert for example strings to hashed passwords.
     public class Converter

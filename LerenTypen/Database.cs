@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using LerenTypen.Models;
 
 namespace LerenTypen
 {
@@ -49,6 +50,7 @@ namespace LerenTypen
                 System.Console.WriteLine(e.Message);
             }
         }
+
         public static bool UserExists(string user)
         {
             try
@@ -83,7 +85,7 @@ namespace LerenTypen
             return false;
         }
 
-        public static void Registrer(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
+        public static void Register(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
             DateTime res = birthday.Date;
 
@@ -343,6 +345,38 @@ namespace LerenTypen
                     }
                     connection.Close();
                     return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return false;
+        }
+
+        //This query returns true if a username already exists, if not, it returns false and everything is fine.
+        public static bool CheckIfUsernameAlreadyExists(int accountID, string userName)
+        {
+            bool result = false;
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("SELECT accountUsername FROM Accounts WHERE accountUsername ");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", accountID);
+                        command.Parameters.AddWithValue("@username", userName);
+
+                        command.ExecuteReader();
+                    }
+                    connection.Close();
                 }
             }
             catch (Exception e)

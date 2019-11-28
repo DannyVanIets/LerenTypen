@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using LerenTypen.Models;
 
 namespace LerenTypen
 {
@@ -13,7 +14,7 @@ namespace LerenTypen
     public partial class LoginPage : Page
     {
         private MainWindow MainWindow;
-        private Classes.Converter Converter;
+        private Converter Converter;
 
         public LoginPage(MainWindow mainWindow)
         {
@@ -21,7 +22,7 @@ namespace LerenTypen
             //This Class is used if you want to change the page.
             MainWindow = mainWindow;
             //This Class is used to Hash the password
-            Converter = new Classes.Converter();
+            Converter = new Converter();
         }
 
         // Er word gekeken als de velden ingevuld zijn, anders word alles afgebroken
@@ -44,7 +45,7 @@ namespace LerenTypen
             if (password.Password == passwordherh.Password)
             {  
                 string hashedpw = Converter.ComputeSha256Hash(password.Password);
-                Database.Registrer(username.Text, hashedpw.ToString(), birthdate.SelectedDate.Value.Date , firstname.Text, lastname.Text, securityvraag.Text, securityans.Text);
+                Database.Register(username.Text, hashedpw.ToString(), birthdate.SelectedDate.Value.Date , firstname.Text, lastname.Text, securityvraag.Text, securityans.Text);
                 MessageBox.Show("U bent succesvol ingelogd!"+"\n"+"U wordt nu doorgestuurd naar de homepagina." , "Succes");
                 username.Text = string.Empty; lastname.Text = string.Empty;
                 firstname.Text = string.Empty; password.Password = string.Empty;
