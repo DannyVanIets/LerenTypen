@@ -393,6 +393,7 @@ namespace LerenTypen
             testClosed = true;
             t1.Stop();
             int resultID = SaveResults();
+            Database.UpdateTimesMade(testID);
             TestResultsPage testResultsPage = new TestResultsPage(testID, m, resultID);
             m.frame.Navigate(testResultsPage);
         }
@@ -406,7 +407,6 @@ namespace LerenTypen
             int amountOfWrong = wrongAnswers.Count;
             decimal wordsPerMinute = CalculateWordsPerMinute();
             decimal percentageRight = CalculatePercentageRight();
-
             int resultID = Database.InsertResults(testID, 1, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines, (int)percentageRight);
             return resultID;
         }

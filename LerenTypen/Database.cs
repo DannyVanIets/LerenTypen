@@ -337,6 +337,31 @@ namespace LerenTypen
             return results;
         }
 
+        public static void UpdateTimesMade(int testID)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    Console.WriteLine(testID);
+                    sb.Append("UPDATE tests SET timesMade = timesMade + 1 WHERE testID = @testID");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@testID", testID);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+        }
+
         /// <summary>
         /// Gets the right answers of a testResult using testResultID
         /// </summary>

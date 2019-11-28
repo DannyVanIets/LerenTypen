@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -120,8 +119,8 @@ namespace LerenTypen
             int wordsPerMinute = int.Parse(testResults[0]);
             amountOfBreaksTbl.Text = amountOfPauses.ToString();
             wordsPerMinuteTbl.Text = wordsPerMinute.ToString();
-            double percentageRight = double.Parse(testResults[2]);
-            string percentageRightStr = Math.Round(percentageRight).ToString() + "%";
+            int percentageRight = int.Parse(testResults[2]);
+            string percentageRightStr = percentageRight.ToString() + "%";
             percentageRightTbl.Text = percentageRightStr;
             if (percentageRight > 55)
             {
