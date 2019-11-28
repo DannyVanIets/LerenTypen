@@ -140,8 +140,8 @@ namespace LerenTypen
             return false;
         }
 
-        // Make the user a student
-        public static bool MakeStudent(string userName)
+
+        public static bool DeleteAcc(string userName)
         {
             try
             {
@@ -149,12 +149,13 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("UPDATE accounts SET accountType = 0 WHERE accountID = @id AND archived = 0");
+                    sb.Append("DELETE FROM accounts WHERE accountID = @id AND accountUsername = @username ");
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
+                        command.Parameters.AddWithValue("@username", userName);
                         command.ExecuteReader();
                     }
                     connection.Close();
@@ -167,196 +168,228 @@ namespace LerenTypen
             }
             return false;
         }
+    
 
-        // Make the user teacher        
-        public static bool MakeTeacher(string userName)
+
+
+
+    // Make the user a student
+    public static bool MakeStudent(string userName)
+    {
+        try
         {
-            try
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("UPDATE accounts SET accountType = 1 WHERE accountID = @id AND archived = 0");
-                    string MySql = sb.ToString();
+                connection.Open();
+                StringBuilder sb = new StringBuilder();
+                sb.Append("UPDATE accounts SET accountType = 0 WHERE accountID = @id AND archived = 0");
+                string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
-                        command.ExecuteReader();
-                    }
-                    connection.Close();
-                    return true;
+                using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                {
+                    command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
+                    command.ExecuteReader();
                 }
+                connection.Close();
+                return true;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            return false;
         }
-
-        // Make the user Admin
-        public static bool MakeAdmin(string userName)
+        catch (Exception e)
         {
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("UPDATE accounts SET accountType = 2 WHERE accountID = @id AND archived = 0");
-                    string MySql = sb.ToString();
+            Console.WriteLine(e);
+        }
+        return false;
+    }
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
-                        command.ExecuteReader();
-                    }
-                    connection.Close();
-                    return true;
+    // Make the user teacher        
+    public static bool MakeTeacher(string userName)
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                StringBuilder sb = new StringBuilder();
+                sb.Append("UPDATE accounts SET accountType = 1 WHERE accountID = @id AND archived = 0");
+                string MySql = sb.ToString();
+
+                using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                {
+                    command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
+                    command.ExecuteReader();
                 }
+                connection.Close();
+                return true;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            return false;
         }
-
-        // Check if person is admin
-        public static bool IsAdmin(int accountnumber)
+        catch (Exception e)
         {
-            try
+            Console.WriteLine(e);
+        }
+        return false;
+    }
+
+    // Make the user Admin
+    public static bool MakeAdmin(string userName)
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                connection.Open();
+                StringBuilder sb = new StringBuilder();
+                sb.Append("UPDATE accounts SET accountType = 2 WHERE accountID = @id AND archived = 0");
+                string MySql = sb.ToString();
+
+                using (MySqlCommand command = new MySqlCommand(MySql, connection))
                 {
-                    String query = "Select accountUsername from accounts where accountType= 2 and accountID = @accountnumber ";
-                    using (MySqlCommand Isadmin = new MySqlCommand(query, connection))
+                    command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
+                    command.ExecuteReader();
+                }
+                connection.Close();
+                return true;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        return false;
+    }
+
+    // Check if person is admin
+    public static bool IsAdmin(int accountnumber)
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                String query = "Select accountUsername from accounts where accountType= 2 and accountID = @accountnumber ";
+                using (MySqlCommand Isadmin = new MySqlCommand(query, connection))
+                {
+                    Isadmin.Parameters.AddWithValue("@accountnumber", accountnumber);
+                    connection.Open();
+                    using (MySqlDataReader reader = Isadmin.ExecuteReader())
                     {
-                        Isadmin.Parameters.AddWithValue("@accountnumber", accountnumber);
-                        connection.Open();
-                        using (MySqlDataReader reader = Isadmin.ExecuteReader())
+                        if (reader.HasRows)
                         {
-                            if (reader.HasRows)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
                         }
                     }
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-            return false;
         }
-
-
-        //All user info received
-        public static List<User> GetUsers()
+        catch (Exception e)
         {
-            List<User> queryResult = new List<User>();
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("select accountID,accountUsername, accountType, accountFirstname , accountSurname from accounts");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.HasRows)
-                            {
-                                while (reader.Read())
-                                {
-                                    queryResult.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), "Edit"));
-                                }
-                                reader.NextResult();
-                            }
-                        }
-                    }
-                }
-                return queryResult;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return null;
-            }
+            Console.WriteLine(e.ToString());
         }
+        return false;
+    }
 
-        public static bool UserExists(string user)
+
+    //All user info received
+    public static List<User> GetUsers()
+    {
+        List<User> queryResult = new List<User>();
+        try
         {
-            try
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                connection.Open();
+                StringBuilder sb = new StringBuilder();
+                sb.Append("select accountID,accountUsername, accountType, accountFirstname , accountSurname from accounts");
+                string MySql = sb.ToString();
+
+                using (MySqlCommand command = new MySqlCommand(MySql, connection))
                 {
-                    String query = "Select accountUsername from accounts where accountUsername = @username";
-                    using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
-                        usernamecheck.Parameters.AddWithValue("@username", user);
-                        connection.Open();
-                        using (MySqlDataReader reader = usernamecheck.ExecuteReader())
+                        while (reader.HasRows)
                         {
-                            if (reader.HasRows)
+                            while (reader.Read())
                             {
-                                return true;
+                                queryResult.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), "Edit"));
                             }
-                            else
-                            {
-                                return false;
-                            }
+                            reader.NextResult();
                         }
                     }
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-            return false;
+            return queryResult;
         }
-
-        public static void Register(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
+        catch (Exception e)
         {
-            DateTime res = birthday.Date;
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    string query = "INSERT INTO accounts(accountType, accountUsername, accountPassword, accountBirthdate, accountFirstname, accountSurname, AccountSecurityQuestion, " +
-                        "AccountSecurityAnswer, archived) VALUES (0 , @username, @pwhash, @bday, @fname, @lname,  @secvraag, @secans, 0)";
-
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
-                    {
-                        //a shorter syntax to adding parameters
-                        command.Parameters.AddWithValue("@username", username);
-                        command.Parameters.AddWithValue("@pwhash", password);
-                        command.Parameters.AddWithValue("@bday", res);
-                        command.Parameters.AddWithValue("@fname", firstname);
-                        command.Parameters.AddWithValue("@lname", lastname);
-                        command.Parameters.AddWithValue("@secvraag", securityvraag);
-                        command.Parameters.AddWithValue("@secans", securityanswer);
-                        //make sure you open and close(after executing) the connection
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            Console.WriteLine(e);
+            return null;
         }
     }
+
+    public static bool UserExists(string user)
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                String query = "Select accountUsername from accounts where accountUsername = @username";
+                using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
+                {
+                    usernamecheck.Parameters.AddWithValue("@username", user);
+                    connection.Open();
+                    using (MySqlDataReader reader = usernamecheck.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.ToString());
+        }
+        return false;
+    }
+
+    public static void Register(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
+    {
+        DateTime res = birthday.Date;
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = "INSERT INTO accounts(accountType, accountUsername, accountPassword, accountBirthdate, accountFirstname, accountSurname, AccountSecurityQuestion, " +
+                    "AccountSecurityAnswer, archived) VALUES (0 , @username, @pwhash, @bday, @fname, @lname,  @secvraag, @secans, 0)";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    //a shorter syntax to adding parameters
+                    command.Parameters.AddWithValue("@username", username);
+                    command.Parameters.AddWithValue("@pwhash", password);
+                    command.Parameters.AddWithValue("@bday", res);
+                    command.Parameters.AddWithValue("@fname", firstname);
+                    command.Parameters.AddWithValue("@lname", lastname);
+                    command.Parameters.AddWithValue("@secvraag", securityvraag);
+                    command.Parameters.AddWithValue("@secans", securityanswer);
+                    //make sure you open and close(after executing) the connection
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+}
 }

@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Media;
 
 namespace LerenTypen
 {
@@ -80,6 +80,33 @@ namespace LerenTypen
                 MessageBox.Show("Er is iets mis gegaan... Hallo product demo..", "Error");
             }
 
+        }
+
+        private void DeleteAccountButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            DeleteAcc.Foreground = Brushes.Black;
+        }
+
+        private void DeleteAccountButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            DeleteAcc.Foreground = Brushes.White;
+        }
+
+        private void DeleteAcc_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string username = account.UserName;
+                Database.DeleteAcc(username);
+                MessageBox.Show("Het account is verwijderd", "Account verwijderd!");
+                this.Close();
+            }
+            catch(Exception r)
+            {
+                Console.WriteLine(r.ToString());
+                MessageBox.Show("Error", "Error");
+                this.Close();
+            }
         }
     }
 }
