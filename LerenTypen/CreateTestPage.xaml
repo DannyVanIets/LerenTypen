@@ -41,11 +41,11 @@
                 <ListBoxItem x:Name="ItemHard" Content="Moeilijk"/>
             </ComboBox>
         </DockPanel>
-        <StackPanel x:Name="testLinesTitlePane" Grid.Row="2" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" >
+        <StackPanel x:Name="testLinesTitlePane" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" >
             <Label Content="Inhoud:" Margin="50,0,0,0" FontSize="20" VerticalAlignment="Center"/>
         </StackPanel>
-        <ScrollViewer x:Name="scrollViewer" HorizontalAlignment="Left" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Top"  VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
-            <StackPanel x:Name="testLinesPane"  HorizontalAlignment="Left"  Margin="0,0,0,0" VerticalAlignment="Top" >
+        <ScrollViewer x:Name="scrollViewer" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Top"  VerticalScrollBarVisibility="Auto" >
+            <StackPanel x:Name="testLinesPane"  Margin="0,0,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3">
                 <TextBlock x:Name="addLineLink" TextWrapping="Wrap" Margin="50,0,50,0"><Hyperlink x:Name="addLine" Click="AddLine_Click" ><Run Text="Voeg nieuwe regel toe"/></Hyperlink></TextBlock>
             </StackPanel>
         </ScrollViewer>
