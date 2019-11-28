@@ -553,7 +553,7 @@ namespace LerenTypen
                 Console.WriteLine(e.ToString());
             }
         }
-        public static List<TestTable> GetAllTestswithIsPrivate()
+        public static List<TestTable> GetAllMyTestswithIsPrivate(int accountId)
         {
             List<TestTable> queryResult = new List<TestTable>();
             try
@@ -562,12 +562,16 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("select testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0;");
+                    sb.Append("select testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and a.accountId=@id;");
                     string MySql = sb.ToString();
-                    int counter = 1;
+                    int Bcounter = 1;
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
+
+                        command.Parameters.AddWithValue("@id", accountId);
+
+
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.HasRows)
@@ -575,6 +579,56 @@ namespace LerenTypen
                                 while (reader.Read())
                                 {
                                     //adds all the found data to a list
+                                    queryResult.Add(new TestTable(Bcounter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6), reader.GetInt32(7), reader.GetInt32(0)));
+                                    Bcounter++;
+                                }
+                                reader.NextResult();
+
+                            }
+                        }
+                    }
+                }
+
+
+
+
+                return queryResult;
+
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public static List<TestTable> GetAllMyTestsAlreadyMade(int ingelogd)
+        {
+            List<TestTable> queryResult = new List<TestTable>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
+                    sb.Append("select t.testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0;");
+                    string MySql = sb.ToString();
+                    int counter = 1;
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+
+                        command.Parameters.AddWithValue("@accountID", ingelogd);
+
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    //add all the found data to a list
                                     queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6), reader.GetInt32(7), reader.GetInt32(0)));
                                     counter++;
                                 }

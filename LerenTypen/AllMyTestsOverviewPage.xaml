@@ -70,7 +70,9 @@
                 <DataGridCheckBoxColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header = "is privé" Width="60*" Binding="{Binding IsPrivate}">
                     <DataGridCheckBoxColumn.CellStyle>
                         <Style>
-                            <EventSetter Event = "CheckBox.Click" Handler="DG_Checkbox_Check"/>
+                            <EventSetter Event = "DataGridCell.Selected" Handler="DG_Selector_Handler"/>
+                            <EventSetter Event = "CheckBox.Checked" Handler="DG_Checkbox_Check"/>
+                            <EventSetter Event = "CheckBox.Unchecked" Handler="DG_Checkbox_Uncheck"/>
                         </Style>
                     </DataGridCheckBoxColumn.CellStyle>
                 </DataGridCheckBoxColumn>
@@ -90,7 +92,7 @@
                         </Style>
                     </DataGridHyperlinkColumn.ElementStyle>
                 </DataGridHyperlinkColumn>
-                <DataGridTextColumn x:Name="AllMyTestsOverviewPage_DG_TestId" Header="TestId" Width="40*" Binding="{Binding TestId}" Visibility="Visible" IsReadOnly="True"/>
+                <DataGridTextColumn x:Name="AllMyTestsOverviewPage_DG_TestId" Header="TestId" Width="0*" Binding="{Binding TestId}" Visibility="Collapsed" IsReadOnly="True"/>
 
             </DataGrid.Columns>
         </DataGrid>

@@ -63,17 +63,14 @@ namespace LerenTypen
 
             try
             {
-                TableContent = Database.GetAllTestswithIsPrivate();
-                
+                TableContent = Database.GetAllMyTestswithIsPrivate(MainWindow.Ingelogd);
+
                 string searchterm = Database.GetUserName(MainWindow.Ingelogd);
 
                 SearchResult = (from t in TableContent
                                 where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
                                 select t).ToList();
                 TableContent = SearchResult;
-
-                //TableCounter(TableContent);
-
 
                 AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = SearchResult;
 
@@ -364,7 +361,7 @@ namespace LerenTypen
             }
             else
             {
-                CurrentContent = Database.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                CurrentContent = Database.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd);
                 //TableCounter(CurrentContent);
                 AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
                 AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
@@ -414,22 +411,27 @@ namespace LerenTypen
         private void DG_Checkbox_Check(object sender, RoutedEventArgs e)
         {
             DataGridCell dgr = sender as DataGridCell;
-            TestTable tt = dgr.DataContext as TestTable;           
+            TestTable tt = dgr.DataContext as TestTable;
             int id = tt.TestId;
-            if (tt.IsPrivate)
-            {
-                Database.UpdateTestToPrivate(id);
-            }
-            else
-            {
-                Database.UpdateTestToPublic(id);
-            }
-            AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
 
-            
-            //AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
-
+            Database.UpdateTestToPrivate(id);
         }
+
+        private void DG_Checkbox_Uncheck(object sender, RoutedEventArgs e)
+        {
+            DataGridCell dgr = sender as DataGridCell;
+            TestTable tt = dgr.DataContext as TestTable;
+            int id = tt.TestId;
+
+            Database.UpdateTestToPublic(id);
+        }
+
+        private void DG_Selector_Handler(object sender, RoutedEventArgs e){
+        }
+
+        //AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+
+
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -439,17 +441,5 @@ namespace LerenTypen
 
             // Database.UpdateToPublic(MainWindow.Ingelogd);
         }
-
-        //SelectionChanged="DataGrid_SelectionChanged"
-
-        //        <DataGridTemplateColumn Header = "Is privé" Width="60*">
-        //    <DataGridTemplateColumn.CellTemplate>
-        //        <DataTemplate>
-        //            <CheckBox IsChecked = "{Binding Path=IsPrivate, UpdateSourceTrigger=PropertyChanged}" Name="theCheckbox" />
-        //        </DataTemplate>
-        //    </DataGridTemplateColumn.CellTemplate>
-        //</DataGridTemplateColumn>
-
-
     }
 }
