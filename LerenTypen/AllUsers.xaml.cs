@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 namespace LerenTypen
 {
     /// <summary>
@@ -12,9 +10,7 @@ namespace LerenTypen
     /// </summary>
     public partial class AllUsers : Page
     {
-
         List<Users> Usercontent;
-
         List<Users> CurrentContent = new List<Users>();
         private List<Users> SearchResult = new List<Users>();
         public bool IsAdmin = false;
@@ -25,14 +21,14 @@ namespace LerenTypen
             this.Mainwindow = mainwindow;
             Usercontent = new List<Users>();
 
-            //de info word uit de database gehaald
+            // De info word uit de database gehaald
             Usercontent = Database.GetUsers();
             DGV1.ItemsSource = Usercontent;
             DGV1.Items.Refresh();
             CurrentContent = Usercontent;
-
         }
-        //hier word de userid meegegven wanneer op edit word geklikt
+
+        // Hier word de userid meegegven wanneer op edit word geklikt
         private void DG_Hyperlink_click(object sender, System.Windows.RoutedEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;
@@ -55,7 +51,6 @@ namespace LerenTypen
                 SearchResult = (from t in CurrentContent
                                 where t.firstname.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.lastname.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.username.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
                                 select t).ToList();
-
                 CurrentContent = SearchResult;
                 DGV1.ItemsSource = CurrentContent;
                 DGV1.Items.Refresh();
@@ -66,14 +61,12 @@ namespace LerenTypen
 
 class Users
 {
-
     public int accountnumber { get; set; }
     public int usertype { get; set; }
     public string username { get; set; }
     public string firstname { get; set; }
     public string lastname { get; set; }
     public string edit { get; set; }
-
 
     public Users(int accountnum, string usern, int acctype, string fname, string lname, string edit)
     {
