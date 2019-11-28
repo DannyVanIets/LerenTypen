@@ -82,12 +82,7 @@ namespace LerenTypen
             
             //Checks if the birthdate isn't younger than 1 year or older than 100 years.
             //This also checks straight away if the birthdate is really a date.
-            if(birthdate > Date.dateOfToday || birthdate < Date.dateOfTodayHundredYearsAgo)
-            {
-                MessageBox.Show($"Geboortedatum moet tussen {Date.dateOfTodayHundredYearsAgo.Day}-{Date.dateOfTodayHundredYearsAgo.Month}-{Date.dateOfTodayHundredYearsAgo.Year} en {Date.dateOfToday.Day}-{Date.dateOfToday.Month}-{Date.dateOfToday.Year} zijn.", "Error");
-            }
-            //This also checks straight away if the birthdate is really a date.
-            else if (birthdate > Date.dateOfToday || birthdate < Date.dateOfTodayHundredYearsAgo)
+            if (birthdate > Date.dateOfToday || birthdate < Date.dateOfTodayHundredYearsAgo)
             {
                 MessageBox.Show($"Geboortedatum moet tussen {Date.dateOfTodayHundredYearsAgo.Day}-{Date.dateOfTodayHundredYearsAgo.Month}-{Date.dateOfTodayHundredYearsAgo.Year} en {Date.dateOfToday.Day}-{Date.dateOfToday.Month}-{Date.dateOfToday.Year} zijn.", "Error");
             }
@@ -95,6 +90,11 @@ namespace LerenTypen
             else if (string.IsNullOrWhiteSpace(firstname) || string.IsNullOrWhiteSpace(surname) || string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(securityQuestion) || string.IsNullOrWhiteSpace(securityAnswer))
             {
                 MessageBox.Show("Je moet alle textvelden hebben ingevuld, behalve de wachtwoord velden!", "Error");
+            }
+            //Check if the username already exists and isn't the same as the old one.
+            else if (Account.UserName != username && Database.UserExists(username))
+            {
+                MessageBox.Show("Deze gebruikersnaam bestaat al! Kies A.U.B. een andere.", "Error");
             }
             else
             {
@@ -104,6 +104,7 @@ namespace LerenTypen
                     //Here we will update everything, except the password. First we will check if it went succesfully or not.
                     if (Database.UpdateAccountWithoutPassword(MainWindow.Ingelogd, username, birthdate, firstname, surname, securityQuestion, securityAnswer))
                     {
+                        MainWindow.UpdateLoginButton();
                         MessageBox.Show("Het account wordt succesvol geüpdate!", "Succes");
                         //We do a refresh of the page, so that the old information is updated
                         MainWindow.ChangePage(new EditAccountPage(MainWindow));
@@ -123,6 +124,11 @@ namespace LerenTypen
                 {
                     MessageBox.Show("U moet een nieuw wachtwoord en herhaling van het nieuwe wachtwoord invoeren!", "Error");
                 }
+                //Here we will give an error if the password is longer than 25 letters.
+                else if (newPassword.Length > 25)
+                {
+                    MessageBox.Show("Het wachtwoord mag niet langer zijn dan 25 tekens!", "Error");
+                }
                 //Here we will check if the oldpassword isn't the same one as in the database and give a message if that's true.
                 else if (Converter.ComputeSha256Hash(oldPassword) != Database.GetPasswordFromAccount(MainWindow.Ingelogd))
                 {
@@ -133,6 +139,11 @@ namespace LerenTypen
                 {
                     MessageBox.Show("De nieuwe wachtwoorden komen niet overeen.", "Error");
                 }
+                //Here we will check if the new password isn't the same as the old one.
+                else if (Converter.ComputeSha256Hash(newPassword) == Database.GetPasswordFromAccount(MainWindow.Ingelogd))
+                {
+                    MessageBox.Show("Het nieuwe wachtwoord mag niet hetzelfde zijn als het oude wachtwoord!", "Error");
+                }
                 //In the else we will update everything with the passwords.
                 else
                 {
@@ -141,6 +152,7 @@ namespace LerenTypen
                     //First we gotta check if it has been succesfully updated. In both cases we will give out a message.
                     if (Database.UpdateAccountWithPassword(MainWindow.Ingelogd, username, hashedNewPassword, birthdate, firstname, surname, securityQuestion, securityAnswer))
                     {
+                        MainWindow.UpdateLoginButton();
                         MessageBox.Show("Het account wordt succesvol geüpdate!", "Succes");
                         //We do a refresh of the page, so that the old information is updated and the passwords haven't been filled in.
                         MainWindow.ChangePage(new EditAccountPage(MainWindow));
