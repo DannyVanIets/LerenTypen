@@ -78,14 +78,16 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
-        
-        <DataGrid Grid.Row="2" Grid.Column="2">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Top 3 snelste typers" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
 
-        <DataGrid Grid.Row="2" Grid.Column="3" Margin="0,0,20,0">
+        <ListView x:Name="top3FastestTypersListView" Grid.Row="2" Grid.Column="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="230">Top 3 snelste typers</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <DataGrid x:Name="top3HighestScoresDataGrid" Grid.Row="2" Grid.Column="3" Margin="0,0,20,0" Background="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Top 3 hoogste scores" Width="*"/>
             </DataGrid.Columns>

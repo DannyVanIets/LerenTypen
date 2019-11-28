@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -71,6 +72,13 @@ namespace LerenTypen
             highscoreLabel.Content = $"{test.Highscore}%";
 
             myResultsListView.ItemsSource = Database.GetAllTestResultsFromAccount(test.AuthorID, testID);
+
+            Dictionary<int, int> top3Fastest = Database.GetTop3FastestTypers(testID);
+            foreach (KeyValuePair<int, int> kvp in top3Fastest)
+            {
+                top3FastestTypersListView.Items.Add($"{Database.GetUserName(kvp.Key)}: {kvp.Value} woorden per minuut");
+            }
+
         }
 
         private void MyResultsListView_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
