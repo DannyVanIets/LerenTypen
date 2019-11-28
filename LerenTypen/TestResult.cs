@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace LerenTypen
 {
@@ -15,9 +16,26 @@ namespace LerenTypen
             WordsPerMinute = wordsPerMinute;
         }
 
+        public decimal CalculatePercentageRight()
+        {
+            List<string> rightAnswers = Database.GetTestResultsContentRight(ID);
+            List<string> wrongAnswers = Database.GetTestResultsContentWrong(ID);
+            decimal percentageRight;
+
+            try
+            {
+                percentageRight = decimal.Divide(rightAnswers.Count, rightAnswers.Count + wrongAnswers.Count) * 100;
+            }
+            catch (DivideByZeroException)
+            {
+                percentageRight = 100;
+            }
+            return percentageRight;
+        }
+
         public override string ToString()
         {
-            return $"{Date}: {WordsPerMinute} woorden per minuut";
+            return $"{Date}: {WordsPerMinute} woorden per minuut ({CalculatePercentageRight()}% goed)";
         }
     }
 }
