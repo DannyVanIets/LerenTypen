@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2019 at 12:23 PM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.11
+-- Gegenereerd op: 28 nov 2019 om 12:45
+-- Serverversie: 10.1.35-MariaDB
+-- PHP-versie: 7.2.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accounts`
+-- Tabelstructuur voor tabel `accounts`
 --
 
 CREATE TABLE `accounts` (
@@ -38,11 +38,11 @@ CREATE TABLE `accounts` (
   `accountSurname` text NOT NULL,
   `accountSecurityQuestion` text NOT NULL,
   `accountSecurityAnswer` text NOT NULL,
-  `archived` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = false, niet gearchiveerd, 1 = true, gearchiveerd'
+  `archived` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = false, niet gearchiveerd, 1 = true, gearchiveerd'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `accounts`
+-- Gegevens worden geëxporteerd voor tabel `accounts`
 --
 
 INSERT INTO `accounts` (`accountID`, `accountType`, `accountUsername`, `accountPassword`, `accountBirthdate`, `accountFirstName`, `accountSurname`, `accountSecurityQuestion`, `accountSecurityAnswer`, `archived`) VALUES
@@ -58,7 +58,7 @@ INSERT INTO `accounts` (`accountID`, `accountType`, `accountUsername`, `accountP
 -- --------------------------------------------------------
 
 --
--- Table structure for table `testcontent`
+-- Tabelstructuur voor tabel `testcontent`
 --
 
 CREATE TABLE `testcontent` (
@@ -68,7 +68,7 @@ CREATE TABLE `testcontent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `testcontent`
+-- Gegevens worden geëxporteerd voor tabel `testcontent`
 --
 
 INSERT INTO `testcontent` (`testContentID`, `testID`, `content`) VALUES
@@ -93,7 +93,7 @@ INSERT INTO `testcontent` (`testContentID`, `testID`, `content`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `testresultcontent`
+-- Tabelstructuur voor tabel `testresultcontent`
 --
 
 CREATE TABLE `testresultcontent` (
@@ -105,7 +105,7 @@ CREATE TABLE `testresultcontent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `testresultcontent`
+-- Gegevens worden geëxporteerd voor tabel `testresultcontent`
 --
 
 INSERT INTO `testresultcontent` (`testResultContentID`, `testResultID`, `answer`, `answerType`, `rightAnswer`) VALUES
@@ -173,7 +173,7 @@ INSERT INTO `testresultcontent` (`testResultContentID`, `testResultID`, `answer`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `testresults`
+-- Tabelstructuur voor tabel `testresults`
 --
 
 CREATE TABLE `testresults` (
@@ -182,12 +182,12 @@ CREATE TABLE `testresults` (
   `accountID` int(11) NOT NULL COMMENT 'Hier staat het persoon die het heeft geoefend',
   `testResultsDate` date NOT NULL,
   `wordsEachMinute` int(11) NOT NULL,
-  `pauses` int(11) NOT NULL DEFAULT 0,
-  `score` int(100) NOT NULL
+  `pauses` int(11) NOT NULL DEFAULT '0',
+  `score` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `testresults`
+-- Gegevens worden geëxporteerd voor tabel `testresults`
 --
 
 INSERT INTO `testresults` (`testResultID`, `testID`, `accountID`, `testResultsDate`, `wordsEachMinute`, `pauses`, `score`) VALUES
@@ -215,7 +215,7 @@ INSERT INTO `testresults` (`testResultID`, `testID`, `accountID`, `testResultsDa
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tests`
+-- Tabelstructuur voor tabel `tests`
 --
 
 CREATE TABLE `tests` (
@@ -225,15 +225,15 @@ CREATE TABLE `tests` (
   `testType` tinyint(1) NOT NULL COMMENT '0 = woorden, 1 = zinnen',
   `testDifficulty` int(2) NOT NULL COMMENT '0 = makkelijk, 1 = middel, 2 = moeilijk',
   `createDate` date NOT NULL,
-  `isPrivate` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = nee, publiek, 1 = ja, private',
-  `archived` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = false, niet gearchiveerd, 1 = true, gearchiveerd',
-  `timesMade` int(11) DEFAULT 0,
-  `highscore` int(11) DEFAULT 0,
-  `version` int(11) DEFAULT 1
+  `isPrivate` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = nee, publiek, 1 = ja, private',
+  `archived` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = false, niet gearchiveerd, 1 = true, gearchiveerd',
+  `timesMade` int(11) DEFAULT '0',
+  `highscore` int(11) DEFAULT '0',
+  `version` int(11) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tests`
+-- Gegevens worden geëxporteerd voor tabel `tests`
 --
 
 INSERT INTO `tests` (`testID`, `accountID`, `testName`, `testType`, `testDifficulty`, `createDate`, `isPrivate`, `archived`, `timesMade`, `highscore`, `version`) VALUES
@@ -274,31 +274,31 @@ INSERT INTO `tests` (`testID`, `accountID`, `testName`, `testType`, `testDifficu
 (36, 5, 'Muney', 1, 2, '2019-11-28', 1, 0, 0, 0, 1);
 
 --
--- Indexes for dumped tables
+-- Indexen voor geëxporteerde tabellen
 --
 
 --
--- Indexes for table `accounts`
+-- Indexen voor tabel `accounts`
 --
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`accountID`);
 
 --
--- Indexes for table `testcontent`
+-- Indexen voor tabel `testcontent`
 --
 ALTER TABLE `testcontent`
   ADD PRIMARY KEY (`testContentID`),
   ADD KEY `FK_testID_testContent` (`testID`);
 
 --
--- Indexes for table `testresultcontent`
+-- Indexen voor tabel `testresultcontent`
 --
 ALTER TABLE `testresultcontent`
   ADD PRIMARY KEY (`testResultContentID`),
   ADD KEY `FK_testResultID_testResultContent` (`testResultID`);
 
 --
--- Indexes for table `testresults`
+-- Indexen voor tabel `testresults`
 --
 ALTER TABLE `testresults`
   ADD PRIMARY KEY (`testResultID`),
@@ -306,71 +306,71 @@ ALTER TABLE `testresults`
   ADD KEY `FK_accountID_testResults` (`accountID`) USING BTREE;
 
 --
--- Indexes for table `tests`
+-- Indexen voor tabel `tests`
 --
 ALTER TABLE `tests`
   ADD PRIMARY KEY (`testID`),
   ADD KEY `FK_accountID_tests` (`accountID`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT voor geëxporteerde tabellen
 --
 
 --
--- AUTO_INCREMENT for table `accounts`
+-- AUTO_INCREMENT voor een tabel `accounts`
 --
 ALTER TABLE `accounts`
   MODIFY `accountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `testcontent`
+-- AUTO_INCREMENT voor een tabel `testcontent`
 --
 ALTER TABLE `testcontent`
   MODIFY `testContentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `testresultcontent`
+-- AUTO_INCREMENT voor een tabel `testresultcontent`
 --
 ALTER TABLE `testresultcontent`
   MODIFY `testResultContentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
--- AUTO_INCREMENT for table `testresults`
+-- AUTO_INCREMENT voor een tabel `testresults`
 --
 ALTER TABLE `testresults`
   MODIFY `testResultID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `tests`
+-- AUTO_INCREMENT voor een tabel `tests`
 --
 ALTER TABLE `tests`
   MODIFY `testID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
--- Constraints for dumped tables
+-- Beperkingen voor geëxporteerde tabellen
 --
 
 --
--- Constraints for table `testcontent`
+-- Beperkingen voor tabel `testcontent`
 --
 ALTER TABLE `testcontent`
   ADD CONSTRAINT `FK_testID_testContent` FOREIGN KEY (`testID`) REFERENCES `tests` (`testID`);
 
 --
--- Constraints for table `testresultcontent`
+-- Beperkingen voor tabel `testresultcontent`
 --
 ALTER TABLE `testresultcontent`
   ADD CONSTRAINT `FK_testResultID_testResultContent` FOREIGN KEY (`testResultID`) REFERENCES `testresults` (`testResultID`);
 
 --
--- Constraints for table `testresults`
+-- Beperkingen voor tabel `testresults`
 --
 ALTER TABLE `testresults`
   ADD CONSTRAINT `accountID_foreign_key` FOREIGN KEY (`accountID`) REFERENCES `accounts` (`accountID`),
   ADD CONSTRAINT `testID_foreign_key` FOREIGN KEY (`testID`) REFERENCES `tests` (`testID`);
 
 --
--- Constraints for table `tests`
+-- Beperkingen voor tabel `tests`
 --
 ALTER TABLE `tests`
   ADD CONSTRAINT `FK_accountID_tests` FOREIGN KEY (`accountID`) REFERENCES `accounts` (`accountID`);
