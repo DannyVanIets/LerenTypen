@@ -99,13 +99,13 @@ namespace LerenTypen
             else
             {
                 //We will check if the oldpassword, newpassword and newpasswordrepeat haven't been filled in and update everything except the passwords.
-                if (string.IsNullOrEmpty(oldPassword) && string.IsNullOrEmpty(newPassword) && string.IsNullOrEmpty(newPasswordRepeat))
+                if (string.IsNullOrWhiteSpace(oldPassword) && string.IsNullOrWhiteSpace(newPassword) && string.IsNullOrWhiteSpace(newPasswordRepeat))
                 {
                     //Here we will update everything, except the password. First we will check if it went succesfully or not.
                     if (Database.UpdateAccountWithoutPassword(MainWindow.Ingelogd, username, birthdate, firstname, surname, securityQuestion, securityAnswer))
                     {
                         MainWindow.UpdateLoginButton();
-                        MessageBox.Show("Het account wordt succesvol geüpdate!", "Succes");
+                        MessageBox.Show("Het account is succesvol geüpdate!", "Succes");
                         //We do a refresh of the page, so that the old information is updated
                         MainWindow.ChangePage(new EditAccountPage(MainWindow));
                     }
@@ -115,12 +115,12 @@ namespace LerenTypen
                     }
                 }
                 //In here we will check if the oldpassword hasn't been filled in, but the newpassword and/or newpasswordrepeat have been.
-                else if (string.IsNullOrEmpty(oldPassword) && (!string.IsNullOrEmpty(newPassword) || !string.IsNullOrEmpty(newPasswordRepeat)))
+                else if (string.IsNullOrWhiteSpace(oldPassword) && (!string.IsNullOrWhiteSpace(newPassword) || !string.IsNullOrWhiteSpace(newPasswordRepeat)))
                 {
                     MessageBox.Show("U moet het oude wachtwoord invoeren voordat u een nieuw wachtwoord kunt invoeren.", "Error");
                 }
                 //In here we will check if the oldpassword has been filled in, but the newpassword and/or newpasswordrepeat haven't been.
-                else if (!string.IsNullOrEmpty(oldPassword) && (string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(newPasswordRepeat)))
+                else if (!string.IsNullOrWhiteSpace(oldPassword) && (string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(newPasswordRepeat)))
                 {
                     MessageBox.Show("U moet een nieuw wachtwoord en herhaling van het nieuwe wachtwoord invoeren!", "Error");
                 }
@@ -153,7 +153,7 @@ namespace LerenTypen
                     if (Database.UpdateAccountWithPassword(MainWindow.Ingelogd, username, hashedNewPassword, birthdate, firstname, surname, securityQuestion, securityAnswer))
                     {
                         MainWindow.UpdateLoginButton();
-                        MessageBox.Show("Het account wordt succesvol geüpdate!", "Succes");
+                        MessageBox.Show("Het account is succesvol geüpdate!", "Succes");
                         //We do a refresh of the page, so that the old information is updated and the passwords haven't been filled in.
                         MainWindow.ChangePage(new EditAccountPage(MainWindow));
                     }
