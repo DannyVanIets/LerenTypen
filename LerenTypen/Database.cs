@@ -7,44 +7,7 @@ namespace LerenTypen
 {
     static class Database
     {
-        private static MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder()
-        {
-            Server = "localhost",
-            UserID = "root",
-            Password = "",
-            Database = "quicklylearningtyping"
-        };
-
         private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
-
-        public static void TestQuery()
-        {
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("INSERT INTO tests VALUES (2, 'Test', 'words', 1, 0)");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            //while (reader.Read())
-                            //{
-
-                            //}
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-        }
 
         public static string GetUserName(int accountID)
         {
@@ -73,7 +36,7 @@ namespace LerenTypen
             }
             catch (MySqlException e)
             {
-                System.Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
             }
             return result;
         }
@@ -115,7 +78,7 @@ namespace LerenTypen
             }
             catch (MySqlException e)
             {
-                System.Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
             }
             return results;
         }
@@ -128,6 +91,7 @@ namespace LerenTypen
         public static string GetTestName(int testID)
         {
             string title = "";
+
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -135,9 +99,9 @@ namespace LerenTypen
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("Select testName from tests where testID = @testID");
-                    string MySql = sb.ToString();
+                    string mySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
                     {
                         command.Parameters.AddWithValue("@testID", testID);
 
@@ -153,8 +117,9 @@ namespace LerenTypen
             }
             catch (MySqlException e)
             {
-                System.Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
             }
+
             return title;
         }
 
@@ -190,7 +155,7 @@ namespace LerenTypen
             }
             catch (MySqlException e)
             {
-                System.Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
             }
             return results;
         }
@@ -230,7 +195,7 @@ namespace LerenTypen
             }
             catch (MySqlException e)
             {
-                System.Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
             }
             InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);
             return testResultID;
@@ -261,7 +226,7 @@ namespace LerenTypen
                 }
                 catch (MySqlException e)
                 {
-                    System.Console.WriteLine(e.Message);
+                    Console.WriteLine(e.Message);
                 }
             }
             // Position of right answer in lines is stored in keyvaluepairs int
@@ -288,7 +253,7 @@ namespace LerenTypen
                 }
                 catch (MySqlException e)
                 {
-                    System.Console.WriteLine(e.Message);
+                    Console.WriteLine(e.Message);
                 }
             }
         }
@@ -330,7 +295,7 @@ namespace LerenTypen
             }
             catch (MySqlException e)
             {
-                System.Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
             }
             return results;
         }
@@ -343,6 +308,7 @@ namespace LerenTypen
         public static List<string> GetTestResultsContentRight(int testResultID)
         {
             List<string> results = new List<string>();
+
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -367,7 +333,7 @@ namespace LerenTypen
             }
             catch (MySqlException e)
             {
-                System.Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
             }
             return results;
         }
@@ -400,7 +366,7 @@ namespace LerenTypen
             }
             catch (MySqlException e)
             {
-                System.Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
             }
             return results;
         }
@@ -434,7 +400,7 @@ namespace LerenTypen
             }
             catch (MySqlException e)
             {
-                System.Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
             }
             return results;
         }
@@ -467,7 +433,7 @@ namespace LerenTypen
             }
             catch (MySqlException e)
             {
-                System.Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
             }
             return "";
         }
@@ -519,7 +485,7 @@ namespace LerenTypen
             }
             catch (MySqlException e)
             {
-                System.Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
                 return 0;
             }
         }
@@ -674,7 +640,7 @@ namespace LerenTypen
             }
             catch (MySqlException e)
             {
-                System.Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
             }
 
             return null;
