@@ -345,14 +345,9 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllTestsOverview_Button_ShowOwnTestOnly_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (MainWindow.Ingelogd == 0)
+            if (MainWindow.Ingelogd != 0)
             {
-                Console.WriteLine("User niet ingelogd");
-            }
-            else
-            {
-                System.Windows.MessageBox.Show("Gaat naar pagina met eigen toetsen");
-                //MainWindow.ChangePage(new AllMyTestsOverviewPage(MainWindow));
+                MainWindow.ChangePage(new AllMyTestsOverviewPage(MainWindow));
             }
         }
 

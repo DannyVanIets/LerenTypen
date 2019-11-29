@@ -156,7 +156,7 @@ namespace LerenTypen
         {
             if (Ingelogd > 0)
             {
-                loginPageButton.Content = $"Welkom {Database.GetAccountUsername(Ingelogd)} ▼";
+                loginPageButton.Content = $"Welkom {Database.GetUserName(Ingelogd)} ▼";
                 loginPageButton.ContextMenu = (ContextMenu)FindResource("accountMenu");
             }
             else
