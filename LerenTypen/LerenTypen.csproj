@@ -144,6 +144,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="TestExercisePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TestResultsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="TipPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -174,6 +182,12 @@
     </Compile>
     <Compile Include="Privacystatement.xaml.cs">
       <DependentUpon>Privacystatement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestExercisePage.xaml.cs">
+      <DependentUpon>TestExercisePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestResultsPage.xaml.cs">
+      <DependentUpon>TestResultsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="TipPage.xaml.cs">
       <DependentUpon>TipPage.xaml</DependentUpon>
