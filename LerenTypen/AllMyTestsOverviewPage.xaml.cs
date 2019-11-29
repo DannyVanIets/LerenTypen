@@ -370,7 +370,7 @@ namespace LerenTypen
             AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
         }
 
-        // Handlers below not implemented yet, showing id's in messagebox for now
+        // Handlers below not implemented yet, showing amountOfWords in messagebox for now
         private void DG_AllMyTestsOverviewPage_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink link = (Hyperlink)sender;
