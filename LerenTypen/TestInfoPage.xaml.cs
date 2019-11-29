@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,7 +13,7 @@ namespace LerenTypen
         private int testID;
 
         public TestInfoPage(int testID, MainWindow mainWindow)
-        { 
+        {
             InitializeComponent();
 
             this.mainWindow = mainWindow;
@@ -80,7 +79,7 @@ namespace LerenTypen
             }
 
             Dictionary<int, int> top3Highscore = Database.GetTop3Highscores(testID);
-            foreach (KeyValuePair<int, int> kvp in top3Fastest)
+            foreach (KeyValuePair<int, int> kvp in top3Highscore)
             {
                 top3HighestScoresListView.Items.Add($"{Database.GetUserName(kvp.Key)}: {(int)kvp.Value}% goed");
             }
