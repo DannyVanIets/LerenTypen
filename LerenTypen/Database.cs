@@ -1,13 +1,11 @@
 ﻿using Microsoft.OData.Edm;
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Windows;
 
 namespace LerenTypen
 {
-    static class Database
+    public static class Database
     {
         private static MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder()
         {
@@ -38,7 +36,7 @@ namespace LerenTypen
                         {
                             //while (reader.Read())
                             //{
-                                    
+
                             //}
                         }
                     }
@@ -154,7 +152,7 @@ namespace LerenTypen
             }
             return 0;
         }
-      
+
         public static string GetAccountUsername(int accountID)
         {
             try

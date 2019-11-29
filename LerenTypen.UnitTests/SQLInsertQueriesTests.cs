@@ -9,15 +9,18 @@ namespace LerenTypen.UnitTests
         public class StringCalculatorTests
         {
             [Test]
-            public static void Add_ThreeNumbers_ReturnsSum()
+            [TestCase("Piet", false)]
+            [TestCase("H", true)]
+            [TestCase("", false)]
+            [TestCase("Danny", false)]
+            public void UserExists_Username_Bool(string username, bool result)
             {
                 //Arrange
-
-                int result = 0;
+                bool answer = false;
                 //Act
-                result = calculator.Add("1,2,3");
+                answer = Database.UserExists(username);
                 //Assert
-                Assert.AreEqual(result, 6);
+                Assert.AreEqual(result, answer);
             }
 
         }
