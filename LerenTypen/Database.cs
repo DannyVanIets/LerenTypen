@@ -2,10 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Windows;
 using LerenTypen.Models;
-
 
 namespace LerenTypen
 {
@@ -22,206 +20,34 @@ namespace LerenTypen
         private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
         /// <summary>
         /// Method for adding tests to database. 
-        /// </summary>        
-        public static void AddTest(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy)
-        {
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-
-                    // Select last insert id is used to insert the tests content into a seperate table with the same id
-                    // NOW() is being used to get the local date.
-                    sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID) " +
-                        $"VALUES (@testName, @testType, 0, @testDifficulty, NOW(), @isPrivate , @uploadedBy); SELECT LAST_INSERT_ID()");
-
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@testName", testName);
-                        command.Parameters.AddWithValue("@testType", testType);
-                        command.Parameters.AddWithValue("@testDifficulty", testDifficulty);
-                        command.Parameters.AddWithValue("@isPrivate", isPrivate);
-                        command.Parameters.AddWithValue("@uploadedBy", uploadedBy);
-
-                        object testID = command.ExecuteScalar();
-                        int intTestID = int.Parse(testID.ToString());
-
-                        AddTestContent(intTestID, content);
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-        }
-        /// <summary>
-        /// Method adds each line of content of a test to database using its tests ID. testcontent is stored in a separate db.
-        /// </summary>        
-        private static void AddTestContent(int testID, List<string> content)
-        {
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    foreach (string contentLine in content)
-                    {
-                        string MySql = $"INSERT INTO testContent (testID, content) VALUES (@testID,@contentLine);";
-
-                        using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                        {
-                            command.Parameters.AddWithValue("@testID", testID);
-                            command.Parameters.AddWithValue("@contentLine", contentLine);
-                            command.ExecuteNonQuery();
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-        }
-
-        public static List<string> GetAccountType(int accountID)
-        {
-            List<string> resultset = new List<string>();
-            try
-
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("select accountType from accounts Where accountID = @accountID");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@accountID", accountID);
-
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.HasRows)
-                            {
-                                while (reader.Read())
-                                {
-                                    resultset.Add(reader.GetString(2));
-
-                                }
-                                reader.NextResult();
-                            }
-                        }
-                    }
-                }
-                return resultset;
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns every test in the database
         /// </summary>
-        /// <returns></returns>
-        public static List<TestTable> GetAllTests()
+        public static void TestQuery()
         {
-            List<TestTable> queryResult = new List<TestTable>();
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("select testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0;");
-                    string MySql = sb.ToString();
-                    int counter = 1;
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.HasRows)
-                            {
-                                while (reader.Read())
-                                {
-                                    // Adds all the found data to a list
-                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6)));
-                                    counter++;
-                                }
-                                reader.NextResult();
-
-                            }
-                        }
-                    }
-                }
-                return queryResult;
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Get the amount of words from the contentTable for each test
-        /// </summary>
-        /// <param name="testId"></param>
-        /// <returns></returns>
-        public static int GetAmountOfWordsFromTest(int testId)
-        {
-            int amountOfWords = 0;
-            string fullResult = "";
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-
-                    // This query returns all the content from a given testId
-                    sb.Append("SELECT content FROM testcontent WHERE testID=" + testId);
-
+                    sb.Append("INSERT INTO `testcontent` (`testContentID`, `testID`, `content`) VALUES (NULL, '1', 'Klaas-jan');");
                     string MySql = sb.ToString();
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
+                            //while (reader.Read())
+                            //{
 
-                            while (reader.Read())
-                            {
-                                fullResult = reader.GetString(0);
-
-                                // Checks the string for any excess spaces and deletes them
-                                string[] words = fullResult.Trim().Split();
-                                foreach (var word in words)
-                                {
-                                    if (!word.Equals(""))
-                                    {
-                                        amountOfWords++;
-                                    }
-                                }
-                            }
+                            //}
                         }
                     }
+                    connection.Close();
                 }
-                return amountOfWords;
             }
             catch (MySqlException e)
             {
                 System.Console.WriteLine(e.Message);
-                return 0;
             }
         }
 
@@ -247,6 +73,7 @@ namespace LerenTypen
                                 return false;
                             }
                         }
+                        connection.Close();
                     }
                 }
             }
@@ -261,6 +88,7 @@ namespace LerenTypen
         public static void Register(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
             DateTime res = birthday.Date;
+
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -282,6 +110,7 @@ namespace LerenTypen
                         connection.Open();
                         command.ExecuteNonQuery();
                     }
+                    connection.Close();
                 }
             }
             catch (Exception e)
@@ -290,8 +119,7 @@ namespace LerenTypen
             }
         }
 
-
-        // Database query used by login. We're gonna check if the username and hashedpassword match any existing data. If it does, we will return the accountID.
+        //Database query used by login. We're gonna check if the username and hashedpassword match any existing data. If it does, we will return the accountID.
         public static int GetAccountIDForLogin(string accountUsername, string password)
         {
             try
@@ -321,6 +149,7 @@ namespace LerenTypen
                             }
                         }
                     }
+                    connection.Close();
                 }
             }
             catch (MySqlException e)
@@ -354,6 +183,7 @@ namespace LerenTypen
                             }
                         }
                     }
+                    connection.Close();
                 }
             }
             catch (MySqlException e)
@@ -361,95 +191,6 @@ namespace LerenTypen
                 System.Console.WriteLine(e.Message);
             }
             return "";
-        }
-
-
-        /// <summary>
-        /// function that returns a username based on the accountID
-        /// </summary>
-        /// <param name="accountId"></param>
-        /// <returns></returns>
-        public static string GetUserName(int accountId)
-        {
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-
-                    sb.Append($"SELECT `accountUsername` FROM accounts WHERE accountID = @accountID AND archived = 0;");
-
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@accountID", accountId);
-
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                return reader.GetString(0);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Returns all the tests that have been previously made by the user
-        /// </summary>
-        /// <param name="ingelogd"></param>
-        /// <returns></returns>
-        public static List<TestTable> GetAllTestsAlreadyMade(int ingelogd)
-        {
-            List<TestTable> queryResult = new List<TestTable>();
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    // This query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                    sb.Append("select t.testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0 and t.isPrivate=0;");
-
-                    string MySql = sb.ToString();
-                    int counter = 1;
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-
-                        command.Parameters.AddWithValue("@accountID", ingelogd);
-
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.HasRows)
-                            {
-                                while (reader.Read())
-                                {
-                                    // Add all the found data to a list
-                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6)));
-                                    counter++;
-                                }
-                                reader.NextResult();
-                            }
-                        }
-                    }
-                }
-                return queryResult;
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-                return null;
-            }
         }
 
         //In this query we will get all the information from one account. This is used in EditAccountPage to fill in the textboxes with the existing information.
@@ -611,394 +352,6 @@ namespace LerenTypen
                 Console.WriteLine(e);
             }
             return false;
-        }
-
-        /// <summary>
-        /// Gets the accountID of the testcreater and the testDifficulty
-        /// </summary>
-        /// <param name="testID"></param>
-        /// <returns></returns>
-        public static List<int> GetTestInformation(int testID)
-        {
-            List<int> results = new List<int>();
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("Select accountID, testDifficulty from tests where testID = @testID");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@testID", testID);
-
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                var accountID = reader["accountID"];
-                                var testDifficulty = reader["testDifficulty"];
-
-                                results.Add((int)accountID);
-                                results.Add((int)testDifficulty);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            return results;
-        }
-
-        /// <summary>
-        /// Get the tests name using testID
-        /// </summary>
-        /// <param name="testID"></param>
-        /// <returns></returns>
-        public static string GetTestName(int testID)
-        {
-            string title = "";
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("Select testName from tests where testID = @testID");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@testID", testID);
-
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                title = reader.GetString(0);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            return title;
-        }
-
-        /// <summary>
-        /// Gets all of the content having this testID
-        /// </summary>
-        /// <param name="testID"></param>
-        /// <returns></returns>
-        public static List<string> GetTestContent(int testID)
-        {
-            List<string> results = new List<string>();
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("Select content from testContent Where testID = @testID");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@testID", testID);
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                results.Add(reader.GetString(0));
-                            }
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            return results;
-        }
-        /// <summary>
-        /// inserts results of the test after the test has been made and adds the users input to testresultcontent right after, using the same testresult id
-        /// </summary>
-        /// <param name="testID"></param>
-        /// <param name="accountID"></param>
-        /// <param name="wordsEachMinute"></param>
-        /// <param name="pauses"></param>
-        /// <param name="rightAnswers"></param>
-        /// <param name="wrongAnswers"></param>
-        /// <param name="lines"></param>
-        /// <returns></returns>
-        public static Int32 InsertResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines, int score)
-        {
-            Int32 testResultID = 0;
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score) VALUES (@testID, @accountID, NOW(), @WordsEachMinute, @pauses, @score); Select LAST_INSERT_ID();");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@testID", testID);
-                        command.Parameters.AddWithValue("@accountID", accountID);
-                        command.Parameters.AddWithValue("@wordsEachMinute", wordsEachMinute);
-                        command.Parameters.AddWithValue("@pauses", pauses);
-                        command.Parameters.AddWithValue("@score", score);
-
-                        testResultID = Convert.ToInt32(command.ExecuteScalar());
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);
-            return testResultID;
-        }
-
-        public static void InsertResultsContent(Int32 testResultID, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
-        {
-            foreach (string rightAnswer in rightAnswers)
-            {
-                try
-                {
-                    using (MySqlConnection connection = new MySqlConnection(connectionString))
-                    {
-                        connection.Open();
-                        StringBuilder sb = new StringBuilder();
-                        sb.Append("INSERT INTO testresultcontent (testResultID, answer, answerType) VALUES (@testResultID, @answer, @answerType)");
-                        string MySql = sb.ToString();
-
-                        using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                        {
-                            command.Parameters.AddWithValue("@testResultID", testResultID);
-                            command.Parameters.AddWithValue("@answer", rightAnswer);
-                            command.Parameters.AddWithValue("@answerType", 0);
-                            command.ExecuteNonQuery();
-                        }
-                    }
-
-                }
-                catch (MySqlException e)
-                {
-                    System.Console.WriteLine(e.Message);
-                }
-            }
-            // Position of right answer in lines is stored in keyvaluepairs int
-            foreach (KeyValuePair<int, string> wrongAnswer in wrongAnswers)
-            {
-                try
-                {
-                    using (MySqlConnection connection = new MySqlConnection(connectionString))
-                    {
-                        connection.Open();
-                        StringBuilder sb = new StringBuilder();
-                        sb.Append("INSERT INTO testresultcontent (testResultID, answer, answerType, rightAnswer) VALUES (@testResultID, @answer, @answerType, @rightAnswer)");
-                        string MySql = sb.ToString();
-
-                        using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                        {
-                            command.Parameters.AddWithValue("@testResultID", testResultID);
-                            command.Parameters.AddWithValue("@answer", wrongAnswer.Value);
-                            command.Parameters.AddWithValue("@answerType", 1);
-                            command.Parameters.AddWithValue("@rightAnswer", lines[wrongAnswer.Key]);
-                            command.ExecuteNonQuery();
-                        }
-                    }
-                }
-                catch (MySqlException e)
-                {
-                    System.Console.WriteLine(e.Message);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets the results using resultsID
-        /// </summary>
-        /// <param name="accountID"></param>
-        /// <param name="testID"></param>
-        /// <param name="testResultsID"></param>
-        /// <returns></returns>
-        public static List<string> GetTestResults(int testResultsID)
-        {
-            List<string> results = new List<string>();
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-
-                    sb.Append("Select wordsEachMinute, pauses, score from testresults where testResultID = @testResultID");
-
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@testResultID", testResultsID);
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                results.Add(reader["wordsEachMinute"].ToString());
-                                results.Add(reader["pauses"].ToString());
-                                results.Add(reader["score"].ToString());
-                            }
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            return results;
-        }
-
-        public static void UpdateTimesMade(int testID)
-        {
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    Console.WriteLine(testID);
-                    sb.Append("UPDATE tests SET timesMade = timesMade + 1 WHERE testID = @testID");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@testID", testID);
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-        }
-
-        /// <summary>
-        /// Gets the right answers of a testResult using testResultID
-        /// </summary>
-        /// <param name="testResultID"></param>
-        /// <returns></returns>
-        public static List<string> GetTestResultsContentRight(int testResultID)
-        {
-            List<string> results = new List<string>();
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("Select answer from testResultContent Where testResultID = @testResultID and answerType = 0");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@testResultID", testResultID);
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                results.Add(reader["answer"].ToString());
-                            }
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            return results;
-        }
-
-        // Gets the wrong answers of a testResult using testResultID
-        public static List<string> GetTestResultsContentWrong(int testResultID)
-        {
-            List<string> results = new List<string>();
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("Select answer from testResultContent Where testResultID = @testResultID and answerType = 1");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@testResultID", testResultID);
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                results.Add(reader["answer"].ToString());
-                            }
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            return results;
-        }
-
-        // Gets the answers the wrong answers had to be
-        public static List<string> GetTestResultsContentHadToBe(int testResultID)
-        {
-            List<string> results = new List<string>();
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("Select rightAnswer from testResultContent Where testResultID = @testResultID and answerType = 1");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@testResultID", testResultID);
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-
-                                results.Add(reader["rightAnswer"].ToString());
-                            }
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                System.Console.WriteLine(e.Message);
-            }
-            return results;
         }
     }
 }

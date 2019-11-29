@@ -9,65 +9,6 @@
       Title="Page2" ShowsNavigationUI="False">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="4*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="254*"/>
-        </Grid.RowDefinitions>
-
-        <Label x:Name="AllTestsOverview_Label_AllTests" Grid.Column="0" Grid.Row="0" Content="Overzicht Alle Toetsen" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Height="53" Width="352"/>
-
-        <TextBox x:Name="AllTestsOverview_TextBox_Search" HorizontalAlignment="Left" Height="25" Grid.Row="2" TextWrapping="Wrap" Text="Zoek gebruiker/toetsnaam" BorderThickness="2" VerticalAlignment="Top" Width="155" Margin="10,3,0,0" TextChanged="Search_Event" PreviewMouseDown="Search_Remove_Event"/>
-
-        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
-            <CheckBox x:Name="AllTestsOverview_CheckBox_MadeBefore" Content="Toon alleen geoefende toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Height="21" Width="200" Checked="AllTestsOverview_CheckBox_MadeBefore_Checked" Unchecked="AllTestsOverview_CheckBox_MadeBefore_Unchecked"/>
-            <Button x:Name="AllTestsOverview_Button_ShowOwnTestOnly" Content="Toon alleen eigen toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Width="170" Height="25" Margin="0,4,0,0" Click="AllTestsOverview_Button_ShowOwnTestOnly_Click"/>
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="2" Margin="0.6,0,-1.4,0">
-            <Label x:Name="AllTestsOverview_Label_AmountOfWords" Content="Aantal woorden: " VerticalAlignment="Top" Grid.Column="2" Grid.Row="2" Height="32" Width="95" Margin="0,2,0,0" />
-            <ComboBox x:Name="AllTestsOverview_ComboBox_AmountOfWords" VerticalAlignment="Top" Width="115" Grid.Column="2" Height="24" Grid.Row="3" Margin="0,4,0,0">
-                <ComboBoxItem x:Name="AllTestsOverview_ComboBoxItem_ToonAlles" IsSelected="True" Selected="ToonAlles_Clicker">Toon alles</ComboBoxItem>
-                <ComboBoxItem x:Name="AllTestsOverview_ComboBoxItem_LessThan50" Selected="LessThan50_Clicker">Minder dan 50</ComboBoxItem>
-                <ComboBoxItem x:Name="AllTestsOverview_ComboBoxItem_50To100" Selected="Between50And100_Clicker">50-100</ComboBoxItem>
-                <ComboBoxItem x:Name="AllTestsOverview_ComboBoxItem_100To150" Selected="Between100And150_Clicker">100-150</ComboBoxItem>
-                <ComboBoxItem x:Name="AllTestsOverview_ComboBoxItem_150To200" Selected="Between150And200_Clicker">150-200</ComboBoxItem>
-                <ComboBoxItem x:Name="AllTestsOverview_ComboBoxItem_MoreThan200" Selected="MoreThan200_Clicker">Meer dan 200</ComboBoxItem>
-            </ComboBox>
-            <Button x:Name="AllTestsOverview_Button_MakeOwnTest" Content="Maak een nieuwe toets" VerticalAlignment="Top" Width="150" Height="25" Grid.Column="2" Grid.Row="1" Margin="10,3,10,0" Click="AllTestsOverview_Button_MakeOwnTest_Click"/>
-        </StackPanel>
-
-        <DataGrid x:Name="AllTestsOverview_DataGrid_AllTestsTable" AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="#" Width="30*" Binding="{Binding WPFNumber}"/>
-                <DataGridHyperlinkColumn ContentBinding="{Binding WPFName}" Header="Naam" Width="435*">
-                    <DataGridHyperlinkColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Tag" Value="{Binding AmountOfWords}"/>
-                            <EventSetter Event="Hyperlink.Click" Handler="DG_AllTestOverview_Hyperlink_Click"/>
-                        </Style>
-                    </DataGridHyperlinkColumn.ElementStyle>
-                </DataGridHyperlinkColumn>
-                <DataGridTextColumn Header="Aantal keren gemaakt" Width="150*" Binding="{Binding WPFTimesMade}"/>
-                <DataGridTextColumn Header="Highscore" Width="100*" Binding="{Binding Highscore}"/>
-                <DataGridTextColumn Header="Aantal woorden" Width="120*" Binding="{Binding AmountOfWords}"/>
-                <DataGridTextColumn Header="Moeilijkheidsgraad" Width="125*" Binding="{Binding Difficulty}" SortMemberPath="DifficultyBinder"/>
-                <DataGridHyperlinkColumn Header="Geüpload door" Width="100*" ContentBinding="{Binding Uploader}">
-                    <DataGridHyperlinkColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Tag" Value="{Binding AmountOfWords}"/>
-                            <EventSetter Event="Hyperlink.Click" Handler="DG_ATO_Hyperlink_Click"/>
-                        </Style>
-                    </DataGridHyperlinkColumn.ElementStyle>
-                </DataGridHyperlinkColumn>
-                <DataGridTextColumn Header="DifficultyBinder" Width="0*" Binding="{Binding DifficultyBinder}" Visibility="Hidden"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14">Dit is het toetsoverzicht</Label>
     </Grid>
 </Page>

@@ -94,7 +94,7 @@ namespace LerenTypen
         //This method will be used once someone starts working on the forgot password.
         private void Forgot_password_button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            //MainWindow.ChangePage(new ForgotPasswordPage());
+            MainWindow.ChangePage(new ForgotPasswordPage());
         }
 
         //Once this button is pressed, it will check if the username and/or password are empty. If they are, a message will appear telling the user about it. If they are all filled in, we're gonna check if it's connected to an account.
