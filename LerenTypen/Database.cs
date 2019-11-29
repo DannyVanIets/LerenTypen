@@ -7,7 +7,7 @@ using LerenTypen.Models;
 
 namespace LerenTypen
 {
-    static class Database
+    public static class Database
     {
         private static string connectionString = "Server=localhost;" +
             "Database=quicklylearningtyping;" +
