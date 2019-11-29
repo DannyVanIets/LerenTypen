@@ -58,8 +58,6 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Securtiy Antwoord :&#xA;" Canvas.Left="612" Canvas.Top="303" Width="162" FontSize="14" Height="40"/>
                 <TextBox x:Name="securityans"  Height="31" Canvas.Left="795" MaxLength="25" Canvas.Top="255" Width="162" />
-                
-
             </StackPanel>
             <CheckBox x:Name="checkboxakkoord" Height="24" Canvas.Left="612" Canvas.Top="457" Width="245" IsChecked="False" Checked="CheckBox_Checked" Unchecked="CheckBox_unChecked">
                 <TextBlock>Ik ga akkoord met het
@@ -100,10 +98,5 @@
                 </TransformGroup>
             </Border.RenderTransform>
         </Border>
-
-                
-                          
-
-            
     </Grid>
 </Page>

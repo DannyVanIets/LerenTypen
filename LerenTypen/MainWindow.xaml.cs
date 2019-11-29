@@ -58,6 +58,10 @@ namespace LerenTypen
                 ChangePage(new LoginPage(this), loginPageButton);
             }
         }
+        private void AlleUsers_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(new AllUsers(this), AllUsers);
+        }
 
         //Checks if the user is logged in and sends them to the EditAccountPage if so.
         private void EditAccountPageButton_Click(object sender, RoutedEventArgs e)
@@ -99,12 +103,6 @@ namespace LerenTypen
                 {
                     pageToggleButton = homePageButton;
                 }
-
-                //temp
-                else if (pageToChangeTo is AllMyTestsOverviewPage)
-                {
-                    pageToggleButton = testOverviewPageButton;
-                }
                 else if (pageToChangeTo is TrendingTestsPage)
                 {
                     pageToggleButton = trendingTestsPageButton;
@@ -145,7 +143,6 @@ namespace LerenTypen
             tipPageButton.IsChecked = false;
             leaderboardPageButton.IsChecked = false;
             loginPageButton.IsChecked = false;
-
             buttonToSwitchTo.IsChecked = true;
         }
 

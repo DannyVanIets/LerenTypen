@@ -106,6 +106,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AdminUserPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AllUsers.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ForgotPasswordPage.xaml">
     <Page Include="AllMyTestsOverviewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -129,6 +138,13 @@
       <DependentUpon>CreateTestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Account.cs" />
+    <Compile Include="AdminUserPanel.xaml.cs">
+      <DependentUpon>AdminUserPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AllUsers.xaml.cs">
+      <DependentUpon>AllUsers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -175,10 +191,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestOverviewPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -210,9 +222,6 @@
     </Compile>
     <Compile Include="TrendingTestsPage.xaml.cs">
       <DependentUpon>TrendingTestsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="TestOverviewPage.xaml.cs">
-      <DependentUpon>TestOverviewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
