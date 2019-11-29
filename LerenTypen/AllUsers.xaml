@@ -9,7 +9,7 @@
       Title="Page1" ShowsNavigationUI="False">
     <Grid>
         <Label Content="Alle Accounts" HorizontalAlignment="Left" Height="70" Margin="62,37,0,0" VerticalAlignment="Top" Width="245" FontSize="32" FontWeight="Bold"/>
-        <TextBox HorizontalAlignment="Left" Height="34" Margin="176,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131" />
+        <TextBox x:Name="Search_Username_Account" HorizontalAlignment="Left" Height="34" Margin="176,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159" BorderThickness="2" TextChanged="Search_Event"/>
         <Label Content="Account zoeken:" HorizontalAlignment="Left" Height="34" Margin="62,94,0,0" VerticalAlignment="Top" Width="109"/>
         <DataGrid x:Name="DGV1" AutoGenerateColumns="False" Margin="0,135,-0.4,0.6" IsReadOnly="True">
             <DataGrid.Columns>
