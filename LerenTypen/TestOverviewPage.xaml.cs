@@ -390,7 +390,7 @@ namespace LerenTypen
         private void DG_AllTestOverview_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;
-            int id = (int)textBlock.Tag;
+            int id = Convert.ToInt32(textBlock.Tag);
 
             if (MainWindow.Ingelogd == 0)
             {

@@ -319,8 +319,7 @@ namespace LerenTypen
             }
             else
             {
-                MessageBox.Show("Gaat naar createTestPage");
-                //MainWindow.ChangePage(new CreateTestPage(MainWindow));
+                MainWindow.ChangePage(new CreateTestPage(MainWindow));
             }
         }
 

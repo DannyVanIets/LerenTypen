@@ -34,12 +34,12 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Label Content="Wachtwoord : " Canvas.Left="612" Canvas.Top="207" Width="162" FontSize="14" RenderTransformOrigin="0.513,1.588" Height="40"/>
-            <PasswordBox Name="password" Height="31" Canvas.Left="795" MaxLength="25" PasswordChar="*" Canvas.Top="207" Width="162"/>
+            <PasswordBox Name="password" Height="31" Canvas.Left="795" MaxLength="25" Canvas.Top="207" Width="162"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Label Content="Wachtwoord Herhaling :" Canvas.Left="612" Canvas.Top="255" Width="162" FontSize="14" Height="40"/>
-            <PasswordBox x:Name="passwordherh"  Height="31" Canvas.Left="795" MaxLength="25" PasswordChar="*" Canvas.Top="255" Width="162" />
+            <PasswordBox x:Name="passwordherh"  Height="31" Canvas.Left="795" MaxLength="25" Canvas.Top="255" Width="162" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
