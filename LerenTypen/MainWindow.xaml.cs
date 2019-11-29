@@ -99,7 +99,9 @@ namespace LerenTypen
                 {
                     pageToggleButton = homePageButton;
                 }
-                else if (pageToChangeTo is TestOverviewPage)
+
+                //temp
+                else if (pageToChangeTo is AllMyTestsOverviewPage)
                 {
                     pageToggleButton = testOverviewPageButton;
                 }

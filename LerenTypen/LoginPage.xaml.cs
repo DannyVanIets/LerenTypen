@@ -36,7 +36,7 @@ namespace LerenTypen
 
             if (Database.UserExists(username.Text))
             {
-                MessageBox.Show("Deze gebruikersnaam is al in gebruik!","Gebruikersnaam in gebruik");
+                MessageBox.Show("Deze gebruikersnaam is al in gebruik!", "Gebruikersnaam in gebruik");
                 return;
             }
 
