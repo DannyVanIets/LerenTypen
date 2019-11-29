@@ -49,6 +49,7 @@ namespace LerenTypen
                 System.Console.WriteLine(e.Message);
             }
         }
+
         public static bool UserExists(string user)
         {
             try
