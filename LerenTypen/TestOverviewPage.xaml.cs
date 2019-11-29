@@ -69,12 +69,13 @@ namespace LerenTypen
             try
             {
                 TableContent = Database.GetAllTests();
-                AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
-                AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+
 
                 // Bool to prevent the select event/ToonAlles_event at startup app
                 IsPageInitialized = true;
                 CurrentContent = TableContent;
+                ActiveFilter = 0;
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
             }
             catch (NullReferenceException)
             {
@@ -262,7 +263,7 @@ namespace LerenTypen
 
             foreach (var item in CurrentContent)
             {
-                if (item.AmountOfWords > startValue && item.AmountOfWords < endValue)
+                if (item.AmountOfWords >= startValue && item.AmountOfWords <= endValue)
                 {
                     FilterList.Add(item);
                 }
@@ -281,38 +282,38 @@ namespace LerenTypen
             switch (activeFilter)
             {
                 case 0:
-                    StartValue = 0;
-                    EndValue = 99999;
+                    StartValue = 1;
+                    EndValue = Int32.MaxValue;
                     StartAndEnd[0] = StartValue;
                     StartAndEnd[1] = EndValue;
                     return StartAndEnd;
                 case 1:
-                    StartValue = 0;
-                    EndValue = 50;
+                    StartValue = 1;
+                    EndValue = 49;
                     StartAndEnd[0] = StartValue;
                     StartAndEnd[1] = EndValue;
                     return StartAndEnd;
                 case 2:
-                    StartValue = 49;
-                    EndValue = 100;
+                    StartValue = 50;
+                    EndValue = 99;
                     StartAndEnd[0] = StartValue;
                     StartAndEnd[1] = EndValue;
                     return StartAndEnd;
                 case 3:
-                    StartValue = 99;
-                    EndValue = 150;
+                    StartValue = 100;
+                    EndValue = 149;
                     StartAndEnd[0] = StartValue;
                     StartAndEnd[1] = EndValue;
                     return StartAndEnd;
                 case 4:
-                    StartValue = 149;
-                    EndValue = 200;
+                    StartValue = 150;
+                    EndValue = 199;
                     StartAndEnd[0] = StartValue;
                     StartAndEnd[1] = EndValue;
                     return StartAndEnd;
                 case 5:
-                    StartValue = 199;
-                    EndValue = 999999;
+                    StartValue = 200;
+                    EndValue = Int32.MaxValue;
                     StartAndEnd[0] = StartValue;
                     StartAndEnd[1] = EndValue;
                     return StartAndEnd;
@@ -389,8 +390,17 @@ namespace LerenTypen
         private void DG_AllTestOverview_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;
-            string id = textBlock.Tag.ToString();
-            System.Windows.MessageBox.Show(id);
+            int id = (int)textBlock.Tag;
+
+            if (MainWindow.Ingelogd == 0)
+            {
+                Console.WriteLine("User niet ingelogd");
+            }
+            else
+            {
+                MainWindow.ChangePage(new TestInfoPage(id, MainWindow));
+            }
+
         }
 
         /// <summary>
