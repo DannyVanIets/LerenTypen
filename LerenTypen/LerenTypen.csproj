@@ -121,7 +121,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AllMyTestsOverviewPage.xaml.cs" />
+    <Compile Include="AllMyTestsOverviewPage.xaml.cs">
+      <DependentUpon>AllMyTestsOverviewPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
