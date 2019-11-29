@@ -57,7 +57,7 @@ namespace LerenTypen
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    String query = "Select accountUsername from accounts where accountUsername = @username";
+                    string query = "Select accountUsername from accounts where accountUsername = @username";
                     using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
                     {
                         usernamecheck.Parameters.AddWithValue("@username", user);
@@ -345,38 +345,6 @@ namespace LerenTypen
                     }
                     connection.Close();
                     return true;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            return false;
-        }
-
-        //This query returns true if a username already exists, if not, it returns false and everything is fine.
-        public static bool CheckIfUsernameAlreadyExists(int accountID, string userName)
-        {
-            bool result = false;
-
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("SELECT accountUsername FROM Accounts WHERE accountUsername ");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@id", accountID);
-                        command.Parameters.AddWithValue("@username", userName);
-
-                        command.ExecuteReader();
-                    }
-                    connection.Close();
                 }
             }
             catch (Exception e)
