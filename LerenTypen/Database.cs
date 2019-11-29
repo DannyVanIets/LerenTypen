@@ -620,6 +620,7 @@ namespace LerenTypen
         public static string GetTestName(int testID)
         {
             string title = "";
+
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -627,9 +628,9 @@ namespace LerenTypen
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("Select testName from tests where testID = @testID");
-                    string MySql = sb.ToString();
+                    string mySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
                     {
                         command.Parameters.AddWithValue("@testID", testID);
 
@@ -647,6 +648,7 @@ namespace LerenTypen
             {
                 Console.WriteLine(e.Message);
             }
+
             return title;
         }
 
@@ -686,62 +688,8 @@ namespace LerenTypen
             }
             return results;
         }
-
-        public static bool UserExists(string user)
-        {
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    String query = "Select accountUsername from accounts where accountUsername = @username";
-                    using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
-                    {
-                        usernamecheck.Parameters.AddWithValue("@username", user);
-                        connection.Open();
-                        using (MySqlDataReader reader = usernamecheck.ExecuteReader())
-                        {
-                            if (reader.HasRows)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-            return false;
-        }
-
-        public static void UpdateTimesMade(int testID)
-        {
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    Console.WriteLine(testID);
-                    sb.Append("UPDATE tests SET timesMade = timesMade + 1 WHERE testID = @testID");
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@testID", testID);
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+ 
+        
         }
 
         // Functions for US#11
@@ -919,6 +867,7 @@ namespace LerenTypen
         public static List<string> GetTestResultsContentRight(int testResultID)
         {
             List<string> results = new List<string>();
+
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -1004,6 +953,337 @@ namespace LerenTypen
 
                                 results.Add(reader["rightAnswer"].ToString());
                             }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return results;
+        }
+
+        public static string GetAccountUsername(int accountID)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append($"SELECT `accountUsername` FROM accounts WHERE accountID = @id;");
+
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", accountID);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return reader[0].ToString();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return "";
+        }
+
+        /// <summary>
+        /// Get the amount of words from the contentTable for each test
+        /// </summary>
+        /// <param name="testId"></param>
+        /// <returns></returns>
+        public static int GetAmountOfWordsFromTest(int testId)
+        {
+            int amountOfWords = 0;
+            string fullResult = "";
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    // this query returns all the content from a given testId
+                    sb.Append("SELECT content FROM testcontent WHERE testID=" + testId);
+
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+
+                            while (reader.Read())
+                            {
+                                fullResult = reader.GetString(0);
+
+                                // checks the string for any excess spaces and deletes them
+                                string[] words = fullResult.Trim().Split();
+                                foreach (var word in words)
+                                {
+                                    if (!word.Equals(""))
+                                    {
+                                        amountOfWords++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return amountOfWords;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
+        }
+
+        public static List<TestResult> GetAllTestResultsFromAccount(int accountID, int testID)
+        {
+            List<TestResult> results = new List<TestResult>();
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    // this query returns all the content from a given testId
+                    sb.Append($"SELECT testResultID, testResultsDate, wordsEachMinute FROM testresults WHERE testID={testID} AND accountID={accountID}");
+
+                    string mySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int id = Convert.ToInt32(reader[0]);
+                                DateTime dateTime = (DateTime)reader[1];
+                                string date = dateTime.Date.ToString("dd/MM/yyyy");
+                                int wordsPerMin = Convert.ToInt32(reader[2]);
+
+                                results.Add(new TestResult(id, date, wordsPerMin));
+                            }
+                        }
+                    }
+                }
+
+                return results;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public static int GetTestHighscore(int testID)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    // this query returns all the content from a given testId
+                    sb.Append($"SELECT MAX(score) FROM testresults WHERE testID={testID}");
+
+                    string mySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return Convert.ToInt32(reader[0]);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);              
+            }
+
+            return 0;
+        }
+
+        public static int GetTestAverageScore(int testID)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    // this query returns all the content from a given testId
+                    sb.Append($"SELECT AVG(score) FROM testresults WHERE testID={testID}");
+
+                    string mySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                return Convert.ToInt32(reader[0]);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);              
+            }
+
+            return 0;
+        }
+
+        public static Test GetTest(int testID)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("SELECT testName, testType, accountID, timesMade, highscore, version, testDifficulty, isPrivate, createDate FROM tests WHERE testID = @testID");
+                    string mySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@testID", testID);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string testName = reader[0].ToString();
+                                int testType = Convert.ToInt32(reader[1]);
+                                int authorID = Convert.ToInt32(reader[2]);
+                                string authorUsername = GetAccountUsername(authorID);
+                                int wordCount = GetAmountOfWordsFromTest(testID);
+                                int timesMade = Convert.ToInt32(reader[3]);
+                                double highscore = Convert.ToDouble(reader[4]);
+                                int version = Convert.ToInt32(reader[5]);
+                                int testDifficulty = Convert.ToInt32(reader[6]);
+                                bool isPrivate = Convert.ToBoolean(reader[7]);
+                                DateTime createdDateTime = (DateTime)reader[8];
+                                string createdDateString = createdDateTime.Date.ToString("dd/MM/yyyy");
+
+                                return new Test(testID, testName, testType, authorID, authorUsername, wordCount, timesMade, version, testDifficulty, isPrivate, createdDateString);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return null;
+        }
+
+        public static Dictionary<int, int> GetTop3FastestTypers(int testID)
+        {
+            Dictionary<int, int> results = new Dictionary<int, int>();
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    // this query returns all the content from a given testId
+                    sb.Append($"SELECT MAX(wordsEachMinute), accountID FROM testresults WHERE testID={testID} GROUP BY accountID DESC LIMIT 3 ");
+
+                    string mySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int wordsPerMin = Convert.ToInt32(reader[0]);
+                                int accountID = Convert.ToInt32(reader[1]);
+
+                                results.Add(accountID, wordsPerMin);
+                            }
+                        }
+                    }
+                }
+
+                return results;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        public static Dictionary<int, int> GetTop3Highscores(int testID)
+        {
+            Dictionary<int, int> results = new Dictionary<int, int>();
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    // this query returns all the content from a given testId
+                    sb.Append($"SELECT MAX(score), accountID FROM testresults WHERE testID={testID} GROUP BY accountID DESC LIMIT 3 ");
+
+                    string mySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int score = Convert.ToInt32(reader[0]);
+                                int accountID = Convert.ToInt32(reader[1]);
+
+                                results.Add(accountID, score);
+                            }
+                        }
+                    }
+                }
+
+                return results;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
                         }
                     }
                 }
