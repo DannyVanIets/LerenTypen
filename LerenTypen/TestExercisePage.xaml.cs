@@ -312,7 +312,7 @@ namespace LerenTypen
         /// </summary>
         private void StopTest()
         {
-            m.frame.Navigate(new TestOverviewPage());
+            m.frame.Navigate(new TestOverviewPage(m));
         }
 
         /// <summary>

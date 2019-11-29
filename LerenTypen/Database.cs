@@ -536,6 +536,169 @@ namespace LerenTypen
             }
         }
 
+        /// <summary>
+        /// Returns every test in the database
+        /// </summary>
+        /// <returns></returns>
+        public static List<TestTable> GetAllTests()
+        {
+            List<TestTable> queryResult = new List<TestTable>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("select testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0;");
+                    string MySql = sb.ToString();
+                    int counter = 1;
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    // Adds all the found data to a list
+                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6)));
+                                    counter++;
+                                }
+                                reader.NextResult();
+
+                            }
+                        }
+                    }
+                }
+                return queryResult;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns all the tests that have been previously made by the user
+        /// </summary>
+        /// <param name="ingelogd"></param>
+        /// <returns></returns>
+        public static List<TestTable> GetAllTestsAlreadyMade(int ingelogd)
+        {
+            List<TestTable> queryResult = new List<TestTable>();
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    // This query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
+                    sb.Append("select t.testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0 and t.isPrivate=0;");
+
+                    string MySql = sb.ToString();
+                    int counter = 1;
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+
+                        command.Parameters.AddWithValue("@accountID", ingelogd);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    // Add all the found data to a list
+                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6)));
+                                    counter++;
+                                }
+                                reader.NextResult();
+                            }
+                        }
+                    }
+                }
+                return queryResult;
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Method for adding tests to database. 
+        /// </summary>        
+        public static void AddTest(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    // Select last insert id is used to insert the tests content into a seperate table with the same id
+                    // NOW() is being used to get the local date.
+                    sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID) " +
+                        $"VALUES (@testName, @testType, 0, @testDifficulty, NOW(), @isPrivate , @uploadedBy); SELECT LAST_INSERT_ID()");
+
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@testName", testName);
+                        command.Parameters.AddWithValue("@testType", testType);
+                        command.Parameters.AddWithValue("@testDifficulty", testDifficulty);
+                        command.Parameters.AddWithValue("@isPrivate", isPrivate);
+                        command.Parameters.AddWithValue("@uploadedBy", uploadedBy);
+
+                        object testID = command.ExecuteScalar();
+                        int intTestID = int.Parse(testID.ToString());
+
+                        AddTestContent(intTestID, content);
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Method adds each line of content of a test to database using its tests ID. testcontent is stored in a separate db.
+        /// </summary>        
+        private static void AddTestContent(int testID, List<string> content)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    foreach (string contentLine in content)
+                    {
+                        string MySql = $"INSERT INTO testContent (testID, content) VALUES (@testID,@contentLine);";
+
+                        using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                        {
+                            command.Parameters.AddWithValue("@testID", testID);
+                            command.Parameters.AddWithValue("@contentLine", contentLine);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+        }
+
         public static void UpdateTimesMade(int testID)
         {
             try
