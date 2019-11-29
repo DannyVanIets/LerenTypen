@@ -1,8 +1,8 @@
-using System.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 
 namespace LerenTypen
@@ -60,12 +60,10 @@ namespace LerenTypen
 
             TableContent = new List<TestTable>();
 
-            ////add the data to the datagrid and refresh to show
-
+            // Add the data to the datagrid and refresh to show
             try
             {
                 TableContent = Database.GetAllMyTestswithIsPrivate(MainWindow.Ingelogd);
-
                 string searchterm = Database.GetUserName(MainWindow.Ingelogd);
 
                 SearchResult = (from t in TableContent
@@ -74,10 +72,9 @@ namespace LerenTypen
                 TableContent = SearchResult;
 
                 AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = SearchResult;
-
                 //AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
 
-                //Bool to prevent the select event/ToonAlles_event at startup app
+                // Bool to prevent the select event/ToonAlles_event at startup app
                 isInitialized = true;
                 CurrentContent = SearchResult;
             }
@@ -85,7 +82,6 @@ namespace LerenTypen
             {
                 Console.WriteLine("Er zijn geen toetsen");
             }
-
         }
         /// <summary>
         /// Filter to show everything
@@ -229,9 +225,7 @@ namespace LerenTypen
                 Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
 
             }
-
         }
-
         /// <summary>
         /// Function that removes the standard text the first time the user clicks the searchbar
         /// </summary>
@@ -263,7 +257,6 @@ namespace LerenTypen
             AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = FilterList;
             AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
         }
-
         /// <summary>
         /// Function that finds the corresponding startvalue/endvalue based on which active filternumber is given and returns these values.
         /// </summary>
@@ -346,9 +339,7 @@ namespace LerenTypen
             {
                 AllMyTestsOverviewPage_TextBox_Search.Text = $"User: {Database.GetUserName(MainWindow.Ingelogd)}";
             }
-
         }
-
         /// <summary>
         /// If checked, checkbox that shows tests previously made by the user
         /// </summary>
@@ -368,7 +359,6 @@ namespace LerenTypen
                 AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
             }
         }
-
         /// <summary>
         /// Unchecks the box that only shows tests previously made by the user, therefore showing all the tests
         /// </summary>
@@ -377,10 +367,10 @@ namespace LerenTypen
         private void AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked(object sender, RoutedEventArgs e)
         {
             AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = TableContent;
-
             AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
         }
 
+        // Handlers below not implemented yet, showing id's in messagebox for now
         private void DG_AllMyTestsOverviewPage_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink link = (Hyperlink)sender;
@@ -401,6 +391,7 @@ namespace LerenTypen
             string id = link.Tag.ToString();
             MessageBox.Show(id);
         }
+
         private void DG_ATO_Delete_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink link = (Hyperlink)sender;

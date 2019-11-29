@@ -4,7 +4,6 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
 
 namespace LerenTypen
 {
@@ -463,7 +462,6 @@ namespace LerenTypen
                 Console.WriteLine(e);
             }
         }
-
         public static string GetAccountUsername(int accountID)
         {
             try
@@ -503,21 +501,14 @@ namespace LerenTypen
         {
             try
             {
-
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-
-                    String query = "update tests set isPrivate=0 where testId=@test;";
+                    connection.Open();
+                    string query = "update tests set isPrivate=0 where testId=@test;";
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-                        
                         command.Parameters.AddWithValue("@test", testId);
-
-                       
-                        connection.Open();
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                        }
+                        command.ExecuteNonQuery();
                     }
                 }
             }
@@ -530,18 +521,13 @@ namespace LerenTypen
         {
             try
             {
-
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-
+                    connection.Open();
                     String query = "update tests set isPrivate=1 where testId=@test;";
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-
                         command.Parameters.AddWithValue("@test", testId);
-
-
-                        connection.Open();
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                         }
@@ -568,10 +554,7 @@ namespace LerenTypen
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
-
                         command.Parameters.AddWithValue("@id", accountId);
-
-
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.HasRows)
@@ -583,17 +566,11 @@ namespace LerenTypen
                                     Bcounter++;
                                 }
                                 reader.NextResult();
-
                             }
                         }
                     }
                 }
-
-
-
-
                 return queryResult;
-
             }
             catch (MySqlException e)
             {
@@ -601,7 +578,6 @@ namespace LerenTypen
                 return null;
             }
         }
-
         public static List<TestTable> GetAllMyTestsAlreadyMade(int ingelogd)
         {
             List<TestTable> queryResult = new List<TestTable>();
@@ -618,9 +594,7 @@ namespace LerenTypen
 
                     using (MySqlCommand command = new MySqlCommand(MySql, connection))
                     {
-
                         command.Parameters.AddWithValue("@accountID", ingelogd);
-
 
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
@@ -633,17 +607,11 @@ namespace LerenTypen
                                     counter++;
                                 }
                                 reader.NextResult();
-
                             }
                         }
                     }
                 }
-
-
-
-
                 return queryResult;
-
             }
             catch (MySqlException e)
             {
@@ -651,8 +619,5 @@ namespace LerenTypen
                 return null;
             }
         }
-
-
-
     }
 }
