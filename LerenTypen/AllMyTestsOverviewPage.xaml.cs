@@ -74,7 +74,7 @@ namespace LerenTypen
 
                 AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = SearchResult;
 
-                AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+                //AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
 
                 //Bool to prevent the select event/ToonAlles_event at startup app
                 isInitialized = true;
@@ -91,7 +91,7 @@ namespace LerenTypen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ToonAlles_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        private void ToonAlles_Clicker(object sender, RoutedEventArgs e)
         {
             if (isInitialized)
             {
@@ -112,7 +112,7 @@ namespace LerenTypen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void LessThan50_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        private void LessThan50_Clicker(object sender, RoutedEventArgs e)
         {
 
             List<TestTable> ItemsLessThan50 = new List<TestTable>();
@@ -132,7 +132,7 @@ namespace LerenTypen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Between50And100_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        private void Between50And100_Clicker(object sender, RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween50And100 = new List<TestTable>();
             if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
@@ -151,7 +151,7 @@ namespace LerenTypen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Between100And150_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        private void Between100And150_Clicker(object sender, RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween100And150 = new List<TestTable>();
             if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
@@ -170,7 +170,7 @@ namespace LerenTypen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Between150And200_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        private void Between150And200_Clicker(object sender, RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween150And200 = new List<TestTable>();
             if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
@@ -189,7 +189,7 @@ namespace LerenTypen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MoreThan200_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        private void MoreThan200_Clicker(object sender, RoutedEventArgs e)
         {
             List<TestTable> ItemsMoreThan200 = new List<TestTable>();
             if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
@@ -317,7 +317,7 @@ namespace LerenTypen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AllMyTestsOverviewPage_Button_MakeOwnTest_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void AllMyTestsOverviewPage_Button_MakeOwnTest_Click(object sender, RoutedEventArgs e)
         {
             if (MainWindow.Ingelogd == 0)
             {
@@ -335,7 +335,7 @@ namespace LerenTypen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AllMyTestsOverviewPage_Button_ShowOwnTestOnly_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void AllMyTestsOverviewPage_Button_ShowOwnTestOnly_Click(object sender, RoutedEventArgs e)
         {
             if (MainWindow.Ingelogd == 0)
             {
@@ -353,7 +353,7 @@ namespace LerenTypen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AllMyTestsOverviewPage_CheckBox_MadeBefore_Checked(object sender, System.Windows.RoutedEventArgs e)
+        private void AllMyTestsOverviewPage_CheckBox_MadeBefore_Checked(object sender, RoutedEventArgs e)
         {
             if (MainWindow.Ingelogd == 0)
             {
@@ -373,7 +373,7 @@ namespace LerenTypen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        private void AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked(object sender, RoutedEventArgs e)
         {
 
             AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = TableContent;
@@ -381,37 +381,37 @@ namespace LerenTypen
             AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
         }
 
-        private void DG_AllMyTestsOverviewPage_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void DG_AllMyTestsOverviewPage_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;
             string id = textBlock.Tag.ToString();
-            System.Windows.MessageBox.Show(id);
+            MessageBox.Show(id);
         }
 
-        private void DG_ATO_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void DG_ATO_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;
             string id = textBlock.Tag.ToString();
-            System.Windows.MessageBox.Show(id);
+            MessageBox.Show(id);
 
         }
-        private void DG_ATO_Edit_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void DG_ATO_Edit_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;
             string id = textBlock.Tag.ToString();
-            System.Windows.MessageBox.Show(id);
+            MessageBox.Show(id);
         }
-        private void DG_ATO_Delete_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void DG_ATO_Delete_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;
             string id = textBlock.Tag.ToString();
-            System.Windows.MessageBox.Show(id);
+            MessageBox.Show(id);
         }
 
         private void DG_Checkbox_Check(object sender, RoutedEventArgs e)
         {
-            DataGridCell dgr = sender as DataGridCell;
-            TestTable tt = dgr.DataContext as TestTable;
+            CheckBox checkbox = sender as CheckBox;
+            TestTable tt = checkbox.DataContext as TestTable;
             int id = tt.TestId;
 
             Database.UpdateTestToPrivate(id);

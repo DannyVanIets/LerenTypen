@@ -43,58 +43,69 @@
             <Button x:Name="AllMyTestsOverviewPage_Button_MakeOwnTest" Content="Maak een nieuwe toets" VerticalAlignment="Top" Width="150" Height="25" Grid.Column="2" Grid.Row="1" Margin="10,3,10,0" Click="AllMyTestsOverviewPage_Button_MakeOwnTest_Click"/>
         </StackPanel>
 
-        <DataGrid x:Name="AllMyTestsOverviewPage_DataGrid_AllTestsTable" AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6" IsReadOnly="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="#" Width="30*" Binding="{Binding WPFNumber}" IsReadOnly="True"/>
-                <DataGridHyperlinkColumn ContentBinding="{Binding WPFName}" Header="Naam" Width="300*" IsReadOnly="True">
-                    <DataGridHyperlinkColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Tag" Value="{Binding AmountOfWords}"/>
-                            <EventSetter Event="Hyperlink.Click" Handler="DG_AllMyTestsOverviewPage_Hyperlink_Click"/>
-                        </Style>
-                    </DataGridHyperlinkColumn.ElementStyle>
-                </DataGridHyperlinkColumn>
-                <DataGridTextColumn Header="Aantal keren gemaakt" Width="150*" Binding="{Binding WPFTimesMade}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Highscore" Width="100*" Binding="{Binding Highscore}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Aantal woorden" Width="120*" Binding="{Binding AmountOfWords}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Moeilijkheidsgraad" Width="130*" Binding="{Binding Difficulty}" SortMemberPath="DifficultyBinder" IsReadOnly="True"/>
-                <DataGridHyperlinkColumn Header="Geüpload door" Width="110*" ContentBinding="{Binding Uploader}" IsReadOnly="True">
-                    <DataGridHyperlinkColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Tag" Value="{Binding AmountOfWords}"/>
-                            <EventSetter Event="Hyperlink.Click" Handler="DG_ATO_Hyperlink_Click"/>
-                        </Style>
-                    </DataGridHyperlinkColumn.ElementStyle>
-                </DataGridHyperlinkColumn>
-                <DataGridTextColumn Header="DifficultyBinder" Width="0*" Binding="{Binding DifficultyBinder}" Visibility="Hidden" IsReadOnly="True"/>
-                <DataGridCheckBoxColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header = "is privé" Width="60*" Binding="{Binding IsPrivate}">
-                    <DataGridCheckBoxColumn.CellStyle>
-                        <Style>
-                            <EventSetter Event = "DataGridCell.Selected" Handler="DG_Selector_Handler"/>
-                            <EventSetter Event = "CheckBox.Checked" Handler="DG_Checkbox_Check"/>
-                            <EventSetter Event = "CheckBox.Unchecked" Handler="DG_Checkbox_Uncheck"/>
-                        </Style>
-                    </DataGridCheckBoxColumn.CellStyle>
-                </DataGridCheckBoxColumn>
-                <DataGridHyperlinkColumn Header="Bewerken" ContentBinding="{Binding Edit}" Width="70*" IsReadOnly="True">
-                    <DataGridHyperlinkColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Tag" Value="{Binding AmountOfWords}"/>
-                            <EventSetter Event="Hyperlink.Click" Handler="DG_ATO_Edit_Hyperlink_Click"/>
-                        </Style>
-                    </DataGridHyperlinkColumn.ElementStyle>
-                </DataGridHyperlinkColumn>
-                <DataGridHyperlinkColumn Header="Verwijderen" ContentBinding="{Binding Delete}" Width="90*" IsReadOnly="True">
-                    <DataGridHyperlinkColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Tag" Value="{Binding AmountOfWords}"/>
-                            <EventSetter Event="Hyperlink.Click" Handler="DG_ATO_Delete_Hyperlink_Click"/>
-                        </Style>
-                    </DataGridHyperlinkColumn.ElementStyle>
-                </DataGridHyperlinkColumn>
-                <DataGridTextColumn x:Name="AllMyTestsOverviewPage_DG_TestId" Header="TestId" Width="0*" Binding="{Binding TestId}" Visibility="Collapsed" IsReadOnly="True"/>
-
-            </DataGrid.Columns>
-        </DataGrid>
+        <ListView x:Name="AllMyTestsOverviewPage_DataGrid_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}"/>
+                        <GridViewColumn Header="Naam" Width="200">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_AllMyTestsOverviewPage_Hyperlink_Click">
+                                            <Run Text="{Binding WPFName}"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Aantal keren gemaakt" Width="175" DisplayMemberBinding="{Binding WPFTimesMade}"/>
+                        <GridViewColumn Header="Highscore" Width="100" DisplayMemberBinding="{Binding Highscore}"/>
+                        <GridViewColumn Header="Aantal woorden" Width="75" DisplayMemberBinding="{Binding AmountOfWords}"/>
+                        <GridViewColumn Header="Moeilijkheidsgraad" Width="100" DisplayMemberBinding="{Binding Difficulty}"/>
+                        <GridViewColumn Header="Geüpload door" Width="100" DisplayMemberBinding="{Binding Uploader}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Tag="{Binding AmountOfWords}">
+                                        <Hyperlink Click="DG_ATO_Hyperlink_Click"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
+                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="is privé" Width="50">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Tag="{Binding AmountOfWords}" Click="DG_Checkbox_Check" IsChecked="{Binding IsPrivate}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Bewerken" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Click="DG_ATO_Edit_Hyperlink_Click" Tag="{Binding AmountOfWords}">
+                                            <Run Text="{Binding Edit}"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Verwijderen" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Tag="{Binding AmountOfWords}">
+                                        <Hyperlink Click="DG_ATO_Delete_Hyperlink_Click">
+                                            <Run Text="{Binding Delete}"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_TestId" Header="TestId" DisplayMemberBinding="{Binding TestId}" Width="100"/>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>
