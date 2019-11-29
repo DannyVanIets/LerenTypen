@@ -1,33 +1,32 @@
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
 using LerenTypen.Models;
 
 namespace LerenTypen
 {
     static class Database
     {
-        private static string connectionString = "Server=localhost;Database=quicklylearningtyping;Uid=root;";
+        private static string connectionString = "Data Source=127.0.0.1,1433;User Id=qlt;Password=MvBg2T-{K[Vh;Database=quicklylearningtyping;";
 
         public static int GetAccountIDForLogin(string accountUsername, string password)
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     // We only return the accountID, in case the logged in user's account information changes. That way nothing that may change is stored. ID's will always stay the same. We also check if the account is not archived.
-                    sb.Append($"SELECT `accountID` FROM accounts WHERE accountUsername = @accountusername AND accountPassword = @accountpassword AND archived = 0;");
+                    sb.Append($"SELECT accountID FROM accounts WHERE accountUsername = @accountusername AND accountPassword = @accountpassword AND archived = 0;");
                     string MySql = sb.ToString();
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@accountusername", accountUsername);
                         command.Parameters.AddWithValue("@accountpassword", password);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -37,7 +36,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -48,18 +47,18 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     // We only return the accountID, in case the logged in user's account information changes. That way nothing that may change is stored. ID's will always stay the same. We also check if the account is not archived.
-                    sb.Append($"SELECT `accountID` FROM accounts WHERE accountUsername = @accountusername AND archived = 0;");
+                    sb.Append($"SELECT accountID FROM accounts WHERE accountUsername = @accountusername AND archived = 0;");
                     string MySql = sb.ToString();
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@accountusername", accountUsername);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -69,7 +68,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -82,18 +81,18 @@ namespace LerenTypen
             Account account = new Account();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("SELECT accountUsername, accountBirthdate, accountFirstName, accountSurname FROM accounts WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", accountID);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -105,7 +104,7 @@ namespace LerenTypen
                     return account;
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -117,13 +116,13 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("UPDATE accounts SET accountFirstname = @firstname, accountSurname = @surname, accountUsername = @username WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
                         command.Parameters.AddWithValue("@firstname", firstName);
@@ -147,7 +146,7 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -155,7 +154,7 @@ namespace LerenTypen
                     string MySql = sb.ToString();
                     int counter = 1;
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
                         command.Parameters.AddWithValue("@username", userName);
@@ -177,14 +176,14 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("UPDATE accounts SET accountType = 0 WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
                         command.ExecuteReader();
@@ -205,14 +204,14 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("UPDATE accounts SET accountType = 1 WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
                         command.ExecuteReader();
@@ -233,14 +232,14 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("UPDATE accounts SET accountType = 2 WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
                         command.ExecuteReader();
@@ -261,14 +260,14 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     String query = "Select accountUsername from accounts where accountType= 2 and accountID = @accountnumber ";
-                    using (MySqlCommand Isadmin = new MySqlCommand(query, connection))
+                    using (SqlCommand Isadmin = new SqlCommand(query, connection))
                     {
                         Isadmin.Parameters.AddWithValue("@accountnumber", accountnumber);
                         connection.Open();
-                        using (MySqlDataReader reader = Isadmin.ExecuteReader())
+                        using (SqlDataReader reader = Isadmin.ExecuteReader())
                         {
                             if (reader.HasRows)
                             {
@@ -295,16 +294,16 @@ namespace LerenTypen
             List<User> queryResult = new List<User>();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("select accountID,accountUsername, accountType, accountFirstname , accountSurname from accounts");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.HasRows)
                             {
@@ -333,7 +332,7 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -345,7 +344,7 @@ namespace LerenTypen
 
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@testName", testName);
                         command.Parameters.AddWithValue("@testType", testType);
@@ -360,7 +359,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -372,7 +371,7 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
@@ -380,7 +379,7 @@ namespace LerenTypen
                     {
                         string MySql = $"INSERT INTO testContent (testID, content) VALUES (@testID,@contentLine);";
 
-                        using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                        using (SqlCommand command = new SqlCommand(MySql, connection))
                         {
                             command.Parameters.AddWithValue("@testID", testID);
                             command.Parameters.AddWithValue("@contentLine", contentLine);
@@ -389,7 +388,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -401,18 +400,18 @@ namespace LerenTypen
             try
 
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("select accountType from accounts Where accountID = @accountID");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@accountID", accountID);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.HasRows)
                             {
@@ -428,7 +427,7 @@ namespace LerenTypen
                 }
                 return resultset;
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
                 return null;
@@ -444,7 +443,7 @@ namespace LerenTypen
             List<TestTable> queryResult = new List<TestTable>();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -452,9 +451,9 @@ namespace LerenTypen
                     string MySql = sb.ToString();
                     int counter = 1;
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.HasRows)
                             {
@@ -472,7 +471,7 @@ namespace LerenTypen
                 }
                 return queryResult;
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
                 return null;
@@ -490,7 +489,7 @@ namespace LerenTypen
             string fullResult = "";
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -500,9 +499,9 @@ namespace LerenTypen
 
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
 
                             while (reader.Read())
@@ -524,7 +523,7 @@ namespace LerenTypen
                 }
                 return amountOfWords;
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
                 return 0;
@@ -540,20 +539,20 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
 
-                    sb.Append($"SELECT `accountUsername` FROM accounts WHERE accountID = @accountID AND archived = 0;");
+                    sb.Append($"SELECT accountUsername FROM accounts WHERE accountID = @accountID AND archived = 0;");
 
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@accountID", accountId);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -563,7 +562,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -580,18 +579,18 @@ namespace LerenTypen
             List<int> results = new List<int>();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("Select accountID, testDifficulty from tests where testID = @testID");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@testID", testID);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -605,7 +604,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -623,18 +622,18 @@ namespace LerenTypen
 
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("Select testName from tests where testID = @testID");
                     string mySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    using (SqlCommand command = new SqlCommand(mySql, connection))
                     {
                         command.Parameters.AddWithValue("@testID", testID);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -644,7 +643,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -662,17 +661,17 @@ namespace LerenTypen
             List<string> results = new List<string>();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("Select content from testContent Where testID = @testID");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@testID", testID);
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -682,7 +681,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -694,11 +693,11 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     string query = "update tests set isPrivate=0 where testId=@test;";
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@test", testId);
                         command.ExecuteNonQuery();
@@ -714,14 +713,14 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     String query = "update tests set isPrivate=1 where testId=@test;";
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@test", testId);
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                         }
                     }
@@ -737,7 +736,7 @@ namespace LerenTypen
             List<TestTable> queryResult = new List<TestTable>();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -745,10 +744,10 @@ namespace LerenTypen
                     string MySql = sb.ToString();
                     int Bcounter = 1;
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", accountId);
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.HasRows)
                             {
@@ -765,7 +764,7 @@ namespace LerenTypen
                 }
                 return queryResult;
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
                 return null;
@@ -776,7 +775,7 @@ namespace LerenTypen
             List<TestTable> queryResult = new List<TestTable>();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -785,11 +784,11 @@ namespace LerenTypen
                     string MySql = sb.ToString();
                     int counter = 1;
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@accountID", ingelogd);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.HasRows)
                             {
@@ -806,7 +805,7 @@ namespace LerenTypen
                 }
                 return queryResult;
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
                 return null;
@@ -825,7 +824,7 @@ namespace LerenTypen
             List<string> results = new List<string>();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -834,10 +833,10 @@ namespace LerenTypen
 
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@testResultID", testResultsID);
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -849,7 +848,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -867,17 +866,17 @@ namespace LerenTypen
 
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("Select answer from testResultContent Where testResultID = @testResultID and answerType = 0");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@testResultID", testResultID);
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -887,7 +886,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -900,17 +899,17 @@ namespace LerenTypen
             List<string> results = new List<string>();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("Select answer from testResultContent Where testResultID = @testResultID and answerType = 1");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@testResultID", testResultID);
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -920,7 +919,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -933,17 +932,17 @@ namespace LerenTypen
             List<string> results = new List<string>();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("Select rightAnswer from testResultContent Where testResultID = @testResultID and answerType = 1");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@testResultID", testResultID);
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -954,7 +953,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -965,19 +964,19 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append($"SELECT `accountUsername` FROM accounts WHERE accountID = @id;");
+                    sb.Append($"SELECT accountUsername FROM accounts WHERE accountID = @id;");
 
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", accountID);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -987,7 +986,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -1000,7 +999,7 @@ namespace LerenTypen
 
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -1010,9 +1009,9 @@ namespace LerenTypen
 
                     string mySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    using (SqlCommand command = new SqlCommand(mySql, connection))
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -1029,7 +1028,7 @@ namespace LerenTypen
 
                 return results;
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
                 return null;
@@ -1039,7 +1038,7 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -1049,9 +1048,9 @@ namespace LerenTypen
 
                     string mySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    using (SqlCommand command = new SqlCommand(mySql, connection))
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -1061,7 +1060,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);              
             }
@@ -1073,7 +1072,7 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -1083,9 +1082,9 @@ namespace LerenTypen
 
                     string mySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    using (SqlCommand command = new SqlCommand(mySql, connection))
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -1095,7 +1094,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);              
             }
@@ -1107,18 +1106,18 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("SELECT testName, testType, accountID, timesMade, highscore, version, testDifficulty, isPrivate, createDate FROM tests WHERE testID = @testID");
                     string mySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    using (SqlCommand command = new SqlCommand(mySql, connection))
                     {
                         command.Parameters.AddWithValue("@testID", testID);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -1141,7 +1140,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -1155,7 +1154,7 @@ namespace LerenTypen
 
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -1165,9 +1164,9 @@ namespace LerenTypen
 
                     string mySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    using (SqlCommand command = new SqlCommand(mySql, connection))
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -1182,7 +1181,7 @@ namespace LerenTypen
 
                 return results;
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
                 return null;
@@ -1195,7 +1194,7 @@ namespace LerenTypen
 
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -1205,9 +1204,9 @@ namespace LerenTypen
 
                     string mySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(mySql, connection))
+                    using (SqlCommand command = new SqlCommand(mySql, connection))
                     {
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -1222,7 +1221,7 @@ namespace LerenTypen
 
                 return results;
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
                 return null;
@@ -1245,14 +1244,14 @@ namespace LerenTypen
             Int32 testResultID = 0;
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
                     sb.Append("INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score) VALUES (@testID, @accountID, NOW(), @WordsEachMinute, @pauses, @score); Select LAST_INSERT_ID();");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@testID", testID);
                         command.Parameters.AddWithValue("@accountID", accountID);
@@ -1264,7 +1263,7 @@ namespace LerenTypen
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -1278,14 +1277,14 @@ namespace LerenTypen
             {
                 try
                 {
-                    using (MySqlConnection connection = new MySqlConnection(connectionString))
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
                         StringBuilder sb = new StringBuilder();
                         sb.Append("INSERT INTO testresultcontent (testResultID, answer, answerType) VALUES (@testResultID, @answer, @answerType)");
                         string MySql = sb.ToString();
 
-                        using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                        using (SqlCommand command = new SqlCommand(MySql, connection))
                         {
                             command.Parameters.AddWithValue("@testResultID", testResultID);
                             command.Parameters.AddWithValue("@answer", rightAnswer);
@@ -1295,7 +1294,7 @@ namespace LerenTypen
                     }
 
                 }
-                catch (MySqlException e)
+                catch (SqlException e)
                 {
                     Console.WriteLine(e.Message);
                 }
@@ -1305,14 +1304,14 @@ namespace LerenTypen
             {
                 try
                 {
-                    using (MySqlConnection connection = new MySqlConnection(connectionString))
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
                         StringBuilder sb = new StringBuilder();
                         sb.Append("INSERT INTO testresultcontent (testResultID, answer, answerType, rightAnswer) VALUES (@testResultID, @answer, @answerType, @rightAnswer)");
                         string MySql = sb.ToString();
 
-                        using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                        using (SqlCommand command = new SqlCommand(MySql, connection))
                         {
                             command.Parameters.AddWithValue("@testResultID", testResultID);
                             command.Parameters.AddWithValue("@answer", wrongAnswer.Value);
@@ -1322,7 +1321,7 @@ namespace LerenTypen
                         }
                     }
                 }
-                catch (MySqlException e)
+                catch (SqlException e)
                 {
                     Console.WriteLine(e.Message);
                 }
@@ -1338,7 +1337,7 @@ namespace LerenTypen
 
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
@@ -1346,11 +1345,11 @@ namespace LerenTypen
                     sb.Append("SELECT accountUsername, accountBirthdate, accountFirstName, accountSurname, accountSecurityQuestion, accountSecurityAnswer FROM accounts WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", accountID);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -1363,7 +1362,7 @@ namespace LerenTypen
                     return account;
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -1378,7 +1377,7 @@ namespace LerenTypen
 
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
@@ -1386,11 +1385,11 @@ namespace LerenTypen
                     sb.Append("SELECT accountPassword FROM accounts WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", accountID);
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
@@ -1414,7 +1413,7 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
@@ -1423,7 +1422,7 @@ namespace LerenTypen
                         "AccountSecurityQuestion = @securityquestion, AccountSecurityAnswer = @securityanswer WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", accountID);
                         command.Parameters.AddWithValue("@username", userName);
@@ -1455,7 +1454,7 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
 
@@ -1464,7 +1463,7 @@ namespace LerenTypen
                         "accountSurname = @surname, AccountSecurityQuestion = @securityquestion, AccountSecurityAnswer = @securityanswer WHERE accountID = @id AND archived = 0");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@id", accountID);
                         command.Parameters.AddWithValue("@username", userName);
@@ -1496,12 +1495,12 @@ namespace LerenTypen
 
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     string query = "INSERT INTO accounts(accountType, accountUsername, accountPassword, accountBirthdate, accountFirstname, accountSurname, AccountSecurityQuestion, " +
                         "AccountSecurityAnswer, archived) VALUES (0 , @username, @pwhash, @bday, @fname, @lname,  @secvraag, @secans, 0)";
 
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         //a shorter syntax to adding parameters
                         command.Parameters.AddWithValue("@username", username);
@@ -1534,7 +1533,7 @@ namespace LerenTypen
             List<TestTable> queryResult = new List<TestTable>();
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -1543,13 +1542,13 @@ namespace LerenTypen
                     string MySql = sb.ToString();
                     int counter = 1;
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
 
                         command.Parameters.AddWithValue("@accountID", ingelogd);
 
 
-                        using (MySqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.HasRows)
                             {
@@ -1569,7 +1568,7 @@ namespace LerenTypen
                 return queryResult;
 
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
                 return null;
@@ -1580,14 +1579,14 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     String query = "Select accountUsername from accounts where accountUsername = @username";
-                    using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
+                    using (SqlCommand usernamecheck = new SqlCommand(query, connection))
                     {
                         usernamecheck.Parameters.AddWithValue("@username", user);
                         connection.Open();
-                        using (MySqlDataReader reader = usernamecheck.ExecuteReader())
+                        using (SqlDataReader reader = usernamecheck.ExecuteReader())
                         {
                             if (reader.HasRows)
                             {
@@ -1612,7 +1611,7 @@ namespace LerenTypen
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
@@ -1620,14 +1619,14 @@ namespace LerenTypen
                     sb.Append("UPDATE tests SET timesMade = timesMade + 1 WHERE testID = @testID");
                     string MySql = sb.ToString();
 
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    using (SqlCommand command = new SqlCommand(MySql, connection))
                     {
                         command.Parameters.AddWithValue("@testID", testID);
                         command.ExecuteNonQuery();
                     }
                 }
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
             }
