@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Security.Cryptography;
+using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
@@ -25,7 +27,7 @@ namespace LerenTypen
 
         private void TestOverviewPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new TestOverviewPage(), testOverviewPageButton);
+            ChangePage(new TestOverviewPage(this), testOverviewPageButton);
         }
 
         private void TrendingTestsPageButton_Click(object sender, RoutedEventArgs e)
@@ -54,6 +56,19 @@ namespace LerenTypen
             else
             {
                 ChangePage(new LoginPage(this), loginPageButton);
+            }
+        }
+        private void AllUsersPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(new AllUsersPage(this), allUsersPageButton);
+        }
+
+        //Checks if the user is logged in and sends them to the EditAccountPage if so.
+        private void EditAccountPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Ingelogd > 0)
+            {
+                ChangePage(new EditAccountPage(this));
             }
         }
 
@@ -87,10 +102,6 @@ namespace LerenTypen
                 if (pageToChangeTo is HomePage)
                 {
                     pageToggleButton = homePageButton;
-                }
-                else if (pageToChangeTo is TestOverviewPage)
-                {
-                    pageToggleButton = testOverviewPageButton;
                 }
                 else if (pageToChangeTo is TrendingTestsPage)
                 {
@@ -132,7 +143,6 @@ namespace LerenTypen
             tipPageButton.IsChecked = false;
             leaderboardPageButton.IsChecked = false;
             loginPageButton.IsChecked = false;
-
             buttonToSwitchTo.IsChecked = true;
         }
 
@@ -143,7 +153,7 @@ namespace LerenTypen
         {
             if (Ingelogd > 0)
             {
-                loginPageButton.Content = $"Welkom {Database.GetAccountUsername(Ingelogd)} ▼";
+                loginPageButton.Content = $"Welkom {Database.GetUserName(Ingelogd)} ▼";
                 loginPageButton.ContextMenu = (ContextMenu)FindResource("accountMenu");
             }
             else

@@ -1,0 +1,58 @@
+﻿<Page x:Class="LerenTypen.CreateTestPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LerenTypen"
+      mc:Ignorable="d" 
+      d:DesignHeight="570" d:DesignWidth="1050" Background="White"
+      Title="Page3" ShowsNavigationUI="False">
+
+    <Grid x:Name="mainPanel">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="titlePane" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="0,0,-0.4,0">
+            <Label Content="Toets Aanmaken" Margin="20,5,0,0" FontSize="32" FontWeight="Bold"/>
+        </StackPanel>
+        <DockPanel x:Name="optionsPane" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  Margin="0,0,0,0" VerticalAlignment="Top" >
+            <Label Content="Naam:" FontSize="15" Margin="50,0,0,0" VerticalAlignment="Center"/>
+            <TextBox x:Name="textInputTestName" TextWrapping="Wrap" TabIndex="-1" MinWidth="140" MaxWidth="240" Height="25" Margin="20,0,0,0" VerticalAlignment="Center"/>
+            <Label Content="Type:" FontSize="15" Margin="200,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ComboBox x:Name="comboBoxType" MaxWidth="100" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" SelectedIndex="0">
+                <ListBoxItem x:Name="itemSentence" Content="Zinnen"/>
+                <ListBoxItem x:Name="ItemWord" Content="Woorden"/>
+            </ComboBox>
+            <Label Content="Moeilijkheidsgraad:" FontSize="15" Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <ComboBox x:Name="comboBoxDifficulty"  MaxWidth="140"  Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectedIndex="0"  >
+                <ListBoxItem x:Name="itemEasy" Content="Makkelijk"/>
+                <ListBoxItem x:Name="ItemMedium" Content="Middel"/>
+                <ListBoxItem x:Name="ItemHard" Content="Moeilijk"/>
+            </ComboBox>
+        </DockPanel>
+        <StackPanel x:Name="testLinesTitlePane" Grid.Row="2" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" >
+            <Label Content="Inhoud:" Margin="50,0,0,0" FontSize="20" VerticalAlignment="Center"/>
+        </StackPanel>
+        <ScrollViewer x:Name="scrollViewer" HorizontalAlignment="Left" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Top"  VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
+            <StackPanel x:Name="testLinesPane"  HorizontalAlignment="Left"  Margin="0,0,0,0" VerticalAlignment="Top" >
+                <TextBlock x:Name="addLineLink" TextWrapping="Wrap" Margin="50,0,50,0"><Hyperlink x:Name="addLine" Click="AddLine_Click" ><Run Text="Voeg nieuwe regel toe"/></Hyperlink></TextBlock>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel x:Name="uploadPane" Grid.Row="4" Grid.Column="2" Orientation ="Horizontal"  Margin="0,0,0,0" VerticalAlignment="Center" >
+            <RadioButton x:Name="publicRadio" Content="Publiek" Margin="0,0,0,0" Width="80" VerticalAlignment="Center"/>
+            <RadioButton x:Name="privateRadio" Content="Privé" Margin="10,0,0,0" Width="80" VerticalAlignment="Center" IsChecked="True"/>
+            <Button x:Name="saveButton" Content="Opslaan" Height="20" Width="100" Margin="10,0,0,0" VerticalAlignment="Center" Click="SaveButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

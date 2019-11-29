@@ -1,97 +1,98 @@
-using System.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace LerenTypen
 {
     /// <summary>
     /// Page for the overview of all the tests
     /// </summary>
-    public partial class TestOverviewPage : Page
+    public partial class AllMyTestsOverviewPage : Page
     {
         /// <summary>
         /// A list with all the data
         /// </summary>
-        private List<TestTable> TableContent;
+        List<TestTable> TableContent;
 
         /// <summary>
         /// A list with the currently displayed data
         /// </summary>
-        private List<TestTable> CurrentContent = new List<TestTable>();
+        List<TestTable> CurrentContent = new List<TestTable>();
 
         /// <summary>
         /// A list with the searchresult data
         /// </summary>
-        private List<TestTable> SearchResult = new List<TestTable>();
+        List<TestTable> SearchResult = new List<TestTable>();
 
         /// <summary>
-        /// Bool to tell the app if it has loaded for the first time
+        /// bool to tell the app if it has loaded for the first time
         /// </summary>
-        private bool IsPageInitialized = false;
+        bool isInitialized = false;
 
         /// <summary>
-        /// Number that corresponds to a filter
+        /// number that corresponds to a filter
         /// </summary>
-        private int ActiveFilter = 0;
+        int ActiveFilter = 0;
 
         /// <summary>
         /// Startvalue of the amount of words in the filter
         /// </summary>
-        private int StartValue = 0;
+        int StartValue = 0;
 
         /// <summary>
         /// Endvalue of the amount of words in the filter
         /// </summary>
-        private int EndValue = 999999;
+        int EndValue = 999999;
 
         /// <summary>
         /// Combines startvalue and endValue
         /// </summary>
-        private int[] StartAndEnd = new int[2];
+        int[] StartAndEnd = new int[2];
 
         private MainWindow MainWindow { get; set; }
-        public TestOverviewPage(MainWindow mainWindow)
+        public AllMyTestsOverviewPage(MainWindow mainWindow)
         {
             InitializeComponent();
             this.MainWindow = mainWindow;
-            TableContent = new List<TestTable>();
 
-            // Hide some buttons if a user hasnt logged in yet
-            if (MainWindow.Ingelogd == 0)
-            {
-                AllTestsOverview_Button_MakeOwnTest.Visibility = System.Windows.Visibility.Hidden;
-                AllTestsOverview_Button_ShowOwnTestOnly.Visibility = System.Windows.Visibility.Hidden;
-                AllTestsOverview_CheckBox_MadeBefore.Visibility = System.Windows.Visibility.Hidden;
-            }
+            TableContent = new List<TestTable>();
 
             // Add the data to the datagrid and refresh to show
             try
             {
-                TableContent = Database.GetAllTests();
-                AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
-                AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+                TableContent = Database.GetAllMyTestswithIsPrivate(MainWindow.Ingelogd);
+                string searchterm = Database.GetUserName(MainWindow.Ingelogd);
+
+                SearchResult = (from t in TableContent
+                                where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                select t).ToList();
+                TableContent = SearchResult;
+
+                AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = SearchResult;
+                //AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
 
                 // Bool to prevent the select event/ToonAlles_event at startup app
-                IsPageInitialized = true;
-                CurrentContent = TableContent;
+                isInitialized = true;
+                CurrentContent = SearchResult;
             }
-            catch (NullReferenceException)
+            catch (Exception)
             {
                 Console.WriteLine("Er zijn geen toetsen");
             }
         }
-
         /// <summary>
         /// Filter to show everything
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ToonAlles_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        private void ToonAlles_Clicker(object sender, RoutedEventArgs e)
         {
-            if (IsPageInitialized)
+            if (isInitialized)
             {
-                if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+                if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
                 {
                     CurrentContent = TableContent;
                 }
@@ -103,15 +104,16 @@ namespace LerenTypen
                 Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
             }
         }
-
         /// <summary>
-        /// Filters everything with less than 50 words
+        /// Filters everything less than 50
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void LessThan50_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        private void LessThan50_Clicker(object sender, RoutedEventArgs e)
         {
-            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+
+            List<TestTable> ItemsLessThan50 = new List<TestTable>();
+            if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = TableContent;
             }
@@ -122,15 +124,15 @@ namespace LerenTypen
             ActiveFilter = 1;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
         }
-
         /// <summary>
         /// Filters everything between 50 and 100
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Between50And100_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        private void Between50And100_Clicker(object sender, RoutedEventArgs e)
         {
-            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            List<TestTable> ItemsBetween50And100 = new List<TestTable>();
+            if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = TableContent;
             }
@@ -141,15 +143,15 @@ namespace LerenTypen
             ActiveFilter = 2;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
         }
-
         /// <summary>
-        /// Filters everything between 100 and 150
+        /// filters everything between 100 and 150
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Between100And150_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        private void Between100And150_Clicker(object sender, RoutedEventArgs e)
         {
-            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            List<TestTable> ItemsBetween100And150 = new List<TestTable>();
+            if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = TableContent;
             }
@@ -160,15 +162,15 @@ namespace LerenTypen
             ActiveFilter = 3;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
         }
-
         /// <summary>
-        /// Filters everything between 150 and 200
+        /// filters everything between 150 and 200
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Between150And200_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        private void Between150And200_Clicker(object sender, RoutedEventArgs e)
         {
-            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            List<TestTable> ItemsBetween150And200 = new List<TestTable>();
+            if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = TableContent;
             }
@@ -179,15 +181,15 @@ namespace LerenTypen
             ActiveFilter = 4;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
         }
-
         /// <summary>
-        /// Filters for items with more than 200 words
+        /// filters for items with more than 200 words
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MoreThan200_Clicker(object sender, System.Windows.RoutedEventArgs e)
+        private void MoreThan200_Clicker(object sender, RoutedEventArgs e)
         {
-            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            List<TestTable> ItemsMoreThan200 = new List<TestTable>();
+            if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = TableContent;
             }
@@ -198,7 +200,6 @@ namespace LerenTypen
             ActiveFilter = 5;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
         }
-
         /// <summary>
         /// Function that happens when the user uses the searchbar
         /// </summary>
@@ -206,38 +207,25 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void Search_Event(object sender, TextChangedEventArgs e)
         {
-            if (AllTestsOverview_TextBox_Search.Text.Equals(""))
+            if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = TableContent;
                 Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
             }
-            if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
+
+            if (!AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && !AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
-                if (AllTestsOverview_TextBox_Search.Text.StartsWith("User: "))
-                {
-                    CurrentContent = TableContent;
-                    string searchterm = AllTestsOverview_TextBox_Search.Text.Substring(6);
-                    SearchResult = (from t in CurrentContent
-                                    where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
-                                    select t).ToList();
+                CurrentContent = TableContent;
+                string searchterm = AllMyTestsOverviewPage_TextBox_Search.Text;
+                SearchResult = (from t in CurrentContent
+                                where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                select t).ToList();
 
-                    CurrentContent = SearchResult;
-                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-                }
-                else
-                {
-                    CurrentContent = TableContent;
-                    string searchterm = AllTestsOverview_TextBox_Search.Text;
-                    SearchResult = (from t in CurrentContent
-                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
-                                    select t).ToList();
+                CurrentContent = SearchResult;
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
 
-                    CurrentContent = SearchResult;
-                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-                }
             }
         }
-
         /// <summary>
         /// Function that removes the standard text the first time the user clicks the searchbar
         /// </summary>
@@ -245,12 +233,11 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void Search_Remove_Event(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam"))
+            if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam"))
             {
-                AllTestsOverview_TextBox_Search.Text = "";
+                AllMyTestsOverviewPage_TextBox_Search.Text = "";
             }
         }
-
         /// <summary>
         /// Function that filters based on the parameters and displays the results
         /// </summary>
@@ -267,10 +254,9 @@ namespace LerenTypen
                     FilterList.Add(item);
                 }
             }
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = FilterList;
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = FilterList;
+            AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
         }
-
         /// <summary>
         /// Function that finds the corresponding startvalue/endvalue based on which active filternumber is given and returns these values.
         /// </summary>
@@ -320,13 +306,12 @@ namespace LerenTypen
                     return null;
             }
         }
-
         /// <summary>
         /// Button to make a new test
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AllTestsOverview_Button_MakeOwnTest_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void AllMyTestsOverviewPage_Button_MakeOwnTest_Click(object sender, RoutedEventArgs e)
         {
             if (MainWindow.Ingelogd == 0)
             {
@@ -334,29 +319,33 @@ namespace LerenTypen
             }
             else
             {
-                MainWindow.ChangePage(new CreateTestPage(MainWindow));
+                MessageBox.Show("Gaat naar createTestPage");
+                //MainWindow.ChangePage(new CreateTestPage(MainWindow));
             }
         }
 
         /// <summary>
-        /// Button that filters tests only made by the user himself
+        /// button that filters tests only made by the user himself
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AllTestsOverview_Button_ShowOwnTestOnly_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void AllMyTestsOverviewPage_Button_ShowOwnTestOnly_Click(object sender, RoutedEventArgs e)
         {
-            if (MainWindow.Ingelogd != 0)
+            if (MainWindow.Ingelogd == 0)
             {
-                MainWindow.ChangePage(new AllMyTestsOverviewPage(MainWindow));
+                Console.WriteLine("User niet ingelogd");
+            }
+            else
+            {
+                AllMyTestsOverviewPage_TextBox_Search.Text = $"User: {Database.GetUserName(MainWindow.Ingelogd)}";
             }
         }
-
         /// <summary>
         /// If checked, checkbox that shows tests previously made by the user
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AllTestsOverview_CheckBox_MadeBefore_Checked(object sender, System.Windows.RoutedEventArgs e)
+        private void AllMyTestsOverviewPage_CheckBox_MadeBefore_Checked(object sender, RoutedEventArgs e)
         {
             if (MainWindow.Ingelogd == 0)
             {
@@ -364,46 +353,70 @@ namespace LerenTypen
             }
             else
             {
-                CurrentContent = Database.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
-                AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
-                AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+                CurrentContent = Database.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd);
+                //TableCounter(CurrentContent);
+                AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
+                AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
             }
         }
-
         /// <summary>
         /// Unchecks the box that only shows tests previously made by the user, therefore showing all the tests
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AllTestsOverview_CheckBox_MadeBefore_Unchecked(object sender, System.Windows.RoutedEventArgs e)
+        private void AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked(object sender, RoutedEventArgs e)
         {
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = TableContent;
+            AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
         }
 
-        /// <summary>
-        /// Hyperlink so a user can click on a testname to go to its testinformation
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DG_AllTestOverview_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
+        // Handlers below not implemented yet, showing amountOfWords in messagebox for now
+        private void DG_AllMyTestsOverviewPage_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            TextBlock textBlock = (TextBlock)sender;
-            string id = textBlock.Tag.ToString();
-            System.Windows.MessageBox.Show(id);
+            Hyperlink link = (Hyperlink)sender;
+            string id = link.Tag.ToString();
+            MessageBox.Show(id);
         }
 
-        /// <summary>
-        /// Hyperlink that sends a user to the corresponding userPage
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DG_ATO_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void DG_ATO_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            TextBlock textBlock = (TextBlock)sender;
-            string id = textBlock.Tag.ToString();
-            System.Windows.MessageBox.Show(id);
+            Hyperlink link = (Hyperlink)sender;
+            string id = link.Tag.ToString();
+            MessageBox.Show(id);
+        }
 
+        private void DG_ATO_Edit_Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            Hyperlink link = (Hyperlink)sender;
+            string id = link.Tag.ToString();
+            MessageBox.Show(id);
+        }
+
+        private void DG_ATO_Delete_Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            Hyperlink link = (Hyperlink)sender;
+            string id = link.Tag.ToString();
+            MessageBox.Show(id);
+        }
+
+        private void DG_Checkbox_Check(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkbox = sender as CheckBox;
+            TestTable tt = checkbox.DataContext as TestTable;
+            int id = tt.TestId;
+
+            Database.UpdateTestToPrivate(id);
+            //tt.IsPrivate = checkbox.IsChecked;
+            AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+        }
+
+        private void DG_Checkbox_Uncheck(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkbox = sender as CheckBox;
+            TestTable tt = checkbox.DataContext as TestTable;
+            int id = tt.TestId;
+
+            Database.UpdateTestToPublic(id);
         }
     }
 }
