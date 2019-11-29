@@ -58,9 +58,9 @@ namespace LerenTypen
                 ChangePage(new LoginPage(this), loginPageButton);
             }
         }
-        private void AlleUsers_Click(object sender, RoutedEventArgs e)
+        private void AllUsersPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new AllUsers(this), AllUsers);
+            ChangePage(new AllUsersPage(this), allUsersPageButton);
         }
 
         //Checks if the user is logged in and sends them to the EditAccountPage if so.

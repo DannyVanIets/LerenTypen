@@ -15,18 +15,17 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
-            <RowDefinition Height="25"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="254*"/>
         </Grid.RowDefinitions>
 
         <Label x:Name="AllMyTestsOverviewPage_Label_AllTests" Grid.Column="0" Grid.Row="0" Content="Mijn Toetsen" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Height="53" Width="352"/>
 
-        <TextBox x:Name="AllMyTestsOverviewPage_TextBox_Search" HorizontalAlignment="Left" Height="25" Grid.Row="2" TextWrapping="Wrap" Text="Zoek toetsnaam" BorderThickness="2" VerticalAlignment="Top" Width="155" Margin="10,3,0,0" TextChanged="Search_Event" PreviewMouseDown="Search_Remove_Event"/>
+        <TextBox x:Name="AllMyTestsOverviewPage_TextBox_Search" HorizontalAlignment="Left" Height="25" Grid.Row="1" TextWrapping="Wrap" Text="Zoek toetsnaam" BorderThickness="2" VerticalAlignment="Top" Width="155" Margin="10,3,0,0" TextChanged="Search_Event" PreviewMouseDown="Search_Remove_Event"/>
 
-        <CheckBox x:Name="AllMyTestsOverviewPage_CheckBox_MadeBefore" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Content="Toon geoefende toetsen" HorizontalAlignment="Center" Height="21" Width="152" Margin="0,2.2,0,0" Checked="AllMyTestsOverviewPage_CheckBox_MadeBefore_Checked" Unchecked="AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked"/>
+        <CheckBox x:Name="AllMyTestsOverviewPage_CheckBox_MadeBefore" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="Toon geoefende toetsen" HorizontalAlignment="Center" Height="21" Width="152" Margin="0,2.2,0,0" Checked="AllMyTestsOverviewPage_CheckBox_MadeBefore_Checked" Unchecked="AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked"/>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="2" Margin="0.6,0,-1.4,0">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="1" Margin="0.6,0,-1.4,0">
             <Label x:Name="AllMyTestsOverviewPage_Label_AmountOfWords" Content="Aantal woorden: " VerticalAlignment="Top" Grid.Column="2" Grid.Row="2" Height="32" Width="95" Margin="0,2,0,0" />
             <ComboBox x:Name="AllMyTestsOverviewPage_ComboBox_AmountOfWords" VerticalAlignment="Top" Width="115" Grid.Column="2" Height="24" Grid.Row="3" Margin="0,4,0,0">
                 <ComboBoxItem x:Name="AllMyTestsOverviewPage_ComboBoxItem_ToonAlles" IsSelected="True" Selected="ToonAlles_Clicker">Toon alles</ComboBoxItem>
@@ -43,7 +42,7 @@
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                        <GridViewColumn Header="Naam" Width="260" local:GridViewSort.PropertyName="WPFName">
+                        <GridViewColumn Header="Naam" Width="200" local:GridViewSort.PropertyName="WPFName">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -76,10 +75,10 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Width="25">
+                        <GridViewColumn Width="35">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock HorizontalAlignment="Stretch">
+                                    <TextBlock>
                                         <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Edit_Hyperlink_Click" TextDecorations="">
                                             <Run Text="✎"/>
                                         </Hyperlink>
@@ -90,7 +89,7 @@
                         <GridViewColumn Width="25">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock HorizontalAlignment="Stretch">
+                                    <TextBlock>
                                         <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Delete_Hyperlink_Click" TextDecorations="">
                                             <Run Text="X"/>
                                         </Hyperlink>

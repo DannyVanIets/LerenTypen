@@ -8,14 +8,15 @@ namespace LerenTypen
     /// <summary>
     /// Interaction logic for Page1.xaml
     /// </summary>
-    public partial class AllUsers : Page
+    public partial class AllUsersPage : Page
     {
         List<User> usercontent;
         List<User> CurrentContent = new List<User>();
         private List<User> SearchResult = new List<User>();
         public bool IsAdmin = false;
         public MainWindow Mainwindow { get; set; }
-        public AllUsers(MainWindow mainwindow)
+
+        public AllUsersPage(MainWindow mainwindow)
         {
             InitializeComponent();
             this.Mainwindow = mainwindow;
@@ -26,6 +27,7 @@ namespace LerenTypen
             DGV1.Items.Refresh();
             CurrentContent = usercontent;
         }
+
         // This gives UserID when Edit is clicked
         private void DG_Hyperlink_click(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -36,8 +38,9 @@ namespace LerenTypen
             Database.GetUserAccount(int.Parse(id));
             var newWindow = new AdminUserPanel(int.Parse(id), int.Parse(usertype));
             newWindow.ShowDialog();
-            Mainwindow.ChangePage(new AllUsers(Mainwindow));
+            Mainwindow.ChangePage(new AllUsersPage(Mainwindow));
         }
+
         private void Search_Event(object sender, TextChangedEventArgs e)
         {
             if (Search_Username_Account.Text.Equals(""))

@@ -110,12 +110,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AllUsers.xaml">
+    <Page Include="AllMyTestsOverviewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ForgotPasswordPage.xaml">
-    <Page Include="AllMyTestsOverviewPage.xaml">
+    <Page Include="AllUsersPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -134,16 +133,15 @@
     <Compile Include="AllMyTestsOverviewPage.xaml.cs">
       <DependentUpon>AllMyTestsOverviewPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AllUsersPage.xaml.cs">
+      <DependentUpon>AllUsersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreateTestPage.xaml.cs">
       <DependentUpon>CreateTestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
-    <Compile Include="Account.cs" />
     <Compile Include="AdminUserPanel.xaml.cs">
       <DependentUpon>AdminUserPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AllUsers.xaml.cs">
-      <DependentUpon>AllUsers.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -179,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="TestOverviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="TestResultsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -209,6 +211,9 @@
     </Compile>
     <Compile Include="Privacystatement.xaml.cs">
       <DependentUpon>Privacystatement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TestOverviewPage.xaml.cs">
+      <DependentUpon>TestOverviewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestTable.cs" />
     <Compile Include="TestExercisePage.xaml.cs">

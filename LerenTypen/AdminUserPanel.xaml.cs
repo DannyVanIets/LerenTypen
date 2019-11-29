@@ -4,10 +4,10 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using LerenTypen.Models;
 
 namespace LerenTypen
 {
-
     public partial class AdminUserPanel : Window
     {
         private Account account;

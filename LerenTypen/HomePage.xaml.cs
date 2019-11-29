@@ -34,12 +34,5 @@ namespace LerenTypen
         {
             mainWindow.ChangePage(new TrendingTestsPage());
         }
-
-        public HomePage(MainWindow mainWindow)
-        {
-            InitializeComponent();
-            this.mainWindow = mainWindow;
-
-        }
     }
 }
