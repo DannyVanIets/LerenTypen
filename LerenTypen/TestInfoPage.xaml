@@ -64,11 +64,11 @@
             </StackPanel>
         </StackPanel>
 
-        <ListView x:Name="myResultsListView" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,0,0">
+        <ListView x:Name="myResultsListView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,0,0">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
-                        <GridViewColumn Header="Mijn resultaten" Width="480"/>
+                        <GridViewColumn Header="Mijn resultaten" Width="500"/>
                     </GridView.Columns>
                 </GridView>
             </ListView.View>
@@ -79,18 +79,20 @@
             </ListView.ItemContainerStyle>
         </ListView>
 
-        <ListView x:Name="top3FastestTypersListView" Grid.Row="2" Grid.Column="2">
+        <ListView x:Name="top3FastestTypersListView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.Column="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="230">Top 3 snelste typers</GridViewColumn>
+                    <GridViewColumn Width="265" Header="Top 3 snelste typers">
+                       
+                    </GridViewColumn>                    
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <ListView x:Name="top3HighestScoresListView" Grid.Row="2" Grid.Column="3" Margin="0,0,20,0" Background="White">
+        <ListView x:Name="top3HighestScoresListView" Grid.Row="2" Grid.Column="3" Margin="0,0,20,0" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Background="White">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="220">Top 3 hoogste scores</GridViewColumn>
+                    <GridViewColumn Header="Top 3 hoogste scores" Width="245"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
