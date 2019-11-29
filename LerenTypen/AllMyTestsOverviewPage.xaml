@@ -48,7 +48,7 @@
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}"/>
-                        <GridViewColumn Header="Naam" Width="200">
+                        <GridViewColumn Header="Naam" Width="275">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -59,50 +59,50 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Aantal keren gemaakt" Width="175" DisplayMemberBinding="{Binding WPFTimesMade}"/>
-                        <GridViewColumn Header="Highscore" Width="100" DisplayMemberBinding="{Binding Highscore}"/>
-                        <GridViewColumn Header="Aantal woorden" Width="75" DisplayMemberBinding="{Binding AmountOfWords}"/>
-                        <GridViewColumn Header="Moeilijkheidsgraad" Width="100" DisplayMemberBinding="{Binding Difficulty}"/>
-                        <GridViewColumn Header="Geüpload door" Width="100" DisplayMemberBinding="{Binding Uploader}">
+                        <GridViewColumn Header="Aantal keren gemaakt" Width="125" DisplayMemberBinding="{Binding WPFTimesMade}"/>
+                        <GridViewColumn Header="Highscore" Width="75" DisplayMemberBinding="{Binding Highscore}"/>
+                        <GridViewColumn Header="Aantal woorden" Width="100" DisplayMemberBinding="{Binding AmountOfWords}"/>
+                        <GridViewColumn Header="Moeilijkheidsgraad" Width="125" DisplayMemberBinding="{Binding Difficulty}"/>
+                        <GridViewColumn Header="Geüpload door" Width="90" DisplayMemberBinding="{Binding Uploader}">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Tag="{Binding AmountOfWords}">
-                                        <Hyperlink Click="DG_ATO_Hyperlink_Click"/>
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Hyperlink_Click"/>
                                     </TextBlock>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
-                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="is privé" Width="50">
+                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="40">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox Tag="{Binding AmountOfWords}" Click="DG_Checkbox_Check" IsChecked="{Binding IsPrivate}"/>
+                                    <CheckBox Tag="{Binding AmountOfWords}" Checked="DG_Checkbox_Check" Unchecked="DG_Checkbox_Uncheck" IsChecked="{Binding IsPrivate}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Bewerken" Width="100">
+                        <GridViewColumn Header="Bewerken" Width="80">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
-                                        <Hyperlink Click="DG_ATO_Edit_Hyperlink_Click" Tag="{Binding AmountOfWords}">
+                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Edit_Hyperlink_Click">
                                             <Run Text="{Binding Edit}"/>
                                         </Hyperlink>
                                     </TextBlock>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Verwijderen" Width="100">
+                        <GridViewColumn Header="Verwijderen" Width="80">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Tag="{Binding AmountOfWords}">
-                                        <Hyperlink Click="DG_ATO_Delete_Hyperlink_Click">
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Delete_Hyperlink_Click">
                                             <Run Text="{Binding Delete}"/>
                                         </Hyperlink>
                                     </TextBlock>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_TestId" Header="TestId" DisplayMemberBinding="{Binding TestId}" Width="100"/>
+                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_TestId" Header="TestId" DisplayMemberBinding="{Binding TestId}" Width="0"/>
                     </GridView.Columns>
                 </GridView>
             </ListView.View>

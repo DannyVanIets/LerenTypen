@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 
 namespace LerenTypen
 {
@@ -375,7 +376,6 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked(object sender, RoutedEventArgs e)
         {
-
             AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = TableContent;
 
             AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
@@ -383,28 +383,28 @@ namespace LerenTypen
 
         private void DG_AllMyTestsOverviewPage_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            TextBlock textBlock = (TextBlock)sender;
-            string id = textBlock.Tag.ToString();
+            Hyperlink link = (Hyperlink)sender;
+            string id = link.Tag.ToString();
             MessageBox.Show(id);
         }
 
         private void DG_ATO_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            TextBlock textBlock = (TextBlock)sender;
-            string id = textBlock.Tag.ToString();
+            Hyperlink link = (Hyperlink)sender;
+            string id = link.Tag.ToString();
             MessageBox.Show(id);
-
         }
+
         private void DG_ATO_Edit_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            TextBlock textBlock = (TextBlock)sender;
-            string id = textBlock.Tag.ToString();
+            Hyperlink link = (Hyperlink)sender;
+            string id = link.Tag.ToString();
             MessageBox.Show(id);
         }
         private void DG_ATO_Delete_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            TextBlock textBlock = (TextBlock)sender;
-            string id = textBlock.Tag.ToString();
+            Hyperlink link = (Hyperlink)sender;
+            string id = link.Tag.ToString();
             MessageBox.Show(id);
         }
 
@@ -415,31 +415,17 @@ namespace LerenTypen
             int id = tt.TestId;
 
             Database.UpdateTestToPrivate(id);
+            //tt.IsPrivate = checkbox.IsChecked;
+            AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
         }
 
         private void DG_Checkbox_Uncheck(object sender, RoutedEventArgs e)
         {
-            DataGridCell dgr = sender as DataGridCell;
-            TestTable tt = dgr.DataContext as TestTable;
+            CheckBox checkbox = sender as CheckBox;
+            TestTable tt = checkbox.DataContext as TestTable;
             int id = tt.TestId;
 
             Database.UpdateTestToPublic(id);
-        }
-
-        private void DG_Selector_Handler(object sender, RoutedEventArgs e){
-        }
-
-        //AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
-
-
-
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            DataGrid ThisGrid = (DataGrid)sender;
-            bool check = (bool)ThisGrid.SelectedItem;
-            MessageBox.Show(check.ToString());
-
-            // Database.UpdateToPublic(MainWindow.Ingelogd);
         }
     }
 }
