@@ -176,7 +176,7 @@
     <Compile Include="Privacystatement.xaml.cs">
       <DependentUpon>Privacystatement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Test.cs" />
+    <Compile Include="TestTable.cs" />
     <Compile Include="TipPage.xaml.cs">
       <DependentUpon>TipPage.xaml</DependentUpon>
     </Compile>
