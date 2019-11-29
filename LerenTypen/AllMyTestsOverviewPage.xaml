@@ -43,12 +43,12 @@
             <Button x:Name="AllMyTestsOverviewPage_Button_MakeOwnTest" Content="Maak een nieuwe toets" VerticalAlignment="Top" Width="150" Height="25" Grid.Column="2" Grid.Row="1" Margin="10,3,10,0" Click="AllMyTestsOverviewPage_Button_MakeOwnTest_Click"/>
         </StackPanel>
 
-        <ListView x:Name="AllMyTestsOverviewPage_DataGrid_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6">
+        <ListView x:Name="AllMyTestsOverviewPage_DataGrid_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6" local:GridViewSort.AutoSort="True">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
-                        <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}"/>
-                        <GridViewColumn Header="Naam" Width="275">
+                        <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
+                        <GridViewColumn Header="Naam" Width="260" local:GridViewSort.PropertyName="WPFName">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -59,11 +59,11 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Aantal keren gemaakt" Width="125" DisplayMemberBinding="{Binding WPFTimesMade}"/>
-                        <GridViewColumn Header="Highscore" Width="75" DisplayMemberBinding="{Binding Highscore}"/>
-                        <GridViewColumn Header="Aantal woorden" Width="100" DisplayMemberBinding="{Binding AmountOfWords}"/>
-                        <GridViewColumn Header="Moeilijkheidsgraad" Width="125" DisplayMemberBinding="{Binding Difficulty}"/>
-                        <GridViewColumn Header="Geüpload door" Width="90" DisplayMemberBinding="{Binding Uploader}">
+                        <GridViewColumn Header="Aantal keren gemaakt" Width="125" DisplayMemberBinding="{Binding WPFTimesMade}" local:GridViewSort.PropertyName="WPFTimesMade"/>
+                        <GridViewColumn Header="Highscore" Width="75" DisplayMemberBinding="{Binding Highscore}" local:GridViewSort.PropertyName="Highscore"/>
+                        <GridViewColumn Header="Aantal woorden" Width="100" DisplayMemberBinding="{Binding AmountOfWords}" local:GridViewSort.PropertyName="AmountOfWords"/>
+                        <GridViewColumn Header="Moeilijkheidsgraad" Width="125" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>
+                        <GridViewColumn Header="Geüpload door" Width="90" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -73,7 +73,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
-                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="40">
+                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="40" local:GridViewSort.PropertyName="IsPrivate">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox Tag="{Binding AmountOfWords}" Checked="DG_Checkbox_Check" Unchecked="DG_Checkbox_Uncheck" IsChecked="{Binding IsPrivate}"/>
@@ -102,7 +102,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_TestId" Header="TestId" DisplayMemberBinding="{Binding TestId}" Width="0"/>
+                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_TestId" Header="TestId" DisplayMemberBinding="{Binding TestId}" local:GridViewSort.PropertyName="TestId" Width="0"/>
                     </GridView.Columns>
                 </GridView>
             </ListView.View>
