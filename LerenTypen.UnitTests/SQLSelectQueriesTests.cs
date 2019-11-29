@@ -13,7 +13,7 @@ namespace LerenTypen.UnitTests
     {
         //Happy tests
         [Test]
-
+        public void 
 
 
         //Unhappy tests
