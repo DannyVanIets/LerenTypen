@@ -80,23 +80,23 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Bewerken" Width="80">
+                        <GridViewColumn Width="25">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock>
-                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Edit_Hyperlink_Click">
-                                            <Run Text="{Binding Edit}"/>
+                                    <TextBlock HorizontalAlignment="Stretch">
+                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Edit_Hyperlink_Click" TextDecorations="">
+                                            <Run Text="✎"/>
                                         </Hyperlink>
                                     </TextBlock>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Verwijderen" Width="80">
+                        <GridViewColumn Width="25">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock>
-                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Delete_Hyperlink_Click">
-                                            <Run Text="{Binding Delete}"/>
+                                    <TextBlock HorizontalAlignment="Stretch">
+                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Delete_Hyperlink_Click" TextDecorations="">
+                                            <Run Text="X"/>
                                         </Hyperlink>
                                     </TextBlock>
                                 </DataTemplate>

@@ -11,8 +11,6 @@
         public string Uploader { get; set; }
         public int DifficultyBinder { get; set; }
         public bool IsPrivate { get; set; }
-        public string Edit { get; set; } = "bewerken";
-        public string Delete { get; set; } = "verwijderen";
         public int TestId { get; set; }
 
         public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, int testDifficulty, string uploader)
