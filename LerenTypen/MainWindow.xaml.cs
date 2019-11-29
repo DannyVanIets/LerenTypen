@@ -72,11 +72,6 @@ namespace LerenTypen
             }
         }
 
-        private void TestButton_Click(object sender, RoutedEventArgs e)
-        {
-            ChangePage(new TestInfoPage(1, this), testButton);
-        }
-
         /// <summary>
         /// Changes the page to the specified page if this page is not 
         /// already open and updates the menu buttons accordingly

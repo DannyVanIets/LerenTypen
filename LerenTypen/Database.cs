@@ -688,9 +688,6 @@ namespace LerenTypen
             }
             return results;
         }
- 
-        
-        }
 
         // Functions for US#11
         public static void UpdateTestToPublic(int testId)
@@ -997,58 +994,6 @@ namespace LerenTypen
             return "";
         }
 
-        /// <summary>
-        /// Get the amount of words from the contentTable for each test
-        /// </summary>
-        /// <param name="testId"></param>
-        /// <returns></returns>
-        public static int GetAmountOfWordsFromTest(int testId)
-        {
-            int amountOfWords = 0;
-            string fullResult = "";
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-
-                    // this query returns all the content from a given testId
-                    sb.Append("SELECT content FROM testcontent WHERE testID=" + testId);
-
-                    string MySql = sb.ToString();
-
-                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                    {
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-
-                            while (reader.Read())
-                            {
-                                fullResult = reader.GetString(0);
-
-                                // checks the string for any excess spaces and deletes them
-                                string[] words = fullResult.Trim().Split();
-                                foreach (var word in words)
-                                {
-                                    if (!word.Equals(""))
-                                    {
-                                        amountOfWords++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                return amountOfWords;
-            }
-            catch (MySqlException e)
-            {
-                Console.WriteLine(e.Message);
-                return 0;
-            }
-        }
-
         public static List<TestResult> GetAllTestResultsFromAccount(int accountID, int testID)
         {
             List<TestResult> results = new List<TestResult>();
@@ -1090,7 +1035,6 @@ namespace LerenTypen
                 return null;
             }
         }
-
         public static int GetTestHighscore(int testID)
         {
             try
@@ -1283,16 +1227,6 @@ namespace LerenTypen
                 Console.WriteLine(e.Message);
                 return null;
             }
-        }
-                        }
-                    }
-                }
-            }
-            catch (MySqlException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return results;
         }
 
         /// <summary>
@@ -1639,6 +1573,63 @@ namespace LerenTypen
             {
                 Console.WriteLine(e.Message);
                 return null;
+            }
+        }
+
+        public static bool UserExists(string user)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    String query = "Select accountUsername from accounts where accountUsername = @username";
+                    using (MySqlCommand usernamecheck = new MySqlCommand(query, connection))
+                    {
+                        usernamecheck.Parameters.AddWithValue("@username", user);
+                        connection.Open();
+                        using (MySqlDataReader reader = usernamecheck.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return false;
+        }
+
+        public static void UpdateTimesMade(int testID)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+                    Console.WriteLine(testID);
+                    sb.Append("UPDATE tests SET timesMade = timesMade + 1 WHERE testID = @testID");
+                    string MySql = sb.ToString();
+
+                    using (MySqlCommand command = new MySqlCommand(MySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@testID", testID);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (MySqlException e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }
