@@ -5,8 +5,6 @@ namespace LerenTypen.UnitTests
     [TestFixture]
     class SQLInsertQueriesTests
     {
-
-
-
+        
     }
 }
