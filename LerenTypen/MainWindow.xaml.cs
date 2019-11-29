@@ -1,4 +1,4 @@
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,7 +27,7 @@ namespace LerenTypen
 
         private void TestOverviewPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new TestOverviewPage(this), testOverviewPageButton);
+            ChangePage(new TestOverviewPage(), testOverviewPageButton);
         }
 
         private void TrendingTestsPageButton_Click(object sender, RoutedEventArgs e)
@@ -124,7 +124,10 @@ namespace LerenTypen
                     pageToggleButton = loginPageButton;
                 }
 
-                SwitchMenuButtons(pageToggleButton);
+                if (pageToggleButton != null)
+                {
+                    SwitchMenuButtons(pageToggleButton);
+                }
             }
         }
 
@@ -141,10 +144,7 @@ namespace LerenTypen
             leaderboardPageButton.IsChecked = false;
             loginPageButton.IsChecked = false;
 
-            if (buttonToSwitchTo != null)
-            {
-                buttonToSwitchTo.IsChecked = true;
-            }
+            buttonToSwitchTo.IsChecked = true;
         }
 
         /// <summary>
@@ -175,20 +175,5 @@ namespace LerenTypen
                 ChangePage(new HomePage(this));
             }
         }
-
-        private void Test_Click(object sender, RoutedEventArgs e)
-        {
-            //ChangePage(new CreateTestPage(), TestButton);
-            //string tekst = "";
-            //foreach (var item in Database.TestQuery())
-            //{
-            //    tekst += item;
-            //}
-            //System.Windows.MessageBox.Show(tekst);
-            System.Windows.MessageBox.Show(Database.GetAmountOfWordsFromTest(3).ToString());
-
-            
-        }
-
     }
 }
