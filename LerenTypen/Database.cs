@@ -340,7 +340,7 @@ namespace LerenTypen
                     // Select SCOPE_IDENTITY is used to insert the tests content into a seperate table with the same id
                     // DateTime.Now is being used to get the current date and time.
                     sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID) " +
-                        $"VALUES (@testName, @testType, 0, @testDifficulty, '{DateTime.Now}', @isPrivate, @uploadedBy); SELECT SCOPE_IDENTITY()");
+                        $"VALUES (@testName, @testType, 0, @testDifficulty, @now, @isPrivate, @uploadedBy); SELECT SCOPE_IDENTITY()");
 
                     string MySql = sb.ToString();
 
@@ -349,6 +349,7 @@ namespace LerenTypen
                         command.Parameters.AddWithValue("@testName", testName);
                         command.Parameters.AddWithValue("@testType", testType);
                         command.Parameters.AddWithValue("@testDifficulty", testDifficulty);
+                        command.Parameters.AddWithValue("@now", DateTime.Now);
                         command.Parameters.AddWithValue("@isPrivate", isPrivate);
                         command.Parameters.AddWithValue("@uploadedBy", uploadedBy);
 
