@@ -391,16 +391,7 @@ namespace LerenTypen
         {
             TextBlock textBlock = (TextBlock)sender;
             int id = Convert.ToInt32(textBlock.Tag);
-
-            if (MainWindow.Ingelogd == 0)
-            {
-                Console.WriteLine("User niet ingelogd");
-            }
-            else
-            {
-                MainWindow.ChangePage(new TestInfoPage(id, MainWindow));
-            }
-
+            MainWindow.ChangePage(new TestInfoPage(id, MainWindow));
         }
 
         /// <summary>
