@@ -72,10 +72,12 @@ public class User
     public string Firstname { get; set; }
     public string Lastname { get; set; }
     public string Edit { get; set; }
-    public User(int accountnum, string usern, string acctype, string fname, string lname, string edit)
+
+    public User(int accountnum, string usern, int acctype, string fname, string lname, string edit)
     {
-        UserTypeID = int.Parse(acctype);
         this.Accountnumber = accountnum;
+        this.UserTypeID = acctype;
+
         if (UserTypeID == 0)
         {
             this.Usertype = "Student";
