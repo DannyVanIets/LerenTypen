@@ -1045,7 +1045,7 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // this query returns all the content from a given testId
-                    sb.Append($"SELECT MAX(score) FROM testresults WHERE testID={testID}");
+                    sb.Append($"SELECT ISNULL(MAX(score), 0) FROM testresults WHERE testID={testID}");
 
                     string mySql = sb.ToString();
 
@@ -1053,7 +1053,7 @@ namespace LerenTypen
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            while (reader.Read() && reader.HasRows)
+                            while (reader.Read())
                             {
                                 return Convert.ToInt32(reader[0]);
                             }
@@ -1079,7 +1079,7 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // this query returns all the content from a given testId
-                    sb.Append($"SELECT AVG(score) FROM testresults WHERE testID={testID}");
+                    sb.Append($"SELECT ISNULL(AVG(score), 0) FROM testresults WHERE testID={testID}");
 
                     string mySql = sb.ToString();
 
