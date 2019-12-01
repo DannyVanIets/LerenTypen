@@ -1161,7 +1161,7 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // this query returns all the content from a given testId
-                    sb.Append($"SELECT MAX(wordsEachMinute), accountID FROM testresults WHERE testID={testID} GROUP BY accountID DESC LIMIT 3 ");
+                    sb.Append($"SELECT TOP 3 MAX(wordsEachMinute), accountID FROM testresults WHERE testID=1 GROUP BY accountID");
 
                     string mySql = sb.ToString();
 
@@ -1185,7 +1185,7 @@ namespace LerenTypen
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
-                return null;
+                return results;
             }
         }
 
@@ -1201,7 +1201,7 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // this query returns all the content from a given testId
-                    sb.Append($"SELECT MAX(score), accountID FROM testresults WHERE testID={testID} GROUP BY accountID DESC LIMIT 3 ");
+                    sb.Append($"SELECT TOP 3 MAX(score), accountID FROM testresults WHERE testID={testID} GROUP BY accountID");
 
                     string mySql = sb.ToString();
 
@@ -1225,7 +1225,7 @@ namespace LerenTypen
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
-                return null;
+                return results;
             }
         }
 
