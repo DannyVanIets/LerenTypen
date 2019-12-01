@@ -155,11 +155,17 @@ namespace LerenTypen
             {
                 loginPageButton.Content = $"Welkom {Database.GetUserName(Ingelogd)} ▼";
                 loginPageButton.ContextMenu = (ContextMenu)FindResource("accountMenu");
+
+                if (Database.IsAdmin(Ingelogd))
+                {
+                    allUsersPageButton.Visibility = Visibility.Visible;
+                }
             }
             else
             {
                 loginPageButton.Content = "Inloggen/registeren";
                 loginPageButton.ContextMenu = null;
+                allUsersPageButton.Visibility = Visibility.Collapsed;
             }
         }
 
