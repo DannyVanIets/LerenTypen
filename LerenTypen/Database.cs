@@ -337,10 +337,10 @@ namespace LerenTypen
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
 
-                    // Select last insert id is used to insert the tests content into a seperate table with the same id
-                    // NOW() is being used to get the local date.
+                    // Select SCOPE_IDENTITY is used to insert the tests content into a seperate table with the same id
+                    // DateTime.Now is being used to get the current date and time.
                     sb.Append($"INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID) " +
-                        $"VALUES (@testName, @testType, 0, @testDifficulty, NOW(), @isPrivate , @uploadedBy); SELECT LAST_INSERT_ID()");
+                        $"VALUES (@testName, @testType, 0, @testDifficulty, '{DateTime.Now}', @isPrivate, @uploadedBy); SELECT SCOPE_IDENTITY()");
 
                     string MySql = sb.ToString();
 
