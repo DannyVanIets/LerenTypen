@@ -73,7 +73,7 @@ public class User
     public string Lastname { get; set; }
     public string Edit { get; set; }
 
-    public User(int accountnum, string usern, int acctype, string fname, string lname, string edit)
+    public User(int accountnum, string usern, int acctype, string fname, string lname)
     {
         this.Accountnumber = accountnum;
         this.UserTypeID = acctype;
