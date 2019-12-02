@@ -43,10 +43,10 @@ namespace LerenTypen
             string testTypeString = "";
             switch (test.Type)
             {
-                case 0:
+                case 1:
                     testTypeString = "woorden";
                     break;
-                case 1:
+                case 0:
                     testTypeString = "zinnen";
                     break;
             }
