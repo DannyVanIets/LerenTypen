@@ -91,22 +91,5 @@ namespace LerenTypen
         {
             DeleteAcc.Foreground = Brushes.White;
         }
-
-        private void DeleteAcc_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                string username = account.UserName;
-                Database.DeleteAcc(username);
-                MessageBox.Show("Het account is verwijderd", "Account verwijderd!");
-                this.Close();
-            }
-            catch(Exception r)
-            {
-                Console.WriteLine(r.ToString());
-                MessageBox.Show("Error", "Error");
-                this.Close();
-            }
-        }
     }
 }
