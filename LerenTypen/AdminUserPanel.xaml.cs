@@ -1,9 +1,8 @@
 using System;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using LerenTypen.Controllers;
 using LerenTypen.Models;
 
 namespace LerenTypen
@@ -16,7 +15,7 @@ namespace LerenTypen
             InitializeComponent();
             try
             {
-                account = Database.GetUserAccount(id);
+                account = AccountController.GetUserAccount(id);
                 firstNameTextBox.Text = account.FirstName;
                 lastNameTextbox.Text = account.Surname;
                 EditPageUserName.Content += " " + account.UserName;
@@ -26,7 +25,6 @@ namespace LerenTypen
             {
                 Console.WriteLine(e.ToString());
                 MessageBox.Show("U bent niet ingelogd!", "Error");
-
             }
         }
 
@@ -41,7 +39,7 @@ namespace LerenTypen
             {
                 if (!string.IsNullOrEmpty(firstname) || !string.IsNullOrEmpty(surname) || !string.IsNullOrEmpty(username))
                 {
-                    Database.AdminUpdateAccount(username, firstname, surname);
+                    AccountController.UpdateAccount(username, firstname, surname);
                 }
                 else
                 {
@@ -50,13 +48,13 @@ namespace LerenTypen
 
                 if (comboboxvalue == "student")
                 {
-                    Database.MakeStudent(username);
+                    AccountController.MakeStudent(username);
                     MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
                     this.Close();
                 }
                 else if (comboboxvalue == "docent")
                 {
-                    Database.MakeTeacher(username);
+                    AccountController.MakeTeacher(username);
                     MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
                     this.Close();
 
@@ -64,7 +62,7 @@ namespace LerenTypen
                 }
                 else if (comboboxvalue == "admin")
                 {
-                    Database.MakeAdmin(username);
+                    AccountController.MakeAdmin(username);
                     MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
                     this.Close();
 
@@ -79,7 +77,6 @@ namespace LerenTypen
                 Console.WriteLine(q);
                 MessageBox.Show("Er is iets mis gegaan... Hallo product demo..", "Error");
             }
-
         }
 
         private void DeleteAccountButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -97,7 +94,7 @@ namespace LerenTypen
             try
             {
                 string username = account.UserName;
-                Database.DeleteAcc(username);
+                AccountController.DeleteAccount(username);
                 MessageBox.Show("Het account is verwijderd", "Account verwijderd!");
                 this.Close();
             }

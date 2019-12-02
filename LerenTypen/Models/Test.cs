@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LerenTypen.Controllers;
 
-namespace LerenTypen
+namespace LerenTypen.Models
 {
     class Test
     {
@@ -37,8 +33,8 @@ namespace LerenTypen
             IsPrivate = isPrivate;
             CreatedDateTime = createdDateTime;
 
-            Highscore = Database.GetTestHighscore(ID);
-            AverageScore = Database.GetTestAverageScore(ID);
+            Highscore = TestController.GetTestHighscore(ID);
+            AverageScore = TestController.GetTestAverageScore(ID);
         }
     }
 }

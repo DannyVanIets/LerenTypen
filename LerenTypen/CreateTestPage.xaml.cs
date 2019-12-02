@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LerenTypen.Controllers;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -134,7 +135,6 @@ namespace LerenTypen
                     m.frame.Navigate(new CreateTestPage(m));
                 }
             }
-
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace LerenTypen
             }
 
             int accountID = m.Ingelogd;
-            Database.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID);
+            TestController.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID);
             return true;
         }
 

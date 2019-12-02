@@ -2,6 +2,7 @@ using System.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LerenTypen.Controllers;
 
 namespace LerenTypen
 {
@@ -68,8 +69,7 @@ namespace LerenTypen
             // Add the data to the datagrid and refresh to show
             try
             {
-                TableContent = Database.GetAllTests();
-
+                TableContent = TestController.GetAllTests();
 
                 // Bool to prevent the select event/ToonAlles_event at startup app
                 IsPageInitialized = true;
@@ -365,7 +365,7 @@ namespace LerenTypen
             }
             else
             {
-                CurrentContent = Database.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
                 AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
                 AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
             }

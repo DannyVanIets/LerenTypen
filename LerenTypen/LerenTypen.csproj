@@ -107,20 +107,23 @@
     <Compile Include="AllUsersPage.xaml.cs">
       <DependentUpon>AllUsersPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TestResultController.cs" />
     <Compile Include="CreateTestPage.xaml.cs">
       <DependentUpon>CreateTestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Converter.cs" />
     <Compile Include="Models\Date.cs" />
-    <Compile Include="Database.cs" />
+    <Compile Include="Models\Database.cs" />
     <Compile Include="ForgotPasswordPage.xaml.cs">
       <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
     </Compile>
@@ -180,21 +183,22 @@
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserTable.cs" />
     <Compile Include="Privacystatement.xaml.cs">
       <DependentUpon>Privacystatement.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestOverviewPage.xaml.cs">
       <DependentUpon>TestOverviewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Test.cs" />
+    <Compile Include="Models\Test.cs" />
     <Compile Include="TestInfoPage.xaml.cs">
       <DependentUpon>TestInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestResult.cs" />
+    <Compile Include="Models\TestResult.cs" />
     <Compile Include="TipPage.xaml.cs">
       <DependentUpon>TipPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestTable.cs" />
+    <Compile Include="Models\TestTable.cs" />
     <Compile Include="TestExercisePage.xaml.cs">
       <DependentUpon>TestExercisePage.xaml</DependentUpon>
     </Compile>
@@ -230,5 +234,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

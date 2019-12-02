@@ -1,3 +1,5 @@
+using LerenTypen.Controllers;
+using LerenTypen.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +12,9 @@ namespace LerenTypen
     /// </summary>
     public partial class AllUsersPage : Page
     {
-        List<User> usercontent;
-        List<User> CurrentContent = new List<User>();
-        private List<User> SearchResult = new List<User>();
+        List<UserTable> usercontent;
+        List<UserTable> CurrentContent = new List<UserTable>();
+        private List<UserTable> SearchResult = new List<UserTable>();
         public bool IsAdmin = false;
         public MainWindow Mainwindow { get; set; }
 
@@ -20,9 +22,9 @@ namespace LerenTypen
         {
             InitializeComponent();
             this.Mainwindow = mainwindow;
-            usercontent = new List<User>();
+            usercontent = new List<UserTable>();
             //Info loaded in from database
-            usercontent = Database.GetUsers();
+            usercontent = AccountController.GetAllUsers();
             DGV1.ItemsSource = usercontent;
             DGV1.Items.Refresh();
             CurrentContent = usercontent;
@@ -32,10 +34,10 @@ namespace LerenTypen
         private void DG_Hyperlink_click(object sender, System.Windows.RoutedEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;
-            User user = (User)textBlock.Tag;
-            string id = user.Accountnumber.ToString();
-            string usertype = user.UserTypeID.ToString();
-            Database.GetUserAccount(int.Parse(id));
+            UserTable UserTable = (UserTable)textBlock.Tag;
+            string id = UserTable.Accountnumber.ToString();
+            string usertype = UserTable.UserTypeID.ToString();
+            AccountController.GetUserAccount(int.Parse(id));
             var newWindow = new AdminUserPanel(int.Parse(id), int.Parse(usertype));
             newWindow.ShowDialog();
             Mainwindow.ChangePage(new AllUsersPage(Mainwindow));
@@ -61,38 +63,5 @@ namespace LerenTypen
                 DGV1.Items.Refresh();
             }
         }
-    }
-}
-public class User
-{
-    public int Accountnumber { get; set; }
-    public int UserTypeID { get; set; }
-    public string Usertype { get; set; }
-    public string Username { get; set; }
-    public string Firstname { get; set; }
-    public string Lastname { get; set; }
-    public string Edit { get; set; }
-
-    public User(int accountnum, string usern, int acctype, string fname, string lname)
-    {
-        this.Accountnumber = accountnum;
-        this.UserTypeID = acctype;
-
-        if (UserTypeID == 0)
-        {
-            this.Usertype = "Student";
-        }
-        else if (UserTypeID == 1)
-        {
-            this.Usertype = "Docent";
-        }
-        else
-        {
-            this.Usertype = "Admin";
-        }
-        this.Username = usern;
-        this.Firstname = fname;
-        this.Lastname = lname;
-        this.Edit = "Bewerken";
     }
 }

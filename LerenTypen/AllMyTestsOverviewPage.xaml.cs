@@ -1,3 +1,4 @@
+using LerenTypen.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,8 +64,8 @@ namespace LerenTypen
             // Add the data to the datagrid and refresh to show
             try
             {
-                TableContent = Database.GetAllMyTestswithIsPrivate(MainWindow.Ingelogd);
-                string searchterm = Database.GetUserName(MainWindow.Ingelogd);
+                TableContent = TestController.GetAllMyTestswithIsPrivate(MainWindow.Ingelogd);
+                string searchterm = AccountController.GetUsername(MainWindow.Ingelogd);
 
                 SearchResult = (from t in TableContent
                                 where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
@@ -336,7 +337,7 @@ namespace LerenTypen
             }
             else
             {
-                AllMyTestsOverviewPage_TextBox_Search.Text = $"User: {Database.GetUserName(MainWindow.Ingelogd)}";
+                AllMyTestsOverviewPage_TextBox_Search.Text = $"User: {AccountController.GetUsername(MainWindow.Ingelogd)}";
             }
         }
         /// <summary>
@@ -352,7 +353,7 @@ namespace LerenTypen
             }
             else
             {
-                CurrentContent = Database.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd);
+                CurrentContent = TestController.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd);
                 //TableCounter(CurrentContent);
                 AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
                 AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
@@ -404,7 +405,7 @@ namespace LerenTypen
             TestTable tt = checkbox.DataContext as TestTable;
             int id = tt.TestId;
 
-            Database.UpdateTestToPrivate(id);
+            TestController.UpdateTestToPrivate(id);
             //tt.IsPrivate = checkbox.IsChecked;
             AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
         }
@@ -415,7 +416,7 @@ namespace LerenTypen
             TestTable tt = checkbox.DataContext as TestTable;
             int id = tt.TestId;
 
-            Database.UpdateTestToPublic(id);
+            TestController.UpdateTestToPublic(id);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using LerenTypen.Controllers;
+using LerenTypen.Models;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -19,7 +21,7 @@ namespace LerenTypen
             this.mainWindow = mainWindow;
             this.testID = testID;
 
-            Test test = Database.GetTest(testID);
+            Test test = TestController.GetTest(testID);
             testNameLabel.Content = test.Name;
 
             string difficultyString = "";
@@ -53,7 +55,7 @@ namespace LerenTypen
             testContentTextBox.AppendText($"Type toets: {testTypeString}\n");
 
             testContentTextBox.AppendText("\nOpgaven:\n");
-            List<string> testContent = Database.GetTestContent(testID);
+            List<string> testContent = TestController.GetTestContent(testID);
             foreach (string line in testContent)
             {
                 testContentTextBox.AppendText($"{line}\n");
@@ -70,18 +72,18 @@ namespace LerenTypen
             avarageScoreLabel.Content = $"{test.AverageScore}%";
             highscoreLabel.Content = $"{test.Highscore}%";
 
-            myResultsListView.ItemsSource = Database.GetAllTestResultsFromAccount(test.AuthorID, testID);
+            myResultsListView.ItemsSource = TestResultController.GetAllTestResultsFromAccount(test.AuthorID, testID);
 
-            Dictionary<int, int> top3Fastest = Database.GetTop3FastestTypers(testID);
+            Dictionary<int, int> top3Fastest = TestController.GetTop3FastestTypers(testID);
             foreach (KeyValuePair<int, int> kvp in top3Fastest)
             {
-                top3FastestTypersListView.Items.Add($"{Database.GetUserName(kvp.Key)}: {kvp.Value} woorden per minuut");
+                top3FastestTypersListView.Items.Add($"{AccountController.GetUsername(kvp.Key)}: {kvp.Value} woorden per minuut");
             }
 
-            Dictionary<int, int> top3Highscore = Database.GetTop3Highscores(testID);
+            Dictionary<int, int> top3Highscore = TestController.GetTop3Highscores(testID);
             foreach (KeyValuePair<int, int> kvp in top3Highscore)
             {
-                top3HighestScoresListView.Items.Add($"{Database.GetUserName(kvp.Key)}: {(int)kvp.Value}% goed");
+                top3HighestScoresListView.Items.Add($"{AccountController.GetUsername(kvp.Key)}: {(int)kvp.Value}% goed");
             }
         }
 

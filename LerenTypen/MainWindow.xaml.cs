@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using LerenTypen.Controllers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -154,10 +155,10 @@ namespace LerenTypen
         {
             if (Ingelogd > 0)
             {
-                loginPageButton.Content = $"Welkom {Database.GetUserName(Ingelogd)} ▼";
+                loginPageButton.Content = $"Welkom {AccountController.GetUsername(Ingelogd)} ▼";
                 loginPageButton.ContextMenu = (ContextMenu)FindResource("accountMenu");
 
-                if (Database.IsAdmin(Ingelogd))
+                if (AccountController.IsAdmin(Ingelogd))
                 {
                     allUsersPageButton.Visibility = Visibility.Visible;
                 }

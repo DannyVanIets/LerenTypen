@@ -4,7 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using LerenTypen.Models;
+using LerenTypen.Controllers;
 
 namespace LerenTypen
 {
@@ -14,15 +14,12 @@ namespace LerenTypen
     public partial class LoginPage : Page
     {
         private MainWindow MainWindow;
-        private Converter Converter;
 
         public LoginPage(MainWindow mainWindow)
         {
             InitializeComponent();
-            //This Class is used if you want to change the page.
+            //This property is used if you want to change the page.
             MainWindow = mainWindow;
-            //This Class is used to Hash the password
-            Converter = new Converter();
         }
 
         // Er word gekeken als de velden ingevuld zijn, anders word alles afgebroken
@@ -34,7 +31,7 @@ namespace LerenTypen
                 return;
             }
 
-            if (Database.UserExists(username.Text))
+            if (LoginController.UserExists(username.Text))
             {
                 MessageBox.Show("Deze gebruikersnaam is al in gebruik!", "Gebruikersnaam in gebruik");
                 return;
@@ -44,8 +41,8 @@ namespace LerenTypen
             Klik op de registreer button en het wachtwoord word gehasht.*/
             if (password.Password == passwordherh.Password)
             {  
-                string hashedpw = Converter.ComputeSha256Hash(password.Password);
-                Database.Register(username.Text, hashedpw.ToString(), birthdate.SelectedDate.Value.Date , firstname.Text, lastname.Text, securityvraag.Text, securityans.Text);
+                string hashedpw = LoginController.ComputeSha256Hash(password.Password);
+                LoginController.RegisterUser(username.Text, hashedpw.ToString(), birthdate.SelectedDate.Value.Date , firstname.Text, lastname.Text, securityvraag.Text, securityans.Text);
                 MessageBox.Show("U bent succesvol ingelogd!"+"\n"+"U wordt nu doorgestuurd naar de homepagina." , "Succes");
                 username.Text = string.Empty; lastname.Text = string.Empty;
                 firstname.Text = string.Empty; password.Password = string.Empty;
@@ -119,8 +116,8 @@ namespace LerenTypen
             {
                 //In here we're first gonna hash the password and then send the username and hashedpassword to the database. We will return a number and if that number is higher than 0, it means we're logged in. We will send a message to the student and send them to the homepage. If not, we will send a message to the user telling that that account doesn't exist.
 
-                string hashedpw = Converter.ComputeSha256Hash(loginPassword);
-                MainWindow.Ingelogd = Database.GetAccountIDForLogin(loginUsername, hashedpw);
+                string hashedpw = LoginController.ComputeSha256Hash(loginPassword);
+                MainWindow.Ingelogd = LoginController.GetAccountIDForLogin(loginUsername, hashedpw);
 
                 if (MainWindow.Ingelogd > 0)
                 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LerenTypen.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -59,8 +60,8 @@ namespace LerenTypen
             t1.Tick += StartTimer;
 
             // Gets the tests name and content using the given testID
-            lines = Database.GetTestContent(testID);
-            testName = Database.GetTestName(testID);
+            lines = TestController.GetTestContent(testID);
+            testName = TestController.GetTestName(testID);
             testNameLbl.Content = testName;
 
             // Check if lines are found
@@ -393,7 +394,7 @@ namespace LerenTypen
             testClosed = true;
             t1.Stop();
             int resultID = SaveResults();
-            Database.UpdateTimesMade(testID);
+            TestController.UpdateTimesMade(testID);
             TestResultsPage testResultsPage = new TestResultsPage(testID, m, resultID);
             m.frame.Navigate(testResultsPage);
         }
@@ -407,7 +408,7 @@ namespace LerenTypen
             int amountOfWrong = wrongAnswers.Count;
             decimal wordsPerMinute = CalculateWordsPerMinute();
             decimal percentageRight = CalculatePercentageRight();
-            int resultID = Database.InsertResults(testID, 1, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines, (int)percentageRight);
+            int resultID = TestResultController.SaveResults(testID, 1, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines, (int)percentageRight);
             return resultID;
         }
 
