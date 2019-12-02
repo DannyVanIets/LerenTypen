@@ -100,7 +100,7 @@ namespace LerenTypen
             margin.Right = 20;
             margin.Top = 0;
             margin.Bottom = 10;
-            tb.Width = 900;
+            tb.MinWidth = 900;
             tb.Margin = margin;
             tb.Name = "textBox" + i;
             textBoxes.Add(tb);
