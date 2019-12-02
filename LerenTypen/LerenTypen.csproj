@@ -236,5 +236,8 @@
     <Resource Include="img\resumeButton.png" />
     <Resource Include="img\stopButton.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\restartButton.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
