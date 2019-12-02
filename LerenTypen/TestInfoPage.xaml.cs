@@ -70,7 +70,7 @@ namespace LerenTypen
             avarageScoreLabel.Content = $"{test.AverageScore}%";
             highscoreLabel.Content = $"{test.Highscore}%";
 
-            myResultsListView.ItemsSource = Database.GetAllTestResultsFromAccount(test.AuthorID, testID);
+            myResultsListView.ItemsSource = Database.GetAllTestResultsFromAccount(mainWindow.Ingelogd, testID);
 
             Dictionary<int, int> top3Fastest = Database.GetTop3FastestTypers(testID);
             foreach (KeyValuePair<int, int> kvp in top3Fastest)
