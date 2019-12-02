@@ -1161,12 +1161,13 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // this query returns all the content from a given testId
-                    sb.Append($"SELECT TOP 3 MAX(wordsEachMinute), accountID FROM testresults WHERE testID=1 GROUP BY accountID");
+                    sb.Append("SELECT TOP 3 MAX(wordsEachMinute), accountID FROM testresults WHERE testID=@testID GROUP BY accountID");
 
                     string mySql = sb.ToString();
 
                     using (SqlCommand command = new SqlCommand(mySql, connection))
                     {
+                        command.Parameters.AddWithValue("@testID", testID);
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
