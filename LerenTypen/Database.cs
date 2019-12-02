@@ -337,6 +337,7 @@ public static class Database
             Console.WriteLine(e.Message);
         }
     }
+
     /// <summary>
     /// Method adds each line of content of a test to database using its tests ID. testcontent is stored in a separate db.
     /// </summary>        
