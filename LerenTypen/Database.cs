@@ -144,36 +144,6 @@ public static class Database
         return false;
     }
 
-
-    public static bool DeleteAcc(string userName)
-    {
-        try
-        {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                connection.Open();
-                StringBuilder sb = new StringBuilder();
-                sb.Append("DELETE FROM accounts WHERE accountID = @id AND accountUsername = @username ");
-                string MySql = sb.ToString();
-                int counter = 1;
-
-                using (MySqlCommand command = new MySqlCommand(MySql, connection))
-                {
-                    command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
-                    command.Parameters.AddWithValue("@username", userName);
-                    command.ExecuteReader();
-                }
-                connection.Close();
-                return true;
-            }
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
-        return false;
-    }
-
     // Make the user a student
     public static bool MakeStudent(string userName)
     {
