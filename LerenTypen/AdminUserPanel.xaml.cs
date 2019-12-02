@@ -92,7 +92,7 @@ namespace LerenTypen
             DeleteAcc.Foreground = Brushes.White;
         }
 
-        private void DeleteAcc_Click(object sender, RoutedEventArgs e)
+      /*  private void DeleteAcc_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -107,6 +107,6 @@ namespace LerenTypen
                 MessageBox.Show("Error", "Error");
                 this.Close();
             }
-        }
+        }*/
     }
 }
