@@ -140,6 +140,10 @@ namespace LerenTypen
                 {
                     pageToggleButton = tipPageButton;
                 }
+                else if (pageToChangeTo is AllUsersPage)
+                {
+                    pageToggleButton = allUsersPageButton;
+                }
                 else if (pageToChangeTo is LeaderboardPage)
                 {
                     pageToggleButton = leaderboardPageButton;
@@ -164,6 +168,7 @@ namespace LerenTypen
             trendingTestsPageButton.IsChecked = false;
             tipPageButton.IsChecked = false;
             leaderboardPageButton.IsChecked = false;
+            allUsersPageButton.IsChecked = false;
             loginPageButton.IsChecked = false;
 
             if (buttonToSwitchTo != null)

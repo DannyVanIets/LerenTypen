@@ -1,8 +1,8 @@
-using System.Data.SqlClient;
+using LerenTypen.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
-using LerenTypen.Models;
 
 namespace LerenTypen
 {
@@ -599,7 +599,7 @@ namespace LerenTypen
                                 var testDifficulty = reader["testDifficulty"];
 
                                 results.Add((int)accountID);
-                                results.Add((int)testDifficulty);
+                                results.Add(Convert.ToInt32(testDifficulty));
                             }
                         }
                     }
@@ -1063,7 +1063,7 @@ namespace LerenTypen
             }
             catch (SqlException e)
             {
-                Console.WriteLine(e.Message);              
+                Console.WriteLine(e.Message);
             }
 
             return 0;
@@ -1097,7 +1097,7 @@ namespace LerenTypen
             }
             catch (SqlException e)
             {
-                Console.WriteLine(e.Message);              
+                Console.WriteLine(e.Message);
             }
 
             return 0;
@@ -1250,7 +1250,7 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score) VALUES (@testID, @accountID, NOW(), @WordsEachMinute, @pauses, @score); Select LAST_INSERT_ID();");
+                    sb.Append("INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score) VALUES (@testID, @accountID, CURRENT_TIMESTAMP, @WordsEachMinute, @pauses, @score); Select SCOPE_IDENTITY();");
                     string MySql = sb.ToString();
 
                     using (SqlCommand command = new SqlCommand(MySql, connection))
@@ -1260,6 +1260,7 @@ namespace LerenTypen
                         command.Parameters.AddWithValue("@wordsEachMinute", wordsEachMinute);
                         command.Parameters.AddWithValue("@pauses", pauses);
                         command.Parameters.AddWithValue("@score", score);
+                        command.ExecuteNonQuery();
 
                         testResultID = Convert.ToInt32(command.ExecuteScalar());
                     }
