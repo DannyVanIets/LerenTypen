@@ -82,7 +82,7 @@ namespace LerenTypen
 
         }
 
-        private void DeleteAccountButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+     /*   private void DeleteAccountButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             DeleteAcc.Foreground = Brushes.Black;
         }
@@ -91,7 +91,7 @@ namespace LerenTypen
         {
             DeleteAcc.Foreground = Brushes.White;
         }
-
+*/
       /*  private void DeleteAcc_Click(object sender, RoutedEventArgs e)
         {
             try
