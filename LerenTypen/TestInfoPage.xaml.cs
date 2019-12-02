@@ -83,6 +83,11 @@ namespace LerenTypen
             {
                 top3HighestScoresListView.Items.Add($"{Database.GetUserName(kvp.Key)}: {(int)kvp.Value}% goed");
             }
+
+            if (mainWindow.Ingelogd == 0)
+            {
+                startTestButton.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void MyResultsListView_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
