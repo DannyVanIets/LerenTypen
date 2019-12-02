@@ -31,7 +31,7 @@
         <Label x:Name="testVersionLabel" HorizontalAlignment="Right" VerticalAlignment="Center" 
                Grid.Column="3" Margin="0,0,20,0">Toetsversie</Label>
 
-        <TextBox x:Name="testContentTextBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" IsReadOnly="True" Margin="0,0,20,10"/>
+        <TextBox x:Name="testContentTextBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" IsReadOnly="True" Margin="0,0,20,10" VerticalScrollBarVisibility="Auto"/>
 
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="20,0,0,0">
             <StackPanel Orientation="Horizontal">
@@ -64,7 +64,7 @@
             </StackPanel>
         </StackPanel>
 
-        <ListView x:Name="myResultsListView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,0,0">
+        <ListView x:Name="myResultsListView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,0,0">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
@@ -79,7 +79,7 @@
             </ListView.ItemContainerStyle>
         </ListView>
 
-        <ListView x:Name="top3FastestTypersListView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Grid.Row="2" Grid.Column="2">
+        <ListView x:Name="top3FastestTypersListView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="265" Header="Top 3 snelste typers">
