@@ -33,7 +33,7 @@ namespace LerenTypen
             amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
             List<int> testInformation = Database.GetTestInformation(testID);
             createrRun.Text = Database.GetUserName(testInformation[0]);
-            amountOfWordsLbl.Content = Database.GetAmountOfWordsFromTest(testID);
+            amountOfWordsLbl.Content = $"Aantal woorden: {Database.GetAmountOfWordsFromTest(testID)}";
 
             string difficulty;
             if (testInformation[1].Equals(0))
