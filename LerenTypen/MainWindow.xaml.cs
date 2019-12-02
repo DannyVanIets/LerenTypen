@@ -1,5 +1,5 @@
-﻿using System.Security.Cryptography;
-using System.Text;
+﻿using Renci.SshNet;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -14,9 +14,34 @@ namespace LerenTypen
         // The account ID if the user is logged in, otherwise 0
         public int Ingelogd { get; set; }
 
+        private SshClient client;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            client = new SshClient("145.44.233.184", "student", "toor2019");
+            connectSSH:
+            try
+            {
+                client.Connect();
+                var port = new ForwardedPortLocal("127.0.0.1", 1433, "localhost", 1433);
+                client.AddForwardedPort(port);
+                port.Start();
+            }
+            catch (Exception)
+            {
+                var result = MessageBox.Show("Error bij het maken van verbinding met de server. Controleer uw internetverbinding. Wilt u opnieuw proberen te verbinden?", "LerenTypen", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    goto connectSSH;
+                }
+                else
+                {
+                    Environment.Exit(1);
+                }
+            }
+
             frame.Navigate(new HomePage(this));
         }
 
@@ -185,6 +210,12 @@ namespace LerenTypen
                 MessageBox.Show("U bent succesvol uitgelogd! U wordt nu doorgestuurd naar de homepagina.", "Succes");
                 ChangePage(new HomePage(this));
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            client.Disconnect();
+            client.Dispose();
         }
     }
 }
