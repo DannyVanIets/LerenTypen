@@ -91,7 +91,7 @@ namespace LerenTypen
             removeLink.Click += RemoveLine_Click;
             tbl.Inlines.Add(removeLink);
             tb.Height = 25;
-            tb.MaxLength = 200;
+            tb.MaxLength = 115;
             tb.TabIndex = i;
             panel.Orientation = Orientation.Horizontal;
             tbl.VerticalAlignment = VerticalAlignment.Center;

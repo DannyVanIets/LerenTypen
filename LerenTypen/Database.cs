@@ -142,7 +142,7 @@ namespace LerenTypen
         }
 
 
-        public static bool DeleteAcc(string userName)
+       /* public static bool DeleteAcc(string userName)
         {
             try
             {
@@ -170,7 +170,7 @@ namespace LerenTypen
             }
             return false;
         }
-
+        */
         // Make the user a student
         public static bool MakeStudent(string userName)
         {
