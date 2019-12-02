@@ -84,7 +84,7 @@ namespace LerenTypen
 
         private void Hyperlink_click(object sender, RoutedEventArgs e)
         {
-            var newWindow = new Privacystatement();
+            var newWindow = new PrivacyInfoWindow();
             newWindow.Show();
         }
 

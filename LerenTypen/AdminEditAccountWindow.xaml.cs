@@ -7,10 +7,10 @@ using LerenTypen.Models;
 
 namespace LerenTypen
 {
-    public partial class AdminUserPanel : Window
+    public partial class AdminEditAccountWindow : Window
     {
         private Account account;
-        public AdminUserPanel(int id, int acctype)
+        public AdminEditAccountWindow(int id, int acctype)
         {
             InitializeComponent();
             try

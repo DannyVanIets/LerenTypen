@@ -70,7 +70,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AdminUserPanel.xaml">
+    <Page Include="AdminEditAccountWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -98,8 +98,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AdminUserPanel.xaml.cs">
-      <DependentUpon>AdminUserPanel.xaml</DependentUpon>
+    <Compile Include="AdminEditAccountWindow.xaml.cs">
+      <DependentUpon>AdminEditAccountWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="AllMyTestsOverviewPage.xaml.cs">
       <DependentUpon>AllMyTestsOverviewPage.xaml</DependentUpon>
@@ -147,7 +147,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Privacystatement.xaml">
+    <Page Include="PrivacyInfoWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -184,8 +184,8 @@
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\UserTable.cs" />
-    <Compile Include="Privacystatement.xaml.cs">
-      <DependentUpon>Privacystatement.xaml</DependentUpon>
+    <Compile Include="PrivacyInfoWindow.xaml.cs">
+      <DependentUpon>PrivacyInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="TestOverviewPage.xaml.cs">
       <DependentUpon>TestOverviewPage.xaml</DependentUpon>
