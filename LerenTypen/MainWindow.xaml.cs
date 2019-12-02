@@ -1,4 +1,4 @@
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -58,6 +58,10 @@ namespace LerenTypen
                 ChangePage(new LoginPage(this), loginPageButton);
             }
         }
+        private void AllUsersPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(new AllUsersPage(this), allUsersPageButton);
+        }
 
         //Checks if the user is logged in and sends them to the EditAccountPage if so.
         private void EditAccountPageButton_Click(object sender, RoutedEventArgs e)
@@ -98,10 +102,6 @@ namespace LerenTypen
                 if (pageToChangeTo is HomePage)
                 {
                     pageToggleButton = homePageButton;
-                }
-                else if (pageToChangeTo is TestOverviewPage)
-                {
-                    pageToggleButton = testOverviewPageButton;
                 }
                 else if (pageToChangeTo is TrendingTestsPage)
                 {
@@ -154,13 +154,19 @@ namespace LerenTypen
         {
             if (Ingelogd > 0)
             {
-                loginPageButton.Content = $"Welkom {Database.GetAccountUsername(Ingelogd)} ▼";
+                loginPageButton.Content = $"Welkom {Database.GetUserName(Ingelogd)} ▼";
                 loginPageButton.ContextMenu = (ContextMenu)FindResource("accountMenu");
+
+                if (Database.IsAdmin(Ingelogd))
+                {
+                    allUsersPageButton.Visibility = Visibility.Visible;
+                }
             }
             else
             {
                 loginPageButton.Content = "Inloggen/registeren";
                 loginPageButton.ContextMenu = null;
+                allUsersPageButton.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -175,20 +181,5 @@ namespace LerenTypen
                 ChangePage(new HomePage(this));
             }
         }
-
-        private void Test_Click(object sender, RoutedEventArgs e)
-        {
-            //ChangePage(new CreateTestPage(), TestButton);
-            //string tekst = "";
-            //foreach (var item in Database.TestQuery())
-            //{
-            //    tekst += item;
-            //}
-            //System.Windows.MessageBox.Show(tekst);
-            System.Windows.MessageBox.Show(Database.GetAmountOfWordsFromTest(3).ToString());
-
-            
-        }
-
     }
 }

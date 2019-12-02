@@ -92,6 +92,7 @@ namespace LerenTypen
             tbl.Inlines.Add(removeLink);
             tb.Height = 25;
             tb.MaxLength = 200;
+            tb.TabIndex = i;
             panel.Orientation = Orientation.Horizontal;
             tbl.VerticalAlignment = VerticalAlignment.Center;
 

@@ -1,0 +1,106 @@
+﻿<Page x:Class="LerenTypen.AllMyTestsOverviewPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LerenTypen"
+      mc:Ignorable="d" 
+      d:DesignHeight="570" d:DesignWidth="1050" Background="White"
+      Title="Page2" ShowsNavigationUI="False">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="254*"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="AllMyTestsOverviewPage_Label_AllTests" Grid.Column="0" Grid.Row="0" Content="Mijn Toetsen" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Height="53" Width="352"/>
+
+        <TextBox x:Name="AllMyTestsOverviewPage_TextBox_Search" HorizontalAlignment="Left" Height="25" Grid.Row="1" TextWrapping="Wrap" Text="Zoek toetsnaam" BorderThickness="2" VerticalAlignment="Top" Width="155" Margin="10,3,0,0" TextChanged="Search_Event" PreviewMouseDown="Search_Remove_Event"/>
+
+        <CheckBox x:Name="AllMyTestsOverviewPage_CheckBox_MadeBefore" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="Toon geoefende toetsen" HorizontalAlignment="Center" Height="21" Width="152" Margin="0,2.2,0,0" Checked="AllMyTestsOverviewPage_CheckBox_MadeBefore_Checked" Unchecked="AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="1" Margin="0.6,0,-1.4,0">
+            <Label x:Name="AllMyTestsOverviewPage_Label_AmountOfWords" Content="Aantal woorden: " VerticalAlignment="Top" Grid.Column="2" Grid.Row="2" Height="32" Width="95" Margin="0,2,0,0" />
+            <ComboBox x:Name="AllMyTestsOverviewPage_ComboBox_AmountOfWords" VerticalAlignment="Top" Width="115" Grid.Column="2" Height="24" Grid.Row="3" Margin="0,4,0,0">
+                <ComboBoxItem x:Name="AllMyTestsOverviewPage_ComboBoxItem_ToonAlles" IsSelected="True" Selected="ToonAlles_Clicker">Toon alles</ComboBoxItem>
+                <ComboBoxItem x:Name="AllMyTestsOverviewPage_ComboBoxItem_LessThan50" Selected="LessThan50_Clicker">Minder dan 50</ComboBoxItem>
+                <ComboBoxItem x:Name="AllMyTestsOverviewPage_ComboBoxItem_50To100" Selected="Between50And100_Clicker">50-100</ComboBoxItem>
+                <ComboBoxItem x:Name="AllMyTestsOverviewPage_ComboBoxItem_100To150" Selected="Between100And150_Clicker">100-150</ComboBoxItem>
+                <ComboBoxItem x:Name="AllMyTestsOverviewPage_ComboBoxItem_150To200" Selected="Between150And200_Clicker">150-200</ComboBoxItem>
+                <ComboBoxItem x:Name="AllMyTestsOverviewPage_ComboBoxItem_MoreThan200" Selected="MoreThan200_Clicker">Meer dan 200</ComboBoxItem>
+            </ComboBox>
+            <Button x:Name="AllMyTestsOverviewPage_Button_MakeOwnTest" Content="Maak een nieuwe toets" VerticalAlignment="Top" Width="150" Height="25" Grid.Column="2" Grid.Row="1" Margin="10,3,10,0" Click="AllMyTestsOverviewPage_Button_MakeOwnTest_Click"/>
+        </StackPanel>
+        <ListView x:Name="AllMyTestsOverviewPage_DataGrid_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6" local:GridViewSort.AutoSort="True">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
+                        <GridViewColumn Header="Naam" Width="200" local:GridViewSort.PropertyName="WPFName">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_AllMyTestsOverviewPage_Hyperlink_Click">
+                                            <Run Text="{Binding WPFName}"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <!-- Binding is used for collecting properties of objects in lists-->
+                        <GridViewColumn Header="Aantal keren gemaakt" Width="150" DisplayMemberBinding="{Binding WPFTimesMade}" local:GridViewSort.PropertyName="WPFTimesMade"/>
+                        <GridViewColumn Header="Highscore" Width="100" DisplayMemberBinding="{Binding Highscore}" local:GridViewSort.PropertyName="Highscore"/>
+                        <GridViewColumn Header="Aantal woorden" Width="125" DisplayMemberBinding="{Binding AmountOfWords}" local:GridViewSort.PropertyName="AmountOfWords"/>
+                        <GridViewColumn Header="Moeilijkheidsgraad" Width="150" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>
+                        <GridViewColumn Header="Geüpload door" Width="120" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Hyperlink_Click"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
+                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="70" local:GridViewSort.PropertyName="IsPrivate">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Tag="{Binding AmountOfWords}" Checked="DG_Checkbox_Check" Unchecked="DG_Checkbox_Uncheck" IsChecked="{Binding IsPrivate}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="35">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Edit_Hyperlink_Click" TextDecorations="">
+                                            <Run Text="✎"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="25">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Delete_Hyperlink_Click" TextDecorations="">
+                                            <Run Text="X"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_TestId" Header="TestId" DisplayMemberBinding="{Binding TestId}" local:GridViewSort.PropertyName="TestId" Width="0"/>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>

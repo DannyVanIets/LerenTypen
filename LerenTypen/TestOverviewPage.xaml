@@ -49,7 +49,7 @@
                 <DataGridHyperlinkColumn ContentBinding="{Binding WPFName}" Header="Naam" Width="435*">
                     <DataGridHyperlinkColumn.ElementStyle>
                         <Style TargetType="TextBlock">
-                            <Setter Property="Tag" Value="{Binding AmountOfWords}"/>
+                            <Setter Property="Tag" Value="{Binding TestId}"/>
                             <EventSetter Event="Hyperlink.Click" Handler="DG_AllTestOverview_Hyperlink_Click"/>
                         </Style>
                     </DataGridHyperlinkColumn.ElementStyle>

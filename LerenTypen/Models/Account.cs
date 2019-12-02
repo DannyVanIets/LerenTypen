@@ -26,6 +26,14 @@ namespace LerenTypen.Models
             SecurityAnswer = securityAnswer;
         }
 
+        public Account(string userName, DateTime birthdate, string firstName, string surname)
+        {
+            UserName = userName;
+            Birthdate = birthdate;
+            FirstName = firstName;
+            Surname = surname;
+        }
+
         public Account()
         {
 

@@ -34,12 +34,12 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Label Content="Wachtwoord : " Canvas.Left="612" Canvas.Top="207" Width="162" FontSize="14" RenderTransformOrigin="0.513,1.588" Height="40"/>
-            <PasswordBox Name="password" Height="31" Canvas.Left="795" MaxLength="25" PasswordChar="*" Canvas.Top="207" Width="162"/>
+            <PasswordBox Name="password" Height="31" Canvas.Left="795" MaxLength="25" Canvas.Top="207" Width="162"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Label Content="Wachtwoord Herhaling :" Canvas.Left="612" Canvas.Top="255" Width="162" FontSize="14" Height="40"/>
-            <PasswordBox x:Name="passwordherh"  Height="31" Canvas.Left="795" MaxLength="25" PasswordChar="*" Canvas.Top="255" Width="162" />
+            <PasswordBox x:Name="passwordherh"  Height="31" Canvas.Left="795" MaxLength="25" Canvas.Top="255" Width="162" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -58,8 +58,6 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Securtiy Antwoord :&#xA;" Canvas.Left="612" Canvas.Top="303" Width="162" FontSize="14" Height="40"/>
                 <TextBox x:Name="securityans"  Height="31" Canvas.Left="795" MaxLength="25" Canvas.Top="255" Width="162" />
-                
-
             </StackPanel>
             <CheckBox x:Name="checkboxakkoord" Height="24" Canvas.Left="612" Canvas.Top="457" Width="245" IsChecked="False" Checked="CheckBox_Checked" Unchecked="CheckBox_unChecked">
                 <TextBlock>Ik ga akkoord met het
@@ -81,7 +79,7 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Content="Wachtwoord:" Canvas.Left="612" Canvas.Top="255" Width="162" FontSize="14"/>
-                <PasswordBox x:Name="password_login_textbox" Height="31" Canvas.Left="795" Canvas.Top="255" Width="162"/>
+                <PasswordBox x:Name="password_login_textbox" Height="31" KeyDown="Password_login_textbox_KeyDown" Canvas.Left="795" Canvas.Top="255" Width="162"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -100,10 +98,5 @@
                 </TransformGroup>
             </Border.RenderTransform>
         </Border>
-
-                
-                          
-
-            
     </Grid>
 </Page>
