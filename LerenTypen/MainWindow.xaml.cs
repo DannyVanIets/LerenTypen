@@ -14,11 +14,13 @@ namespace LerenTypen
         // The account ID if the user is logged in, otherwise 0
         public int Ingelogd { get; set; }
 
+        private SshClient client;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            SshClient client = new SshClient("145.44.233.184", "student", "toor2019");
+            client = new SshClient("145.44.233.184", "student", "toor2019");
             connectSSH:
             try
             {
@@ -203,6 +205,12 @@ namespace LerenTypen
                 MessageBox.Show("U bent succesvol uitgelogd! U wordt nu doorgestuurd naar de homepagina.", "Succes");
                 ChangePage(new HomePage(this));
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            client.Disconnect();
+            client.Dispose();
         }
     }
 }
