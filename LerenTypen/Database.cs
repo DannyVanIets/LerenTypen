@@ -755,7 +755,7 @@ namespace LerenTypen
                                 while (reader.Read())
                                 {
                                     //adds all the found data to a list
-                                    queryResult.Add(new TestTable(Bcounter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6), reader.GetInt32(7), reader.GetInt32(0)));
+                                    queryResult.Add(new TestTable(Bcounter, reader.GetString(2), Convert.ToInt32(reader[4]), Convert.ToInt32(reader[5]), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(6), Convert.ToInt32(reader[7]), Convert.ToInt32(reader[0])));
                                     Bcounter++;
                                 }
                                 reader.NextResult();
@@ -796,7 +796,7 @@ namespace LerenTypen
                                 while (reader.Read())
                                 {
                                     //add all the found data to a list
-                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6), reader.GetInt32(7), reader.GetInt32(0)));
+                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(6), reader.GetInt32(7), reader.GetInt32(0)));
                                     counter++;
                                 }
                                 reader.NextResult();

@@ -374,14 +374,12 @@ namespace LerenTypen
         {
             Hyperlink link = (Hyperlink)sender;
             string id = link.Tag.ToString();
-            MessageBox.Show(id);
         }
 
         private void DG_ATO_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink link = (Hyperlink)sender;
             string id = link.Tag.ToString();
-            MessageBox.Show(id);
         }
 
         private void DG_ATO_Edit_Hyperlink_Click(object sender, RoutedEventArgs e)
