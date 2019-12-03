@@ -340,7 +340,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select accountID, accountUsername, accountType, accountFirstname, accountSurname from accounts";
+                string query = "select accountID, accountUsername, accountType, accountFirstname, accountSurname from accounts where archived = 0";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -372,7 +372,7 @@ namespace LerenTypen.Controllers
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
-                string query = "Select accountUsername from accounts where accountType = 2 and accountID = @accountnumber";
+                string query = "Select accountUsername from accounts where accountType = 2 and accountID = @accountnumber and archived =0";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@accountnumber", accountnumber);
@@ -493,7 +493,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "DELETE FROM accounts WHERE accountID = @id";
+                string query = "UPDATE accounts set archived=1 WHERE accountID = @id AND archived = 0";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
