@@ -435,7 +435,7 @@ namespace LerenTypen
 
             if (minutesSpend != 0)
             {
-                wordsPerMinute = Database.GetAmountOfWordsFromTest(testID) / minutesSpend;
+                wordsPerMinute = TestController.GetAmountOfWordsFromTest(testID) / minutesSpend;
             }
             else
             {
