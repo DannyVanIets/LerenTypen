@@ -59,12 +59,12 @@
                 <DataGridTextColumn Header="Aantal woorden" Width="120*" Binding="{Binding AmountOfWords}"/>
                 <DataGridTextColumn Header="Moeilijkheidsgraad" Width="125*" Binding="{Binding Difficulty}" SortMemberPath="DifficultyBinder"/>
                 <DataGridHyperlinkColumn Header="Geüpload door" Width="100*" ContentBinding="{Binding Uploader}">
-                    <DataGridHyperlinkColumn.ElementStyle>
+                    <!--<DataGridHyperlinkColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="Tag" Value="{Binding AmountOfWords}"/>
                             <EventSetter Event="Hyperlink.Click" Handler="DG_ATO_Hyperlink_Click"/>
                         </Style>
-                    </DataGridHyperlinkColumn.ElementStyle>
+                    </DataGridHyperlinkColumn.ElementStyle>-->
                 </DataGridHyperlinkColumn>
                 <DataGridTextColumn Header="DifficultyBinder" Width="0*" Binding="{Binding DifficultyBinder}" Visibility="Hidden"/>
             </DataGrid.Columns>

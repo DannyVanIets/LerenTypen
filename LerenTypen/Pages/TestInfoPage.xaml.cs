@@ -45,10 +45,10 @@ namespace LerenTypen
             string testTypeString = "";
             switch (test.Type)
             {
-                case 0:
+                case 1:
                     testTypeString = "woorden";
                     break;
-                case 1:
+                case 0:
                     testTypeString = "zinnen";
                     break;
             }
@@ -72,7 +72,7 @@ namespace LerenTypen
             avarageScoreLabel.Content = $"{test.AverageScore}%";
             highscoreLabel.Content = $"{test.Highscore}%";
 
-            myResultsListView.ItemsSource = TestResultController.GetAllTestResultsFromAccount(test.AuthorID, testID);
+            myResultsListView.ItemsSource = TestResultController.GetAllTestResultsFromAccount(mainWindow.Ingelogd, testID);
 
             Dictionary<int, int> top3Fastest = TestController.GetTop3FastestTypers(testID);
             foreach (KeyValuePair<int, int> kvp in top3Fastest)
@@ -84,6 +84,11 @@ namespace LerenTypen
             foreach (KeyValuePair<int, int> kvp in top3Highscore)
             {
                 top3HighestScoresListView.Items.Add($"{AccountController.GetUsername(kvp.Key)}: {(int)kvp.Value}% goed");
+            }
+
+            if (mainWindow.Ingelogd == 0)
+            {
+                startTestButton.Visibility = Visibility.Collapsed;
             }
         }
 

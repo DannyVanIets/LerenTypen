@@ -41,9 +41,9 @@ namespace LerenTypen
             Klik op de registreer button en het wachtwoord word gehasht.*/
             if (password.Password == passwordherh.Password)
             {  
-                string hashedpw = LoginController.ComputeSha256Hash(password.Password);
-                LoginController.RegisterUser(username.Text, hashedpw.ToString(), birthdate.SelectedDate.Value.Date , firstname.Text, lastname.Text, securityvraag.Text, securityans.Text);
-                MessageBox.Show("U bent succesvol ingelogd!"+"\n"+"U wordt nu doorgestuurd naar de homepagina." , "Succes");
+                string hashedpw = Converter.ComputeSha256Hash(password.Password);
+                Database.Register(username.Text, hashedpw.ToString(), birthdate.SelectedDate.Value.Date , firstname.Text, lastname.Text, securityvraag.Text, securityans.Text);
+                MessageBox.Show("U bent succesvol geregistreerd! U kunt nu inloggen.", "Succes");
                 username.Text = string.Empty; lastname.Text = string.Empty;
                 firstname.Text = string.Empty; password.Password = string.Empty;
                 passwordherh.Password = string.Empty; birthdate.Text = string.Empty; securityans.Text = string.Empty;

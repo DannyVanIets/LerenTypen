@@ -92,7 +92,7 @@ namespace LerenTypen
             removeLink.Click += RemoveLine_Click;
             tbl.Inlines.Add(removeLink);
             tb.Height = 25;
-            tb.MaxLength = 200;
+            tb.MaxLength = 115;
             tb.TabIndex = i;
             panel.Orientation = Orientation.Horizontal;
             tbl.VerticalAlignment = VerticalAlignment.Center;
@@ -101,7 +101,7 @@ namespace LerenTypen
             margin.Right = 20;
             margin.Top = 0;
             margin.Bottom = 10;
-            tb.Width = 900;
+            tb.MinWidth = 900;
             tb.Margin = margin;
             tb.Name = "textBox" + i;
             textBoxes.Add(tb);

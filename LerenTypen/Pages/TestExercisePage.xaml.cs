@@ -391,7 +391,7 @@ namespace LerenTypen
         /// </summary>
         private void CloseTest()
         {
-            testClosed = true;
+            testClosed = false;
             t1.Stop();
             int resultID = SaveResults();
             TestController.UpdateTimesMade(testID);
@@ -408,7 +408,7 @@ namespace LerenTypen
             int amountOfWrong = wrongAnswers.Count;
             decimal wordsPerMinute = CalculateWordsPerMinute();
             decimal percentageRight = CalculatePercentageRight();
-            int resultID = TestResultController.SaveResults(testID, 1, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines, (int)percentageRight);
+            int resultID = TestResultController.SaveResults(testID, m.Ingelogd, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines, (int)percentageRight);
             return resultID;
         }
 
@@ -436,7 +436,7 @@ namespace LerenTypen
 
             if (minutesSpend != 0)
             {
-                wordsPerMinute = rightAnswers.Count / minutesSpend;
+                wordsPerMinute = Database.GetAmountOfWordsFromTest(testID) / minutesSpend;
             }
             else
             {
