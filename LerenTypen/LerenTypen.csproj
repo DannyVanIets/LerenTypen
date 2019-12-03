@@ -242,5 +242,8 @@
   <ItemGroup>
     <Resource Include="img\restartButton.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\awardBadge.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
