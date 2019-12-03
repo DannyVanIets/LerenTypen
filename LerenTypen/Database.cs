@@ -142,35 +142,35 @@ namespace LerenTypen
         }
 
 
-       /* public static bool DeleteAcc(string userName)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append("DELETE FROM accounts WHERE accountID = @id AND accountUsername = @username ");
-                    string MySql = sb.ToString();
-                    int counter = 1;
+        /* public static bool DeleteAcc(string userName)
+         {
+             try
+             {
+                 using (SqlConnection connection = new SqlConnection(connectionString))
+                 {
+                     connection.Open();
+                     StringBuilder sb = new StringBuilder();
+                     sb.Append("DELETE FROM accounts WHERE accountID = @id AND accountUsername = @username ");
+                     string MySql = sb.ToString();
+                     int counter = 1;
 
-                    using (SqlCommand command = new SqlCommand(MySql, connection))
-                    {
-                        command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
-                        command.Parameters.AddWithValue("@username", userName);
-                        command.ExecuteReader();
-                    }
-                    connection.Close();
-                    return true;
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            return false;
-        }
-        */
+                     using (SqlCommand command = new SqlCommand(MySql, connection))
+                     {
+                         command.Parameters.AddWithValue("@id", GetAccountIDForUpdate(userName));
+                         command.Parameters.AddWithValue("@username", userName);
+                         command.ExecuteReader();
+                     }
+                     connection.Close();
+                     return true;
+                 }
+             }
+             catch (Exception e)
+             {
+                 Console.WriteLine(e);
+             }
+             return false;
+         }
+         */
         // Make the user a student
         public static bool MakeStudent(string userName)
         {
@@ -1006,7 +1006,7 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // this query returns all the content from a given testId
-                    sb.Append($"SELECT testResultID, testResultsDate, wordsEachMinute FROM testresults WHERE testID={testID} AND accountID={accountID}");
+                    sb.Append($"SELECT testResultID, testResultsDate, wordsEachMinute FROM testresults WHERE testID={testID} AND accountID={accountID} ORDER BY testResultsDate DESC");
 
                     string mySql = sb.ToString();
 
@@ -1260,7 +1260,6 @@ namespace LerenTypen
                         command.Parameters.AddWithValue("@wordsEachMinute", wordsEachMinute);
                         command.Parameters.AddWithValue("@pauses", pauses);
                         command.Parameters.AddWithValue("@score", score);
-                        command.ExecuteNonQuery();
 
                         testResultID = Convert.ToInt32(command.ExecuteScalar());
                     }
@@ -1618,7 +1617,6 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    Console.WriteLine(testID);
                     sb.Append("UPDATE tests SET timesMade = timesMade + 1 WHERE testID = @testID");
                     string MySql = sb.ToString();
 

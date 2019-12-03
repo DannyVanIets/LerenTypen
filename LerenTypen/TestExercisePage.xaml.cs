@@ -390,10 +390,9 @@ namespace LerenTypen
         /// </summary>
         private void CloseTest()
         {
-            testClosed = true;
+            testClosed = false;
             t1.Stop();
             int resultID = SaveResults();
-            Database.UpdateTimesMade(testID);
             TestResultsPage testResultsPage = new TestResultsPage(testID, m, resultID);
             m.frame.Navigate(testResultsPage);
         }
