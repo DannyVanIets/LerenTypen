@@ -7,31 +7,6 @@ namespace LerenTypen.Controllers
 {
     class TestController
     {
-        public static void UpdateTimesMade(int testID)
-        {
-            SqlConnection connection = new SqlConnection(Database.connectionString);
-            try
-            {
-                connection.Open();
-                string query = "UPDATE tests SET timesMade = timesMade + 1 WHERE testID = @testID";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@testID", testID);
-                    command.ExecuteNonQuery();
-                }
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                connection.Close();
-                connection.Dispose();
-            }
-        }
-
         public static int GetTestHighscore(int testID)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -161,7 +136,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0;";
+                string query = "select testID, t.accountID, testName, t.testDifficulty, timesMade, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0;";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -171,7 +146,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             // Adds all the found data to a list
-                            queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(6), -1, reader.GetInt32(0)));
+                            queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), GetFastestTyper(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(5), -1, reader.GetInt32(0)));
                             counter++;
                         }
                     }
@@ -187,6 +162,42 @@ namespace LerenTypen.Controllers
                 connection.Dispose();
             }
             return queryResult;
+        }
+
+        public static int GetFastestTyper(int testID)
+        {
+            int wordsPerMin = 0;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // this query returns all the content from a given testId
+                string query = "SELECT MAX(wordsEachMinute), accountID FROM testresults WHERE testID=@testID GROUP BY accountID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testID", testID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            wordsPerMin = Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return wordsPerMin;
         }
 
         /// <summary>
@@ -242,7 +253,7 @@ namespace LerenTypen.Controllers
                 connection.Open();
 
                 // this query returns all the content from a given testId
-                string query = ("SELECT TOP 3 MAX(wordsEachMinute), accountID FROM testresults WHERE testID=1 GROUP BY accountID");
+                string query = ("SELECT TOP 3 MAX(wordsEachMinute) AS wordsEachMinute, accountID FROM testresults WHERE testID=1 GROUP BY accountID ORDER BY wordsEachMinute DESC");
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -281,7 +292,7 @@ namespace LerenTypen.Controllers
                 connection.Open();
 
                 // this query returns all the content from a given testId
-                string query = "SELECT TOP 3 MAX(score), accountID FROM testresults WHERE testID = @testID GROUP BY accountID";
+                string query = "SELECT TOP 3 MAX(score) AS score, accountID FROM testresults WHERE testID = @testID GROUP BY accountID  ORDER BY score DESC";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -449,7 +460,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and a.accountId=@id";
+                string query = "select testID, t.accountID, testName, t.testDifficulty, timesMade, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and a.accountId=@id";
                 int bCounter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -460,7 +471,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //adds all the found data to a list
-                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6), reader.GetInt32(7), reader.GetInt32(0)));
+                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), reader.GetInt32(4), GetFastestTyper(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(5), reader.GetInt32(6), reader.GetInt32(0)));
                             bCounter++;
                         }
                     }
@@ -485,7 +496,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0;";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, timesMade, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0;";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -497,7 +508,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             // add all the found data to a list
-                            queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6), reader.GetInt32(7), reader.GetInt32(0)));
+                            queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), GetFastestTyper(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(5), reader.GetInt32(6), reader.GetInt32(0)));
                             counter++;
                         }
                     }
