@@ -1006,7 +1006,7 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // this query returns all the content from a given testId
-                    sb.Append($"SELECT testResultID, testResultsDate, wordsEachMinute FROM testresults WHERE testID={testID} AND accountID={accountID}");
+                    sb.Append($"SELECT testResultID, testResultsDate, wordsEachMinute FROM testresults WHERE testID={testID} AND accountID={accountID} ORDER BY testResultsDate DESC");
 
                     string mySql = sb.ToString();
 
