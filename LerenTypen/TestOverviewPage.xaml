@@ -55,7 +55,7 @@
                     </DataGridHyperlinkColumn.ElementStyle>
                 </DataGridHyperlinkColumn>
                 <DataGridTextColumn Header="Aantal keren gemaakt" Width="150*" Binding="{Binding WPFTimesMade}"/>
-                <DataGridTextColumn Header="Highscore" Width="100*" Binding="{Binding Highscore}"/>
+                <DataGridTextColumn Header="Meeste woorden per minuut" Width="180*" Binding="{Binding Highscore}"/>
                 <DataGridTextColumn Header="Aantal woorden" Width="120*" Binding="{Binding AmountOfWords}"/>
                 <DataGridTextColumn Header="Moeilijkheidsgraad" Width="125*" Binding="{Binding Difficulty}" SortMemberPath="DifficultyBinder"/>
                 <DataGridHyperlinkColumn Header="Geüpload door" Width="100*" ContentBinding="{Binding Uploader}">

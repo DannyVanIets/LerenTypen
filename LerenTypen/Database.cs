@@ -461,7 +461,7 @@ namespace LerenTypen
                                 while (reader.Read())
                                 {
                                     // Adds all the found data to a list
-                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), GetTestHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(5), -1, reader.GetInt32(0)));
+                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), GetFastestTyper(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(5), -1, reader.GetInt32(0)));
                                     counter++;
                                 }
                                 reader.NextResult();
@@ -741,7 +741,7 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("select testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and a.accountId=@id;");
+                    sb.Append("select testID, t.accountID, testName, t.testDifficulty, timesMade, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and a.accountId=@id;");
                     string MySql = sb.ToString();
                     int Bcounter = 1;
 
@@ -755,7 +755,7 @@ namespace LerenTypen
                                 while (reader.Read())
                                 {
                                     //adds all the found data to a list
-                                    queryResult.Add(new TestTable(Bcounter, reader.GetString(2), Convert.ToInt32(reader[4]), Convert.ToInt32(reader[5]), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(6), Convert.ToInt32(reader[7]), Convert.ToInt32(reader[0])));
+                                    queryResult.Add(new TestTable(Bcounter, reader.GetString(2), Convert.ToInt32(reader[4]), GetFastestTyper(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(5), Convert.ToInt32(reader[6]), Convert.ToInt32(reader[0])));
                                     Bcounter++;
                                 }
                                 reader.NextResult();
@@ -1632,6 +1632,43 @@ namespace LerenTypen
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+            }
+        }
+
+        public static int GetFastestTyper(int testID)
+        {
+            int wordsPerMin = 0;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    StringBuilder sb = new StringBuilder();
+
+                    // this query returns all the content from a given testId
+                    sb.Append("SELECT MAX(wordsEachMinute), accountID FROM testresults WHERE testID=@testID GROUP BY accountID");
+
+                    string mySql = sb.ToString();
+
+                    using (SqlCommand command = new SqlCommand(mySql, connection))
+                    {
+                        command.Parameters.AddWithValue("@testID", testID);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                wordsPerMin = Convert.ToInt32(reader[0]);
+                            }
+                        }
+                    }
+                }
+
+                return wordsPerMin;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return wordsPerMin;
             }
         }
     }
