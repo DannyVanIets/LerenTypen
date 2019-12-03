@@ -46,7 +46,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
-                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_AllMyTestsOverviewPage_Hyperlink_Click">
+                                        <Hyperlink Tag="{Binding TestId}" Click="DG_AllMyTestsOverviewPage_Hyperlink_Click">
                                             <Run Text="{Binding WPFName}"/>
                                         </Hyperlink>
                                     </TextBlock>

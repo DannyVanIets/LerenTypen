@@ -373,7 +373,8 @@ namespace LerenTypen
         private void DG_AllMyTestsOverviewPage_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink link = (Hyperlink)sender;
-            string id = link.Tag.ToString();
+            int id = (int)link.Tag;
+            MainWindow.ChangePage(new TestInfoPage(id, MainWindow));
         }
 
         private void DG_ATO_Hyperlink_Click(object sender, RoutedEventArgs e)

@@ -14,7 +14,6 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-
         <StackPanel x:Name="textpanel" Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Center" >
             <TextBlock Height="61" Canvas.Left="612" TextWrapping="Wrap" Text="Registreren" Canvas.Top="10" Width="245" FontWeight="Bold" FontSize="36"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
