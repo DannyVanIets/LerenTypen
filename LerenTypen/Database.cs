@@ -448,7 +448,7 @@ namespace LerenTypen
                 {
                     connection.Open();
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("select testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0;");
+                    sb.Append("select testID, t.accountID, testName, t.testDifficulty, timesMade, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0;");
                     string MySql = sb.ToString();
                     int counter = 1;
 
@@ -461,7 +461,7 @@ namespace LerenTypen
                                 while (reader.Read())
                                 {
                                     // Adds all the found data to a list
-                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(6), -1, reader.GetInt32(0)));
+                                    queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), GetTestHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(5), -1, reader.GetInt32(0)));
                                     counter++;
                                 }
                                 reader.NextResult();
@@ -1161,7 +1161,7 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // this query returns all the content from a given testId
-                    sb.Append("SELECT TOP 3 MAX(wordsEachMinute), accountID FROM testresults WHERE testID=@testID GROUP BY accountID");
+                    sb.Append("SELECT TOP 3 MAX(wordsEachMinute) as wordsEachMinute, accountID FROM testresults WHERE testID=@testID GROUP BY accountID ORDER BY wordsEachMinute desc");
 
                     string mySql = sb.ToString();
 
@@ -1202,7 +1202,7 @@ namespace LerenTypen
                     StringBuilder sb = new StringBuilder();
 
                     // this query returns all the content from a given testId
-                    sb.Append($"SELECT TOP 3 MAX(score), accountID FROM testresults WHERE testID={testID} GROUP BY accountID");
+                    sb.Append($"SELECT TOP 3 MAX(score) as score, accountID FROM testresults WHERE testID={testID} GROUP BY accountID ORDER BY score desc");
 
                     string mySql = sb.ToString();
 
