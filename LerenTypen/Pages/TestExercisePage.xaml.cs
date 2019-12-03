@@ -394,7 +394,6 @@ namespace LerenTypen
             testClosed = false;
             t1.Stop();
             int resultID = SaveResults();
-            TestController.UpdateTimesMade(testID);
             TestResultsPage testResultsPage = new TestResultsPage(testID, m, resultID);
             m.frame.Navigate(testResultsPage);
         }
