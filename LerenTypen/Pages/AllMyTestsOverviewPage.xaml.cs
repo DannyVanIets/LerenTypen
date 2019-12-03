@@ -61,7 +61,7 @@ namespace LerenTypen
 
             TableContent = new List<TestTable>();
 
-            // Add the data to the datagrid and refresh to show
+            // Add the data to the ListView and refresh to show
             try
             {
                 TableContent = TestController.GetAllMyTestswithIsPrivate(MainWindow.Ingelogd);
@@ -72,8 +72,8 @@ namespace LerenTypen
                                 select t).ToList();
                 TableContent = SearchResult;
 
-                AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = SearchResult;
-                //AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+                AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = SearchResult;
+                //AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
 
                 // Bool to prevent the select event/ToonAlles_event at startup app
                 isInitialized = true;
@@ -255,8 +255,8 @@ namespace LerenTypen
                     FilterList.Add(item);
                 }
             }
-            AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = FilterList;
-            AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+            AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = FilterList;
+            AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
         }
         /// <summary>
         /// Function that finds the corresponding startvalue/endvalue based on which active filternumber is given and returns these values.
@@ -355,8 +355,8 @@ namespace LerenTypen
             {
                 CurrentContent = TestController.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd);
                 //TableCounter(CurrentContent);
-                AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
-                AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+                AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = CurrentContent;
+                AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
             }
         }
         /// <summary>
@@ -366,8 +366,8 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked(object sender, RoutedEventArgs e)
         {
-            AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = TableContent;
-            AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+            AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = TableContent;
+            AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
         }
 
         // Handlers below not implemented yet, showing amountOfWords in messagebox for now
@@ -406,7 +406,7 @@ namespace LerenTypen
 
             TestController.UpdateTestToPrivate(id);
             //tt.IsPrivate = checkbox.IsChecked;
-            AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+            AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
         }
 
         private void DG_Checkbox_Uncheck(object sender, RoutedEventArgs e)

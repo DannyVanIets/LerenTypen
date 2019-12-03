@@ -43,31 +43,39 @@
             <Button x:Name="AllTestsOverview_Button_MakeOwnTest" Content="Maak een nieuwe toets" VerticalAlignment="Top" Width="150" Height="25" Grid.Column="2" Grid.Row="1" Margin="10,3,10,0" Click="AllTestsOverview_Button_MakeOwnTest_Click"/>
         </StackPanel>
 
-        <DataGrid x:Name="AllTestsOverview_DataGrid_AllTestsTable" AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="#" Width="30*" Binding="{Binding WPFNumber}"/>
-                <DataGridHyperlinkColumn ContentBinding="{Binding WPFName}" Header="Naam" Width="435*">
-                    <DataGridHyperlinkColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Tag" Value="{Binding TestId}"/>
-                            <EventSetter Event="Hyperlink.Click" Handler="DG_AllTestOverview_Hyperlink_Click"/>
-                        </Style>
-                    </DataGridHyperlinkColumn.ElementStyle>
-                </DataGridHyperlinkColumn>
-                <DataGridTextColumn Header="Aantal keren gemaakt" Width="150*" Binding="{Binding WPFTimesMade}"/>
-                <DataGridTextColumn Header="Meeste woorden per minuut" Width="180*" Binding="{Binding Highscore}"/>
-                <DataGridTextColumn Header="Aantal woorden" Width="120*" Binding="{Binding AmountOfWords}"/>
-                <DataGridTextColumn Header="Moeilijkheidsgraad" Width="125*" Binding="{Binding Difficulty}" SortMemberPath="DifficultyBinder"/>
-                <DataGridHyperlinkColumn Header="Geüpload door" Width="100*" ContentBinding="{Binding Uploader}">
-                    <!--<DataGridHyperlinkColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Tag" Value="{Binding AmountOfWords}"/>
-                            <EventSetter Event="Hyperlink.Click" Handler="DG_ATO_Hyperlink_Click"/>
-                        </Style>
-                    </DataGridHyperlinkColumn.ElementStyle>-->
-                </DataGridHyperlinkColumn>
-                <DataGridTextColumn Header="DifficultyBinder" Width="0*" Binding="{Binding DifficultyBinder}" Visibility="Hidden"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <ListView x:Name="AllTestsOverview_ListView_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6" local:GridViewSort.AutoSort="True">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
+                        <GridViewColumn Header="Naam" Width="200" local:GridViewSort.PropertyName="WPFName">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding TestId}" Click="LV_AllTestOverview_Hyperlink_Click">
+                                            <Run Text="{Binding WPFName}"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Aantal keren gemaakt" Width="150" DisplayMemberBinding="{Binding WPFTimesMade}" local:GridViewSort.PropertyName="WPFTimesMade"/>
+                        <GridViewColumn Header="Meeste woorden per minuut" Width="180" DisplayMemberBinding="{Binding Highscore}" local:GridViewSort.PropertyName="Highscore"/>
+                        <GridViewColumn Header="Aantal woorden" Width="125" DisplayMemberBinding="{Binding AmountOfWords}" local:GridViewSort.PropertyName="AmountOfWords"/>
+                        <GridViewColumn Header="Moeilijkheidsgraad" Width="150" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>
+                        <GridViewColumn Header="Geüpload door" Width="120" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Hyperlink_Click"/>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>
