@@ -471,7 +471,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //adds all the found data to a list
-                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), reader.GetInt32(4), GetFastestTyper(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(5), reader.GetInt32(6), reader.GetInt32(0)));
+                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), Convert.ToInt32(reader[4]), GetFastestTyper(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(5), Convert.ToInt32(reader[6]), Convert.ToInt32(reader[0])));
                             bCounter++;
                         }
                     }
