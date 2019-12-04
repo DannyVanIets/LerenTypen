@@ -1,6 +1,6 @@
 ﻿namespace LerenTypen.Models
 {
-    class UserTable
+    public class UserTable
     {
         public int Accountnumber { get; set; }
         public int UserTypeID { get; set; }
