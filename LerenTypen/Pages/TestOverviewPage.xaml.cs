@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LerenTypen.Controllers;
+using System.Windows.Documents;
 
 namespace LerenTypen
 {
@@ -389,8 +390,8 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void LV_AllTestOverview_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            TextBlock textBlock = (TextBlock)sender;
-            int id = Convert.ToInt32(textBlock.Tag);
+            Hyperlink link = (Hyperlink)sender;
+            int id = Convert.ToInt32(link.Tag);
             MainWindow.ChangePage(new TestInfoPage(id, MainWindow));
         }
 
@@ -401,9 +402,9 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void DG_ATO_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            TextBlock textBlock = (TextBlock)sender;
-            string id = textBlock.Tag.ToString();
-            System.Windows.MessageBox.Show(id);
+            Hyperlink link = (Hyperlink)sender;
+            string id = link.Tag.ToString();
+            //System.Windows.MessageBox.Show(id);
 
         }
     }
