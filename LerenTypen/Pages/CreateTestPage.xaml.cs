@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LerenTypen.Controllers;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -91,7 +92,7 @@ namespace LerenTypen
             removeLink.Click += RemoveLine_Click;
             tbl.Inlines.Add(removeLink);
             tb.Height = 25;
-            tb.MaxLength = 200;
+            tb.MaxLength = 115;
             tb.TabIndex = i;
             panel.Orientation = Orientation.Horizontal;
             tbl.VerticalAlignment = VerticalAlignment.Center;
@@ -100,7 +101,7 @@ namespace LerenTypen
             margin.Right = 20;
             margin.Top = 0;
             margin.Bottom = 10;
-            tb.Width = 900;
+            tb.MinWidth = 900;
             tb.Margin = margin;
             tb.Name = "textBox" + i;
             textBoxes.Add(tb);
@@ -134,7 +135,6 @@ namespace LerenTypen
                     m.frame.Navigate(new CreateTestPage(m));
                 }
             }
-
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace LerenTypen
             }
 
             int accountID = m.Ingelogd;
-            Database.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID);
+            TestController.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID);
             return true;
         }
 

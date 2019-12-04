@@ -1,3 +1,8 @@
+﻿using Renci.SshNet;
+using System;
+using LerenTypen.Controllers;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -12,9 +17,34 @@ namespace LerenTypen
         // The account ID if the user is logged in, otherwise 0
         public int Ingelogd { get; set; }
 
+        private SshClient client;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            client = new SshClient("145.44.233.184", "student", "toor2019");
+            connectSSH:
+            try
+            {
+                client.Connect();
+                var port = new ForwardedPortLocal("127.0.0.1", 1433, "localhost", 1433);
+                client.AddForwardedPort(port);
+                port.Start();
+            }
+            catch (Exception)
+            {
+                var result = MessageBox.Show("Error bij het maken van verbinding met de server. Controleer uw internetverbinding. Wilt u opnieuw proberen te verbinden?", "LerenTypen", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    goto connectSSH;
+                }
+                else
+                {
+                    Environment.Exit(1);
+                }
+            }
+
             frame.Navigate(new HomePage(this));
         }
 
@@ -56,6 +86,19 @@ namespace LerenTypen
                 ChangePage(new LoginPage(this), loginPageButton);
             }
         }
+        private void AllUsersPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePage(new AllUsersPage(this), allUsersPageButton);
+        }
+
+        //Checks if the user is logged in and sends them to the EditAccountPage if so.
+        private void EditAccountPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Ingelogd > 0)
+            {
+                ChangePage(new EditAccountPage(this));
+            }
+        }
 
         /// <summary>
         /// Changes the page to the specified page if this page is not 
@@ -88,10 +131,6 @@ namespace LerenTypen
                 {
                     pageToggleButton = homePageButton;
                 }
-                else if (pageToChangeTo is TestOverviewPage)
-                {
-                    pageToggleButton = testOverviewPageButton;
-                }
                 else if (pageToChangeTo is TrendingTestsPage)
                 {
                     pageToggleButton = trendingTestsPageButton;
@@ -103,6 +142,10 @@ namespace LerenTypen
                 else if (pageToChangeTo is TipPage)
                 {
                     pageToggleButton = tipPageButton;
+                }
+                else if (pageToChangeTo is AllUsersPage)
+                {
+                    pageToggleButton = allUsersPageButton;
                 }
                 else if (pageToChangeTo is LeaderboardPage)
                 {
@@ -128,6 +171,7 @@ namespace LerenTypen
             trendingTestsPageButton.IsChecked = false;
             tipPageButton.IsChecked = false;
             leaderboardPageButton.IsChecked = false;
+            allUsersPageButton.IsChecked = false;
             loginPageButton.IsChecked = false;
 
             if (buttonToSwitchTo != null)
@@ -143,13 +187,19 @@ namespace LerenTypen
         {
             if (Ingelogd > 0)
             {
-                loginPageButton.Content = $"Welkom {Database.GetAccountUsername(Ingelogd)} ▼";
+                loginPageButton.Content = $"Welkom {AccountController.GetUsername(Ingelogd)} ▼";
                 loginPageButton.ContextMenu = (ContextMenu)FindResource("accountMenu");
+
+                if (AccountController.IsAdmin(Ingelogd))
+                {
+                    allUsersPageButton.Visibility = Visibility.Visible;
+                }
             }
             else
             {
                 loginPageButton.Content = "Inloggen/registeren";
                 loginPageButton.ContextMenu = null;
+                allUsersPageButton.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -165,19 +215,10 @@ namespace LerenTypen
             }
         }
 
-        private void Test_Click(object sender, RoutedEventArgs e)
+        private void Window_Closed(object sender, EventArgs e)
         {
-            //ChangePage(new CreateTestPage(), TestButton);
-            //string tekst = "";
-            //foreach (var item in Database.TestQuery())
-            //{
-            //    tekst += item;
-            //}
-            //System.Windows.MessageBox.Show(tekst);
-            System.Windows.MessageBox.Show(Database.GetAmountOfWordsFromTest(3).ToString());
-
-            
+            client.Disconnect();
+            client.Dispose();
         }
-
     }
 }

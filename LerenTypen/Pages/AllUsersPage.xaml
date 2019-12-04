@@ -1,0 +1,32 @@
+﻿<Page x:Class="LerenTypen.AllUsersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LerenTypen"
+      mc:Ignorable="d" 
+      d:DesignHeight="570" d:DesignWidth="1050" Background="White"
+      Title="Page1" ShowsNavigationUI="False">
+    <Grid>
+        <Label Content="Alle Accounts" HorizontalAlignment="Left" Height="70" Margin="62,37,0,0" VerticalAlignment="Top" Width="245" FontSize="32" FontWeight="Bold"/>
+        <TextBox x:Name="Search_Username_Account" HorizontalAlignment="Left" Height="34" Margin="176,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="159" BorderThickness="2" TextChanged="Search_Event"/>
+        <Label Content="Account zoeken:" HorizontalAlignment="Left" Height="34" Margin="62,94,0,0" VerticalAlignment="Top" Width="109"/>
+        <DataGrid x:Name="DGV1" AutoGenerateColumns="False" Margin="0,135,-0.4,0.6" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="#" Width="30*" Binding="{Binding Accountnumber}"/>
+                <DataGridTextColumn Header="Gebruikersnaam" Width="200*" Binding="{Binding Username}"/>
+                <DataGridTextColumn Header="Gebruiker Type" Width="150*" Binding="{Binding Usertype}"/>
+                <DataGridTextColumn Header="Voornaam" Width="150*" Binding="{Binding Firstname}"/>
+                <DataGridTextColumn Header="Achternaam" Width="150*" Binding="{Binding Lastname}"/>
+                <DataGridHyperlinkColumn  ContentBinding="{Binding Edit}" Header="Bewerken" Width="150">
+                    <DataGridHyperlinkColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Tag" Value="{Binding}"/>
+                            <EventSetter Event="Hyperlink.Click" Handler="DG_Hyperlink_click"/>
+                        </Style>
+                    </DataGridHyperlinkColumn.ElementStyle>
+                </DataGridHyperlinkColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
