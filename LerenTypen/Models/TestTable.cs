@@ -1,6 +1,6 @@
 ﻿namespace LerenTypen
 {
-    class TestTable
+    public class TestTable
     {
         public int WPFNumber { get; set; }
         public string WPFName { get; set; }

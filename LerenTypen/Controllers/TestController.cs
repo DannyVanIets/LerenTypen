@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace LerenTypen.Controllers
 {
-    class TestController
+    public class TestController
     {
         public static int GetTestHighscore(int testID)
         {

@@ -1,12 +1,12 @@
-﻿using System;
+﻿using LerenTypen.Models;
+using System;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
-using LerenTypen.Models;
 
 namespace LerenTypen.Controllers
 {
-    static class LoginController
+    public static class LoginController
     {
         public static string ComputeSha256Hash(string plainData)
         {

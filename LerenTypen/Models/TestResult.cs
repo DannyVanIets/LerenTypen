@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace LerenTypen
 {
-    class TestResult
+    public class TestResult
     {
         public int ID { get; private set; }
         public string Date { get; private set; }

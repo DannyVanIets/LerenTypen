@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using LerenTypen.Models;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace LerenTypen.UnitTests

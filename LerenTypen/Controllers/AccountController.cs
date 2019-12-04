@@ -1,11 +1,11 @@
-﻿using System;
+﻿using LerenTypen.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using LerenTypen.Models;
 
 namespace LerenTypen.Controllers
 {
-    class AccountController
+    public class AccountController
     {
         public static List<string> GetAccountType(int accountID)
         {
