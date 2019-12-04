@@ -20,9 +20,21 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Vertical" Grid.Column="0">
-            <Label FontSize="36" Margin="20,5,-0.2,0" 
-               FontWeight="Bold" Grid.Column="0" Content="Accountoverzicht" Height="62"/>
-            <Label Content="Label" Margin="171,0,-0.2,0" Height="47" FontSize="18"/>
+            <Label FontSize="36" Margin="20,5,-0.2,0" FontWeight="Bold" Grid.Column="0" Content="Accountoverzicht" Height="62"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Gebruikersnaam :" Margin="0,0,0,0"  Height="47" FontSize="18" Width="200"/>
+                <Label Content="//Gebruikersnaam" Margin="0,0,0,0" Height="47" FontSize="18" Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Volledige naam :" Margin="0,0,0,0"  Height="47" FontSize="18" Width="200"/>
+                <Label Content="//Naam" Margin="0,0,0,0" Height="47" FontSize="18" Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Geboortedatum :" Margin="0,0,0,0"  Height="47" FontSize="18" Width="200"/>
+                <Label Content="//Datum" Margin="0,0,0,0" Height="47" FontSize="18" Width="200"/>
+            </StackPanel>
+
+
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Column="1">
@@ -31,7 +43,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <Grid>
+            <Grid Margin="0,10,0,-0.2" Width="526">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -44,19 +56,20 @@
 
 
                 <StackPanel Orientation="Vertical" Grid.Column="0">
-                    <Label Content="1" Margin="171,0,-0.2,0" Height="47" FontSize="18"/>
+                    <TextBox HorizontalAlignment="Left" Height="138" BorderThickness="0" Margin="29,0,0,0" TextWrapping="Wrap" Text="Gemiddeld aantal goede woorden per minuut." Width="234" FontSize="15"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Grid.Column="1">
-                    <Label Content="2" Margin="171,0,-0.2,0" Height="47" FontSize="18"/>
+                    <Label Content="Hier komt de grafiek!" Margin="0,0,-0.2,0" Height="47" FontSize="15"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1">
-                    <Label Content="3" Margin="171,0,-0.2,0" Height="47" FontSize="18"/>
+                    <TextBox HorizontalAlignment="Left" Height="138" BorderThickness="0" Margin="29,0,0,0" TextWrapping="Wrap" Text="Gemiddeld % woorden goed per toets." Width="234" FontSize="15"/>
+
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-                    <Label Content="4" Margin="171,0,-0.2,0" Height="47" FontSize="18"/>
+                    <TextBox HorizontalAlignment="Left" Margin="0,0,0,89.6" TextWrapping="Wrap" BorderThickness="0" Text="Leaderboardrank :" Width="145" FontSize="15"/>
                 </StackPanel>
             </Grid>
         </StackPanel>
