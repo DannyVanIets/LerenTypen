@@ -136,7 +136,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select testID, t.accountID, testName, t.testDifficulty, timesMade, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0;";
+                string query = "select testID, t.accountID, testName, t.testDifficulty, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0;";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -146,7 +146,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             // Adds all the found data to a list
-                            queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), GetFastestTyper(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(5), -1, reader.GetInt32(0)));
+                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetFastestTyper(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(4), -1, reader.GetInt32(0)));
                             counter++;
                         }
                     }
@@ -460,7 +460,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select testID, t.accountID, testName, t.testDifficulty, timesMade, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and a.accountId=@id";
+                string query = "select testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and a.accountId=@id";
                 int bCounter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -471,7 +471,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //adds all the found data to a list
-                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), Convert.ToInt32(reader[4]), GetFastestTyper(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(5), Convert.ToInt32(reader[6]), Convert.ToInt32(reader[0])));
+                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetFastestTyper(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0])));
                             bCounter++;
                         }
                     }
@@ -496,7 +496,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, timesMade, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0;";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0;";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -508,7 +508,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             // add all the found data to a list
-                            queryResult.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), GetFastestTyper(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(5), reader.GetInt32(6), reader.GetInt32(0)));
+                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetFastestTyper(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(0)));
                             counter++;
                         }
                     }
@@ -667,7 +667,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, timesMade, highscore, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0 and t.isPrivate=0";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0 and t.isPrivate=0";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -679,7 +679,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //add all the found data to a list
-                            tests.Add(new TestTable(counter, reader.GetString(2), reader.GetInt32(4), reader.GetInt32(5), TestController.GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(6)));
+                            tests.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetTestHighscore(reader.GetInt32(0)), TestController.GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(4)));
                             counter++;
                         }
                     }
@@ -695,6 +695,45 @@ namespace LerenTypen.Controllers
                 connection.Dispose();
             }
             return tests;
+        }
+
+
+        //Fix TimesMade
+        public static int GetTimesMade(int testId)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            int result = 0;
+            try
+            {
+                connection.Open();
+                string query = "select * from testresults where testId=@test;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@test", testId);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            while (reader.HasRows)
+                            {
+                                result++;
+
+                                reader.NextResult();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return result;
         }
     }
 }
