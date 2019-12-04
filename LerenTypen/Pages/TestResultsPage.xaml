@@ -21,7 +21,7 @@
         <Label FontSize="40" Content="Resultaat"  VerticalAlignment="Center"/>            
         </StackPanel>
         <Button x:Name="restartButton" Background="Transparent" BorderThickness="0" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="1" Grid.Row="0" Width="50" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,50,0" Click="RestartButton_Click">
-            <Image Source="img/restartButton.png"/>
+            <Image Source="/img/restartButton.png"/>
         </Button>
         <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center">
             <Label x:Name="testNameLbl" Content="ToetsNaam" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="18"/>
@@ -64,7 +64,7 @@
         </Grid>
         <StackPanel x:Name="awardStack" Grid.Row="2" Visibility="Collapsed">
             <Label  Margin="60" >
-                <Image Source="img/awardBadge.png"></Image>
+                <Image Source="/img/awardBadge.png"></Image>
             </Label>
             <Label HorizontalAlignment="Center" FontSize="20" Margin="0,-50,0,0" Content="Perfecte score!"></Label>
         </StackPanel>
