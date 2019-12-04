@@ -79,31 +79,39 @@ namespace LerenTypen
             }
         }
 
-     /*   private void DeleteAccountButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void DeleteAccountButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            //DeleteAcc.Foreground = Brushes.Black;
+            DeleteAcc.Foreground = Brushes.Black;
         }
 
         private void DeleteAccountButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            //DeleteAcc.Foreground = Brushes.White;
+            DeleteAcc.Foreground = Brushes.White;
         }
-*/
-      /*  private void DeleteAcc_Click(object sender, RoutedEventArgs e)
+        private void DeleteAcc_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                string username = account.UserName;
-                AccountController.DeleteAccount(username);
-                MessageBox.Show("Het account is verwijderd", "Account verwijderd!");
-                this.Close();
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je het account wilt archiveren?", "Account Verwijderen", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    System.Windows.MessageBox.Show("Het Account is succesvol gearchiveerd!", "Succes");
+                    string username = account.UserName;
+                    AccountController.DeleteAccount(username);
+                    this.Close();
+                }
+                else if (messageBoxResult == MessageBoxResult.No)
+                {
+                    this.Close();
+                }
+
             }
-            catch(Exception r)
+            catch (Exception r)
             {
                 Console.WriteLine(r.ToString());
-                MessageBox.Show("Error", "Error");
+                System.Windows.MessageBox.Show("Error", "Error");
                 this.Close();
             }
-        }*/
+        }
     }
 }
