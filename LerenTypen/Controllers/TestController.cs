@@ -163,6 +163,61 @@ namespace LerenTypen.Controllers
             return queryResult;
         }
 
+        /// <summary>
+        /// Returns the trending tests from the last week
+        /// </summary>
+        /// <returns></returns>
+        public static List<Test> GetTrendingTests(int limit)
+        {
+            List<Test> trendingTests = new List<Test>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "";
+                if (limit != 0)
+                {
+                    query = "select testID, t.accountID, testName, t.testDifficulty from tests t Inner join accounts a on t.accountID=a.accountID JOIN testresults tr on tr.testID = t.testID where t.archived=0 and a.archived=0 and t.isPrivate=0 WHERE tr.testResultsDate BETWEEN @now AND @weekAgo";
+                }
+                else
+                {
+                    query = "select TOP @limit testID, t.accountID, testName, t.testDifficulty from tests t Inner join accounts a on t.accountID=a.accountID JOIN testresults tr on tr.testID = t.testID where t.archived=0 and a.archived=0 and t.isPrivate=0 WHERE tr.testResultsDate BETWEEN @now AND @weekAgo";
+                }
+                DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@limit", limit);
+                    command.Parameters.AddWithValue("@now", DateTime.Now);
+                    command.Parameters.AddWithValue("@weekAgo", todayWeekAgo);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = Convert.ToInt32(reader[0]);
+                            int authorID = Convert.ToInt32(reader[1]);
+                            string name = reader.GetString(2);
+                            int difficulty = Convert.ToInt32(reader[3]);
+
+                            trendingTests.Add(new Test(id, name, difficulty, authorID));
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return trendingTests;
+        }
+
+
         public static int GetFastestTyper(int testID)
         {
             int wordsPerMin = 0;

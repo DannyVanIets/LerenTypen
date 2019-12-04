@@ -36,5 +36,16 @@ namespace LerenTypen.Models
             Highscore = TestController.GetTestHighscore(ID);
             AverageScore = TestController.GetTestAverageScore(ID);
         }
+
+        public Test(int id, string name, int difficulty, int authorID)
+        {
+            ID = id;
+            Name = name;
+            Difficulty = difficulty;
+            AuthorID = authorID;
+
+            TimesMade = TestController.GetTimesMade(ID);
+            Highscore = TestController.GetTestHighscore(ID);
+        }
     }
 }
