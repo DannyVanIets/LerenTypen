@@ -216,7 +216,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score) VALUES (@testID, @accountID, NOW(), @WordsEachMinute, @pauses, @score); Select LAST_INSERT_ID();";
+                string query = "INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score) VALUES (@testID, @accountID, CURRENT_TIMESTAMP, @WordsEachMinute, @pauses, @score); Select SCOPE_IDENTITY();";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -239,19 +239,20 @@ namespace LerenTypen.Controllers
                 connection.Dispose();
             }
 
-            InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);
+            InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);           
             return testResultID;
         }
 
         private static void InsertResultsContent(int testResultID, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
-
-            foreach (string rightAnswer in rightAnswers)
+            try
             {
-                try
+                connection.Open();
+
+                foreach (string rightAnswer in rightAnswers)
                 {
-                    connection.Open();
+
                     string query = "INSERT INTO testresultcontent (testResultID, answer, answerType) VALUES (@testResultID, @answer, @answerType)";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -263,17 +264,13 @@ namespace LerenTypen.Controllers
                     }
 
                 }
-                catch (SqlException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
 
-            // Position of right answer in lines is stored in keyvaluepairs int
-            foreach (KeyValuePair<int, string> wrongAnswer in wrongAnswers)
-            {
-                try
+
+
+                // Position of right answer in lines is stored in keyvaluepairs int
+                foreach (KeyValuePair<int, string> wrongAnswer in wrongAnswers)
                 {
+
                     string query = "INSERT INTO testresultcontent (testResultID, answer, answerType, rightAnswer) VALUES (@testResultID, @answer, @answerType, @rightAnswer)";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -285,16 +282,17 @@ namespace LerenTypen.Controllers
                         command.ExecuteNonQuery();
                     }
                 }
-                catch (SqlException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-                finally
-                {
-                    connection.Close();
-                    connection.Dispose();
-                }
             }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
         }
     }
 }

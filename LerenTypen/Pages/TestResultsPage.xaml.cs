@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System;
 
 namespace LerenTypen
 {
@@ -116,7 +117,7 @@ namespace LerenTypen
             wrongAnswers = TestResultController.GetTestResultsContentWrong(testResultID);
             hadToBe = TestResultController.GetTestResultsContentHadToBe(testResultID);
 
-            int amountOfPauses = int.Parse(testResults[1]);
+            int amountOfPauses = Convert.ToInt32(testResults[1]);
             int wordsPerMinute = int.Parse(testResults[0]);
             amountOfBreaksTbl.Text = amountOfPauses.ToString();
             wordsPerMinuteTbl.Text = wordsPerMinute.ToString();

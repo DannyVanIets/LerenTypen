@@ -99,7 +99,6 @@ namespace LerenTypen.Controllers
                             int authorID = Convert.ToInt32(reader[2]);
                             string authorUsername = AccountController.GetUsername(authorID);
                             int wordCount = GetAmountOfWordsFromTest(testID);
-                            int timesMade = Convert.ToInt32(reader[3]);
                             double highscore = Convert.ToDouble(reader[4]);
                             int version = Convert.ToInt32(reader[5]);
                             int testDifficulty = Convert.ToInt32(reader[6]);
@@ -107,7 +106,7 @@ namespace LerenTypen.Controllers
                             DateTime createdDateTime = (DateTime)reader[8];
                             string createdDateString = createdDateTime.Date.ToString("dd/MM/yyyy");
 
-                            return new Test(testID, testName, testType, authorID, authorUsername, wordCount, timesMade, version, testDifficulty, isPrivate, createdDateString);
+                            return new Test(testID, testName, testType, authorID, authorUsername, wordCount, version, testDifficulty, isPrivate, createdDateString);
                         }
                     }
                 }
@@ -225,8 +224,8 @@ namespace LerenTypen.Controllers
                             var accountID = reader["accountID"];
                             var testDifficulty = reader["testDifficulty"];
 
-                            results.Add((int)accountID);
-                            results.Add((int)testDifficulty);
+                            results.Add(Convert.ToInt32(accountID));
+                            results.Add(Convert.ToInt32(testDifficulty));
                         }
                     }
                 }
@@ -496,7 +495,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0;";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.accountID=@accountID and t.archived=0 and a.archived=0;";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -697,8 +696,6 @@ namespace LerenTypen.Controllers
             return tests;
         }
 
-
-        //Fix TimesMade
         public static int GetTimesMade(int testId)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -706,7 +703,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select * from testresults where testId=@test;";
+                string query = "select count(*) from testresults where testId=@test;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@test", testId);
@@ -714,12 +711,7 @@ namespace LerenTypen.Controllers
                     {
                         while (reader.Read())
                         {
-                            while (reader.HasRows)
-                            {
-                                result++;
-
-                                reader.NextResult();
-                            }
+                            result = Convert.ToInt32(reader[0]);
                         }
                     }
                 }

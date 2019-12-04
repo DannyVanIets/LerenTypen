@@ -54,7 +54,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <!-- Binding is used for collecting properties of objects in lists-->
-                        <GridViewColumn Header="Totaal aantal keren gemaakt" Width="150" DisplayMemberBinding="{Binding WPFTimesMade}" local:GridViewSort.PropertyName="WPFTimesMade"/>
+                        <GridViewColumn Header="Totaal aantal keren geoefend" Width="180" DisplayMemberBinding="{Binding WPFTimesMade}" local:GridViewSort.PropertyName="WPFTimesMade"/>
                         <GridViewColumn Header="Meeste woorden per minuut" Width="180" DisplayMemberBinding="{Binding Highscore}" local:GridViewSort.PropertyName="Highscore"/>
                         <GridViewColumn Header="Aantal woorden" Width="125" DisplayMemberBinding="{Binding AmountOfWords}" local:GridViewSort.PropertyName="AmountOfWords"/>
                         <GridViewColumn Header="Moeilijkheidsgraad" Width="150" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>

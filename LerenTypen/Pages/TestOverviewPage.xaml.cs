@@ -368,9 +368,25 @@ namespace LerenTypen
             }
             else
             {
+                
                 CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
-                AllTestsOverview_ListView_AllTestsTable.ItemsSource = CurrentContent;
-                AllTestsOverview_ListView_AllTestsTable.Items.Refresh();
+                if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
+                {
+                    string searchterm = AllTestsOverview_TextBox_Search.Text;
+                    SearchResult = (from t in CurrentContent
+                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                    select t).ToList();
+
+                    CurrentContent = SearchResult;
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+                }
+                else
+                {
+
+                    AllTestsOverview_ListView_AllTestsTable.ItemsSource = CurrentContent;
+                    AllTestsOverview_ListView_AllTestsTable.Items.Refresh();
+                }
             }
         }
 
@@ -381,8 +397,34 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllTestsOverview_CheckBox_MadeBefore_Unchecked(object sender, System.Windows.RoutedEventArgs e)
         {
-            AllTestsOverview_ListView_AllTestsTable.ItemsSource = TableContent;
-            AllTestsOverview_ListView_AllTestsTable.Items.Refresh();
+            if (MainWindow.Ingelogd == 0)
+            {
+                Console.WriteLine("User niet ingelogd");
+            }
+            else
+            {
+                    AllTestsOverview_ListView_AllTestsTable.ItemsSource = TableContent;
+                CurrentContent = TableContent;
+                //CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
+                {
+                    string searchterm = AllTestsOverview_TextBox_Search.Text;
+                    SearchResult = (from t in CurrentContent
+                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                    select t).ToList();
+
+                    CurrentContent = SearchResult;
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+                }
+                else
+                {
+
+                    AllTestsOverview_ListView_AllTestsTable.ItemsSource = TableContent;
+                    AllTestsOverview_ListView_AllTestsTable.Items.Refresh();
+                }
+            }
+
         }
 
         /// <summary>

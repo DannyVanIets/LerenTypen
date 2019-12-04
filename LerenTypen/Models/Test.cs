@@ -18,8 +18,8 @@ namespace LerenTypen.Models
         public bool IsPrivate { get; private set; }
         public string CreatedDateTime { get; private set; }
 
-        public Test(int id, string name, int type, int authorID, string authorUsername, int wordCount, 
-            int timesMade, int version, int difficulty, bool isPrivate, string createdDateTime)
+        public Test(int id, string name, int type, int authorID, string authorUsername, int wordCount,
+            int version, int difficulty, bool isPrivate, string createdDateTime)
         {
             ID = id;
             Name = name;
@@ -27,12 +27,12 @@ namespace LerenTypen.Models
             AuthorID = authorID;
             AuthorUsername = authorUsername;
             WordCount = wordCount;
-            TimesMade = timesMade;
             Version = version;
             Difficulty = difficulty;
             IsPrivate = isPrivate;
             CreatedDateTime = createdDateTime;
 
+            TimesMade = TestController.GetTimesMade(ID);
             Highscore = TestController.GetTestHighscore(ID);
             AverageScore = TestController.GetTestAverageScore(ID);
         }

@@ -210,13 +210,27 @@ namespace LerenTypen
         {
             if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
-                CurrentContent = TableContent;
+                if (AllMyTestsOverviewPage_CheckBox_MadeBefore.IsChecked.Value)
+                {
+                    CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                }
+                else
+                {
+                    CurrentContent = TableContent;
+                }
                 Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
             }
 
             if (!AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && !AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
-                CurrentContent = TableContent;
+                if (AllMyTestsOverviewPage_CheckBox_MadeBefore.IsChecked.Value)
+                {
+                    CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                }
+                else
+                {
+                    CurrentContent = TableContent;
+                }
                 string searchterm = AllMyTestsOverviewPage_TextBox_Search.Text;
                 SearchResult = (from t in CurrentContent
                                 where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
@@ -353,10 +367,25 @@ namespace LerenTypen
             }
             else
             {
-                CurrentContent = TestController.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd);
-                //TableCounter(CurrentContent);
-                AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = CurrentContent;
-                AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
+
+                CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                if (!AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
+                {
+                    string searchterm = AllMyTestsOverviewPage_TextBox_Search.Text;
+                    SearchResult = (from t in CurrentContent
+                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                    select t).ToList();
+
+                    CurrentContent = SearchResult;
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+                }
+                else
+                {
+
+                    AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = CurrentContent;
+                    AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
+                }
             }
         }
         /// <summary>
@@ -366,8 +395,33 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked(object sender, RoutedEventArgs e)
         {
-            AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = TableContent;
-            AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
+            if (MainWindow.Ingelogd == 0)
+            {
+                Console.WriteLine("User niet ingelogd");
+            }
+            else
+            {
+                AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = TableContent;
+                CurrentContent = TableContent;
+                //CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                if (!AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && !AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
+                {
+                    string searchterm = AllMyTestsOverviewPage_TextBox_Search.Text;
+                    SearchResult = (from t in CurrentContent
+                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                    select t).ToList();
+
+                    CurrentContent = SearchResult;
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+                }
+                else
+                {
+
+                    AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = TableContent;
+                    AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
+                }
+            }
         }
 
         // Handlers below not implemented yet, showing amountOfWords in messagebox for now
