@@ -210,25 +210,27 @@ namespace LerenTypen
         {
             if (AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
-                CurrentContent = TableContent;
-                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-            }
-            if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
-            {
-                if (AllTestsOverview_TextBox_Search.Text.StartsWith("User: "))
+                if (AllTestsOverview_CheckBox_MadeBefore.IsChecked.Value)
                 {
-                    CurrentContent = TableContent;
-                    string searchterm = AllTestsOverview_TextBox_Search.Text.Substring(6);
-                    SearchResult = (from t in CurrentContent
-                                    where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
-                                    select t).ToList();
-
-                    CurrentContent = SearchResult;
-                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+                    CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
                 }
                 else
                 {
                     CurrentContent = TableContent;
+                }
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+            }
+            if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
+            {
+                    if (AllTestsOverview_CheckBox_MadeBefore.IsChecked.Value)
+                    {
+                        CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                    }
+                    else
+                    {
+                        CurrentContent = TableContent;
+                    }
+                    //CurrentContent = TableContent;
                     string searchterm = AllTestsOverview_TextBox_Search.Text;
                     SearchResult = (from t in CurrentContent
                                     where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
@@ -236,7 +238,7 @@ namespace LerenTypen
 
                     CurrentContent = SearchResult;
                     Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-                }
+                
             }
         }
 
@@ -405,6 +407,11 @@ namespace LerenTypen
             Hyperlink link = (Hyperlink)sender;
             string id = link.Tag.ToString();
             //System.Windows.MessageBox.Show(id);
+
+        }
+
+        private void AllTestsOverview_CheckBox_MadeBefore_Unchecked_1(object sender, System.Windows.RoutedEventArgs e)
+        {
 
         }
     }
