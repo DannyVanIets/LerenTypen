@@ -173,5 +173,23 @@ namespace LerenTypen.UnitTests
             Assert.AreEqual(result, answer);
         }
         #endregion
+
+        #region Insert
+        List<string> Content = new List<string>() { "a", "b" };
+        [Test]
+        [TestCase("Dummy toets", 1, 1, 0, Content, 1, new Test(null, "Dummy toets", 1, 1,))]
+        public void Add_Test_ReturnBool(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy, Test result)
+        {
+            //Arrange
+            Test answer;
+            //Act
+            TestController.AddTest(testName, testType, testDifficulty, isPrivate, content, uploadedBy);
+            List<string> getTestID = Database.SelectQuery("Select Max(testID) from tests");
+            int testID = int.Parse(getTestID[0]);
+            answer = TestController.GetTest(testID);
+            //Assert
+            Assert.AreEqual(result, answer);
+        }
+        #endregion
     }
 }

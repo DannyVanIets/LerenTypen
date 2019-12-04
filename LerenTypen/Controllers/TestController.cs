@@ -7,6 +7,39 @@ namespace LerenTypen.Controllers
 {
     public class TestController
     {
+
+        public static List<string> SelectQuery(string query)
+        {
+            List<string> result = new List<string>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            result.Add(reader.ToString());
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return result;
+        }
+
         public static int GetTestHighscore(int testID)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
