@@ -120,7 +120,7 @@
                 HorizontalAlignment="Right" VerticalAlignment="Bottom"
                 Margin="0,0,20,20" Width="64" RenderOptions.BitmapScalingMode="HighQuality"
                 Background="Transparent" BorderThickness="0" Click="StartTestButton_Click">
-            <Image Source="img/resumeButton.png"/>
+            <Image Source="/img/resumeButton.png"/>
         </Button>
     </Grid>
 </Page>
