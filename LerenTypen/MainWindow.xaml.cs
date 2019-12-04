@@ -203,16 +203,21 @@ namespace LerenTypen
             }
         }
 
+        public void Logout_Users()
+        {
+            Ingelogd = 0;
+            UpdateLoginButton();
+            MessageBox.Show("U bent succesvol uitgelogd! U wordt nu doorgestuurd naar de homepagina.", "Succes");
+            ChangePage(new HomePage(this));
+        }
+
         private void LogoutMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je wilt uitloggen?", "Uitloggen", System.Windows.MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je wilt uitloggen?", "Uitloggen", System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                Ingelogd = 0;
-                UpdateLoginButton();
-                MessageBox.Show("U bent succesvol uitgelogd! U wordt nu doorgestuurd naar de homepagina.", "Succes");
-                ChangePage(new HomePage(this));
-            }
+                Logout_Users();
+             }
         }
 
         private void Window_Closed(object sender, EventArgs e)

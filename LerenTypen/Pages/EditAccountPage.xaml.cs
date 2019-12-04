@@ -76,7 +76,7 @@ namespace LerenTypen
             DateTime birthdate = (DateTime)birthdateDatePicker.SelectedDate;
             string securityQuestion = securityQuestionComboBox.Text;
             string securityAnswer = securityAnswerTextBox.Text;
-            
+
             //Checks if the birthdate isn't younger than 1 year or older than 100 years.
             //This also checks straight away if the birthdate is really a date.
             if (birthdate > Date.dateOfToday || birthdate < Date.dateOfTodayHundredYearsAgo)
@@ -159,6 +159,33 @@ namespace LerenTypen
                         MessageBox.Show("Het account kon niet worden geüpdate, probeer het opnieuw of neem contact op met de beheerders.", "Error");
                     }
                 }
+            }
+        }
+
+        private void DeleteAccountButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je het account wilt verwijderen?", "Account Verwijderen",MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    System.Windows.MessageBox.Show("Het Account is succesvol gearchiveerd!", "Succes");
+                    string username = Account.UserName;
+                    AccountController.DeleteAccount(username);
+                    MainWindow.Logout_Users();
+                    MainWindow.ChangePage(new HomePage(MainWindow));
+                }
+                else if (messageBoxResult == MessageBoxResult.No)
+                {
+                    MainWindow.Logout_Users();
+                }
+
+            }
+            catch (Exception r)
+            {
+                Console.WriteLine(r.ToString());
+                System.Windows.MessageBox.Show("Error", "Error");
+                MainWindow.Logout_Users();
             }
         }
     }
