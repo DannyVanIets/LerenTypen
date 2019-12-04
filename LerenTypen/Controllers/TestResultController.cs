@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace LerenTypen.Controllers
 {
-    class TestResultController
+    public class TestResultController
     {
         /// <summary>
         /// Gets the results using resultsID
@@ -239,7 +239,7 @@ namespace LerenTypen.Controllers
                 connection.Dispose();
             }
 
-            InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);           
+            InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);
             return testResultID;
         }
 
