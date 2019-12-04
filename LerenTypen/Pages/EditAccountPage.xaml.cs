@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using LerenTypen.Controllers;
 using LerenTypen.Models;
 
 namespace LerenTypen
@@ -14,7 +15,6 @@ namespace LerenTypen
     {
         private MainWindow MainWindow;
         private Account Account;
-        private Converter Converter;
         private Date Date;
 
         public EditAccountPage(MainWindow mainWindow)
@@ -23,9 +23,6 @@ namespace LerenTypen
             //MainWindow is used to change pages.
             MainWindow = mainWindow;
 
-            //Here are all the constructors for Account, Converter and Date
-            //Converter is used to convert strings to hashed passwords.
-            Converter = new Converter();
             //Date is used to get the current date and the date from 100 years ago.
             Date = new Date();
 
@@ -33,7 +30,7 @@ namespace LerenTypen
             //If a user is logged in, we will fill in all the information from his account into the textboxes.
             if (mainWindow.Ingelogd > 0)
             {
-                Account = Database.GetAllAccountInformationExceptPassword(mainWindow.Ingelogd);
+                Account = AccountController.GetUserAccount(mainWindow.Ingelogd);
 
                 firstNameTextBox.Text = Account.FirstName;
                 lastNameTextbox.Text = Account.Surname;
@@ -92,7 +89,7 @@ namespace LerenTypen
                 MessageBox.Show("Je moet alle textvelden hebben ingevuld, behalve de wachtwoord velden!", "Error");
             }
             //Check if the username already exists and isn't the same as the old one.
-            else if (Account.UserName != username && Database.UserExists(username))
+            else if (Account.UserName != username && LoginController.UserExists(username))
             {
                 MessageBox.Show("Deze gebruikersnaam bestaat al! Kies A.U.B. een andere.", "Error");
             }
@@ -102,7 +99,7 @@ namespace LerenTypen
                 if (string.IsNullOrWhiteSpace(oldPassword) && string.IsNullOrWhiteSpace(newPassword) && string.IsNullOrWhiteSpace(newPasswordRepeat))
                 {
                     //Here we will update everything, except the password. First we will check if it went succesfully or not.
-                    if (Database.UpdateAccountWithoutPassword(MainWindow.Ingelogd, username, birthdate, firstname, surname, securityQuestion, securityAnswer))
+                    if (AccountController.UpdateAccount(MainWindow.Ingelogd, username, birthdate, firstname, surname, securityQuestion, securityAnswer))
                     {
                         MainWindow.UpdateLoginButton();
                         MessageBox.Show("Het account is succesvol geüpdate!", "Succes");
@@ -130,7 +127,7 @@ namespace LerenTypen
                     MessageBox.Show("Het wachtwoord mag niet langer zijn dan 25 tekens!", "Error");
                 }
                 //Here we will check if the oldpassword isn't the same one as in the database and give a message if that's true.
-                else if (Converter.ComputeSha256Hash(oldPassword) != Database.GetPasswordFromAccount(MainWindow.Ingelogd))
+                else if (LoginController.ComputeSha256Hash(oldPassword) != AccountController.GetPasswordFromAccount(MainWindow.Ingelogd))
                 {
                     MessageBox.Show("Dat is niet het goede oude wachtwoord!", "Error");
                 }
@@ -140,17 +137,17 @@ namespace LerenTypen
                     MessageBox.Show("De nieuwe wachtwoorden komen niet overeen.", "Error");
                 }
                 //Here we will check if the new password isn't the same as the old one.
-                else if (Converter.ComputeSha256Hash(newPassword) == Database.GetPasswordFromAccount(MainWindow.Ingelogd))
+                else if (LoginController.ComputeSha256Hash(newPassword) == AccountController.GetPasswordFromAccount(MainWindow.Ingelogd))
                 {
                     MessageBox.Show("Het nieuwe wachtwoord mag niet hetzelfde zijn als het oude wachtwoord!", "Error");
                 }
                 //In the else we will update everything with the passwords.
                 else
                 {
-                    string hashedNewPassword = Converter.ComputeSha256Hash(newPassword);
+                    string hashedNewPassword = LoginController.ComputeSha256Hash(newPassword);
 
                     //First we gotta check if it has been succesfully updated. In both cases we will give out a message.
-                    if (Database.UpdateAccountWithPassword(MainWindow.Ingelogd, username, hashedNewPassword, birthdate, firstname, surname, securityQuestion, securityAnswer))
+                    if (AccountController.UpdateAccountWithPassword(MainWindow.Ingelogd, username, hashedNewPassword, birthdate, firstname, surname, securityQuestion, securityAnswer))
                     {
                         MainWindow.UpdateLoginButton();
                         MessageBox.Show("Het account is succesvol geüpdate!", "Succes");

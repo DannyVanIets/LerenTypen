@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LerenTypen.Controllers;
+using System;
 using System.Collections.Generic;
 
 namespace LerenTypen
@@ -18,8 +19,8 @@ namespace LerenTypen
 
         public decimal CalculatePercentageRight()
         {
-            List<string> rightAnswers = Database.GetTestResultsContentRight(ID);
-            List<string> wrongAnswers = Database.GetTestResultsContentWrong(ID);
+            List<string> rightAnswers = TestResultController.GetTestResultsContentRight(ID);
+            List<string> wrongAnswers = TestResultController.GetTestResultsContentWrong(ID);
             decimal percentageRight;
 
             try

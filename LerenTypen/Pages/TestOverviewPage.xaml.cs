@@ -2,6 +2,8 @@ using System.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LerenTypen.Controllers;
+using System.Windows.Documents;
 
 namespace LerenTypen
 {
@@ -65,11 +67,10 @@ namespace LerenTypen
                 AllTestsOverview_CheckBox_MadeBefore.Visibility = System.Windows.Visibility.Hidden;
             }
 
-            // Add the data to the datagrid and refresh to show
+            // Add the data to the ListView and refresh to show
             try
             {
-                TableContent = Database.GetAllTests();
-
+                TableContent = TestController.GetAllTests();
 
                 // Bool to prevent the select event/ToonAlles_event at startup app
                 IsPageInitialized = true;
@@ -209,25 +210,27 @@ namespace LerenTypen
         {
             if (AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
-                CurrentContent = TableContent;
-                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-            }
-            if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
-            {
-                if (AllTestsOverview_TextBox_Search.Text.StartsWith("User: "))
+                if (AllTestsOverview_CheckBox_MadeBefore.IsChecked.Value)
                 {
-                    CurrentContent = TableContent;
-                    string searchterm = AllTestsOverview_TextBox_Search.Text.Substring(6);
-                    SearchResult = (from t in CurrentContent
-                                    where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
-                                    select t).ToList();
-
-                    CurrentContent = SearchResult;
-                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+                    CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
                 }
                 else
                 {
                     CurrentContent = TableContent;
+                }
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+            }
+            if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
+            {
+                    if (AllTestsOverview_CheckBox_MadeBefore.IsChecked.Value)
+                    {
+                        CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                    }
+                    else
+                    {
+                        CurrentContent = TableContent;
+                    }
+                    //CurrentContent = TableContent;
                     string searchterm = AllTestsOverview_TextBox_Search.Text;
                     SearchResult = (from t in CurrentContent
                                     where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
@@ -235,7 +238,7 @@ namespace LerenTypen
 
                     CurrentContent = SearchResult;
                     Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-                }
+                
             }
         }
 
@@ -268,8 +271,8 @@ namespace LerenTypen
                     FilterList.Add(item);
                 }
             }
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = FilterList;
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            AllTestsOverview_ListView_AllTestsTable.ItemsSource = FilterList;
+            AllTestsOverview_ListView_AllTestsTable.Items.Refresh();
         }
 
         /// <summary>
@@ -365,9 +368,25 @@ namespace LerenTypen
             }
             else
             {
-                CurrentContent = Database.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
-                AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
-                AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+                
+                CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
+                {
+                    string searchterm = AllTestsOverview_TextBox_Search.Text;
+                    SearchResult = (from t in CurrentContent
+                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                    select t).ToList();
+
+                    CurrentContent = SearchResult;
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+                }
+                else
+                {
+
+                    AllTestsOverview_ListView_AllTestsTable.ItemsSource = CurrentContent;
+                    AllTestsOverview_ListView_AllTestsTable.Items.Refresh();
+                }
             }
         }
 
@@ -378,8 +397,34 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllTestsOverview_CheckBox_MadeBefore_Unchecked(object sender, System.Windows.RoutedEventArgs e)
         {
-            AllTestsOverview_DataGrid_AllTestsTable.ItemsSource = TableContent;
-            AllTestsOverview_DataGrid_AllTestsTable.Items.Refresh();
+            if (MainWindow.Ingelogd == 0)
+            {
+                Console.WriteLine("User niet ingelogd");
+            }
+            else
+            {
+                    AllTestsOverview_ListView_AllTestsTable.ItemsSource = TableContent;
+                CurrentContent = TableContent;
+                //CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
+                {
+                    string searchterm = AllTestsOverview_TextBox_Search.Text;
+                    SearchResult = (from t in CurrentContent
+                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                    select t).ToList();
+
+                    CurrentContent = SearchResult;
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+                }
+                else
+                {
+
+                    AllTestsOverview_ListView_AllTestsTable.ItemsSource = TableContent;
+                    AllTestsOverview_ListView_AllTestsTable.Items.Refresh();
+                }
+            }
+
         }
 
         /// <summary>
@@ -387,10 +432,10 @@ namespace LerenTypen
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DG_AllTestOverview_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void LV_AllTestOverview_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            TextBlock textBlock = (TextBlock)sender;
-            int id = Convert.ToInt32(textBlock.Tag);
+            Hyperlink link = (Hyperlink)sender;
+            int id = Convert.ToInt32(link.Tag);
             MainWindow.ChangePage(new TestInfoPage(id, MainWindow));
         }
 
@@ -401,9 +446,14 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void DG_ATO_Hyperlink_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            TextBlock textBlock = (TextBlock)sender;
-            string id = textBlock.Tag.ToString();
-            System.Windows.MessageBox.Show(id);
+            Hyperlink link = (Hyperlink)sender;
+            string id = link.Tag.ToString();
+            //System.Windows.MessageBox.Show(id);
+
+        }
+
+        private void AllTestsOverview_CheckBox_MadeBefore_Unchecked_1(object sender, System.Windows.RoutedEventArgs e)
+        {
 
         }
     }

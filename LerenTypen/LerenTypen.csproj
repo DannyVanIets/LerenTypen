@@ -88,27 +88,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AdminUserPanel.xaml">
+    <Page Include="AdminEditAccountWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AllMyTestsOverviewPage.xaml">
+    <Page Include="Pages\AllMyTestsOverviewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="AllUsersPage.xaml">
+    <Page Include="Pages\AllUsersPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CreateTestPage.xaml">
+    <Page Include="Pages\CreateTestPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="EditAccountPage.xaml">
+    <Page Include="Pages\EditAccountPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="HomePage.xaml">
+    <Page Include="Pages\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -116,33 +116,36 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AdminUserPanel.xaml.cs">
-      <DependentUpon>AdminUserPanel.xaml</DependentUpon>
+    <Compile Include="AdminEditAccountWindow.xaml.cs">
+      <DependentUpon>AdminEditAccountWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AllMyTestsOverviewPage.xaml.cs">
+    <Compile Include="Pages\AllMyTestsOverviewPage.xaml.cs">
       <DependentUpon>AllMyTestsOverviewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AllUsersPage.xaml.cs">
+    <Compile Include="Pages\AllUsersPage.xaml.cs">
       <DependentUpon>AllUsersPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CreateTestPage.xaml.cs">
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TestResultController.cs" />
+    <Compile Include="Pages\CreateTestPage.xaml.cs">
       <DependentUpon>CreateTestPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HomePage.xaml.cs">
+    <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Converter.cs" />
     <Compile Include="Models\Date.cs" />
-    <Compile Include="Database.cs" />
-    <Compile Include="ForgotPasswordPage.xaml.cs">
+    <Compile Include="Models\Database.cs" />
+    <Compile Include="Pages\ForgotPasswordPage.xaml.cs">
       <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditAccountPage.xaml.cs">
+    <Compile Include="Pages\EditAccountPage.xaml.cs">
       <DependentUpon>EditAccountPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GridViewSort.cs" />
@@ -150,76 +153,77 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="LeaderboardPage.xaml">
+    <Page Include="Pages\LeaderboardPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="LoginPage.xaml">
+    <Page Include="Pages\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestInfoPage.xaml">
+    <Page Include="Pages\TestInfoPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Privacystatement.xaml">
+    <Page Include="PrivacyInfoWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestExercisePage.xaml">
+    <Page Include="Pages\TestExercisePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestOverviewPage.xaml">
+    <Page Include="Pages\TestOverviewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestResultsPage.xaml">
+    <Page Include="Pages\TestResultsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TipPage.xaml">
+    <Page Include="Pages\TipPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TrendingTestsPage.xaml">
+    <Page Include="Pages\TrendingTestsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ForgotPasswordPage.xaml">
+    <Page Include="Pages\ForgotPasswordPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LeaderboardPage.xaml.cs">
+    <Compile Include="Pages\LeaderboardPage.xaml.cs">
       <DependentUpon>LeaderboardPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoginPage.xaml.cs">
+    <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Privacystatement.xaml.cs">
-      <DependentUpon>Privacystatement.xaml</DependentUpon>
+    <Compile Include="Models\UserTable.cs" />
+    <Compile Include="PrivacyInfoWindow.xaml.cs">
+      <DependentUpon>PrivacyInfoWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestOverviewPage.xaml.cs">
+    <Compile Include="Pages\TestOverviewPage.xaml.cs">
       <DependentUpon>TestOverviewPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Test.cs" />
-    <Compile Include="TestInfoPage.xaml.cs">
+    <Compile Include="Models\Test.cs" />
+    <Compile Include="Pages\TestInfoPage.xaml.cs">
       <DependentUpon>TestInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestResult.cs" />
-    <Compile Include="TipPage.xaml.cs">
+    <Compile Include="Models\TestResult.cs" />
+    <Compile Include="Pages\TipPage.xaml.cs">
       <DependentUpon>TipPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestTable.cs" />
-    <Compile Include="TestExercisePage.xaml.cs">
+    <Compile Include="Models\TestTable.cs" />
+    <Compile Include="Pages\TestExercisePage.xaml.cs">
       <DependentUpon>TestExercisePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestResultsPage.xaml.cs">
+    <Compile Include="Pages\TestResultsPage.xaml.cs">
       <DependentUpon>TestResultsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TrendingTestsPage.xaml.cs">
+    <Compile Include="Pages\TrendingTestsPage.xaml.cs">
       <DependentUpon>TrendingTestsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

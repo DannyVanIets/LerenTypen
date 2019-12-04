@@ -1,3 +1,4 @@
+using LerenTypen.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,19 +61,19 @@ namespace LerenTypen
 
             TableContent = new List<TestTable>();
 
-            // Add the data to the datagrid and refresh to show
+            // Add the data to the ListView and refresh to show
             try
             {
-                TableContent = Database.GetAllMyTestswithIsPrivate(MainWindow.Ingelogd);
-                string searchterm = Database.GetUserName(MainWindow.Ingelogd);
+                TableContent = TestController.GetAllMyTestswithIsPrivate(MainWindow.Ingelogd);
+                string searchterm = AccountController.GetUsername(MainWindow.Ingelogd);
 
                 SearchResult = (from t in TableContent
                                 where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
                                 select t).ToList();
                 TableContent = SearchResult;
 
-                AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = SearchResult;
-                //AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+                AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = SearchResult;
+                //AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
 
                 // Bool to prevent the select event/ToonAlles_event at startup app
                 isInitialized = true;
@@ -209,13 +210,27 @@ namespace LerenTypen
         {
             if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
-                CurrentContent = TableContent;
+                if (AllMyTestsOverviewPage_CheckBox_MadeBefore.IsChecked.Value)
+                {
+                    CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                }
+                else
+                {
+                    CurrentContent = TableContent;
+                }
                 Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
             }
 
             if (!AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && !AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
-                CurrentContent = TableContent;
+                if (AllMyTestsOverviewPage_CheckBox_MadeBefore.IsChecked.Value)
+                {
+                    CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                }
+                else
+                {
+                    CurrentContent = TableContent;
+                }
                 string searchterm = AllMyTestsOverviewPage_TextBox_Search.Text;
                 SearchResult = (from t in CurrentContent
                                 where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
@@ -254,8 +269,8 @@ namespace LerenTypen
                     FilterList.Add(item);
                 }
             }
-            AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = FilterList;
-            AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+            AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = FilterList;
+            AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
         }
         /// <summary>
         /// Function that finds the corresponding startvalue/endvalue based on which active filternumber is given and returns these values.
@@ -336,7 +351,7 @@ namespace LerenTypen
             }
             else
             {
-                AllMyTestsOverviewPage_TextBox_Search.Text = $"User: {Database.GetUserName(MainWindow.Ingelogd)}";
+                AllMyTestsOverviewPage_TextBox_Search.Text = $"User: {AccountController.GetUsername(MainWindow.Ingelogd)}";
             }
         }
         /// <summary>
@@ -352,10 +367,25 @@ namespace LerenTypen
             }
             else
             {
-                CurrentContent = Database.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd);
-                //TableCounter(CurrentContent);
-                AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = CurrentContent;
-                AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+
+                CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                if (!AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
+                {
+                    string searchterm = AllMyTestsOverviewPage_TextBox_Search.Text;
+                    SearchResult = (from t in CurrentContent
+                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                    select t).ToList();
+
+                    CurrentContent = SearchResult;
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+                }
+                else
+                {
+
+                    AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = CurrentContent;
+                    AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
+                }
             }
         }
         /// <summary>
@@ -365,8 +395,33 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked(object sender, RoutedEventArgs e)
         {
-            AllMyTestsOverviewPage_DataGrid_AllTestsTable.ItemsSource = TableContent;
-            AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+            if (MainWindow.Ingelogd == 0)
+            {
+                Console.WriteLine("User niet ingelogd");
+            }
+            else
+            {
+                AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = TableContent;
+                CurrentContent = TableContent;
+                //CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                if (!AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && !AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
+                {
+                    string searchterm = AllMyTestsOverviewPage_TextBox_Search.Text;
+                    SearchResult = (from t in CurrentContent
+                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                    select t).ToList();
+
+                    CurrentContent = SearchResult;
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+                }
+                else
+                {
+
+                    AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = TableContent;
+                    AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
+                }
+            }
         }
 
         // Handlers below not implemented yet, showing amountOfWords in messagebox for now
@@ -403,9 +458,9 @@ namespace LerenTypen
             TestTable tt = checkbox.DataContext as TestTable;
             int id = tt.TestId;
 
-            Database.UpdateTestToPrivate(id);
+            TestController.UpdateTestToPrivate(id);
             //tt.IsPrivate = checkbox.IsChecked;
-            AllMyTestsOverviewPage_DataGrid_AllTestsTable.Items.Refresh();
+            AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
         }
 
         private void DG_Checkbox_Uncheck(object sender, RoutedEventArgs e)
@@ -414,7 +469,7 @@ namespace LerenTypen
             TestTable tt = checkbox.DataContext as TestTable;
             int id = tt.TestId;
 
-            Database.UpdateTestToPublic(id);
+            TestController.UpdateTestToPublic(id);
         }
     }
 }

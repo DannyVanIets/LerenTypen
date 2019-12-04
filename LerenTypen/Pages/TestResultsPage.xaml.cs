@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using LerenTypen.Controllers;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System;
 
 namespace LerenTypen
 {
@@ -27,13 +29,13 @@ namespace LerenTypen
             hadToBe = new List<string>();
             rightAnswers = new List<string>();
 
-            testNameLbl.Content = Database.GetTestName(testID);
+            testNameLbl.Content = TestController.GetTestName(testID);
             GetResults();
             FillAnswerList(false);
             amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
-            List<int> testInformation = Database.GetTestInformation(testID);
-            createrRun.Text = Database.GetUserName(testInformation[0]);
-            amountOfWordsLbl.Content = $"Aantal woorden: {Database.GetAmountOfWordsFromTest(testID)}";
+            List<int> testInformation = TestController.GetTestInformation(testID);
+            createrRun.Text = AccountController.GetUsername(testInformation[0]);
+            amountOfWordsLbl.Content = $"Aantal woorden: {TestController.GetAmountOfWordsFromTest(testID)}";
 
             string difficulty;
             if (testInformation[1].Equals(0))
@@ -110,12 +112,12 @@ namespace LerenTypen
         {
             amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
 
-            List<string> testResults = Database.GetTestResults(testResultID);
-            rightAnswers = Database.GetTestResultsContentRight(testResultID);
-            wrongAnswers = Database.GetTestResultsContentWrong(testResultID);
-            hadToBe = Database.GetTestResultsContentHadToBe(testResultID);
+            List<string> testResults = TestResultController.GetTestResults(testResultID);
+            rightAnswers = TestResultController.GetTestResultsContentRight(testResultID);
+            wrongAnswers = TestResultController.GetTestResultsContentWrong(testResultID);
+            hadToBe = TestResultController.GetTestResultsContentHadToBe(testResultID);
 
-            int amountOfPauses = int.Parse(testResults[1]);
+            int amountOfPauses = Convert.ToInt32(testResults[1]);
             int wordsPerMinute = int.Parse(testResults[0]);
             amountOfBreaksTbl.Text = amountOfPauses.ToString();
             wordsPerMinuteTbl.Text = wordsPerMinute.ToString();

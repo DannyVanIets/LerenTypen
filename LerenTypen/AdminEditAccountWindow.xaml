@@ -1,11 +1,11 @@
-﻿<Window x:Class="LerenTypen.AdminUserPanel"
+﻿<Window x:Class="LerenTypen.AdminEditAccountWindow"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LerenTypen"
       mc:Ignorable="d" Background="White"
-      Title="AdminUserPanel" Height="400.2" Width="729.6">
+      Title="Account aanpassen" Height="400.2" Width="729.6">
 
     <Grid Margin="0,0,-0.4,10">
         <Grid.ColumnDefinitions>
@@ -35,6 +35,6 @@
             <ComboBoxItem Tag="docent" Content="Docent"/>
             <ComboBoxItem Tag="admin" Content="Admin" />
         </ComboBox>
-   <!--  <Button x:Name="DeleteAcc" Content="Verwijder Account!" MouseEnter="DeleteAccountButton_MouseEnter" MouseLeave="DeleteAccountButton_MouseLeave" Background="Red" Foreground="White" HorizontalAlignment="Left" Height="29" Margin="20,103.8,0,-82.4" Grid.Row="4" VerticalAlignment="Top" Width="138" Click="DeleteAcc_Click"/> -->
+        <Button x:Name="DeleteAcc" Content="Verwijder Account!" MouseEnter="DeleteAccountButton_MouseEnter" MouseLeave="DeleteAccountButton_MouseLeave" Background="Red" Foreground="White" HorizontalAlignment="Left" Height="29" Margin="20,103.8,0,-82.4" Grid.Row="4" VerticalAlignment="Top" Width="138" Click="DeleteAcc_Click"/>
     </Grid>
 </Window>
