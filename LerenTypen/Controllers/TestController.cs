@@ -508,7 +508,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             // add all the found data to a list
-                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetFastestTyper(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(0)));
+                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetFastestTyper(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(reader.GetInt32(0)), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader.GetInt32(5)), Convert.ToInt32(reader[0])));
                             counter++;
                         }
                     }
@@ -679,7 +679,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //add all the found data to a list
-                            tests.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetTestHighscore(reader.GetInt32(0)), TestController.GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt32(3), reader.GetString(4)));
+                            tests.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetTestHighscore(Convert.ToInt32(reader[0])), TestController.GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4)));
                             counter++;
                         }
                     }
