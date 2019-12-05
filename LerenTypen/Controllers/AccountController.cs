@@ -487,13 +487,13 @@ namespace LerenTypen.Controllers
             return false;
         }
 
-        public static bool DeleteAccount(string userName)
+        private static bool GetAverageWordsMinute(string userName)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
                 connection.Open();
-                string query = "UPDATE accounts set archived=1 WHERE accountID = @id AND archived = 0";
+                string query = "Selectqueryvooraveragewordsperminuut";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -513,5 +513,32 @@ namespace LerenTypen.Controllers
             }
             return false;
         }
+
+    public static bool DeleteAccount(string userName)
+    {
+        SqlConnection connection = new SqlConnection(Database.connectionString);
+        try
+        {
+            connection.Open();
+            string query = "UPDATE accounts set archived=1 WHERE accountID = @id AND archived = 0";
+
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@id", AccountController.GetAccountIDFromUsername(userName));
+                command.ExecuteNonQuery();
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        finally
+        {
+            connection.Close();
+            connection.Dispose();
+        }
+        return false;
     }
+}
 }

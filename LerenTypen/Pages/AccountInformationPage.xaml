@@ -23,15 +23,15 @@
             <Label FontSize="30" Margin="20,5,-0.2,0" FontWeight="Bold" Grid.Column="0" Content="Accountoverzicht" Height="57"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Gebruikersnaam :" Margin="0,0,0,0"  Height="47" FontSize="16" Width="200"/>
-                <Label x:Name="userNamelabel" Content="//Gebruikersnaam" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
+                <Label x:Name="userNamelabel" Content="*Not loaded*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Volledige naam :" Margin="0,0,0,0"  Height="47" FontSize="16" Width="200"/>
-                <Label x:Name="FullNamelabel" Content="//Naam" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
+                <Label x:Name="FullNamelabel" Content="*Not loaded*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Geboortedatum :" Margin="0,0,0,0"  Height="47" FontSize="16" Width="200"/>
-                <Label x:Name="Birthdatelabel" Content="//Datum" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
+                <Label x:Name="Birthdatelabel" Content="*Not loaded*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
             </StackPanel>
 
 
