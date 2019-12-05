@@ -7,6 +7,11 @@ namespace LerenTypen.UnitTests
 {
     class LoginControllerTests
     {
+        public LoginControllerTests()
+        {
+            Database.Connect();
+        }
+
         #region Select
         [Test]
         // Happy

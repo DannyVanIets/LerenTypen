@@ -7,6 +7,12 @@ namespace LerenTypen.UnitTests
 {
     class TestControllerTests
     {
+        public TestControllerTests()
+        {
+            Database.Connect();
+        }
+
+
         #region Select
         [Test]
         public void GetAllTests_ReturnsAllTests(List<TestTable> result)

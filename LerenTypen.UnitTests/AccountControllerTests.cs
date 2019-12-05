@@ -8,8 +8,14 @@ namespace LerenTypen.UnitTests
 {
     class AccountControllerTests
     {
+        public AccountControllerTests()
+        {
+            Database.Connect();
+        }
+
         #region Select
         [Test]
+        //[TestCase(1, new Account("HenkerDenker", new DateTime(1990, 10, 09), "Henk", "Denk"))]
         public void GetUserAccount_AccountID_Account(int accountID, Account result)
         {
             //Arrange
@@ -21,12 +27,15 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        public void IsAdmin_accountnumber_NoException(int accountNumber, bool result)
+        [TestCase(1, true)]
+        [TestCase(2, true)]
+        [TestCase(3, false)]
+        public void IsAdmin_accountnumber_IsAdmin(int accountID, bool result)
         {
             //Arrange
             bool answer;
             //Act
-            answer = AccountController.IsAdmin(accountNumber);
+            answer = AccountController.IsAdmin(accountID);
             //Assert
             Assert.AreEqual(result, answer);
         }
