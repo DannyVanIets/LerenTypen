@@ -37,7 +37,7 @@
             <Label Content="Moeilijkheidsgraad:" FontSize="15" Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <ComboBox x:Name="comboBoxDifficulty"  MaxWidth="140"  Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" SelectedIndex="0"  >
                 <ListBoxItem x:Name="itemEasy" Content="Makkelijk"/>
-                <ListBoxItem x:Name="ItemMedium" Content="Middel"/>
+                <ListBoxItem x:Name="ItemMedium" Content="Gemiddeld"/>
                 <ListBoxItem x:Name="ItemHard" Content="Moeilijk"/>
             </ComboBox>
         </DockPanel>
