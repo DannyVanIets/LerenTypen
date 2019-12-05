@@ -217,18 +217,18 @@ namespace LerenTypen.Controllers
 
                     command.ExecuteNonQuery();
                 }
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         public static bool UpdateAccount(string userName, string firstName, string surname)
@@ -246,18 +246,18 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@username", userName);
                     command.ExecuteNonQuery();
                 }
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         //Same query as UpdateAccountWithoutPassword, except this one also updated the password. Also used in EditAccountPage.
@@ -286,18 +286,18 @@ namespace LerenTypen.Controllers
 
                     command.ExecuteNonQuery();
                 }
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         public static int GetAccountIDFromUsername(string accountUsername)
@@ -417,18 +417,18 @@ namespace LerenTypen.Controllers
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         // Make the user a student
@@ -445,18 +445,19 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@id", GetAccountIDFromUsername(userName));
                     command.ExecuteNonQuery();
                 }
-                return true;
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         // Make the user teacher        
@@ -473,18 +474,19 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@id", GetAccountIDFromUsername(userName));
                     command.ExecuteNonQuery();
                 }
-                return true;
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         public static bool DeleteAccount(string userName)
@@ -500,18 +502,19 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@id", AccountController.GetAccountIDFromUsername(userName));
                     command.ExecuteNonQuery();
                 }
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
     }
 }

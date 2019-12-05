@@ -1,6 +1,7 @@
 ﻿using LerenTypen.Controllers;
 using LerenTypen.Models;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace LerenTypen.UnitTests
@@ -9,11 +10,10 @@ namespace LerenTypen.UnitTests
     {
         #region Select
         [Test]
-        // No Account class in this solution for testing yet
-        public void GetUserAccount_AccountID_Account(int accountID, object result)
+        public void GetUserAccount_AccountID_Account(int accountID, Account result)
         {
             //Arrange
-            object answer = 0;
+            Account answer;
             //Act
             answer = AccountController.GetUserAccount(accountID);
             //Assert
@@ -21,7 +21,7 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        public void IsAdmin_accountnumber_bool(int accountNumber, bool result)
+        public void IsAdmin_accountnumber_NoException(int accountNumber, bool result)
         {
             //Arrange
             bool answer;
@@ -32,18 +32,20 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        public void GetAccountType_accountID_ListString(int accountID, List<string> result)
+        public void GetAccountType_accountID_AccountType(int accountID, int result)
         {
             //Arrange
-            List<string> answer = new List<string>();
+            List<string> answerList = new List<string>();
+            int answer;
             //Act
-            answer = AccountController.GetAccountType(accountID);
+            answerList = AccountController.GetAccountType(accountID);
+            answer = int.Parse(answerList[0]);
             //Assert
             Assert.AreEqual(result, answer);
         }
 
         [Test]
-        public void GetUserName_accountID_string(int accountID, string result)
+        public void GetUserName_accountID_Username(int accountID, string result)
         {
             //Arrange
             string answer = "";
@@ -54,7 +56,7 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        public void GetAllAccountInformationExceptPassword_accountID_Account(int accountID, object result)
+        public void GetAllAccountInformationExceptPassword_accountID_AccountInformationExceptPassword(int accountID, object result)
         {
             //Arrange
             object answer; ;
@@ -65,7 +67,7 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        public void GetPasswordFromAccount_accountID_String(int accountID, string result)
+        public void GetPasswordFromAccount_accountID_Password(int accountID, string result)
         {
             //Arrange
             string answer = "";
@@ -76,7 +78,7 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        public void GetAllUsers(List<UserTable> result)
+        public void GetAllUsers_ReturnsAllUsers(List<UserTable> result)
         {
             //Arrange
             List<UserTable> answer;
@@ -87,5 +89,78 @@ namespace LerenTypen.UnitTests
         }
         #endregion
 
+        #region Update
+        [Test]
+        public void UpdateAccount_AccountData_Bool(int accountID, string userName, DateTime birthday, string firstName, string surname, string securityQuestion, string securityAnswer, bool result)
+        {
+            //Arrange
+            bool answer;
+            //Act
+            answer = AccountController.UpdateAccount(accountID, userName, birthday, firstName, surname, securityQuestion, securityAnswer);
+            //Assert
+            Assert.AreEqual(result, answer);
+        }
+
+        public void UpdateAccount_AccountData_Bool(string userName, string firstName, string surname, bool result)
+        {
+            //Arrange
+            bool answer;
+            //Act
+            answer = AccountController.UpdateAccount(userName, firstName, surname);
+            //Assert
+            Assert.AreEqual(result, answer);
+        }
+
+        public void UpdateAccountWithPassword_AccountData_Bool(int accountID, string userName, string password, DateTime birthday, string firstName, string surname, string securityQuestion, string securityAnswer, bool result)
+        {
+            //Arrange
+            bool answer;
+            //Act
+            answer = AccountController.UpdateAccountWithPassword(accountID, userName, password, birthday, firstName, surname, securityQuestion, securityAnswer);
+            //Assert
+            Assert.AreEqual(result, answer);
+        }
+
+        public void MakeAdmin_Username_Bool(string userName, bool result)
+        {
+            //Arrange
+            bool answer;
+            //Act
+            answer = AccountController.MakeAdmin(userName);
+            //Assert
+            Assert.AreEqual(result, answer);
+        }
+
+        public void MakeStudent_Username_Bool(string userName, bool result)
+        {
+            //Arrange
+            bool answer;
+            //Act
+            answer = AccountController.MakeStudent(userName);
+            //Assert
+            Assert.AreEqual(result, answer);
+        }
+
+        public void MakeTeacher_Username_Bool(string userName, bool result)
+        {
+            //Arrange
+            bool answer;
+            //Act
+            answer = AccountController.MakeTeacher(userName);
+            //Assert
+            Assert.AreEqual(result, answer);
+        }
+
+        public void DeleteAccount_Username_Bool(string userName, bool result)
+        {
+            //Arrange
+            bool answer;
+            //Act
+            answer = AccountController.DeleteAccount(userName);
+            //Assert
+            Assert.AreEqual(result, answer);
+        }
+
+        #endregion
     }
 }
