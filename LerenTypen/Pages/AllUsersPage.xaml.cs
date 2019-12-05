@@ -37,7 +37,7 @@ namespace LerenTypen
             UserTable UserTable = (UserTable)textBlock.Tag;
             string id = UserTable.Accountnumber.ToString();
             string usertype = UserTable.UserTypeID.ToString();
-            AccountController.GetUserAccount(int.Parse(id));
+            AccountController.GetAccountNamesAndBirthdate(int.Parse(id));
             var newWindow = new AdminEditAccountWindow(int.Parse(id), int.Parse(usertype));
             newWindow.ShowDialog();
             Mainwindow.ChangePage(new AllUsersPage(Mainwindow));
