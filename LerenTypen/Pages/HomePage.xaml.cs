@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using LerenTypen.Controllers;
+using System;
+using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace LerenTypen
 {
@@ -23,6 +26,8 @@ namespace LerenTypen
             {
                 loginRegisterButton.Visibility = System.Windows.Visibility.Visible;
             }
+
+            trendingTestsListView.ItemsSource = TestController.GetTrendingTestsNameAndID(10);
         }
 
         private void LoginRegisterButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -33,6 +38,13 @@ namespace LerenTypen
         private void MoreTrendingTestsLink_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             mainWindow.ChangePage(new TrendingTestsPage());
+        }
+
+        private void TrendingTestListViewItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Hyperlink link = (Hyperlink)sender;
+            int id = Convert.ToInt32(link.Tag);
+            mainWindow.ChangePage(new TestInfoPage(id, mainWindow));
         }
     }
 }

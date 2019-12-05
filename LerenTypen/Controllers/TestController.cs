@@ -164,12 +164,12 @@ namespace LerenTypen.Controllers
         }
 
         /// <summary>
-        /// Returns the trending tests from the last week
+        /// Returns the ids of the trending tests from the last week
         /// </summary>
         /// <returns></returns>
-        public static List<Test> GetTrendingTests(int limit)
+        public static List<int> GetTrendingTestIDs(int limit)
         {
-            List<Test> trendingTests = new List<Test>();
+            List<int> trendingTestIDs = new List<int>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
@@ -177,11 +177,11 @@ namespace LerenTypen.Controllers
                 string query = "";
                 if (limit != 0)
                 {
-                    query = "select testID, t.accountID, testName, t.testDifficulty from tests t Inner join accounts a on t.accountID=a.accountID JOIN testresults tr on tr.testID = t.testID where t.archived=0 and a.archived=0 and t.isPrivate=0 WHERE tr.testResultsDate BETWEEN @now AND @weekAgo";
+                    query = "select tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID) DESC";
                 }
                 else
                 {
-                    query = "select TOP @limit testID, t.accountID, testName, t.testDifficulty from tests t Inner join accounts a on t.accountID=a.accountID JOIN testresults tr on tr.testID = t.testID where t.archived=0 and a.archived=0 and t.isPrivate=0 WHERE tr.testResultsDate BETWEEN @now AND @weekAgo";
+                    query = "select TOP @limit tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID) DESC";
                 }
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
 
@@ -195,12 +195,132 @@ namespace LerenTypen.Controllers
                     {
                         while (reader.Read())
                         {
-                            int id = Convert.ToInt32(reader[0]);
-                            int authorID = Convert.ToInt32(reader[1]);
-                            string name = reader.GetString(2);
-                            int difficulty = Convert.ToInt32(reader[3]);
+                            trendingTestIDs.Add(Convert.ToInt32(reader[0]));
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return trendingTestIDs;
+        }
 
-                            trendingTests.Add(new Test(id, name, difficulty, authorID));
+        /// <summary>
+        /// Returns the trending tests from the last week
+        /// </summary>
+        /// <returns></returns>
+        public static List<Test> GetTrendingTests(int limit)
+        {
+            List<Test> trendingTests = new List<Test>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            string idList = "(";
+            List<int> ids = GetTrendingTestIDs(limit);
+
+            foreach (int id in ids)
+            {
+                // Check if this is not the last id
+                if (id != ids[ids.Count - 1])
+                {
+                    idList += $"{id}, ";
+                }
+                else
+                {
+                    idList += $"{id})";
+                }
+            }
+
+            try
+            {
+                connection.Open();
+
+                string query = $"SELECT testID, testName, testType, accountID, version, testDifficulty, isPrivate, createDate from tests t WHERE t.testID IN {idList}";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {                  
+                    command.Parameters.AddWithValue("@ids", idList);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = Convert.ToInt32(reader[0]);
+                            string name = reader.GetString(1);
+                            int type = Convert.ToInt32(reader[2]);
+                            int authorID = Convert.ToInt32(reader[3]);
+                            string authorName = AccountController.GetUsername(authorID);
+                            int wordCount = TestController.GetAmountOfWordsFromTest(id);
+                            int timesMade = TestController.GetTimesMade(id);
+                            int version = Convert.ToInt32(reader[4]);
+                            int difficulty = Convert.ToInt32(reader[5]);
+                            int isPrivate = Convert.ToInt32(reader[6]);
+                            DateTime createDateTime = (DateTime)reader[7];
+
+                            trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty, Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return trendingTests;
+        }
+
+        /// <summary>
+        /// Returns the id and name of the trending tests from the last week
+        /// </summary>
+        /// <returns></returns>
+        public static List<Test> GetTrendingTestsNameAndID(int limit)
+        {
+            List<Test> trendingTests = new List<Test>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            string idList = "(";
+            List<int> ids = GetTrendingTestIDs(limit);
+
+            foreach (int id in ids)
+            {
+                // Check if this is not the last id
+                if (id != ids[ids.Count - 1])
+                {
+                    idList += $"{id}, ";
+                }
+                else
+                {
+                    idList += $"{id})";
+                }
+            }
+
+            try
+            {
+                connection.Open();
+
+                string query = $"SELECT testID, testName from tests t WHERE t.testID IN {idList}";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ids", idList);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int id = Convert.ToInt32(reader[0]);
+                            string name = reader.GetString(1);
+
+                            trendingTests.Add(new Test(id, name));
                         }
                     }
                 }
