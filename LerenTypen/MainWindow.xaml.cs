@@ -100,6 +100,14 @@ namespace LerenTypen
             }
         }
 
+        private void AccountInformationPage_Click(object sender, RoutedEventArgs e)
+        {
+            if(Ingelogd > 0)
+            {
+                ChangePage(new AccountInformationPage(this));
+            }
+        }
+
         /// <summary>
         /// Changes the page to the specified page if this page is not 
         /// already open and updates the menu buttons accordingly
@@ -219,6 +227,11 @@ namespace LerenTypen
         {
             client.Disconnect();
             client.Dispose();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
