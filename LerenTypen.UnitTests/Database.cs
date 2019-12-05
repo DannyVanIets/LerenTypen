@@ -7,7 +7,6 @@ namespace LerenTypen.UnitTests
 {
     class Database
     {
-        private SshClient client;
         public static string connectionString = "Data Source=127.0.0.1,1433;User Id=qlt;Password=MvBg2T-{K[Vh;Database=quicklylearningtyping;";
         public static List<string> SelectQuery(string query)
         {
@@ -43,7 +42,7 @@ namespace LerenTypen.UnitTests
 
         public static void Connect()
         {
-            client = new SshClient("145.44.233.184", "student", "toor2019");
+            SshClient client = new SshClient("145.44.233.184", "student", "toor2019");
             try
             {
                 client.Connect();
