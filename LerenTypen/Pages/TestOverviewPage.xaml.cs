@@ -6,6 +6,8 @@ using LerenTypen.Controllers;
 using System.Windows.Documents;
 using LerenTypen.Models;
 using System.Windows;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LerenTypen
 {
@@ -59,11 +61,14 @@ namespace LerenTypen
         /// </summary>
         private int[] StartAndEnd = new int[2];
 
+        private bool OnlyTrending;
+
         private MainWindow MainWindow { get; set; }
         public TestOverviewPage(MainWindow mainWindow, bool onlyTrending = false)
         {
             InitializeComponent();
             this.MainWindow = mainWindow;
+            OnlyTrending = onlyTrending;
             TableContent = new List<TestTable>();
 
             if (onlyTrending)
@@ -77,31 +82,6 @@ namespace LerenTypen
                 AllTestsOverview_Button_MakeOwnTest.Visibility = Visibility.Hidden;
                 AllTestsOverview_Button_ShowOwnTestOnly.Visibility = Visibility.Hidden;
                 AllTestsOverview_CheckBox_MadeBefore.Visibility = Visibility.Hidden;
-            }
-
-            // Add the data to the ListView and refresh to show
-            try
-            {
-                TableContent = TestController.GetAllTests();
-
-                // Bool to prevent the select event/ToonAlles_event at startup app
-                IsPageInitialized = true;
-
-                if (!onlyTrending)
-                {
-                    CurrentContent = TableContent;
-                }
-                else
-                {
-                    CurrentContent = TrendingTableContent;
-                }
-
-                ActiveFilter = 0;
-                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-            }
-            catch (NullReferenceException)
-            {
-                Console.WriteLine("Er zijn geen toetsen");
             }
         }
 
@@ -361,7 +341,7 @@ namespace LerenTypen
                 Console.WriteLine("User niet ingelogd");
             }
             else
-            {           
+            {
                 CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
                 ApplySearchFilter();
                 AllTestsOverview_ListView_AllTestsTable.ItemsSource = CurrentContent;
@@ -382,7 +362,7 @@ namespace LerenTypen
             }
             else
             {
-                    AllTestsOverview_ListView_AllTestsTable.ItemsSource = TableContent;
+                AllTestsOverview_ListView_AllTestsTable.ItemsSource = TableContent;
                 CurrentContent = TableContent;
                 //CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
                 if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
@@ -456,6 +436,39 @@ namespace LerenTypen
         {
             CurrentContent = TableContent;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                // Add the data to the ListView and refresh to show
+                try
+                {
+                    TableContent = TestController.GetAllTests();
+
+                    Dispatcher.Invoke(() => loadingLabel.Visibility = Visibility.Hidden);
+
+                    // Bool to prevent the select event/ToonAlles_event at startup app
+                    IsPageInitialized = true;
+
+                    if (!OnlyTrending)
+                    {
+                        CurrentContent = TableContent;
+                    }
+                    else
+                    {
+                        CurrentContent = TrendingTableContent;
+                    }
+                }
+                catch (NullReferenceException)
+                {
+                    Console.WriteLine("Er zijn geen toetsen");
+                }
+
+                ActiveFilter = 0;
+                Dispatcher.Invoke(() => Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]));
+            });
         }
     }
 }

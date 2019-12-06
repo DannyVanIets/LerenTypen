@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:LerenTypen"
       mc:Ignorable="d" 
       d:DesignHeight="570" d:DesignWidth="1050" Background="White"
-      Title="Page2" ShowsNavigationUI="False">
+      Title="Page2" ShowsNavigationUI="False" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -78,5 +78,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Label x:Name="loadingLabel" Grid.ColumnSpan="3" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">Laden...</Label>
     </Grid>
 </Page>
