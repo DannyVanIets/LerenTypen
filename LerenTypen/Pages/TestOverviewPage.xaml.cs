@@ -458,6 +458,15 @@ namespace LerenTypen
                     }
                     else
                     {
+                        TrendingTableContent = new List<TestTable>();
+                        List<Test> trendingTests = TestController.GetTrendingTests();
+                        TrendingTableContent = new List<TestTable>();
+                        int counter = 1;
+                        foreach (Test test in trendingTests)
+                        {
+                            TrendingTableContent.Add(new TestTable(counter, test.Name, test.TimesMade, test.Highscore, test.WordCount, test.Difficulty, test.AuthorUsername, 0, test.ID));
+                        }
+
                         CurrentContent = TrendingTableContent;
                     }
                 }
