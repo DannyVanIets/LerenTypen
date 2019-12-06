@@ -1,13 +1,12 @@
-using System.Windows.Controls;
+using LerenTypen.Controllers;
+using LerenTypen.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LerenTypen.Controllers;
-using System.Windows.Documents;
-using LerenTypen.Models;
-using System.Windows;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace LerenTypen
 {
@@ -383,7 +382,6 @@ namespace LerenTypen
                     AllTestsOverview_ListView_AllTestsTable.Items.Refresh();
                 }
             }
-
         }
 
         /// <summary>
