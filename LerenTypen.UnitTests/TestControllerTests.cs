@@ -47,7 +47,7 @@ namespace LerenTypen.UnitTests
 
         [Test]
         // Happy
-        [TestCase(12, 12, "Landen en steden", 1, 1, "HenkerDenker", 72, 2, 1, false, "02/12/2019", false)]
+        [TestCase(12, 12, "Landen en steden", 1, 1, "HenkerDenker", 72, 2, 1, false, "02-12-2019", false)]
         // Unhappy
         [TestCase(0, null, null, null, null, null, null, null, null, null, null, true)]
         public void GetTest_testID_Test(int testID, int resultId, string resultName, int resultType, int resultAuthorID, string resultAuthorUsername, int resultWordCount, int resultVersion, int resultDifficulty, bool resultIsPrivate, string resultCreatedDateTime, bool expectNull)
