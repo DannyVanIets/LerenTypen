@@ -23,7 +23,7 @@ namespace LerenTypen.UnitTests
                     {
                         while (reader.Read())
                         {
-                            result.Add(reader.ToString());
+                            result.Add(reader.GetString(0));
                         }
                     }
                 }

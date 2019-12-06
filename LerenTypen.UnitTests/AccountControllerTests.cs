@@ -23,25 +23,27 @@ namespace LerenTypen.UnitTests
         {
             //Arrange
             Account answer;
+            Account result;
             if (!expectNull)
             {
                 DateTime birthday = new DateTime(resultBirthYear, resultBirthMonth, resultBirthDay);
 
-                Account result = new Account(resultUsername, birthday, resultFirstName, resultSurname);
+                result = new Account(resultUsername, birthday, resultFirstName, resultSurname);
 
-                //Act
-                answer = AccountController.GetUserAccount(accountID);
-                //Assert
-                Assert.AreEqual(result.Birthdate, answer.Birthdate);
-                Assert.AreEqual(result.FirstName, answer.FirstName);
-                Assert.AreEqual(result.Surname, answer.Surname);
-                Assert.AreEqual(result.UserName, answer.UserName);
             }
             else
             {
-                answer = AccountController.GetUserAccount(accountID);
-                Assert.AreEqual(null, answer);
+                result = new Account();
             }
+            //Act
+            answer = AccountController.GetUserAccount(accountID);
+            //Assert
+            Assert.AreEqual(result.Birthdate, answer.Birthdate);
+            Assert.AreEqual(result.FirstName, answer.FirstName);
+            Assert.AreEqual(result.Surname, answer.Surname);
+            Assert.AreEqual(result.UserName, answer.UserName);
+
+
         }
 
         [Test]
@@ -58,26 +60,6 @@ namespace LerenTypen.UnitTests
             bool answer;
             //Act
             answer = AccountController.IsAdmin(accountID);
-            //Assert
-            Assert.AreEqual(result, answer);
-        }
-
-        [Test]
-        // Happy
-        [TestCase(1, 2)]
-        [TestCase(2, 2)]
-        [TestCase(3, 0)]
-        // Unhappy
-        [TestCase(500, null)]
-        [TestCase(int.MaxValue, null)]
-        public void GetAccountType_accountID_AccountType(int accountID, int result)
-        {
-            //Arrange
-            List<string> answerList = new List<string>();
-            int answer;
-            //Act
-            answerList = AccountController.GetAccountType(accountID);
-            answer = int.Parse(answerList[0]);
             //Assert
             Assert.AreEqual(result, answer);
         }
@@ -283,3 +265,4 @@ namespace LerenTypen.UnitTests
         #endregion
     }
 }
+

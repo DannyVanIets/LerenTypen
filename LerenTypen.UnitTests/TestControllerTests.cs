@@ -77,15 +77,17 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        // new list
-        public void GetTestInformation_testID_TestInformation(int testID, List<int> result)
+        // Happy
+        [TestCase(12, 1, 1)]
+        public void GetTestInformation_testID_TestInformation(int testID, int resultAccountID, int resultTestDifficulty)
         {
             //Arrange
             List<int> answer;
             //Act
             answer = TestController.GetTestInformation(testID);
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.AreEqual(resultAccountID, answer[0]);
+            Assert.AreEqual(resultTestDifficulty, answer[1]);
         }
 
         [Test]
@@ -93,8 +95,8 @@ namespace LerenTypen.UnitTests
         [TestCase(12, "Landen en steden")]
         [TestCase(15, "Doeizinnen")]
         // Unhappy
-        [TestCase(1, null)]
-        [TestCase(int.MaxValue, null)]
+        [TestCase(1, "")]
+        [TestCase(int.MaxValue, "")]
         public void GetTestName_testID_TestName(int testID, string result)
         {
             //Arrange
@@ -184,7 +186,7 @@ namespace LerenTypen.UnitTests
 
         [Test]
         // Happy
-        [TestCase(20, 93)]
+        [TestCase(20, 38)]
         // Unhappy
         [TestCase(1, null)]
         public void GetTestAverageScore_TestID_TestAverageScore(int testID, int result)
@@ -245,7 +247,7 @@ namespace LerenTypen.UnitTests
 
         [Test]
         // Happy
-        [TestCase(12, 0)]
+        [TestCase(12, 8)]
         [TestCase(15, 4)]
         // Unhappy
         [TestCase(0, null)]

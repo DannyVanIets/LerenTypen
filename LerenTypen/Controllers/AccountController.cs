@@ -7,39 +7,6 @@ namespace LerenTypen.Controllers
 {
     public class AccountController
     {
-        public static List<string> GetAccountType(int accountID)
-        {
-            List<string> results = new List<string>();
-            SqlConnection connection = new SqlConnection(Database.connectionString);
-            try
-            {
-                connection.Open();
-                string query = "select accountType from accounts Where accountID = @accountID";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@accountID", accountID);
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            results.Add(reader.GetString(2));
-                        }
-                    }
-                }
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                connection.Close();
-                connection.Dispose();
-            }
-            return results;
-        }
 
         /// <summary>
         /// Get an user by its id
