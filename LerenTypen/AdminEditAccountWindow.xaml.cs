@@ -36,6 +36,7 @@ namespace LerenTypen
             string surname = lastNameTextbox.Text;
             string username = account.UserName;
             string comboboxvalue = ((ComboBoxItem)UserType.SelectedItem).Tag.ToString();
+
             try
             {
                 if (!string.IsNullOrEmpty(firstname) || !string.IsNullOrEmpty(surname) || !string.IsNullOrEmpty(username))
@@ -58,8 +59,6 @@ namespace LerenTypen
                     AccountController.MakeTeacher(username);
                     MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
                     this.Close();
-
-
                 }
                 else if (comboboxvalue == "admin")
                 {
@@ -105,7 +104,6 @@ namespace LerenTypen
                 {
                     this.Close();
                 }
-
             }
             catch (Exception r)
             {
