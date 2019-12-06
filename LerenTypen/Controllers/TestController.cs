@@ -252,10 +252,12 @@ namespace LerenTypen.Controllers
                 connection.Open();
 
                 // this query returns all the content from a given testId
-                string query = ("SELECT TOP 3 MAX(wordsEachMinute) AS wordsEachMinute, accountID FROM testresults WHERE testID=1 GROUP BY accountID ORDER BY wordsEachMinute DESC");
+                string query = ("SELECT TOP 3 MAX(wordsEachMinute) AS wordsEachMinute, accountID FROM testresults WHERE testID=@testID GROUP BY accountID ORDER BY wordsEachMinute DESC");
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
+                    command.Parameters.AddWithValue("@testID", testID);
+
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
