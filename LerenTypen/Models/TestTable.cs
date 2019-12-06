@@ -13,6 +13,24 @@
         public bool IsPrivate { get; set; }
         public int TestId { get; set; }
 
+        public TestTable(int number ,string name , int isPrivate , int testID)
+        {
+            this.WPFNumber = number;
+            this.WPFName = name;
+            this.TestId = testID;
+
+            if (isPrivate == 0)
+            { 
+                this.IsPrivate = false;
+            }
+            else
+            {
+                this.IsPrivate = true;
+            }
+
+        }
+
+
         public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, int testDifficulty, string uploader)
         {
             this.WPFNumber = number;

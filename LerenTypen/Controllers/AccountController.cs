@@ -487,13 +487,78 @@ namespace LerenTypen.Controllers
             return false;
         }
 
-        private static bool GetAverageWordsMinute(string userName)
+        public static string GetAverageTestResultpercentage(string userName)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
                 connection.Open();
-                string query = "Selectqueryvooraveragewordsperminuut";
+                string query = "select avg(testresults.score) from testresults where accountID = @id";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", AccountController.GetAccountIDFromUsername(userName));
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return reader[0].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return null;
+        }
+
+
+        public static string GetAverageWordsMinute(string userName)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "select avg(testresults.wordsEachMinute) from testresults where accountID = @id;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", AccountController.GetAccountIDFromUsername(userName));
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return reader[0].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return null;
+        }
+
+        public static bool DeleteAccount(string userName)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "UPDATE accounts set archived=1 WHERE accountID = @id AND archived = 0";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -513,32 +578,5 @@ namespace LerenTypen.Controllers
             }
             return false;
         }
-
-    public static bool DeleteAccount(string userName)
-    {
-        SqlConnection connection = new SqlConnection(Database.connectionString);
-        try
-        {
-            connection.Open();
-            string query = "UPDATE accounts set archived=1 WHERE accountID = @id AND archived = 0";
-
-            using (SqlCommand command = new SqlCommand(query, connection))
-            {
-                command.Parameters.AddWithValue("@id", AccountController.GetAccountIDFromUsername(userName));
-                command.ExecuteNonQuery();
-            }
-            return true;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-        }
-        finally
-        {
-            connection.Close();
-            connection.Dispose();
-        }
-        return false;
     }
-}
 }

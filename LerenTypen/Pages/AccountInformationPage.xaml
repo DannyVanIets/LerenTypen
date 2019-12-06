@@ -39,11 +39,11 @@
 
         <StackPanel Orientation="Vertical" Grid.Column="1">
             <Label FontSize="20" Margin="0,5,0,0" HorizontalAlignment="Center" FontWeight="Bold" Grid.Column="0" Content="Laatst Geoefende Toetsen"/>
-            <DataGrid x:Name="Laatstgeoefendetoetsen" AutoGenerateColumns="False" Margin="0,5,-0.2,0.6" IsReadOnly="True" FontSize="15">
+            <DataGrid x:Name="Laatstgeoefendetoets" AutoGenerateColumns="False" Margin="0,5,-0.2,0.6" IsReadOnly="True" FontSize="15">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" Width="30*" Binding="{Binding Accountnumber}" FontSize="18"/>
-                    <DataGridTextColumn Header ="Toetsnaam" Width="200*" Binding="{Binding Username}" FontSize="18"/>
-                    <DataGridTextColumn Header="Datum" Width="150*" Binding="{Binding Usertype}"  FontSize="18"/>
+                    <DataGridTextColumn Header="#" Width="30*" Binding="{Binding WPFNumber}" FontSize="18"/>
+                    <DataGridTextColumn Header ="Toetsnaam" Width="200*" Binding="{Binding WPFName}" FontSize="18"/>
+                    <DataGridTextColumn Header="Datum" Width="150*" Binding="{Binding Date}"  FontSize="18"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
@@ -61,19 +61,19 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Orientation="Vertical" Grid.Column="0">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Label" VerticalAlignment="Top" HorizontalAlignment="Left" Height="60" Width="52" Margin="0,0,0,0"/>
-                        <TextBox HorizontalAlignment="Left" Height="60" BorderThickness="0" Margin="0,0,0,0" TextWrapping="Wrap" Text="Gemiddeld aantal goede woorden per minuut." Width="210" FontSize="15"/>
-                    </StackPanel>
+                    <TextBox HorizontalAlignment="Left" HorizontalContentAlignment="Center" Height="47" BorderThickness="0" Margin="20,0,0,0" TextWrapping="Wrap" Text="Gemiddeld aantal goede woorden per minuut." Width="210" FontSize="15"/>
+                    <Label x:Name="AverageWordsMinute" Content="*error*" VerticalAlignment="Top" HorizontalAlignment="Left" Height="68" HorizontalContentAlignment="Center" Width="263" Margin="0,0,0,0" FontSize="30"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Vertical" Grid.Column="1">
+                <StackPanel Orientation="Vertical" Grid.ColumnSpan="2" Margin="263,0,0.4,137.2" Grid.RowSpan="2">
                     <Label Content="Hier komt de grafiek!" Margin="0,0,-0.2,0" Height="47" FontSize="15"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1">
-                    <Label Content="Label" HorizontalAlignment="Left" Width="52" RenderTransformOrigin="0.417,-2.325" Margin="0,1,0,95"/>
-                    <TextBox HorizontalAlignment="Left" BorderThickness="0" Margin="0,0,0,94.6" TextWrapping="Wrap" Text="Gemiddeld % woorden goed per toets." Width="209" FontSize="15"/>
+                    <StackPanel Orientation="Vertical">
+                        <TextBox HorizontalAlignment="Left" BorderThickness="0" TextAlignment="Center" Margin="20,0,0,0.0" TextWrapping="Wrap" Text="Gemiddeld % woorden goed per toets." Width="209" FontSize="15"/>
+                        <Label x:Name="AveragePercentageMinute" Content="*error*" HorizontalAlignment="Left"  Height="68" HorizontalContentAlignment="Center" Width="263" Margin="0,0,0,0"  FontSize="30"/>
+                    </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
@@ -85,16 +85,28 @@
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
             <Label FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" FontWeight="Bold" Content="Mijn Toetsen"/>
-            <DataGrid x:Name="MijnToetsen" AutoGenerateColumns="False" Margin="0,5,-0.2,0.6" IsReadOnly="True" FontSize="15">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" Width="30*" Binding="{Binding TestNumber}" FontSize="18"/>
-                    <DataGridTextColumn Header ="Toetsnaam" Width="200*" Binding="{Binding TestName}" FontSize="18"/>
-                    <DataGridTextColumn Header="Datum" Width="100*" Binding="{Binding Date}"  FontSize="18"/>
-                    <DataGridTextColumn Header="Prive" Width="50*" Binding="{Binding Private}"  FontSize="18"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <ListView x:Name="MijnToetsen" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
+                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
+                            <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="70" local:GridViewSort.PropertyName="IsPrivate">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Tag="{Binding AmountOfWords}" Checked="DG_Checkbox_Check" Unchecked="DG_Checkbox_Uncheck" IsChecked="{Binding IsPrivate}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-            <StackPanel Orientation="Horizontal" Height="50" Margin="0,160,-0.2,0">
+                            <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_TestId" Header="TestId" DisplayMemberBinding="{Binding TestId}" local:GridViewSort.PropertyName="TestId" Width="0"/>
+
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <StackPanel Orientation="Horizontal" Height="50" Margin="0,10,-0.2,0">
                 <Button Content="Al mijn toetsen" HorizontalAlignment="Left" Height="42" Margin="35,2,0,-3.8" Width="135"/>
                 <Button Content="Maak nieuwe toets aan" HorizontalAlignment="Left" Height="42" Margin="155,2,0,0" Width="135"/>
             </StackPanel>
