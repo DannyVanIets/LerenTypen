@@ -276,6 +276,7 @@ namespace LerenTypen.Controllers
                 connection.Close();
                 connection.Dispose();
             }
+            trendingTests.Reverse(); // Reverse the list so it is in the right order
             return trendingTests;
         }
 
@@ -307,7 +308,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
 
-                string query = $"SELECT testID, testName from tests t WHERE t.testID IN {idList}";
+                string query = $"SELECT testID, testName, accountID from tests t WHERE t.testID IN {idList}";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -319,8 +320,10 @@ namespace LerenTypen.Controllers
                         {
                             int id = Convert.ToInt32(reader[0]);
                             string name = reader.GetString(1);
+                            int authorID = Convert.ToInt32(reader[2]);
+                            string authorName = AccountController.GetUsername(authorID);
 
-                            trendingTests.Add(new Test(id, name));
+                            trendingTests.Add(new Test(id, name, authorName));
                         }
                     }
                 }
@@ -334,6 +337,7 @@ namespace LerenTypen.Controllers
                 connection.Close();
                 connection.Dispose();
             }
+            trendingTests.Reverse(); // Reverse the list so it is in the right order
             return trendingTests;
         }
 

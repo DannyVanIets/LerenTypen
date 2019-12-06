@@ -53,11 +53,16 @@ namespace LerenTypen
         private int[] StartAndEnd = new int[2];
 
         private MainWindow MainWindow { get; set; }
-        public TestOverviewPage(MainWindow mainWindow)
+        public TestOverviewPage(MainWindow mainWindow, bool onlyTrending = false)
         {
             InitializeComponent();
             this.MainWindow = mainWindow;
             TableContent = new List<TestTable>();
+
+            if (onlyTrending)
+            {
+                AllTestsOverview_CheckBox_TrendingTests.IsChecked = true;
+            }
 
             // Hide some buttons if a user hasnt logged in yet
             if (MainWindow.Ingelogd == 0)
@@ -452,7 +457,12 @@ namespace LerenTypen
 
         }
 
-        private void AllTestsOverview_CheckBox_MadeBefore_Unchecked_1(object sender, System.Windows.RoutedEventArgs e)
+        private void AllTestsOverview_CheckBox_TrendingTests_Checked(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
+
+        private void AllTestsOverview_CheckBox_TrendingTests_Unchecked(object sender, System.Windows.RoutedEventArgs e)
         {
 
         }

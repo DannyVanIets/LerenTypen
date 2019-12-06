@@ -1,4 +1,5 @@
 ﻿using LerenTypen.Controllers;
+using LerenTypen.Models;
 using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
@@ -27,7 +28,14 @@ namespace LerenTypen
                 loginRegisterButton.Visibility = System.Windows.Visibility.Visible;
             }
 
-            trendingTestsListView.ItemsSource = TestController.GetTrendingTestsNameAndID(10);
+            List<Test> trendingTests = TestController.GetTrendingTestsNameAndID(10);
+            int counter = 1;
+            foreach (Test test in trendingTests)
+            {
+                test.Number = counter;
+                trendingTestsListView.Items.Add(test);
+                counter++;
+            }
         }
 
         private void LoginRegisterButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -37,14 +45,15 @@ namespace LerenTypen
 
         private void MoreTrendingTestsLink_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            mainWindow.ChangePage(new TrendingTestsPage());
+            mainWindow.ChangePage(new TestOverviewPage(mainWindow, true));
         }
 
-        private void TrendingTestListViewItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void TrendingTestsListViewItem_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Hyperlink link = (Hyperlink)sender;
-            int id = Convert.ToInt32(link.Tag);
-            mainWindow.ChangePage(new TestInfoPage(id, mainWindow));
+            // Get test associated with the listview item
+            Test test = ((ListViewItem)sender).Content as Test;
+
+            mainWindow.ChangePage(new TestInfoPage(test.ID, mainWindow));
         }
     }
 }

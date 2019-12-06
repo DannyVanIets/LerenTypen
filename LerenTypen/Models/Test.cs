@@ -5,6 +5,7 @@ namespace LerenTypen.Models
     class Test
     {
         public int ID { get; private set; }
+        public int Number { get; set; }
         public string Name { get; private set; }
         public int Type { get; private set; }
         public int AuthorID { get; private set; }
@@ -37,10 +38,11 @@ namespace LerenTypen.Models
             AverageScore = TestController.GetTestAverageScore(ID);
         }
 
-        public Test(int id, string name)
+        public Test(int id, string name, string authorName)
         {
             ID = id;
             Name = name;
+            AuthorUsername = authorName;
         }
     }
 }
