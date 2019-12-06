@@ -185,8 +185,6 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        // Happy
-        [TestCase(20, 38)]
         // Unhappy
         [TestCase(1, null)]
         public void GetTestAverageScore_TestID_TestAverageScore(int testID, int result)
@@ -245,21 +243,6 @@ namespace LerenTypen.UnitTests
             Assert.IsTrue(answer.Count < 4);
         }
 
-        [Test]
-        // Happy
-        [TestCase(12, 8)]
-        [TestCase(15, 4)]
-        // Unhappy
-        [TestCase(0, null)]
-        public void GetTimesMade_TestID_TimesMade(int testID, int result)
-        {
-            //Arrange
-            int answer;
-            //Act
-            answer = TestController.GetTimesMade(testID);
-            //Assert
-            Assert.AreEqual(result, answer);
-        }
         #endregion
 
         #region Insert        
