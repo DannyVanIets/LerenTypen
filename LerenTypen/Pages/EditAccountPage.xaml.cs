@@ -172,13 +172,8 @@ namespace LerenTypen
                     System.Windows.MessageBox.Show("Het Account is succesvol verwijderd!", "Succes");
                     string username = Account.UserName;
                     AccountController.DeleteAccount(username);
-                    MainWindow.LogoutUser();
+                    MainWindow.LogoutUser(true);
                 }
-                else if (messageBoxResult == MessageBoxResult.No)
-                {
-
-                }
-
             }
             catch (Exception r)
             {
