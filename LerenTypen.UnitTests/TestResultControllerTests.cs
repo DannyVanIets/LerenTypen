@@ -14,47 +14,63 @@ namespace LerenTypen.UnitTests
 
         #region Select
         [Test]
-        public void GetTestResults_testResultsID_TestResults(int testResultsID, List<string> result)
+        // Happy
+        [TestCase(48, "60", "0", "100")]
+        public void GetTestResults_testResultsID_TestResults(int testResultsID, string resultWordsEachMinute, string resultPauses, string resultScore)
         {
             //Arrange
             List<string> answer = new List<string>();
             //Act
             answer = TestResultController.GetTestResults(testResultsID);
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.AreEqual(resultWordsEachMinute, answer[0]);
+            Assert.AreEqual(resultPauses, answer[1]);
+            Assert.AreEqual(resultScore, answer[2]);
         }
 
         [Test]
-        public void GetTestResultsContentRight_testResultsID_TestResultsContentRight(int testResultsID, List<string> result)
+        // Happy
+        [TestCase(58, 45)]
+        // Unhappy
+        [TestCase(int.MaxValue, 0)]
+        public void GetTestResultsContentRight_testResultsID_TestResultsContentRight(int testResultsID, int resultCount)
         {
             //Arrange
             List<string> answer = new List<string>();
             //Act
             answer = TestResultController.GetTestResultsContentRight(testResultsID);
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.AreEqual(resultCount, answer.Count);
         }
 
         [Test]
-        public void GetTestResultsContentWrong_testResultsID_TestResultsContentWrong(int testResultsID, List<string> result)
+        // Happy
+        [TestCase(58, 1)]
+        // Unhappy
+        [TestCase(int.MaxValue, 0)]
+        public void GetTestResultsContentWrong_testResultsID_TestResultsContentWrong(int testResultsID, int resultCount)
         {
             //Arrange
             List<string> answer = new List<string>();
             //Act
             answer = TestResultController.GetTestResultsContentWrong(testResultsID);
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.AreEqual(resultCount, answer.Count);
         }
 
         [Test]
-        public void GetTestResultsContentHadToBe_testResultsID_TestResultsContentHadToBe(int testResultsID, List<string> result)
+        // Happy
+        [TestCase(58, 1)]
+        // Unhappy
+        [TestCase(int.MaxValue, 0)]
+        public void GetTestResultsContentHadToBe_testResultsID_TestResultsContentHadToBe(int testResultsID, int resultCount)
         {
             //Arrange
             List<string> answer = new List<string>();
             //Act
             answer = TestResultController.GetTestResultsContentHadToBe(testResultsID);
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.AreEqual(resultCount, answer.Count);
         }
 
         [Test]
@@ -75,19 +91,25 @@ namespace LerenTypen.UnitTests
 
         #region Insert
         [Test]
-        public void SaveResultsandInsertResultsContent_testResultsID_testResultID(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines, int score)
+        // Happy
+        [TestCase(20)]
+        // Unhappy
+        [TestCase(0)]
+        public void SaveResultsandInsertResultsContent_testResultsID_testResultID(int testID)
         {
             //Arrange
             int answer;
             List<string> result;
+            List<string> rightAnswers = new List<string>() { "test", "test" };
+            Dictionary<int, string> wrongAnswers = new Dictionary<int, string>();
+            wrongAnswers.Add(1, "Test");
+            List<string> lines = new List<string>() { "test", "test", "test", "test" };
             //Act
-            answer = TestResultController.SaveResults(testID, accountID, wordsEachMinute, pauses, rightAnswers, wrongAnswers, lines, score);
+            answer = TestResultController.SaveResults(testID, 1, 1, 1, rightAnswers, wrongAnswers, lines, 5);
             result = Database.SelectQuery("Select Max(testResultID) from testresults");
             //Assert
             Assert.AreEqual(int.Parse(result[0]), answer);
         }
-
-
         #endregion
     }
 }
