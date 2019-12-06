@@ -13,7 +13,9 @@ namespace LerenTypen
         private Account Account;
         private Date Date;
         List<TestTable> UserContent;
+        List<TestTable> LastMadeContent;
         List<TestTable> CurrentContent = new List<TestTable>();
+        List<TestTable> ContentNow = new List<TestTable>();
 
 
         public AccountInformationPage(MainWindow mainWindow)
@@ -24,6 +26,7 @@ namespace LerenTypen
             Date = new Date();
             //Make a new list for filling the table
             UserContent = new List<TestTable>();
+            LastMadeContent = new List<TestTable>();
             if (mainWindow.Ingelogd > 0)
             {
                 //get User account
@@ -37,13 +40,18 @@ namespace LerenTypen
                 //Get averages from database and fill labels for that account.
                 AverageWordsMinute.Content = AccountController.GetAverageWordsMinute(Account.UserName);
                 AveragePercentageMinute.Content = AccountController.GetAverageTestResultpercentage(Account.UserName);
-
                 try
                 {
                     UserContent = TestController.GetPrivateTestMyAccount(MainWindow.Ingelogd);
                     MijnToetsen.ItemsSource = UserContent;
                     MijnToetsen.Items.Refresh();
                     CurrentContent = UserContent;
+
+                    LastMadeContent = TestController.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd);
+                    LaatstGeoefendeToetsen.ItemsSource = LastMadeContent;
+                    LaatstGeoefendeToetsen.Items.Refresh();
+                    ContentNow = LastMadeContent;
+
 
                 }
                 catch (Exception e)
@@ -68,8 +76,6 @@ namespace LerenTypen
                 int id = tt.TestId;
                 TestController.UpdateTestToPrivate(id);
                 //tt.IsPrivate = checkbox.IsChecked;
-
-                MessageBox.Show("IK update nu iets."); 
                 MijnToetsen.Items.Refresh();
             }
             catch (Exception y)
@@ -83,9 +89,7 @@ namespace LerenTypen
             CheckBox checkbox = sender as CheckBox;
             TestTable tt = checkbox.DataContext as TestTable;
             int id = tt.TestId;
-
             TestController.UpdateTestToPublic(id);
-            MessageBox.Show("Hij moet nu naar 0");
             MijnToetsen.Items.Refresh();
         }
     }

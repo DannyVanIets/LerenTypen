@@ -39,15 +39,25 @@
 
         <StackPanel Orientation="Vertical" Grid.Column="1">
             <Label FontSize="20" Margin="0,5,0,0" HorizontalAlignment="Center" FontWeight="Bold" Grid.Column="0" Content="Laatst Geoefende Toetsen"/>
-            <DataGrid x:Name="Laatstgeoefendetoets" AutoGenerateColumns="False" Margin="0,5,-0.2,0.6" IsReadOnly="True" FontSize="15">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" Width="30*" Binding="{Binding WPFNumber}" FontSize="18"/>
-                    <DataGridTextColumn Header ="Toetsnaam" Width="200*" Binding="{Binding WPFName}" FontSize="18"/>
-                    <DataGridTextColumn Header="Datum" Width="150*" Binding="{Binding Date}"  FontSize="18"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <ListView x:Name="LaatstGeoefendeToetsen" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
+                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
+                            <GridViewColumn x:Name="AllMyLastMadeTestsPage_DG_IsPrivate" Header="Privé" Width="70" local:GridViewSort.PropertyName="IsPrivate">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Tag="{Binding AmountOfWords}" Checked="DG_Checkbox_Check" Unchecked="DG_Checkbox_Uncheck" IsChecked="{Binding IsPrivate}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="AllMyLastMadeTests_DG_TestId" Header="TestId" DisplayMemberBinding="{Binding TestId}" local:GridViewSort.PropertyName="TestId" Width="0"/>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </StackPanel>
-
         <StackPanel Orientation="Horizontal" Grid.Row="1">
             <Grid Margin="0,10,0,-0.2" Width="526">
                 <Grid.ColumnDefinitions>

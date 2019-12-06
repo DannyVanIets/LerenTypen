@@ -1,4 +1,7 @@
-﻿namespace LerenTypen
+﻿using LerenTypen.Models;
+using System;
+
+namespace LerenTypen
 {
     public class TestTable
     {
@@ -9,18 +12,19 @@
         public int AmountOfWords { get; set; }
         public string Difficulty { get; set; }
         public string Uploader { get; set; }
+        public string date { get; set; }
         public int DifficultyBinder { get; set; }
         public bool IsPrivate { get; set; }
         public int TestId { get; set; }
 
-        public TestTable(int number ,string name , int isPrivate , int testID)
+        public TestTable(int number, string name, int isPrivate, int testID)
         {
             this.WPFNumber = number;
             this.WPFName = name;
             this.TestId = testID;
 
             if (isPrivate == 0)
-            { 
+            {
                 this.IsPrivate = false;
             }
             else

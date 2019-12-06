@@ -468,7 +468,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //adds all the found data to a list
-                            queryResult.Add(new TestTable(Convert.ToInt32(reader[0]), reader.GetString(1),Convert.ToInt32(reader[2]) , Convert.ToInt32(reader[3])));
+                            queryResult.Add(new TestTable(Convert.ToInt32(reader[0]), reader.GetString(1), Convert.ToInt32(reader[2]), Convert.ToInt32(reader[3])));
                         }
                     }
                 }
@@ -484,282 +484,277 @@ namespace LerenTypen.Controllers
             }
             return queryResult;
         }
-    
-    public static List<TestTable> GetAllMyTestswithIsPrivate(int accountId)
-    {
-        List<TestTable> queryResult = new List<TestTable>();
-        SqlConnection connection = new SqlConnection(Database.connectionString);
 
-        try
+        public static List<TestTable> GetAllMyTestswithIsPrivate(int accountId)
         {
-            connection.Open();
-            string query = "select testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and a.accountId=@id";
-            int bCounter = 1;
+            List<TestTable> queryResult = new List<TestTable>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
 
-            using (SqlCommand command = new SqlCommand(query, connection))
+            try
             {
-                command.Parameters.AddWithValue("@id", accountId);
-                using (SqlDataReader reader = command.ExecuteReader())
+                connection.Open();
+                string query = "select testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and a.accountId=@id";
+                int bCounter = 1;
+
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    while (reader.Read())
+                    command.Parameters.AddWithValue("@id", accountId);
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        //adds all the found data to a list
-                        queryResult.Add(new TestTable(bCounter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetFastestTyper(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0])));
-                        bCounter++;
-                    }
-                }
-            }
-        }
-        catch (SqlException e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
-            connection.Dispose();
-        }
-        return queryResult;
-    }
-    public static List<TestTable> GetAllMyTestsAlreadyMade(int ingelogd)
-    {
-        List<TestTable> queryResult = new List<TestTable>();
-        SqlConnection connection = new SqlConnection(Database.connectionString);
-        try
-        {
-            connection.Open();
-            // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-            string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.accountID=@accountID and t.archived=0 and a.archived=0;";
-            int counter = 1;
-
-            using (SqlCommand command = new SqlCommand(query, connection))
-            {
-                command.Parameters.AddWithValue("@accountID", ingelogd);
-
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        // add all the found data to a list
-                        queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetFastestTyper(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0])));
-                        counter++;
-                    }
-                }
-            }
-
-        }
-        catch (SqlException e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
-            connection.Dispose();
-        }
-        return queryResult;
-    }
-
-    /// <summary>
-    /// Get the amount of words from the contentTable for each test
-    /// </summary>
-    /// <param name="testId"></param>
-    /// <returns></returns>
-    public static int GetAmountOfWordsFromTest(int testId)
-    {
-        int amountOfWords = 0;
-        string fullResult = "";
-        SqlConnection connection = new SqlConnection(Database.connectionString);
-        try
-        {
-            connection.Open();
-
-            // This query returns all the content from a given testId
-            string query = "SELECT content FROM testcontent WHERE testID=" + testId;
-
-            using (SqlCommand command = new SqlCommand(query, connection))
-            {
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        fullResult = reader.GetString(0);
-
-                        // Checks the string for any excess spaces and deletes them
-                        string[] words = fullResult.Trim().Split();
-                        foreach (var word in words)
+                        while (reader.Read())
                         {
-                            if (!word.Equals(""))
-                            {
-                                amountOfWords++;
-                            }
+                            //adds all the found data to a list
+                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetFastestTyper(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0])));
+                            bCounter++;
                         }
                     }
                 }
             }
-            return amountOfWords;
-        }
-        catch (SqlException e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
-            connection.Dispose();
-        }
-        return 0;
-    }
-
-    /// <summary>
-    /// Method for adding tests to database. 
-    /// </summary>        
-    public static void AddTest(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy)
-    {
-        SqlConnection connection = new SqlConnection(Database.connectionString);
-        try
-        {
-            connection.Open();
-
-            // Select SCOPE_IDENTITY is used to insert the tests content into a seperate table with the same id
-            // DateTime.Now is being used to get the current date and time.
-            string query = "INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID) " +
-                $"VALUES (@testName, @testType, 0, @testDifficulty, @now, @isPrivate, @uploadedBy); SELECT SCOPE_IDENTITY()";
-
-            using (SqlCommand command = new SqlCommand(query, connection))
+            catch (SqlException e)
             {
-                command.Parameters.AddWithValue("@testName", testName);
-                command.Parameters.AddWithValue("@testType", testType);
-                command.Parameters.AddWithValue("@testDifficulty", testDifficulty);
-                command.Parameters.AddWithValue("@now", DateTime.Now);
-                command.Parameters.AddWithValue("@isPrivate", isPrivate);
-                command.Parameters.AddWithValue("@uploadedBy", uploadedBy);
-
-                object testID = command.ExecuteScalar();
-                int intTestID = int.Parse(testID.ToString());
-
-                AddTestContent(intTestID, content);
+                Console.WriteLine(e.Message);
             }
-        }
-        catch (SqlException e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
-            connection.Dispose();
-        }
-    }
-
-    /// <summary>
-    /// Method adds each line of content of a test to database using its tests ID. testcontent is stored in a separate db.
-    /// </summary>        
-    private static void AddTestContent(int testID, List<string> content)
-    {
-        SqlConnection connection = new SqlConnection(Database.connectionString);
-        try
-        {
-            connection.Open();
-
-            foreach (string contentLine in content)
+            finally
             {
-                string query = "INSERT INTO testContent (testID, content) VALUES (@testID, @contentLine)";
+                connection.Close();
+                connection.Dispose();
+            }
+            return queryResult;
+        }
+        public static List<TestTable> GetAllMyTestsAlreadyMade(int accountId)
+        {
+            List<TestTable> queryResult = new List<TestTable>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
+                string query = "select distinct top 3 tr.testID, testname, t.isPrivate, tr.testID ,tr.testResultsDate from tests t inner join testresults as tr on t.testID = tr.testID where t.accountID = @id and t.archived = 0 order by tr.testResultsDate desc";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", accountId);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            //adds all the found data to a list
+                            queryResult.Add(new TestTable(Convert.ToInt32(reader[0]), reader.GetString(1), Convert.ToInt32(reader[2]), Convert.ToInt32(reader[3])));
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return queryResult;
+        }
+
+        /// <summary>
+        /// Get the amount of words from the contentTable for each test
+        /// </summary>
+        /// <param name="testId"></param>
+        /// <returns></returns>
+        public static int GetAmountOfWordsFromTest(int testId)
+        {
+            int amountOfWords = 0;
+            string fullResult = "";
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // This query returns all the content from a given testId
+                string query = "SELECT content FROM testcontent WHERE testID=" + testId;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@testID", testID);
-                    command.Parameters.AddWithValue("@contentLine", contentLine);
-                    command.ExecuteNonQuery();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            fullResult = reader.GetString(0);
+
+                            // Checks the string for any excess spaces and deletes them
+                            string[] words = fullResult.Trim().Split();
+                            foreach (var word in words)
+                            {
+                                if (!word.Equals(""))
+                                {
+                                    amountOfWords++;
+                                }
+                            }
+                        }
+                    }
+                }
+                return amountOfWords;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// Method for adding tests to database. 
+        /// </summary>        
+        public static void AddTest(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // Select SCOPE_IDENTITY is used to insert the tests content into a seperate table with the same id
+                // DateTime.Now is being used to get the current date and time.
+                string query = "INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID) " +
+                    $"VALUES (@testName, @testType, 0, @testDifficulty, @now, @isPrivate, @uploadedBy); SELECT SCOPE_IDENTITY()";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testName", testName);
+                    command.Parameters.AddWithValue("@testType", testType);
+                    command.Parameters.AddWithValue("@testDifficulty", testDifficulty);
+                    command.Parameters.AddWithValue("@now", DateTime.Now);
+                    command.Parameters.AddWithValue("@isPrivate", isPrivate);
+                    command.Parameters.AddWithValue("@uploadedBy", uploadedBy);
+
+                    object testID = command.ExecuteScalar();
+                    int intTestID = int.Parse(testID.ToString());
+
+                    AddTestContent(intTestID, content);
                 }
             }
-        }
-        catch (SqlException e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
-            connection.Dispose();
-        }
-    }
-
-
-    /// <summary>
-    /// Returns all the tests that have been previously made by the user
-    /// </summary>
-    /// <param name="ingelogd"></param>
-    /// <returns></returns>
-    public static List<TestTable> GetAllTestsAlreadyMade(int ingelogd)
-    {
-        List<TestTable> tests = new List<TestTable>();
-        SqlConnection connection = new SqlConnection(Database.connectionString);
-
-        try
-        {
-            connection.Open();
-            // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-            string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0 and t.isPrivate=0";
-            int counter = 1;
-
-            using (SqlCommand command = new SqlCommand(query, connection))
+            catch (SqlException e)
             {
-                command.Parameters.AddWithValue("@accountID", ingelogd);
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+        }
 
-                using (SqlDataReader reader = command.ExecuteReader())
+        /// <summary>
+        /// Method adds each line of content of a test to database using its tests ID. testcontent is stored in a separate db.
+        /// </summary>        
+        private static void AddTestContent(int testID, List<string> content)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                foreach (string contentLine in content)
                 {
-                    while (reader.Read())
+                    string query = "INSERT INTO testContent (testID, content) VALUES (@testID, @contentLine)";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        //add all the found data to a list
-                        tests.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetTestHighscore(Convert.ToInt32(reader[0])), TestController.GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4)));
-                        counter++;
+                        command.Parameters.AddWithValue("@testID", testID);
+                        command.Parameters.AddWithValue("@contentLine", contentLine);
+                        command.ExecuteNonQuery();
                     }
                 }
             }
-        }
-        catch (SqlException e)
-        {
-            Console.WriteLine(e.Message);
-        }
-        finally
-        {
-            connection.Close();
-            connection.Dispose();
-        }
-        return tests;
-    }
-
-    public static int GetTimesMade(int testId)
-    {
-        SqlConnection connection = new SqlConnection(Database.connectionString);
-        int result = 0;
-        try
-        {
-            connection.Open();
-            string query = "select count(*) from testresults where testId=@test;";
-            using (SqlCommand command = new SqlCommand(query, connection))
+            catch (SqlException e)
             {
-                command.Parameters.AddWithValue("@test", testId);
-                using (SqlDataReader reader = command.ExecuteReader())
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+        }
+
+
+        /// <summary>
+        /// Returns all the tests that have been previously made by the user
+        /// </summary>
+        /// <param name="ingelogd"></param>
+        /// <returns></returns>
+        public static List<TestTable> GetAllTestsAlreadyMade(int ingelogd)
+        {
+            List<TestTable> tests = new List<TestTable>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+
+            try
+            {
+                connection.Open();
+                // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0 and t.isPrivate=0";
+                int counter = 1;
+
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    while (reader.Read())
+                    command.Parameters.AddWithValue("@accountID", ingelogd);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        result = Convert.ToInt32(reader[0]);
+                        while (reader.Read())
+                        {
+                            //add all the found data to a list
+                            tests.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetTestHighscore(Convert.ToInt32(reader[0])), TestController.GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4)));
+                            counter++;
+                        }
                     }
                 }
             }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return tests;
         }
-        catch (Exception e)
+
+        public static int GetTimesMade(int testId)
         {
-            Console.WriteLine(e.ToString());
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            int result = 0;
+            try
+            {
+                connection.Open();
+                string query = "select count(*) from testresults where testId=@test;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@test", testId);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            result = Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return result;
         }
-        finally
-        {
-            connection.Close();
-            connection.Dispose();
-        }
-        return result;
     }
 }
-    }

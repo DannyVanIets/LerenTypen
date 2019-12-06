@@ -117,6 +117,7 @@ namespace LerenTypen.Controllers
             return null;
         }
 
+
         //In this query we will get all the information from one account. This is used in EditAccountPage to fill in the textboxes with the existing information.
         //Password, type and archived is not selected.
         public static Account GetAllAccountInformationExceptPassword(int accountID)
@@ -331,6 +332,39 @@ namespace LerenTypen.Controllers
                 connection.Dispose();
             }
             return 0;
+        }
+
+        public static List<UserTable> GetLast3TestsMade()
+        {
+            List<UserTable> queryResult = new List<UserTable>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "select accountID, accountUsername, accountType, accountFirstname, accountSurname from accounts where archived = 0";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            queryResult.Add(new UserTable(reader.GetInt32(0), reader.GetString(1), reader.GetInt16(2), reader.GetString(3), reader.GetString(4)));
+                        }
+                    }
+                }
+                return queryResult;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
         }
 
         public static List<UserTable> GetAllUsers()
