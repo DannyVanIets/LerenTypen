@@ -58,14 +58,18 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        public void GetAllTestResultsFromAccount_accountIDTestID_AllTestResultsFromAccount(int accountID, int testID, List<TestResult> result)
+        // Happy
+        [TestCase(2, 1, 0)]
+        // Unhappy
+        [TestCase(0, 1, 0)]
+        public void GetAllTestResultsFromAccount_accountIDTestID_AllTestResultsFromAccount(int accountID, int testID, int resultCount)
         {
             //Arrange
             List<TestResult> answer = new List<TestResult>();
             //Act
             answer = TestResultController.GetAllTestResultsFromAccount(accountID, testID);
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.AreEqual(resultCount, answer.Count);
         }
         #endregion
 

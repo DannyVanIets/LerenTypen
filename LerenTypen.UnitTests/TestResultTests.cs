@@ -7,7 +7,7 @@ namespace LerenTypen.UnitTests
     {
         [Test]
         [TestCase(48, 100)]
-        [TestCase(57, 66)]
+        [TestCase(56, 75)]
         public void CalculatePercentageRight_TestResult_percentageRight(int testresultID, decimal result)
         {
             //Arrange

@@ -15,15 +15,17 @@ namespace LerenTypen.UnitTests
 
         #region Select
         [Test]
+        // Happy
+        [TestCase(10)]
         //new List<TestTable>
-        public void GetAllTests_ReturnsAllTests(List<TestTable> result)
+        public void GetAllTests_ReturnsAllTests(int resultCount)
         {
             //Arrange
             List<TestTable> answer;
             //Act
             answer = TestController.GetAllTests();
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.AreEqual(resultCount, answer.Count);
         }
 
         [Test]
@@ -44,15 +46,34 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        //new Test
-        public void GetTest_testID_Test(int testID, Test result)
+        // Happy
+        [TestCase(12, 12, "Landen en steden", 1, 1, "HenkerDenker", 72, 2, 1, false, "02/12/2019", false)]
+        // Unhappy
+        [TestCase(0, null, null, null, null, null, null, null, null, null, null, true)]
+        public void GetTest_testID_Test(int testID, int resultId, string resultName, int resultType, int resultAuthorID, string resultAuthorUsername, int resultWordCount, int resultVersion, int resultDifficulty, bool resultIsPrivate, string resultCreatedDateTime, bool expectNull)
         {
             //Arrange
             Test answer;
+            Test result = new Test(resultId, resultName, resultType, resultAuthorID, resultAuthorUsername, resultWordCount, resultVersion, resultDifficulty, resultIsPrivate, resultCreatedDateTime);
             //Act
             answer = TestController.GetTest(testID);
             //Assert
-            Assert.AreEqual(result, answer);
+            if (answer == null && expectNull)
+            {
+                Assert.Pass();
+            }
+            else
+            {
+                Assert.AreEqual(result.AuthorID, answer.AuthorID);
+                Assert.AreEqual(result.AuthorUsername, answer.AuthorUsername);
+                Assert.AreEqual(result.CreatedDateTime, answer.CreatedDateTime);
+                Assert.AreEqual(result.Difficulty, answer.Difficulty);
+                Assert.AreEqual(result.ID, answer.ID);
+                Assert.AreEqual(result.IsPrivate, answer.IsPrivate);
+                Assert.AreEqual(result.Name, answer.Name);
+                Assert.AreEqual(result.Type, answer.Type);
+                Assert.AreEqual(result.WordCount, answer.WordCount);
+            }
         }
 
         [Test]
@@ -85,27 +106,33 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        // new List
-        public void GetTestContent_testID_TestContent(int testID, List<string> result)
+        // Happy
+        [TestCase(9, 39)]
+        // Unhappy
+        [TestCase(0, 0)]
+        public void GetTestContent_testID_TestContent(int testID, int resultCount)
         {
             //Arrange
             List<string> answer = new List<string>();
             //Act
             answer = TestController.GetTestContent(testID);
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.AreEqual(resultCount, answer.Count);
         }
 
         [Test]
-        // new List
-        public void GetAllMyTestswithIsPrivate_accountID_AllUsersTestsWithIsPrivate(int accountID, List<TestTable> result)
+        // Happy
+        [TestCase(15, 0)]
+        // Unhappy
+        [TestCase(0, 0)]
+        public void GetAllMyTestswithIsPrivate_accountID_AllUsersTestsWithIsPrivate(int accountID, int resultCount)
         {
             //Arrange
             List<TestTable> answer = new List<TestTable>();
             //Act
             answer = TestController.GetAllMyTestswithIsPrivate(accountID);
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.AreEqual(resultCount, answer.Count);
         }
 
         [Test]
@@ -187,28 +214,41 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        public void GetTop3FastestTypers_TestID_Top3FastestTypers(int testID, Dictionary<int, int> result)
+        // Happy
+        [TestCase(12)]
+        // Unhappy
+        [TestCase(0)]
+        public void GetTop3FastestTypers_TestID_Top3FastestTypers(int testID)
         {
             //Arrange
             Dictionary<int, int> answer;
             //Act
             answer = TestController.GetTop3FastestTypers(testID);
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.IsTrue(answer.Count < 4);
         }
 
         [Test]
-        public void GetTop3Highscores_TestID_Top3Highscores(int testID, Dictionary<int, int> result)
+        // Happy
+        [TestCase(12)]
+        // Unhappy
+        [TestCase(0)]
+        public void GetTop3Highscores_TestID_Top3Highscores(int testID)
         {
             //Arrange
             Dictionary<int, int> answer;
             //Act
             answer = TestController.GetTop3Highscores(testID);
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.IsTrue(answer.Count < 4);
         }
 
         [Test]
+        // Happy
+        [TestCase(12, 0)]
+        [TestCase(15, 4)]
+        // Unhappy
+        [TestCase(0, null)]
         public void GetTimesMade_TestID_TimesMade(int testID, int result)
         {
             //Arrange
