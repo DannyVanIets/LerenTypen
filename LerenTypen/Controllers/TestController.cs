@@ -175,19 +175,18 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 string query = "";
-                if (limit != 0)
+                if (limit == 0)
                 {
                     query = "select tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID) DESC";
                 }
                 else
                 {
-                    query = "select TOP @limit tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID) DESC";
+                    query = $"select TOP {limit} tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID) DESC";
                 }
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@limit", limit);
                     command.Parameters.AddWithValue("@now", DateTime.Now);
                     command.Parameters.AddWithValue("@weekAgo", todayWeekAgo);
 
@@ -216,7 +215,7 @@ namespace LerenTypen.Controllers
         /// Returns the trending tests from the last week
         /// </summary>
         /// <returns></returns>
-        public static List<Test> GetTrendingTests(int limit)
+        public static List<Test> GetTrendingTests(int limit = 0)
         {
             List<Test> trendingTests = new List<Test>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -244,8 +243,6 @@ namespace LerenTypen.Controllers
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {                  
-                    command.Parameters.AddWithValue("@ids", idList);
-
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -284,7 +281,7 @@ namespace LerenTypen.Controllers
         /// Returns the id and name of the trending tests from the last week
         /// </summary>
         /// <returns></returns>
-        public static List<Test> GetTrendingTestsNameAndID(int limit)
+        public static List<Test> GetTrendingTestsNameAndID(int limit = 0)
         {
             List<Test> trendingTests = new List<Test>();
             SqlConnection connection = new SqlConnection(Database.connectionString);

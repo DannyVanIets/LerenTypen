@@ -12,8 +12,8 @@ namespace LerenTypen.Models
         public string AuthorUsername { get; private set; }
         public int WordCount { get; private set; }
         public int TimesMade { get; private set; }
-        public double AverageScore { get; private set; }
-        public double Highscore { get; private set; }
+        public int AverageScore { get; private set; }
+        public int Highscore { get; private set; }
         public int Version { get; private set; }
         public int Difficulty { get; private set; }
         public bool IsPrivate { get; private set; }
