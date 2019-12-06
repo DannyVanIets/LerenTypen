@@ -32,7 +32,7 @@ namespace LerenTypen.UnitTests
 
         [Test]
         // Happy
-        [TestCase("H", "test123", 2)]
+        [TestCase("H", "ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae", 2)]
         // Unhappy
         [TestCase("Piet", "Klaas", 0)]
         [TestCase("", "", 0)]
@@ -48,6 +48,7 @@ namespace LerenTypen.UnitTests
         #endregion
 
         #region Insert
+        // new DateTime
         public void RegisterUser_Userdata_Bool(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer, bool result)
         {
             //Arrange

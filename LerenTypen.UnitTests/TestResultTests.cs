@@ -6,10 +6,13 @@ namespace LerenTypen.UnitTests
     class TestResultTests
     {
         [Test]
-        public void CalculatePercentageRight_TestResult_percentageRight(TestResult t, decimal result)
+        [TestCase(48, 100)]
+        [TestCase(57, 66)]
+        public void CalculatePercentageRight_TestResult_percentageRight(int testresultID, decimal result)
         {
             //Arrange
             decimal answer = 0;
+            TestResult t = new TestResult(testresultID, "10/20/1990", 20);
             //Act
             answer = t.CalculatePercentageRight();
             //Assert

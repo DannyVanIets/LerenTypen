@@ -15,6 +15,7 @@ namespace LerenTypen.UnitTests
 
         #region Select
         [Test]
+        //new List<TestTable>
         public void GetAllTests_ReturnsAllTests(List<TestTable> result)
         {
             //Arrange
@@ -26,6 +27,12 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
+        // Happy
+        [TestCase(9, 39)]
+        [TestCase(21, 42)]
+        // Unhappy
+        [TestCase(1, null)]
+        [TestCase(0, null)]
         public void GetAmountOfWordsFromTest_testID_AmountOfWordsOfTest(int testID, int result)
         {
             //Arrange
@@ -37,6 +44,7 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
+        //new Test
         public void GetTest_testID_Test(int testID, Test result)
         {
             //Arrange
@@ -48,6 +56,7 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
+        // new list
         public void GetTestInformation_testID_TestInformation(int testID, List<int> result)
         {
             //Arrange
@@ -59,6 +68,12 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
+        // Happy
+        [TestCase(12, "Landen en steden")]
+        [TestCase(15, "Doeizinnen")]
+        // Unhappy
+        [TestCase(1, null)]
+        [TestCase(int.MaxValue, null)]
         public void GetTestName_testID_TestName(int testID, string result)
         {
             //Arrange
@@ -70,6 +85,7 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
+        // new List
         public void GetTestContent_testID_TestContent(int testID, List<string> result)
         {
             //Arrange
@@ -81,6 +97,7 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
+        // new List
         public void GetAllMyTestswithIsPrivate_accountID_AllUsersTestsWithIsPrivate(int accountID, List<TestTable> result)
         {
             //Arrange
@@ -92,28 +109,42 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        public void GetAllMyTestsAlreadyMade_intIngelogd_AllUsersTestsAlreadyMade(int ingelogd, List<TestTable> result)
+        // Happy
+        [TestCase(15)]
+        // Unhappy
+        [TestCase(0)]
+        public void GetAllMyTestsAlreadyMade_intIngelogd_AllUsersTestsAlreadyMade(int ingelogd)
         {
             //Arrange
             List<TestTable> answer = new List<TestTable>();
             //Act
             answer = TestController.GetAllMyTestsAlreadyMade(ingelogd);
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.AreEqual(0, answer.Count);
         }
 
         [Test]
-        public void GetAllTestsAlreadyMade_intIngelogd_AllTestsAlreadyMade(int ingelogd, List<TestTable> result)
+        // Happy
+        [TestCase(15, 1)]
+        // Unhappy
+        [TestCase(0, 0)]
+        public void GetAllTestsAlreadyMade_intIngelogd_AllTestsAlreadyMade(int ingelogd, int resultCount)
         {
             //Arrange
             List<TestTable> answer = new List<TestTable>();
             //Act
             answer = TestController.GetAllTestsAlreadyMade(ingelogd);
             //Assert
-            Assert.AreEqual(result, answer);
+            Assert.AreEqual(resultCount, answer.Count);
         }
 
         [Test]
+        // Happy
+        [TestCase(10, 100)]
+        [TestCase(15, 100)]
+        [TestCase(20, 100)]
+        // Unhappy
+        [TestCase(1, null)]
         public void GetTestHighscore_accountIDTestID_TestHighscore(int testID, int result)
         {
             //Arrange
@@ -125,6 +156,10 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
+        // Happy
+        [TestCase(20, 93)]
+        // Unhappy
+        [TestCase(1, null)]
         public void GetTestAverageScore_TestID_TestAverageScore(int testID, int result)
         {
             //Arrange
@@ -136,7 +171,12 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        public void GetFastestTyper_TestID_FastestTyper(int testID, int result)
+        // Happy
+        [TestCase(20, 60)]
+        [TestCase(14, 162)]
+        // Unhappy
+        [TestCase(1, null)]
+        public void GetFastestTyper_TestID_WordsPerMinute(int testID, int result)
         {
             //Arrange
             int answer = 0;
