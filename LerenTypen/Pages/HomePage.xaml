@@ -47,6 +47,7 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
+            <Label x:Name="noTrendingTestsLabel" HorizontalAlignment="Center" Visibility="Collapsed">Er zijn momenteel geen trending toetsen!</Label>
             <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0">
                 <Hyperlink x:Name="moreTrendingTestsLink" Click="MoreTrendingTestsLink_Click">Meer trending toetsen...</Hyperlink>
             </TextBlock>

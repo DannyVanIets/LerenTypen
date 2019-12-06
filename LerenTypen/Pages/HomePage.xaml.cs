@@ -1,9 +1,9 @@
 ﻿using LerenTypen.Controllers;
 using LerenTypen.Models;
-using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Windows.Documents;
+using System.Windows;
+using System.Windows.Input;
 
 namespace LerenTypen
 {
@@ -21,34 +21,44 @@ namespace LerenTypen
             
             if (mainWindow.Ingelogd > 0)
             {
-                loginRegisterButton.Visibility = System.Windows.Visibility.Collapsed;
+                loginRegisterButton.Visibility = Visibility.Collapsed;
             }
             else
             {
-                loginRegisterButton.Visibility = System.Windows.Visibility.Visible;
+                loginRegisterButton.Visibility = Visibility.Visible;
             }
 
-            List<Test> trendingTests = TestController.GetTrendingTestsNameAndID(10);
-            int counter = 1;
-            foreach (Test test in trendingTests)
+            //List<Test> trendingTests = TestController.GetTrendingTestsNameAndID(10);
+            List<Test> trendingTests = new List<Test>();
+            if (trendingTests.Count > 0)
             {
-                test.Number = counter;
-                trendingTestsListView.Items.Add(test);
-                counter++;
+                int counter = 1;
+                foreach (Test test in trendingTests)
+                {
+                    test.Number = counter;
+                    trendingTestsListView.Items.Add(test);
+                    counter++;
+                }
+            }
+            else
+            {
+                trendingTestsListView.Visibility = Visibility.Collapsed;
+                noTrendingTestsLabel.Visibility = Visibility.Visible;
+                moreTrendingTestsLink.IsEnabled = false;
             }
         }
 
-        private void LoginRegisterButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void LoginRegisterButton_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.ChangePage(new LoginPage(mainWindow));
         }
 
-        private void MoreTrendingTestsLink_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void MoreTrendingTestsLink_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.ChangePage(new TestOverviewPage(mainWindow, true));
         }
 
-        private void TrendingTestsListViewItem_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void TrendingTestsListViewItem_Click(object sender, MouseButtonEventArgs e)
         {
             // Get test associated with the listview item
             Test test = ((ListViewItem)sender).Content as Test;
