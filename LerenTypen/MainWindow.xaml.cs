@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using LerenTypen.Models;
 
 namespace LerenTypen
 {
@@ -19,9 +20,7 @@ namespace LerenTypen
 
         private SshClient client;
 
-        //testOptions is used to remember the testOptions accross multiple tests.
-        //The order is the buttons from top to bottom in the testInfoPage. So the first one is the option about sound.
-        public bool[] testOptions = new bool[] { false };
+        public TestOptions testOptions;
 
         public MainWindow()
         {
