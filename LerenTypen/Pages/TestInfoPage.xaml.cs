@@ -90,6 +90,15 @@ namespace LerenTypen
             {
                 startTestButton.Visibility = Visibility.Collapsed;
             }
+
+            //Go through the array TestOptions in the mainWindow and check if there are options that have been turned on in previous tests.
+            for (int i = 0; i < mainWindow.testOptions.Length; i++)
+            {
+                if (i == 0)
+                {
+                    playSoundsCheckBox.IsChecked = mainWindow.testOptions[i];
+                }
+            }
         }
 
         private void MyResultsListView_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -105,6 +114,16 @@ namespace LerenTypen
 
         private void StartTestButton_Click(object sender, RoutedEventArgs e)
         {
+            //Check if the option for sounds has been clicked on. If so, change the array position 0 to true. If not, to false.
+            if (playSoundsCheckBox.IsChecked == true)
+            {
+                mainWindow.testOptions[0] = true;
+            }
+            else
+            {
+                mainWindow.testOptions[0] = false;
+            }
+
             mainWindow.ChangePage(new TestExercisePage(testID, mainWindow));
         }
     }

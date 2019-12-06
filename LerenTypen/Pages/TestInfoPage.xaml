@@ -97,23 +97,23 @@
             </ListView.View>
         </ListView>
 
-        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,10,0,0" Visibility="Hidden">
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,10,0,0" Visibility="Visible">
             <Label FontSize="14" FontWeight="Bold">Opties</Label>
-            <CheckBox x:Name="randomCheckBox" Margin="0 2">Willekeurige volgorde</CheckBox>
-            <CheckBox x:Name="continueUntilAllCorrectCheckBox" Margin="0 2">Doorgaan tot alle vragen goed beantwoord zijn</CheckBox>
-            <StackPanel Orientation="Horizontal" Margin="0 2" Height="20">
-                <CheckBox x:Name="timeLimitCheckBox">Tijdslimiet:</CheckBox>
-                <TextBox x:Name="timeLimitTextBox" Width="50" Height="20" Margin="10,0,0,0"/>
-                <Label FontSize="11" Height="25" Margin="0 -2">minuten</Label>
+            <CheckBox x:Name="playSoundsCheckBox" Margin="0 2">Geluiden afspelen</CheckBox>
+            <CheckBox x:Name="continueUntilAllCorrectCheckBox" Margin="0 2" Visibility="Hidden">Doorgaan tot alle vragen goed beantwoord zijn</CheckBox>
+            <StackPanel Orientation="Horizontal" Margin="0 2" Height="20" Visibility="Hidden">
+                <CheckBox x:Name="timeLimitCheckBox" Visibility="Hidden">Tijdslimiet:</CheckBox>
+                <TextBox x:Name="timeLimitTextBox" Width="50" Height="20" Margin="10,0,0,0" Visibility="Hidden"/>
+                <Label FontSize="11" Height="25" Margin="0 -2" Visibility="Hidden">minuten</Label>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 2" Height="20">
+            <StackPanel Orientation="Horizontal" Margin="0 2" Height="20" Visibility="Hidden">
                 <CheckBox x:Name="questionTimeLimitCheckBox">Volgende vraag na:</CheckBox>
                 <TextBox x:Name="questionTimeLimitTextBox" Width="50" Height="20" Margin="10,0,0,0"/>
                 <Label FontSize="11" Height="25" Margin="0 -2">seconden</Label>
             </StackPanel>
-            <CheckBox x:Name="showResultsAfterQuestionCheckBox" Margin="0 2">Resultaten ook na elke vraag tonen</CheckBox>
-            <CheckBox x:Name="readQuestionsAloudCHeckBox" Margin="0 2">Vragen voorlezen</CheckBox>
-            <CheckBox x:Name="checkPunctuationCheckBox" Margin="0 2">Controleer op leestekens</CheckBox>
+            <CheckBox x:Name="showResultsAfterQuestionCheckBox" Margin="0 2" Visibility="Hidden">Resultaten ook na elke vraag tonen</CheckBox>
+            <CheckBox x:Name="readQuestionsAloudCHeckBox" Margin="0 2" Visibility="Hidden">Vragen voorlezen</CheckBox>
+            <CheckBox x:Name="checkPunctuationCheckBox" Margin="0 2" Visibility="Hidden">Controleer op leestekens</CheckBox>
         </StackPanel>
 
         <Button x:Name="startTestButton" Grid.Row="4" Grid.Column="3"
