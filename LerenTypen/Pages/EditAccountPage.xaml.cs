@@ -166,18 +166,17 @@ namespace LerenTypen
         {
             try
             {
-                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je het account wilt verwijderen?", "Account Verwijderen",MessageBoxButton.YesNo);
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je je account wilt verwijderen?", "Account Verwijderen", MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    System.Windows.MessageBox.Show("Het Account is succesvol gearchiveerd!", "Succes");
+                    System.Windows.MessageBox.Show("Het Account is succesvol verwijderd!", "Succes");
                     string username = Account.UserName;
                     AccountController.DeleteAccount(username);
-                    MainWindow.Logout_Users();
-                    MainWindow.ChangePage(new HomePage(MainWindow));
+                    MainWindow.LogoutUser();
                 }
                 else if (messageBoxResult == MessageBoxResult.No)
                 {
-                    MainWindow.Logout_Users();
+
                 }
 
             }
@@ -185,7 +184,7 @@ namespace LerenTypen
             {
                 Console.WriteLine(r.ToString());
                 System.Windows.MessageBox.Show("Error", "Error");
-                MainWindow.Logout_Users();
+                MainWindow.LogoutUser();
             }
         }
     }

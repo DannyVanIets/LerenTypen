@@ -203,7 +203,7 @@ namespace LerenTypen
             }
         }
 
-        public void Logout_Users()
+        public void LogoutUser()
         {
             Ingelogd = 0;
             UpdateLoginButton();
@@ -216,7 +216,7 @@ namespace LerenTypen
             MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je wilt uitloggen?", "Uitloggen", System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                Logout_Users();
+                LogoutUser();
              }
         }
 
