@@ -402,7 +402,7 @@ namespace LerenTypen.Controllers
         }
 
         // Functions for US#11
-        public static void UpdateTestToPublic(int testId)
+        public static bool UpdateTestToPublic(int testId)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
@@ -418,15 +418,17 @@ namespace LerenTypen.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
+            return true;
         }
 
-        public static void UpdateTestToPrivate(int testId)
+        public static bool UpdateTestToPrivate(int testId)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
@@ -443,12 +445,14 @@ namespace LerenTypen.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
+            return true;
         }
 
         public static List<TestTable> GetAllMyTestswithIsPrivate(int accountId)
@@ -580,8 +584,9 @@ namespace LerenTypen.Controllers
         /// <summary>
         /// Method for adding tests to database. 
         /// </summary>        
-        public static void AddTest(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy)
+        public static bool AddTest(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy)
         {
+            bool result;
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
@@ -603,25 +608,29 @@ namespace LerenTypen.Controllers
 
                     object testID = command.ExecuteScalar();
                     int intTestID = int.Parse(testID.ToString());
+                    result = AddTestContent(intTestID, content);
 
-                    AddTestContent(intTestID, content);
                 }
             }
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
+
             }
+            return result;
+
         }
 
         /// <summary>
         /// Method adds each line of content of a test to database using its tests ID. testcontent is stored in a separate db.
         /// </summary>        
-        private static void AddTestContent(int testID, List<string> content)
+        private static bool AddTestContent(int testID, List<string> content)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
@@ -643,12 +652,14 @@ namespace LerenTypen.Controllers
             catch (SqlException e)
             {
                 Console.WriteLine(e.Message);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
+            return true;
         }
 
 

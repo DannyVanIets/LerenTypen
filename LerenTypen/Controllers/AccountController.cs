@@ -7,39 +7,6 @@ namespace LerenTypen.Controllers
 {
     public class AccountController
     {
-        public static List<string> GetAccountType(int accountID)
-        {
-            List<string> results = new List<string>();
-            SqlConnection connection = new SqlConnection(Database.connectionString);
-            try
-            {
-                connection.Open();
-                string query = "select accountType from accounts Where accountID = @accountID";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@accountID", accountID);
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            results.Add(reader.GetString(2));
-                        }
-                    }
-                }
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                connection.Close();
-                connection.Dispose();
-            }
-            return results;
-        }
 
         /// <summary>
         /// Get an user by its id
@@ -217,18 +184,18 @@ namespace LerenTypen.Controllers
 
                     command.ExecuteNonQuery();
                 }
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         public static bool UpdateAccount(string userName, string firstName, string surname)
@@ -246,18 +213,18 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@username", userName);
                     command.ExecuteNonQuery();
                 }
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         //Same query as UpdateAccountWithoutPassword, except this one also updated the password. Also used in EditAccountPage.
@@ -286,18 +253,18 @@ namespace LerenTypen.Controllers
 
                     command.ExecuteNonQuery();
                 }
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         public static int GetAccountIDFromUsername(string accountUsername)
@@ -417,18 +384,18 @@ namespace LerenTypen.Controllers
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         // Make the user a student
@@ -445,18 +412,19 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@id", GetAccountIDFromUsername(userName));
                     command.ExecuteNonQuery();
                 }
-                return true;
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         // Make the user teacher        
@@ -473,18 +441,19 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@id", GetAccountIDFromUsername(userName));
                     command.ExecuteNonQuery();
                 }
-                return true;
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         public static bool DeleteAccount(string userName)
@@ -500,18 +469,19 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@id", AccountController.GetAccountIDFromUsername(userName));
                     command.ExecuteNonQuery();
                 }
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
     }
 }
