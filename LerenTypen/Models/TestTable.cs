@@ -17,6 +17,13 @@ namespace LerenTypen
         public bool IsPrivate { get; set; }
         public int TestId { get; set; }
 
+        public TestTable(int number, string name, int testID)
+        {
+            this.WPFNumber = number;
+            this.WPFName = name;
+            this.TestId = testID;
+        }
+
         public TestTable(int number, string name, int isPrivate, int testID)
         {
             this.WPFNumber = number;

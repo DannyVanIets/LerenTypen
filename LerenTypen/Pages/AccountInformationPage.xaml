@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Vertical" Grid.Column="0">
-            <Label FontSize="30" Margin="20,5,-0.2,0" FontWeight="Bold" Grid.Column="0" Content="Accountoverzicht" Height="57"/>
+            <Label FontSize="30" Margin="20,5,-0.2,0" FontWeight="Bold" Grid.Column="0" Content="Accountinformatie" Height="57"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Gebruikersnaam :" Margin="0,0,0,0"  Height="47" FontSize="16" Width="200"/>
                 <Label x:Name="userNamelabel" Content="*Not loaded*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
@@ -44,14 +44,7 @@
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
-                            <GridViewColumn x:Name="AllMyLastMadeTestsPage_DG_IsPrivate" Header="Privé" Width="70" local:GridViewSort.PropertyName="IsPrivate">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <CheckBox Tag="{Binding AmountOfWords}" Checked="DG_Checkbox_Check" Unchecked="DG_Checkbox_Uncheck" IsChecked="{Binding IsPrivate}"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
+                            <GridViewColumn Header ="Toetsnaam" Width="480" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
                             <GridViewColumn x:Name="AllMyLastMadeTests_DG_TestId" Header="TestId" DisplayMemberBinding="{Binding TestId}" local:GridViewSort.PropertyName="TestId" Width="0"/>
                         </GridView.Columns>
                     </GridView>
