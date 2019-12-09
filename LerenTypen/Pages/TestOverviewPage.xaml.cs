@@ -367,8 +367,7 @@ namespace LerenTypen
                 Console.WriteLine("User niet ingelogd");
             }
             else
-            {
-                
+            {          
                 CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
                 if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
                 {
@@ -379,11 +378,9 @@ namespace LerenTypen
 
                     CurrentContent = SearchResult;
                     Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-
                 }
                 else
                 {
-
                     AllTestsOverview_ListView_AllTestsTable.ItemsSource = CurrentContent;
                     AllTestsOverview_ListView_AllTestsTable.Items.Refresh();
                 }
@@ -403,7 +400,7 @@ namespace LerenTypen
             }
             else
             {
-                    AllTestsOverview_ListView_AllTestsTable.ItemsSource = TableContent;
+                AllTestsOverview_ListView_AllTestsTable.ItemsSource = TableContent;
                 CurrentContent = TableContent;
                 //CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
                 if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
@@ -415,16 +412,13 @@ namespace LerenTypen
 
                     CurrentContent = SearchResult;
                     Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-
                 }
                 else
                 {
-
                     AllTestsOverview_ListView_AllTestsTable.ItemsSource = TableContent;
                     AllTestsOverview_ListView_AllTestsTable.Items.Refresh();
                 }
             }
-
         }
 
         /// <summary>
@@ -450,11 +444,6 @@ namespace LerenTypen
             Hyperlink link = (Hyperlink)sender;
             string id = link.Tag.ToString();
             //System.Windows.MessageBox.Show(id);
-
-        }
-
-        private void AllTestsOverview_CheckBox_MadeBefore_Unchecked_1(object sender, System.Windows.RoutedEventArgs e)
-        {
 
         }
     }

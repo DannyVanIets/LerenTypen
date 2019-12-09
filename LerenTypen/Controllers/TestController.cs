@@ -525,7 +525,8 @@ namespace LerenTypen.Controllers
             }
             return queryResult;
         }
-        public static List<TestTable> GetAllMyTestsAlreadyMade(int accountId)
+
+        public static List<TestTable> GetAllMyTestsAlreadyMade(int ingelogd)
         {
             List<TestTable> queryResult = new List<TestTable>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -533,24 +534,24 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query;
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.accountID=@accountID and t.archived=0 and a.archived=0;";
+                int counter = 1;
 
-                    query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.accountID=@accountID and t.archived=0 and a.archived=0;";
-                    int counter = 1;
-                
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id", accountId);
+                    command.Parameters.AddWithValue("@accountID", ingelogd);
+
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            //adds all the found data to a list
+                            // add all the found data to a list
                             queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetFastestTyper(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0])));
-
+                            counter++;
                         }
                     }
                 }
+
             }
             catch (SqlException e)
             {
@@ -782,10 +783,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query;
-
-                    query = "select top 3 tr.testID, testname, tr.testID ,tr.testResultsDate,t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @id and t.archived=0 and a.archived=0 and t.isPrivate=0 group by tr.testID, testname, t.isPrivate, tr.testID ,tr.testResultsDate order by tr.testResultsDate desc;";
-
+                string query = "select top 3 tr.testID, testname, tr.testID ,tr.testResultsDate,t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @id and t.archived=0 and a.archived=0 and t.isPrivate=0 group by tr.testID, testname, t.isPrivate, tr.testID ,tr.testResultsDate order by tr.testResultsDate desc;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
