@@ -86,7 +86,7 @@
             </Grid>
         </StackPanel>
 
-        <StackPanel x:Name = "MyAccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+        <StackPanel x:Name = "MyAccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" >
             <Label FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" FontWeight="Bold" Content="Mijn Toetsen"/>
             <ListView x:Name="MijnToetsen" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
                 <ListView.View>
@@ -113,6 +113,20 @@
                 <Button Content="Al mijn toetsen" HorizontalAlignment="Left" Height="42" Margin="35,2,0,-3.8" Width="135" Click="AllMyTests_Click"/>
                 <Button Content="Maak nieuwe toets aan" HorizontalAlignment="Left" Height="42" Margin="155,2,0,0" Width="135" Click="MakeNewTest_Click"/>
             </StackPanel>
+        </StackPanel>
+        
+        <StackPanel x:Name = "AccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" Visibility="Collapsed">
+            <Label FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" FontWeight="Bold" Content="Door gebruiker gemaakte toetsen"/>
+            <ListView x:Name="AccountTests" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
+                            <GridViewColumn Header ="Toetsnaam" Width="480" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>            
         </StackPanel>
     </Grid>
 </Page>

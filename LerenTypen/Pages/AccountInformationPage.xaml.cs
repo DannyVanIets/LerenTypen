@@ -17,6 +17,7 @@ namespace LerenTypen
         List<TestTable> CurrentContent = new List<TestTable>();
         List<TestTable> ContentNow = new List<TestTable>();
         private int UserID;
+        private bool myPage;
 
         public AccountInformationPage(MainWindow mainWindow, int UserID = 0)
         {
@@ -29,15 +30,18 @@ namespace LerenTypen
             LastMadeContent = new List<TestTable>();
 
             //get User account
-            if (UserID == 0)
+            if (UserID == 0 || UserID.Equals(mainWindow.Ingelogd))
             {
                 Account = AccountController.GetUserAccount(mainWindow.Ingelogd);
                 UserID = mainWindow.Ingelogd;
+                myPage = true;
             }
             else
             {
                 Account = AccountController.GetUserAccount(UserID);
                 MyAccountPanel.Visibility = Visibility.Collapsed;
+                AccountPanel.Visibility = Visibility.Visible;
+                myPage = false;
             }
             // Fill all the labels with info
             string firstname = Account.FirstName;
@@ -50,11 +54,29 @@ namespace LerenTypen
             AveragePercentageMinute.Content = AccountController.GetAverageTestResultpercentage(Account.UserName) + " %";
             try
             {
-                UserContent = TestController.GetPrivateTestMyAccount(MainWindow.Ingelogd);
-                MijnToetsen.ItemsSource = UserContent;
-                MijnToetsen.Items.Refresh();
-                CurrentContent = UserContent;
+                UserContent = TestController.GetPrivateTestMyAccount(UserID);
+                if (myPage)
+                {
+                    MijnToetsen.ItemsSource = UserContent;
+                    MijnToetsen.Items.Refresh();
+                }
+                else
+                {
+                    List<TestTable> publicTests = new List<TestTable>();
+                    foreach (TestTable t in UserContent)
+                    {
+                        if (t.IsPrivate == false)
+                        {
+                            Console.WriteLine("jo");
+                            publicTests.Add(t);
 
+                        }
+                    }
+                    AccountTests.ItemsSource = publicTests;
+                    AccountTests.Items.Refresh();
+                }
+
+                CurrentContent = UserContent;
                 LastMadeContent = TestController.GetAllMyTestsAlreadyMadeTop3(UserID);
                 LaatstGeoefendeToetsen.ItemsSource = LastMadeContent;
                 LaatstGeoefendeToetsen.Items.Refresh();
