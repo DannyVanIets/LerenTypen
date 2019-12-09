@@ -30,7 +30,7 @@ namespace LerenTypen
             //If a user is logged in, we will fill in all the information from his account into the textboxes.
             if (mainWindow.Ingelogd > 0)
             {
-                Account = AccountController.GetUserAccount(mainWindow.Ingelogd);
+                Account = AccountController.GetAlleAccountInformation(mainWindow.Ingelogd);
 
                 firstNameTextBox.Text = Account.FirstName;
                 lastNameTextbox.Text = Account.Surname;
@@ -41,7 +41,9 @@ namespace LerenTypen
                 birthdateDatePicker.DisplayDateStart = Date.dateOfToday;
                 birthdateDatePicker.DisplayDateEnd = Date.dateOfTodayHundredYearsAgo;
 
-                securityQuestionComboBox.Text = Account.SecurityQuestion;
+                Console.WriteLine(Account.SecurityQuestion);
+                //securityQuestionComboBox.SelectedValue = "Wat is je geboorteplaats?";
+                securityQuestionComboBox.SelectedValue = Account.SecurityQuestion;
                 securityAnswerTextBox.Text = Account.SecurityAnswer;
             }
             else

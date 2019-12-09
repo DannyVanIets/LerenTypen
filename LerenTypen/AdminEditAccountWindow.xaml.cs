@@ -15,7 +15,7 @@ namespace LerenTypen
             InitializeComponent();
             try
             {
-                account = AccountController.GetUserAccount(id);
+                account = AccountController.GetAccountNamesAndBirthdate(id);
                 firstNameTextBox.Text = account.FirstName;
                 lastNameTextbox.Text = account.Surname;
                 EditPageUserName.Content += " " + account.UserName;

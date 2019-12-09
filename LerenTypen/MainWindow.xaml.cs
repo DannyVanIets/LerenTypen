@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using LerenTypen.Models;
 
 namespace LerenTypen
 {
@@ -18,6 +19,9 @@ namespace LerenTypen
         public int Ingelogd { get; set; }
 
         private SshClient client;
+
+        //This class is used to remember the selected options across all tests.
+        public TestOptions testOptions = new TestOptions();
 
         public MainWindow()
         {

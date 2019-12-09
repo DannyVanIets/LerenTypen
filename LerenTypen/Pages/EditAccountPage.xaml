@@ -58,7 +58,7 @@
 
         <Label Grid.Row="7" Grid.Column="0" Margin="10,29.8,10.2,0.2" Grid.RowSpan="2">Securityvraag:</Label>
         <ComboBox x:Name="securityQuestionComboBox" Height="20" Width="260" IsReadOnly="True" HorizontalAlignment="Left"
-                  IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Grid.Row="8" Margin="175,6.4,0,3.6" Grid.ColumnSpan="2">
+                  IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Grid.Row="8" Margin="175,6.4,0,3.6" SelectedValuePath="Content" Grid.ColumnSpan="2">
             <ComboBoxItem Content="Wat is je geboorteplaats?"/>
             <ComboBoxItem Content="Wat is de naam van je moeder?"/>
             <ComboBoxItem Content="Wat is de naam van je eerste huisdier?"/>

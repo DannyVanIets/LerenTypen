@@ -1,6 +1,0 @@
-//Dit is een test bestand
-
-public string ReturnIets()
-{
-	return "Dit is vekeed geschreven";
-}

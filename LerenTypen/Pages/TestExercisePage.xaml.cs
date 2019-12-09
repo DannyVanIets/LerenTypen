@@ -1,6 +1,8 @@
 ﻿using LerenTypen.Controllers;
 using System;
 using System.Collections.Generic;
+using System.Media;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,9 +12,26 @@ using System.Windows.Threading;
 
 namespace LerenTypen
 {
-    /// <summary>
-    /// Interaction logic for Page1.xaml
-    /// </summary>
+    /* <summary>
+    Interaction logic for Page1.xaml
+
+    This application uses these sounds from freesound:
+    small crowd yelling 'YEAH' by Tomlija(http://freesound.org/people/Tomlija/ ),
+    success 1, success 2 by Leszek_Szary (https://freesound.org/people/Leszek_Szary/),
+
+    positive_beeps.wav, negative_beeps.wav by themusicalnomad (https://freesound.org/people/themusicalnomad/),
+    Video Game SFX Positive Action Long Tail by djlprojects (https://freesound.org/people/djlprojects/),
+
+    collect.wav by Wagna(http://freesound.org/people/Wagna/ ),
+    Failure 1.wav by FunWithSound (https://freesound.org/people/FunWithSound/),
+
+    Sad Trombone.wav by Benboncan(http://freesound.org/people/Benboncan/ ),
+    negativebeep.wav by Leszek_Szary (https://freesound.org/people/Splashdust/),
+
+    Wrong Buzzer by KevinVG207(http://freesound.org/people/KevinVG207/ ),
+    Wrong answer. by SgtPepperArc36 (https://freesound.org/people/SgtPepperArc36/)
+
+    </summary>*/
     public partial class TestExercisePage : Page
     {
         // Integers for counters
@@ -34,6 +53,10 @@ namespace LerenTypen
         private bool testClosed;
         private string testName;
         private MainWindow m;
+        //Soundplayer is the class we use for sounds. It can only include a file, play a file and stop playing any sounds.
+        //It's pretty limited, but it's good enough for what we use it for. It also only supports .wav files!
+        private SoundPlayer sp = new SoundPlayer();
+        Random random = new Random();
 
         public TestExercisePage(int testID, MainWindow m)
         {
@@ -137,7 +160,7 @@ namespace LerenTypen
 
         /// <summary>
         /// Timer for countdown at the beginning of the exercise
-        /// </summary>        
+        /// </summary>
         private void StartTimer(object sender, EventArgs e)
         {
             countDownLbl.Content = k - 1;
@@ -207,17 +230,96 @@ namespace LerenTypen
         /// <summary>
         /// Method for showing if input is right or wrong after user hits enter or next, answer is shown in overlay grid.
         /// </summary>
-        private void ShowRightOrWrong(Boolean right, string input)
+        private void ShowRightOrWrong(bool right, string input)
         {
             textInputBox.IsEnabled = false;
-            if (right)
+
+            //Check if the option for sounds is turned on. If not, only change the brushes.
+            if (m.testOptions.Sound)
             {
-                countDownLbl.Foreground = Brushes.Green;
+                //sp.stop() stops any sound or music that's still going on.
+                sp.Stop();
+                string file = "";
+                int randomNumber = random.Next(0, 6);
+
+                //Here we check if the answer is correct or not.
+                if (right)
+                {
+                    countDownLbl.Foreground = Brushes.Green;
+
+                    //Switch case for the number that the randomNumber is. Loads in a different file for every number!
+                    //All the correct sounds are in the soundsCorrect folder. They come from: https://freesound.org/ and are free to use
+                    switch (randomNumber)
+                    {
+                        case 0:
+                            file = @"soundsCorrect/collect.wav";
+                            break;
+                        case 1:
+                            file = @"soundsCorrect/crowdyeah.wav";
+                            break;
+                        case 2:
+                            file = @"soundsCorrect/positive.wav";
+                            break;
+                        case 3:
+                            file = @"soundsCorrect/positivebeep.wav";
+                            break;
+                        case 4:
+                            file = @"soundsCorrect/succes1.wav";
+                            break;
+                        case 5:
+                            file = @"soundsCorrect/succes2.wav";
+                            break;
+                    }
+                }
+                else
+                {
+                    countDownLbl.Foreground = Brushes.Red;
+
+                    //All the wrong sounds are in the soundsWrong folder. They come from: https://freesound.org/ and are free to use
+                    switch (randomNumber)
+                    {
+                        case 0:
+                            file = @"soundsWrong/failure-1.wav";
+                            break;
+                        case 1:
+                            file = @"soundsWrong/negativebeep.wav";
+                            break;
+                        case 2:
+                            file = @"soundsWrong/negative-beeps.wav";
+                            break;
+                        case 3:
+                            file = @"soundsWrong/sad-trombone.wav";
+                            break;
+                        case 4:
+                            file = @"soundsWrong/wrong-answer.wav";
+                            break;
+                        case 5:
+                            file = @"soundsWrong/wrong-buzzer.wav";
+                            break;
+                    }
+                }
+
+                //Sp.soundlocation is used to make sure the soundplayer goes to the right file and sp.load loads in the file.
+                sp.SoundLocation = @"../../../" + file;
+                sp.Load();
+
+                //This lambda query is used to delay the application until the loading from the soundfile is complete.
+                //This way it doesn't stop the whole user-interface.
+                Task.Factory.StartNew(() => { while (!sp.IsLoadCompleted) ; });
+                sp.Play();
             }
             else
             {
-                countDownLbl.Foreground = Brushes.Red;
+                if (right)
+                {
+                    countDownLbl.Foreground = Brushes.Green;
+                }
+                else
+                {
+                    countDownLbl.Foreground = Brushes.Red;
+                }
             }
+
             Overlay.Visibility = Visibility.Visible;
             t1.Stop();
 
