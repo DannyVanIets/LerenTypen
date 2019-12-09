@@ -1,8 +1,8 @@
-using System.Windows.Controls;
+using LerenTypen.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LerenTypen.Controllers;
+using System.Windows.Controls;
 using System.Windows.Documents;
 
 namespace LerenTypen
@@ -222,23 +222,23 @@ namespace LerenTypen
             }
             if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
-                    if (AllTestsOverview_CheckBox_MadeBefore.IsChecked.Value)
-                    {
-                        CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
-                    }
-                    else
-                    {
-                        CurrentContent = TableContent;
-                    }
-                    //CurrentContent = TableContent;
-                    string searchterm = AllTestsOverview_TextBox_Search.Text;
-                    SearchResult = (from t in CurrentContent
-                                    where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
-                                    select t).ToList();
+                if (AllTestsOverview_CheckBox_MadeBefore.IsChecked.Value)
+                {
+                    CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                }
+                else
+                {
+                    CurrentContent = TableContent;
+                }
+                //CurrentContent = TableContent;
+                string searchterm = AllTestsOverview_TextBox_Search.Text;
+                SearchResult = (from t in CurrentContent
+                                where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
+                                select t).ToList();
 
-                    CurrentContent = SearchResult;
-                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-                
+                CurrentContent = SearchResult;
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
             }
         }
 
@@ -367,7 +367,7 @@ namespace LerenTypen
                 Console.WriteLine("User niet ingelogd");
             }
             else
-            {          
+            {
                 CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
                 if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
                 {
@@ -430,7 +430,6 @@ namespace LerenTypen
         {
             Hyperlink link = (Hyperlink)sender;
             int id = Convert.ToInt32(link.Tag);
-            System.Windows.MessageBox.Show(id.ToString());
             MainWindow.ChangePage(new TestInfoPage(id, MainWindow));
         }
 

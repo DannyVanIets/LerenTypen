@@ -22,15 +22,15 @@
         <StackPanel Orientation="Vertical" Grid.Column="0">
             <Label FontSize="30" Margin="20,5,-0.2,0" FontWeight="Bold" Grid.Column="0" Content="Accountinformatie" Height="57"/>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Gebruikersnaam :" Margin="0,0,0,0"  Height="47" FontSize="16" Width="200"/>
+                <Label Content="Gebruikersnaam :" Margin="20,0,0,0"  Height="47" FontSize="16" Width="200"/>
                 <Label x:Name="userNamelabel" Content="*Not loaded*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Volledige naam :" Margin="0,0,0,0"  Height="47" FontSize="16" Width="200"/>
+                <Label Content="Volledige naam :" Margin="20,0,0,0"  Height="47" FontSize="16" Width="200"/>
                 <Label x:Name="FullNamelabel" Content="*Not loaded*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Geboortedatum :" Margin="0,0,0,0"  Height="47" FontSize="16" Width="200"/>
+                <Label Content="Geboortedatum :" Margin="20,0,0,0"  Height="47" FontSize="16" Width="200"/>
                 <Label x:Name="Birthdatelabel" Content="*Not loaded*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
             </StackPanel>
 
@@ -44,12 +44,13 @@
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                            <GridViewColumn Header ="Toetsnaam" Width="480" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
+                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
                             <GridViewColumn x:Name="AllMyLastMadeTests_DG_TestId" Header="TestId" DisplayMemberBinding="{Binding TestId}" local:GridViewSort.PropertyName="TestId" Width="0"/>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>
             </ListView>
+            <Label x:Name="NoRecentTestsLbl" Content="Geen toetsen gevonden" Visibility="Collapsed"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="1">
             <Grid Margin="0,10,0,-0.2" Width="526">
@@ -88,6 +89,7 @@
 
         <StackPanel x:Name = "MyAccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" >
             <Label FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" FontWeight="Bold" Content="Mijn Toetsen"/>
+            <Label x:Name="NoMyTestsLbl" Content="Geen toetsen gevonden" Visibility="Collapsed"/>
             <ListView x:Name="MijnToetsen" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
                 <ListView.View>
                     <GridView>
@@ -117,12 +119,13 @@
         
         <StackPanel x:Name = "AccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" Visibility="Collapsed">
             <Label FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" FontWeight="Bold" Content="Door gebruiker gemaakte toetsen"/>
+            <Label x:Name="NoAccountTestsLbl" Content="Geen toetsen gevonden" Visibility="Collapsed"/>
             <ListView x:Name="AccountTests" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                            <GridViewColumn Header ="Toetsnaam" Width="480" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
+                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>

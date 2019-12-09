@@ -55,32 +55,48 @@ namespace LerenTypen
             try
             {
                 UserContent = TestController.GetPrivateTestMyAccount(UserID);
-                if (myPage)
+                if (UserContent.Count.Equals(0))
                 {
-                    MijnToetsen.ItemsSource = UserContent;
-                    MijnToetsen.Items.Refresh();
+                    MijnToetsen.Visibility = Visibility.Collapsed;
+                    AccountTests.Visibility = Visibility.Collapsed;
+                    NoMyTestsLbl.Visibility = Visibility.Visible;
+                    NoAccountTestsLbl.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    List<TestTable> publicTests = new List<TestTable>();
-                    foreach (TestTable t in UserContent)
+                    if (myPage)
                     {
-                        if (t.IsPrivate == false)
-                        {
-                            Console.WriteLine("jo");
-                            publicTests.Add(t);
-
-                        }
+                        MijnToetsen.ItemsSource = UserContent;
+                        MijnToetsen.Items.Refresh();
                     }
-                    AccountTests.ItemsSource = publicTests;
-                    AccountTests.Items.Refresh();
-                }
+                    else
+                    {
+                        List<TestTable> publicTests = new List<TestTable>();
+                        foreach (TestTable t in UserContent)
+                        {
+                            if (t.IsPrivate == false)
+                            {
+                                publicTests.Add(t);
 
+                            }
+                        }
+                        AccountTests.ItemsSource = publicTests;
+                        AccountTests.Items.Refresh();
+                    }
+                }
                 CurrentContent = UserContent;
                 LastMadeContent = TestController.GetAllMyTestsAlreadyMadeTop3(UserID);
-                LaatstGeoefendeToetsen.ItemsSource = LastMadeContent;
-                LaatstGeoefendeToetsen.Items.Refresh();
-                ContentNow = LastMadeContent;
+                if (LastMadeContent.Count.Equals(0))
+                {
+                    LaatstGeoefendeToetsen.Visibility = Visibility.Collapsed;
+                    NoRecentTestsLbl.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    LaatstGeoefendeToetsen.ItemsSource = LastMadeContent;
+                    LaatstGeoefendeToetsen.Items.Refresh();
+                    ContentNow = LastMadeContent;
+                }
             }
             catch (Exception e)
             {
