@@ -231,25 +231,32 @@ namespace LerenTypen
                     countDownLbl.Foreground = Brushes.Green;
 
                     //Switch case for the number that the randomNumber is. Loads in a different file for every number!
+                    //All the correct sounds are in the soundsCorrect folder. They come from: https://freesound.org/ and are free to use
                     switch (randomNumber)
                     {
                         case 0:
                             file = @"soundsCorrect/collect.wav";
+                            Console.WriteLine("Collect");
                             break;
                         case 1:
                             file = @"soundsCorrect/crowdyeah.wav";
+                            Console.WriteLine("crowdyeah");
                             break;
                         case 2:
                             file = @"soundsCorrect/positive.wav";
+                            Console.WriteLine("positive");
                             break;
                         case 3:
                             file = @"soundsCorrect/positivebeep.wav";
+                            Console.WriteLine("positivebeep");
                             break;
                         case 4:
                             file = @"soundsCorrect/succes1.wav";
+                            Console.WriteLine("succes1");
                             break;
                         case 5:
                             file = @"soundsCorrect/succes2.wav";
+                            Console.WriteLine("succes2");
                             break;
                     }
                 }
@@ -257,6 +264,7 @@ namespace LerenTypen
                 {
                     countDownLbl.Foreground = Brushes.Red;
 
+                    //All the wrong sounds are in the soundsWrong folder. They come from: https://freesound.org/ and are free to use
                     switch (randomNumber)
                     {
                         case 0:

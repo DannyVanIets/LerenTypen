@@ -21,7 +21,7 @@ namespace LerenTypen
         private SshClient client;
 
         //This class is used to remember the selected options across all tests.
-        public TestOptions testOptions;
+        public TestOptions testOptions = new TestOptions();
 
         public MainWindow()
         {
