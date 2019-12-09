@@ -39,7 +39,7 @@ namespace LerenTypen
                 Birthdatelabel.Content = Account.Birthdate;
                 //Get averages from database and fill labels for that account.
                 AverageWordsMinute.Content = AccountController.GetAverageWordsMinute(Account.UserName);
-                AveragePercentageMinute.Content = AccountController.GetAverageTestResultpercentage(Account.UserName);
+                AveragePercentageMinute.Content = AccountController.GetAverageTestResultpercentage(Account.UserName) + " %";
                 try
                 {
                     UserContent = TestController.GetPrivateTestMyAccount(MainWindow.Ingelogd);
