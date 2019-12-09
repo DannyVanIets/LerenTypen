@@ -32,33 +32,7 @@ namespace LerenTypen
             if (UserID == 0)
             {
                 Account = AccountController.GetUserAccount(mainWindow.Ingelogd);
-
-                // Fill all the labels with info
-                string firstname = Account.FirstName;
-                string lastname = Account.Surname;
-                userNamelabel.Content = Account.UserName;
-                FullNamelabel.Content = firstname + " " + lastname;
-                Birthdatelabel.Content = Account.Birthdate;
-                //Get averages from database and fill labels for that account.
-                AverageWordsMinute.Content = AccountController.GetAverageWordsMinute(Account.UserName);
-                AveragePercentageMinute.Content = AccountController.GetAverageTestResultpercentage(Account.UserName) + " %";
-                try
-                {
-                    UserContent = TestController.GetPrivateTestMyAccount(MainWindow.Ingelogd);
-                    MijnToetsen.ItemsSource = UserContent;
-                    MijnToetsen.Items.Refresh();
-                    CurrentContent = UserContent;
-
-                    LastMadeContent = TestController.GetAllMyTestsAlreadyMadeTop3(MainWindow.Ingelogd);
-                    LaatstGeoefendeToetsen.ItemsSource = LastMadeContent;
-                    LaatstGeoefendeToetsen.Items.Refresh();
-                    ContentNow = LastMadeContent;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
-
+                UserID = mainWindow.Ingelogd;
             }
             else
             {
