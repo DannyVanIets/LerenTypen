@@ -12,9 +12,26 @@ using System.Windows.Threading;
 
 namespace LerenTypen
 {
-    /// <summary>
-    /// Interaction logic for Page1.xaml
-    /// </summary>
+    /* <summary>
+    Interaction logic for Page1.xaml
+
+    This application uses these sounds from freesound:
+    small crowd yelling 'YEAH' by Tomlija(http://freesound.org/people/Tomlija/ ),
+    success 1, success 2 by Leszek_Szary (https://freesound.org/people/Leszek_Szary/),
+
+    positive_beeps.wav, negative_beeps.wav by themusicalnomad (https://freesound.org/people/themusicalnomad/),
+    Video Game SFX Positive Action Long Tail by djlprojects (https://freesound.org/people/djlprojects/),
+
+    collect.wav by Wagna(http://freesound.org/people/Wagna/ ),
+    Failure 1.wav by FunWithSound (https://freesound.org/people/FunWithSound/),
+
+    Sad Trombone.wav by Benboncan(http://freesound.org/people/Benboncan/ ),
+    negativebeep.wav by Leszek_Szary (https://freesound.org/people/Splashdust/),
+
+    Wrong Buzzer by KevinVG207(http://freesound.org/people/KevinVG207/ ),
+    Wrong answer. by SgtPepperArc36 (https://freesound.org/people/SgtPepperArc36/)
+
+    </summary>*/
     public partial class TestExercisePage : Page
     {
         // Integers for counters
@@ -236,27 +253,21 @@ namespace LerenTypen
                     {
                         case 0:
                             file = @"soundsCorrect/collect.wav";
-                            Console.WriteLine("Collect");
                             break;
                         case 1:
                             file = @"soundsCorrect/crowdyeah.wav";
-                            Console.WriteLine("crowdyeah");
                             break;
                         case 2:
                             file = @"soundsCorrect/positive.wav";
-                            Console.WriteLine("positive");
                             break;
                         case 3:
                             file = @"soundsCorrect/positivebeep.wav";
-                            Console.WriteLine("positivebeep");
                             break;
                         case 4:
                             file = @"soundsCorrect/succes1.wav";
-                            Console.WriteLine("succes1");
                             break;
                         case 5:
                             file = @"soundsCorrect/succes2.wav";
-                            Console.WriteLine("succes2");
                             break;
                     }
                 }
