@@ -86,7 +86,7 @@
             </Grid>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+        <StackPanel x:Name = "MyAccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1">
             <Label FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" FontWeight="Bold" Content="Mijn Toetsen"/>
             <ListView x:Name="MijnToetsen" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
                 <ListView.View>

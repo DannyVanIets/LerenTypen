@@ -1,8 +1,8 @@
 ﻿using LerenTypen.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System;
 
 namespace LerenTypen
 {
@@ -17,6 +17,7 @@ namespace LerenTypen
         private List<string> hadToBe;
         private List<string> rightAnswers;
         private int testResultID;
+        private string username;
 
         public TestResultsPage(int testID, MainWindow m, int testResultID)
         {
@@ -34,7 +35,8 @@ namespace LerenTypen
             FillAnswerList(false);
             amountOfWrongTbl.Text = wrongAnswers.Count.ToString();
             List<int> testInformation = TestController.GetTestInformation(testID);
-            createrRun.Text = AccountController.GetUsername(testInformation[0]);
+            username = AccountController.GetUsername(testInformation[0]);
+            createrRun.Text = username;
             amountOfWordsLbl.Content = $"Aantal woorden: {TestController.GetAmountOfWordsFromTest(testID)}";
 
             string difficulty;
@@ -136,6 +138,11 @@ namespace LerenTypen
             {
                 awardStack.Visibility = System.Windows.Visibility.Visible;
             }
+        }
+
+        private void UsernameClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            m.ChangePage(new AccountInformationPage(m, AccountController.GetAccountIDFromUsername(username)));
         }
     }
 }
