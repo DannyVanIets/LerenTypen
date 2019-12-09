@@ -436,6 +436,7 @@ namespace LerenTypen
         {
             Hyperlink link = (Hyperlink)sender;
             int id = Convert.ToInt32(link.Tag);
+            System.Windows.MessageBox.Show(id.ToString());
             MainWindow.ChangePage(new TestInfoPage(id, MainWindow));
         }
 

@@ -47,7 +47,7 @@ namespace LerenTypen
                     MijnToetsen.Items.Refresh();
                     CurrentContent = UserContent;
 
-                    LastMadeContent = TestController.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd, true);
+                    LastMadeContent = TestController.GetAllMyTestsAlreadyMadeTop3(MainWindow.Ingelogd);
                     LaatstGeoefendeToetsen.ItemsSource = LastMadeContent;
                     LaatstGeoefendeToetsen.Items.Refresh();
                     ContentNow = LastMadeContent;
