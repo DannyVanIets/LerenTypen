@@ -529,7 +529,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select distinct top 3 tr.testID, testname, t.isPrivate, tr.testID ,tr.testResultsDate from tests t inner join testresults as tr on t.testID = tr.testID where t.accountID = @id and t.archived = 0 order by tr.testResultsDate desc";
+                string query = "select top 3 tr.testID, testname, t.isPrivate, tr.testID ,tr.testResultsDate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @id and t.archived=0 and a.archived=0 and t.isPrivate=0 group by tr.testID, testname, t.isPrivate, tr.testID ,tr.testResultsDate order by tr.testResultsDate desc;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@id", accountId);
