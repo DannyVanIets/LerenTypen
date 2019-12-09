@@ -32,6 +32,7 @@ namespace LerenTypen
             if (UserID == 0)
             {
                 Account = AccountController.GetUserAccount(mainWindow.Ingelogd);
+                UserID = mainWindow.Ingelogd;
             }
             else
             {
