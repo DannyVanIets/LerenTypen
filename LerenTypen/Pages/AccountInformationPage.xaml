@@ -95,7 +95,8 @@
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
+                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName">                               
+                            </GridViewColumn>
                             <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="70" local:GridViewSort.PropertyName="IsPrivate">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
