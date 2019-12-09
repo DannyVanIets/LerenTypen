@@ -32,10 +32,10 @@ namespace LerenTypen
                 //get User account
                 Account = AccountController.GetUserAccount(mainWindow.Ingelogd);
                 // Fill all the labels with info
-                string voornaam = Account.FirstName;
-                string achternaam = Account.Surname;
+                string firstname = Account.FirstName;
+                string lastname = Account.Surname;
                 userNamelabel.Content = Account.UserName;
-                FullNamelabel.Content = voornaam + " " + achternaam;
+                FullNamelabel.Content = firstname + " " + lastname;
                 Birthdatelabel.Content = Account.Birthdate;
                 //Get averages from database and fill labels for that account.
                 AverageWordsMinute.Content = AccountController.GetAverageWordsMinute(Account.UserName);
@@ -51,8 +51,6 @@ namespace LerenTypen
                     LaatstGeoefendeToetsen.ItemsSource = LastMadeContent;
                     LaatstGeoefendeToetsen.Items.Refresh();
                     ContentNow = LastMadeContent;
-
-
                 }
                 catch (Exception e)
                 {
@@ -91,6 +89,17 @@ namespace LerenTypen
             int id = tt.TestId;
             TestController.UpdateTestToPublic(id);
             MijnToetsen.Items.Refresh();
+        }
+
+        private void AllMyTests_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.ChangePage(new AllMyTestsOverviewPage(MainWindow));
+        }
+
+        private void MakeNewTest_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.ChangePage(new CreateTestPage(MainWindow));
+
         }
     }
 }

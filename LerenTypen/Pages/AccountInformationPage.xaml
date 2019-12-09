@@ -76,7 +76,7 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Grid.ColumnSpan="2" Margin="263,0,0.4,137.2" Grid.RowSpan="2">
-                    <Label Content="Hier komt de grafiek!" Margin="0,0,-0.2,0" Height="47" FontSize="15"/>
+               <!--    <Label Content="Hier komt de grafiek!" Margin="0,0,-0.2,0" Height="47" FontSize="15"/> -->
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1">
@@ -87,8 +87,8 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-                    <TextBox HorizontalAlignment="Left" Margin="0,0,0,89.6" TextWrapping="Wrap" BorderThickness="0" Text="Leaderboardrank :" Width="145" FontSize="15"/>
-                    <Label Content="Label" Height="48" VerticalAlignment="Top" Width="117"/>
+               <!--     <TextBox HorizontalAlignment="Left" Margin="0,0,0,89.6" TextWrapping="Wrap" BorderThickness="0" Text="Leaderboardrank :" Width="145" FontSize="15"/>
+                    <Label Content="Label" Height="48" VerticalAlignment="Top" Width="117"/> -->
                 </StackPanel>
             </Grid>
         </StackPanel>
@@ -117,8 +117,8 @@
             </ListView>
 
             <StackPanel Orientation="Horizontal" Height="50" Margin="0,10,-0.2,0">
-                <Button Content="Al mijn toetsen" HorizontalAlignment="Left" Height="42" Margin="35,2,0,-3.8" Width="135"/>
-                <Button Content="Maak nieuwe toets aan" HorizontalAlignment="Left" Height="42" Margin="155,2,0,0" Width="135"/>
+                <Button Content="Al mijn toetsen" HorizontalAlignment="Left" Height="42" Margin="35,2,0,-3.8" Width="135" Click="AllMyTests_Click"/>
+                <Button Content="Maak nieuwe toets aan" HorizontalAlignment="Left" Height="42" Margin="155,2,0,0" Width="135" Click="MakeNewTest_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>
