@@ -46,6 +46,44 @@ namespace LerenTypen.Controllers
         }
 
         /// <summary>
+        /// Get an user by its id
+        /// </summary>
+        public static Account GetUserAccount(int accountID)
+        {
+            Account account = new Account();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "SELECT accountUsername, accountBirthdate, accountFirstName, accountSurname FROM accounts WHERE accountID = @id AND archived = 0";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", accountID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            account = new Account((string)reader[0], (DateTime)reader[1], (string)reader[2], (string)reader[3]);
+                        }
+                    }
+                }
+                return account;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Get an account's username, birthdate, firstname and surname.
         /// </summary>
         public static Account GetAccountNamesAndBirthdate(int accountID)
