@@ -72,10 +72,13 @@ namespace LerenTypen
                     else
                     {
                         List<TestTable> publicTests = new List<TestTable>();
+                        int i = 0;
                         foreach (TestTable t in UserContent)
                         {
                             if (t.IsPrivate == false)
                             {
+                                i++;
+                                t.WPFNumber = i;
                                 publicTests.Add(t);
 
                             }

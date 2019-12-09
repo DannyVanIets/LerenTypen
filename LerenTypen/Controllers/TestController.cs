@@ -469,10 +469,12 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@id", accountId);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        int i = 1;
                         while (reader.Read())
                         {
                             //adds all the found data to a list
-                            queryResult.Add(new TestTable(Convert.ToInt32(reader[0]), reader.GetString(1), Convert.ToInt32(reader[2]), Convert.ToInt32(reader[3])));
+                            queryResult.Add(new TestTable(i, reader.GetString(1), Convert.ToInt32(reader[2]), Convert.ToInt32(reader[3])));
+                            i++;
                         }
                     }
                 }
@@ -790,10 +792,12 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@id", accountId);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        int i = 0;
                         while (reader.Read())
                         {
+                            i++;
                             //adds all the found data to a list
-                            queryResult.Add(new TestTable(Convert.ToInt32(reader[0]), reader.GetString(1), Convert.ToInt32(reader[2])));
+                            queryResult.Add(new TestTable(i, reader.GetString(1), Convert.ToInt32(reader[2])));
 
                         }
                     }
