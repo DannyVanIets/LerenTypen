@@ -27,7 +27,7 @@
 
         <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3">
             <Button x:Name="AllTestsOverview_Button_ShowOwnTestOnly" Content="Toon alleen eigen toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Width="170" Height="25" Margin="0,4,0,0" Click="AllTestsOverview_Button_ShowOwnTestOnly_Click"/>
-            <CheckBox x:Name="AllTestsOverview_CheckBox_MadeBefore" Content="Toon alleen zelf geoefende toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Height="21" Width="225" Checked="AllTestsOverview_CheckBox_MadeBefore_Checked" Unchecked="AllTestsOverview_CheckBox_MadeBefore_Unchecked" Margin="0,0,-0.2,0"/>
+            <CheckBox x:Name="AllTestsOverview_CheckBox_MadeBefore" Content="Toon alleen zelf geoefende toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Height="21" Width="225" Checked="AllTestsOverview_CheckBox_MadeBefore_Checked" Unchecked="AllTestsOverview_CheckBox_MadeBefore_Unchecked" Margin="0,4,-0.2,0"/>
             <CheckBox x:Name="AllTestsOverview_CheckBox_TrendingTests" Content="Toon alleen trending toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Height="21" Width="225" Checked="AllTestsOverview_CheckBox_TrendingTests_Checked" Unchecked="AllTestsOverview_CheckBox_TrendingTests_Unchecked" Margin="0,0,-0.2,0"/>
         </StackPanel>
 
