@@ -415,14 +415,7 @@ namespace LerenTypen
             {
                 if (TrendingTableContent == null)
                 {
-                    TrendingTableContent = new List<TestTable>();
-                    List<Test> trendingTests = TestController.GetTrendingTests();
-                    TrendingTableContent = new List<TestTable>();
-                    int counter = 1;
-                    foreach (Test test in trendingTests)
-                    {
-                        TrendingTableContent.Add(new TestTable(counter, test.Name, test.TimesMade, test.Highscore, test.WordCount, test.Difficulty, test.AuthorUsername, 0, test.ID));
-                    }
+                    GetTrendingTests();
                 }
 
                 CurrentContent = TrendingTableContent;
@@ -434,6 +427,22 @@ namespace LerenTypen
         {
             CurrentContent = TableContent;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+        }
+
+        /// <summary>
+        /// Fills TrendingTableContent with trending tests
+        /// </summary>
+        private void GetTrendingTests()
+        {
+            TrendingTableContent = new List<TestTable>();
+            List<Test> trendingTests = TestController.GetTrendingTests();
+            TrendingTableContent = new List<TestTable>();
+            int counter = 1;
+            foreach (Test test in trendingTests)
+            {
+                TrendingTableContent.Add(new TestTable(counter, test.Name, test.TimesMade, test.Highscore, test.WordCount, test.Difficulty, test.AuthorUsername, 0, test.ID));
+                counter++;
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -456,15 +465,7 @@ namespace LerenTypen
                     }
                     else
                     {
-                        TrendingTableContent = new List<TestTable>();
-                        List<Test> trendingTests = TestController.GetTrendingTests();
-                        TrendingTableContent = new List<TestTable>();
-                        int counter = 1;
-                        foreach (Test test in trendingTests)
-                        {
-                            TrendingTableContent.Add(new TestTable(counter, test.Name, test.TimesMade, test.Highscore, test.WordCount, test.Difficulty, test.AuthorUsername, 0, test.ID));
-                        }
-
+                        GetTrendingTests();
                         CurrentContent = TrendingTableContent;
                     }
                 }
