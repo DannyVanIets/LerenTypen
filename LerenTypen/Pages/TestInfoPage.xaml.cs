@@ -64,7 +64,7 @@ namespace LerenTypen
             usernameLinkText.Text = test.AuthorUsername;
             usernameLink.Click += (s, e) =>
             {
-                // Go to account info page, use test.AuthorID
+                mainWindow.ChangePage(new AccountInformationPage(mainWindow, test.AuthorID));
             };
 
             amountOfWordsLabel.Content = test.WordCount;

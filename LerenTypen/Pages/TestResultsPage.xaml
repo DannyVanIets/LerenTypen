@@ -26,7 +26,7 @@
         <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center">
             <Label x:Name="testNameLbl" Content="ToetsNaam" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="18"/>
             <TextBlock HorizontalAlignment="Center" FontSize="16">
-                <Hyperlink>
+                <Hyperlink Click="UsernameClick">
                     <Run x:Name="createrRun" Text="GemaaktDoor" />
                 </Hyperlink>
             </TextBlock>

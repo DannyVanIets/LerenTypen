@@ -16,9 +16,9 @@ namespace LerenTypen
         List<TestTable> LastMadeContent;
         List<TestTable> CurrentContent = new List<TestTable>();
         List<TestTable> ContentNow = new List<TestTable>();
+        private int UserID;
 
-
-        public AccountInformationPage(MainWindow mainWindow)
+        public AccountInformationPage(MainWindow mainWindow, int UserID = 0)
         {
             InitializeComponent();
             //MainWindow is used to change pages.
@@ -27,42 +27,44 @@ namespace LerenTypen
             //Make a new list for filling the table
             UserContent = new List<TestTable>();
             LastMadeContent = new List<TestTable>();
-            if (mainWindow.Ingelogd > 0)
-            {
-                //get User account
-                Account = AccountController.GetUserAccount(mainWindow.Ingelogd);
-                // Fill all the labels with info
-                string firstname = Account.FirstName;
-                string lastname = Account.Surname;
-                userNamelabel.Content = Account.UserName;
-                FullNamelabel.Content = firstname + " " + lastname;
-                Birthdatelabel.Content = Account.Birthdate;
-                //Get averages from database and fill labels for that account.
-                AverageWordsMinute.Content = AccountController.GetAverageWordsMinute(Account.UserName);
-                AveragePercentageMinute.Content = AccountController.GetAverageTestResultpercentage(Account.UserName) + " %";
-                try
-                {
-                    UserContent = TestController.GetPrivateTestMyAccount(MainWindow.Ingelogd);
-                    MijnToetsen.ItemsSource = UserContent;
-                    MijnToetsen.Items.Refresh();
-                    CurrentContent = UserContent;
 
-                    LastMadeContent = TestController.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd, true);
-                    LaatstGeoefendeToetsen.ItemsSource = LastMadeContent;
-                    LaatstGeoefendeToetsen.Items.Refresh();
-                    ContentNow = LastMadeContent;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
+            //get User account
+            if (UserID == 0)
+            {
+                Account = AccountController.GetUserAccount(mainWindow.Ingelogd);
             }
             else
             {
-                MessageBox.Show("U bent niet ingelogd!", "Error");
-                MainWindow.ChangePage(new HomePage(mainWindow));
+                Account = AccountController.GetUserAccount(UserID);
+                MyAccountPanel.Visibility = Visibility.Collapsed;
+            }
+            // Fill all the labels with info
+            string firstname = Account.FirstName;
+            string lastname = Account.Surname;
+            userNamelabel.Content = Account.UserName;
+            FullNamelabel.Content = firstname + " " + lastname;
+            Birthdatelabel.Content = Account.Birthdate;
+            //Get averages from database and fill labels for that account.
+            AverageWordsMinute.Content = AccountController.GetAverageWordsMinute(Account.UserName);
+            AveragePercentageMinute.Content = AccountController.GetAverageTestResultpercentage(Account.UserName) + " %";
+            try
+            {
+                UserContent = TestController.GetPrivateTestMyAccount(MainWindow.Ingelogd);
+                MijnToetsen.ItemsSource = UserContent;
+                MijnToetsen.Items.Refresh();
+                CurrentContent = UserContent;
+
+                LastMadeContent = TestController.GetAllMyTestsAlreadyMade(UserID, true);
+                LaatstGeoefendeToetsen.ItemsSource = LastMadeContent;
+                LaatstGeoefendeToetsen.Items.Refresh();
+                ContentNow = LastMadeContent;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
         }
+
 
 
         private void DG_Checkbox_Check(object sender, RoutedEventArgs e)
