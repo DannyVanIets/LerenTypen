@@ -1,6 +1,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using LerenTypen.Controllers;
 using LerenTypen.Models;
@@ -15,7 +16,7 @@ namespace LerenTypen
             InitializeComponent();
             try
             {
-                account = AccountController.GetUserAccount(id);
+                account = AccountController.GetAccountNamesAndBirthdate(id);
                 firstNameTextBox.Text = account.FirstName;
                 lastNameTextbox.Text = account.Surname;
                 EditPageUserName.Content += " " + account.UserName;
@@ -35,6 +36,7 @@ namespace LerenTypen
             string surname = lastNameTextbox.Text;
             string username = account.UserName;
             string comboboxvalue = ((ComboBoxItem)UserType.SelectedItem).Tag.ToString();
+
             try
             {
                 if (!string.IsNullOrEmpty(firstname) || !string.IsNullOrEmpty(surname) || !string.IsNullOrEmpty(username))
@@ -57,8 +59,6 @@ namespace LerenTypen
                     AccountController.MakeTeacher(username);
                     MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
                     this.Close();
-
-
                 }
                 else if (comboboxvalue == "admin")
                 {
@@ -79,12 +79,12 @@ namespace LerenTypen
             }
         }
 
-        private void DeleteAccountButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void DeleteAccountButton_MouseEnter(object sender, MouseEventArgs e)
         {
             DeleteAcc.Foreground = Brushes.Black;
         }
 
-        private void DeleteAccountButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void DeleteAccountButton_MouseLeave(object sender, MouseEventArgs e)
         {
             DeleteAcc.Foreground = Brushes.White;
         }
@@ -92,10 +92,10 @@ namespace LerenTypen
         {
             try
             {
-                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je het account wilt archiveren?", "Account Verwijderen", System.Windows.MessageBoxButton.YesNo);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het account wilt archiveren?", "Account Verwijderen", MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    System.Windows.MessageBox.Show("Het Account is succesvol gearchiveerd!", "Succes");
+                    MessageBox.Show("Het Account is succesvol gearchiveerd!", "Succes");
                     string username = account.UserName;
                     AccountController.DeleteAccount(username);
                     this.Close();
@@ -104,12 +104,11 @@ namespace LerenTypen
                 {
                     this.Close();
                 }
-
             }
             catch (Exception r)
             {
                 Console.WriteLine(r.ToString());
-                System.Windows.MessageBox.Show("Error", "Error");
+                MessageBox.Show("Error", "Error");
                 this.Close();
             }
         }

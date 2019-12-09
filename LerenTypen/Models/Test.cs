@@ -2,7 +2,7 @@
 
 namespace LerenTypen.Models
 {
-    class Test
+    public class Test
     {
         public int ID { get; private set; }
         public int Number { get; set; }

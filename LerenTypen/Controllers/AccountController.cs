@@ -1,11 +1,11 @@
-﻿using System;
+﻿using LerenTypen.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using LerenTypen.Models;
 
 namespace LerenTypen.Controllers
 {
-    class AccountController
+    public class AccountController
     {
         public static List<string> GetAccountType(int accountID)
         {
@@ -41,10 +41,47 @@ namespace LerenTypen.Controllers
             return results;
         }
 
+        //Get all the account information, except for password.
+        public static Account GetAlleAccountInformation(int accountID)
+        {
+            Account account = new Account();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+
+            try
+            {
+                connection.Open();
+                string query = "SELECT accountUsername, accountBirthdate, accountFirstName, accountSurname, accountSecurityQuestion, accountSecurityAnswer FROM accounts WHERE accountID = @id AND archived = 0";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", accountID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            account = new Account((string)reader[0], (DateTime)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], (string)reader[5]);
+                        }
+                    }
+                }
+                return account;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return null;
+        }
+
         /// <summary>
-        /// Get an user by its id
+        /// Get an account's username, birthdate, firstname and surname.
         /// </summary>
-        public static Account GetUserAccount(int accountID)
+        public static Account GetAccountNamesAndBirthdate(int accountID)
         {
             Account account = new Account();
             SqlConnection connection = new SqlConnection(Database.connectionString);

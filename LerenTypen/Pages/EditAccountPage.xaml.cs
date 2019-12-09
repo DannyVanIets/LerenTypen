@@ -30,7 +30,7 @@ namespace LerenTypen
             //If a user is logged in, we will fill in all the information from his account into the textboxes.
             if (mainWindow.Ingelogd > 0)
             {
-                Account = AccountController.GetUserAccount(mainWindow.Ingelogd);
+                Account = AccountController.GetAlleAccountInformation(mainWindow.Ingelogd); // QUERY AANPASSEN!
 
                 firstNameTextBox.Text = Account.FirstName;
                 lastNameTextbox.Text = Account.Surname;
@@ -41,7 +41,8 @@ namespace LerenTypen
                 birthdateDatePicker.DisplayDateStart = Date.dateOfToday;
                 birthdateDatePicker.DisplayDateEnd = Date.dateOfTodayHundredYearsAgo;
 
-                securityQuestionComboBox.Text = Account.SecurityQuestion;
+                //securityQuestionComboBox.SelectedValue = "Wat is je geboorteplaats?";
+                securityQuestionComboBox.SelectedValue = Account.SecurityQuestion;
                 securityAnswerTextBox.Text = Account.SecurityAnswer;
             }
             else
@@ -76,7 +77,7 @@ namespace LerenTypen
             DateTime birthdate = (DateTime)birthdateDatePicker.SelectedDate;
             string securityQuestion = securityQuestionComboBox.Text;
             string securityAnswer = securityAnswerTextBox.Text;
-            
+
             //Checks if the birthdate isn't younger than 1 year or older than 100 years.
             //This also checks straight away if the birthdate is really a date.
             if (birthdate > Date.dateOfToday || birthdate < Date.dateOfTodayHundredYearsAgo)
@@ -159,6 +160,27 @@ namespace LerenTypen
                         MessageBox.Show("Het account kon niet worden geüpdate, probeer het opnieuw of neem contact op met de beheerders.", "Error");
                     }
                 }
+            }
+        }
+
+        private void DeleteAccountButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je je account wilt verwijderen?", "Account Verwijderen", MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    System.Windows.MessageBox.Show("Het Account is succesvol verwijderd!", "Succes");
+                    string username = Account.UserName;
+                    AccountController.DeleteAccount(username);
+                    MainWindow.LogoutUser(true);
+                }
+            }
+            catch (Exception r)
+            {
+                Console.WriteLine(r.ToString());
+                System.Windows.MessageBox.Show("Error", "Error");
+                MainWindow.LogoutUser();
             }
         }
     }

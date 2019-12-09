@@ -58,7 +58,7 @@
 
         <Label Grid.Row="7" Grid.Column="0" Margin="10,29.8,10.2,0.2" Grid.RowSpan="2">Securityvraag:</Label>
         <ComboBox x:Name="securityQuestionComboBox" Height="20" Width="260" IsReadOnly="True" HorizontalAlignment="Left"
-                  IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Grid.Row="8" Margin="175,6.4,0,3.6" Grid.ColumnSpan="2">
+                  IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Grid.Row="8" Margin="175,6.4,0,3.6" SelectedValuePath="Content" Grid.ColumnSpan="2">
             <ComboBoxItem Content="Wat is je geboorteplaats?"/>
             <ComboBoxItem Content="Wat is de naam van je moeder?"/>
             <ComboBoxItem Content="Wat is de naam van je eerste huisdier?"/>
@@ -72,6 +72,6 @@
 
         <Button x:Name="deleteAccountButton" Grid.Row="9" Grid.Column="1" Margin="0,50.8,10.6,73.2"
                 Width="125" Height="20" HorizontalAlignment="Right" 
-                Background="Red" Foreground="White" MouseEnter="DeleteAccountButton_MouseEnter" MouseLeave="DeleteAccountButton_MouseLeave">Verwijder account</Button>
+                Background="Red" Foreground="White" MouseEnter="DeleteAccountButton_MouseEnter" MouseLeave="DeleteAccountButton_MouseLeave" Click="DeleteAccountButton_Click">Verwijder account</Button>
     </Grid>
 </Page>
