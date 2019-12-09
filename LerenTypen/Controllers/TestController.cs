@@ -459,7 +459,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and a.accountId=@id";
+                string query = "select testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and a.accountId=@id";
                 int bCounter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -495,7 +495,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.accountID=@accountID and t.archived=0 and a.archived=0;";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.accountID=@accountID and t.archived=0 and a.archived=0;";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -666,7 +666,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = 2 and t.archived=0 and a.archived=0 and t.isPrivate=0 group by t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername from tests t join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = 2 and t.archived=0 and a.archived=0 and t.isPrivate=0";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
