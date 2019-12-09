@@ -28,7 +28,7 @@ namespace LerenTypen
                 loginRegisterButton.Visibility = Visibility.Visible;
             }
 
-            List<Test> trendingTests = TestController.GetTrendingTestsNameAndID(10);
+            List<Test> trendingTests = TestController.GetTrendingTestsNameAndID(3);
             if (trendingTests.Count > 0)
             {
                 int counter = 1;
