@@ -35,7 +35,7 @@
 
     <Window.Resources>
         <ContextMenu x:Key="accountMenu">
-            <MenuItem Header="Accountinformatie"></MenuItem>
+            <MenuItem x:Name="AccountInformationPageButton" Header="Accountinformatie" Click="AccountInformationPage_Click"></MenuItem>
             <MenuItem x:Name="EditAccountPageButton" Header="Account aanpassen" Click="EditAccountPageButton_Click"></MenuItem>
             <MenuItem Header="Uitloggen" Click="LogoutMenuItem_Click"></MenuItem>
         </ContextMenu>

@@ -454,6 +454,40 @@ namespace LerenTypen.Controllers
             }
             return true;
         }
+        public static List<TestTable> GetPrivateTestMyAccount(int accountId)
+        {
+            List<TestTable> queryResult = new List<TestTable>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+
+            try
+            {
+                connection.Open();
+                string query = "select testID, testName, t.isPrivate , t.testID from tests t Inner join accounts a on t.accountID=@id where t.archived= 0 and a.archived= 0 and a.accountId= @id;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", accountId);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            //adds all the found data to a list
+                            queryResult.Add(new TestTable(Convert.ToInt32(reader[0]), reader.GetString(1), Convert.ToInt32(reader[2]), Convert.ToInt32(reader[3])));
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return queryResult;
+        }
 
         public static List<TestTable> GetAllMyTestswithIsPrivate(int accountId)
         {
@@ -491,7 +525,7 @@ namespace LerenTypen.Controllers
             }
             return queryResult;
         }
-        public static List<TestTable> GetAllMyTestsAlreadyMade(int ingelogd)
+        public static List<TestTable> GetAllMyTestsAlreadyMade(int accountId, bool top3)
         {
             List<TestTable> queryResult = new List<TestTable>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -499,24 +533,27 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.accountID=@accountID and t.archived=0 and a.archived=0;";
-                int counter = 1;
-
-                using (SqlCommand command = new SqlCommand(query, connection))
+                if (top3)
                 {
-                    command.Parameters.AddWithValue("@accountID", ingelogd);
-
+                    string query = "select top 3 tr.testID, testname, tr.testID ,tr.testResultsDate,t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @id and t.archived=0 and a.archived=0 and t.isPrivate=0 group by tr.testID, testname, t.isPrivate, tr.testID ,tr.testResultsDate order by tr.testResultsDate desc;";
+                }
+                else
+                {
+                    string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.accountID=@accountID and t.archived=0 and a.archived=0;";
+                    int counter = 1;
+                     }
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", accountId);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            // add all the found data to a list
-                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetFastestTyper(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0])));
-                            counter++;
+                            //adds all the found data to a list
+                            queryResult.Add(new TestTable(Convert.ToInt32(reader[0]), reader.GetString(1), Convert.ToInt32(reader[2])));
                         }
                     }
                 }
-
             }
             catch (SqlException e)
             {
