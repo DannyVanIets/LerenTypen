@@ -411,10 +411,11 @@ namespace LerenTypen
         }
 
         /// <summary>
-        /// Method for early closing test, user is navigated to testoverview
+        /// Method for early closing test, user is navigated to testoverview and unfinished test is saved to db
         /// </summary>
         private void StopTest()
         {
+            SaveResults(false);
             m.frame.Navigate(new TestOverviewPage(m));
         }
 
@@ -504,12 +505,12 @@ namespace LerenTypen
         /// Results are stored in database after exercising test
         /// </summary>
         /// <returns></returns>
-        private int SaveResults()
+        private int SaveResults(bool finished = true)
         {
             int amountOfWrong = wrongAnswers.Count;
             decimal wordsPerMinute = CalculateWordsPerMinute();
             decimal percentageRight = CalculatePercentageRight();
-            int resultID = TestResultController.SaveResults(testID, m.Ingelogd, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines, (int)percentageRight);
+            int resultID = TestResultController.SaveResults(testID, m.Ingelogd, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines, (int)percentageRight, finished);
             return resultID;
         }
 

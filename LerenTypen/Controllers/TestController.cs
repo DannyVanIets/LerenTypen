@@ -990,5 +990,38 @@ namespace LerenTypen.Controllers
             }
             return queryResult;
         }
+
+        public static List<int> GetUnfinishedTestsFromAccount(int accountId)
+        {
+            List<int> ids = new List<int>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "select testID from testresults where accountID = @id and finished = 0";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", accountId);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ids.Add(Convert.ToInt32(reader[0]));
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return ids;
+        }
     }
 }

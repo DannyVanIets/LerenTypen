@@ -208,7 +208,7 @@ namespace LerenTypen.Controllers
         /// <param name="wrongAnswers"></param>
         /// <param name="lines"></param>
         /// <returns></returns>
-        public static int SaveResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines, int score)
+        public static int SaveResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines, int score, bool finished)
         {
             int testResultID = 0;
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -216,7 +216,15 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score) VALUES (@testID, @accountID, CURRENT_TIMESTAMP, @WordsEachMinute, @pauses, @score); Select SCOPE_IDENTITY();";
+                string query;
+                if (finished)
+                {
+                    query = "INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score) VALUES (@testID, @accountID, CURRENT_TIMESTAMP, @WordsEachMinute, @pauses, @score); Select SCOPE_IDENTITY();";
+                }
+                else
+                {
+                    query = "INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score, finished) VALUES (@testID, @accountID, CURRENT_TIMESTAMP, @WordsEachMinute, @pauses, @score, 0); Select SCOPE_IDENTITY();";
+                }             
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

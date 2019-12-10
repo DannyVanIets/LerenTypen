@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using LerenTypen.Models;
+using System.Collections.Generic;
 
 namespace LerenTypen
 {
@@ -196,12 +197,42 @@ namespace LerenTypen
                 {
                     allUsersPageButton.Visibility = Visibility.Visible;
                 }
+
+                CheckForUnfinishedTests();
             }
             else
             {
                 loginPageButton.Content = "Inloggen/registeren";
                 loginPageButton.ContextMenu = null;
                 allUsersPageButton.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        /// <summary>
+        /// Used to show a button in the menu to resume unfinished tests if the logged in user has any
+        /// </summary>
+        public void CheckForUnfinishedTests()
+        {
+            List<int> unfinishedTestIDs = TestController.GetUnfinishedTestsFromAccount(Ingelogd);
+            if (unfinishedTestIDs.Count > 0)
+            {
+                resumeTestsButton.Visibility = Visibility.Visible;
+
+                if (resumeTestsButton.ContextMenu == null)
+                {
+                    resumeTestsButton.ContextMenu = new ContextMenu();
+                }
+
+                foreach (int id in unfinishedTestIDs)
+                {
+                    MenuItem item = new MenuItem();
+                    item.Header = TestController.GetTestName(id);
+                    item.Click += ((s, e) =>
+                    {
+                        ChangePage(new TestExercisePage(id, this));
+                    });
+                    resumeTestsButton.ContextMenu.Items.Add(item);
+                }
             }
         }
 
@@ -231,6 +262,12 @@ namespace LerenTypen
         {
             client.Disconnect();
             client.Dispose();
+        }
+
+        private void ResumeTestsButton_Click(object sender, RoutedEventArgs e)
+        {
+            resumeTestsButton.ContextMenu.IsOpen = true;
+            resumeTestsButton.IsChecked = false;
         }
     }
 }
