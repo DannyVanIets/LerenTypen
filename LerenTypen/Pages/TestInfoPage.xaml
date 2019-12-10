@@ -122,5 +122,6 @@
                 Background="Transparent" BorderThickness="0" Click="StartTestButton_Click">
             <Image Source="/img/resumeButton.png"/>
         </Button>
+        <Button x:Name="editTestBtn" Content="Toets Wijzigen" Grid.Column="3" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Center" Width="100" Margin="0,20,0,0" Visibility="Collapsed" Click="EditTestBtn_Click"/>
     </Grid>
 </Page>

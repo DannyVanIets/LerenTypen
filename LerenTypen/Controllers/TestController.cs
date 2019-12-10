@@ -242,7 +242,7 @@ namespace LerenTypen.Controllers
                 string query = $"SELECT testID, testName, testType, accountID, version, testDifficulty, isPrivate, createDate from tests t WHERE t.testID IN {idList}";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
-                {                  
+                {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -630,6 +630,34 @@ namespace LerenTypen.Controllers
             }
             return true;
         }
+
+
+        public static bool UpdateTestToArchived(int testId)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "update tests set archived=1 where testId=@test;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@test", testId);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return true;
+        }
+
         public static List<TestTable> GetPrivateTestMyAccount(int accountId)
         {
             List<TestTable> queryResult = new List<TestTable>();
@@ -797,7 +825,7 @@ namespace LerenTypen.Controllers
         /// <summary>
         /// Method for adding tests to database. 
         /// </summary>        
-        public static bool AddTest(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy)
+        public static bool AddTest(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy, int version)
         {
             bool result;
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -807,8 +835,8 @@ namespace LerenTypen.Controllers
 
                 // Select SCOPE_IDENTITY is used to insert the tests content into a seperate table with the same id
                 // DateTime.Now is being used to get the current date and time.
-                string query = "INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID) " +
-                    $"VALUES (@testName, @testType, 0, @testDifficulty, @now, @isPrivate, @uploadedBy); SELECT SCOPE_IDENTITY()";
+                string query = "INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID, version) " +
+                    $"VALUES (@testName, @testType, 0, @testDifficulty, @now, @isPrivate, @uploadedBy, @version); SELECT SCOPE_IDENTITY()";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -818,6 +846,7 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@now", DateTime.Now);
                     command.Parameters.AddWithValue("@isPrivate", isPrivate);
                     command.Parameters.AddWithValue("@uploadedBy", uploadedBy);
+                    command.Parameters.AddWithValue("@version", version);
 
                     object testID = command.ExecuteScalar();
                     int intTestID = int.Parse(testID.ToString());

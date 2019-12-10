@@ -478,6 +478,42 @@ namespace LerenTypen.Controllers
             return false;
         }
 
+        // Check if person is teacher
+        public static bool IsTeacher(int accountnumber)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                string query = "Select accountUsername from accounts where accountType = 1 and accountID = @accountnumber and archived =0";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@accountnumber", accountnumber);
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return false;
+        }
+
         // Make the user Admin
         public static bool MakeAdmin(string userName)
         {

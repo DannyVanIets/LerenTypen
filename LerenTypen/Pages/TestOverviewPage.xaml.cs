@@ -82,6 +82,11 @@ namespace LerenTypen
                 AllTestsOverview_Button_ShowOwnTestOnly.Visibility = Visibility.Hidden;
                 AllTestsOverview_CheckBox_MadeBefore.Visibility = Visibility.Hidden;
             }
+            if (AccountController.IsTeacher(mainWindow.Ingelogd))
+            {
+                deleteColumn.Width = 25;
+                editColumn.Width = 35;
+            }
         }
 
         /// <summary>
@@ -503,6 +508,19 @@ namespace LerenTypen
                 ActiveFilter = 0;
                 Dispatcher.Invoke(() => Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]));
             });
+        }
+
+        private void DG_ATO_Edit_Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            Hyperlink hyperlink = (Hyperlink)sender;
+            MainWindow.ChangePage(new CreateTestPage(MainWindow, Convert.ToInt32(hyperlink.Tag)));
+        }
+
+        private void DG_ATO_Delete_Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            Hyperlink hyperlink = (Hyperlink)sender;
+            TestController.UpdateTestToArchived(Convert.ToInt32(hyperlink.Tag));
+            MainWindow.ChangePage(new TestOverviewPage(MainWindow));
         }
     }
 }

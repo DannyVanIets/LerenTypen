@@ -1,4 +1,5 @@
 ﻿using LerenTypen.Controllers;
+using LerenTypen.Models;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +16,8 @@ namespace LerenTypen
         private List<string> textBoxValues;
         static int i = 0;
         private MainWindow m;
+        bool newVersion = false;
+        Test test;
 
         public CreateTestPage(MainWindow m)
         {
@@ -26,6 +29,28 @@ namespace LerenTypen
             CreateInputLine();
             CreateInputLine();
             textInputTestName.MaxLength = 50;
+        }
+
+        public CreateTestPage(MainWindow m, int testID)
+        {
+            InitializeComponent();
+            this.m = m;
+            textBoxes = new List<TextBox>();
+            textBoxValues = new List<string>();
+            test = TestController.GetTest(testID);
+            textInputTestName.Text = test.Name;
+            List<string> content = TestController.GetTestContent(test.ID);
+            foreach (string line in content)
+            {
+                CreateInputLine(line);
+            }
+            comboBoxDifficulty.SelectedIndex = test.Difficulty;
+            comboBoxType.SelectedIndex = test.Type;
+            privateRadio.Visibility = Visibility.Hidden;
+            publicRadio.Visibility = Visibility.Hidden;
+            textInputTestName.MaxLength = 50;
+            pageTitle.Content = "Toets Wijzigen";
+            newVersion = true;
         }
 
         private void AddLine_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -78,7 +103,7 @@ namespace LerenTypen
         /// Method for adding textinputlines, the lines include a hyperlink to remove themselves.
         /// Tags and Names are added for the RemoveInputLine method.
         /// </summary>
-        private void CreateInputLine()
+        private void CreateInputLine(string content = "")
         {
             Thickness margin = new Thickness();
             StackPanel panel = new StackPanel();
@@ -104,6 +129,7 @@ namespace LerenTypen
             tb.MinWidth = 900;
             tb.Margin = margin;
             tb.Name = "textBox" + i;
+            tb.Text = content;
             textBoxes.Add(tb);
 
             panel.Children.Add(tb);
@@ -166,7 +192,15 @@ namespace LerenTypen
             }
 
             int accountID = m.Ingelogd;
-            TestController.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID);
+            if (newVersion)
+            {
+                TestController.AddTest(title, type, difficulty, 0, textBoxValues, test.AuthorID, test.Version + 1);
+                TestController.UpdateTestToArchived(test.ID);
+            }
+            else
+            {
+                TestController.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID, 1);
+            }
             return true;
         }
 
