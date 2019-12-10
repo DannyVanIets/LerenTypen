@@ -368,7 +368,7 @@ namespace LerenTypen
             else
             {
 
-                CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                CurrentContent = TestController.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd);
                 if (!AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
                 {
                     string searchterm = AllMyTestsOverviewPage_TextBox_Search.Text;
