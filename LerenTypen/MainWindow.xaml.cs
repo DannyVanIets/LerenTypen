@@ -64,7 +64,7 @@ namespace LerenTypen
 
         private void TipPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new TipPage(), tipPageButton);
+            ChangePage(new TipPage(this), tipPageButton);
         }
 
         private void LeaderboardPageButton_Click(object sender, RoutedEventArgs e)

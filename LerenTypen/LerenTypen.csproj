@@ -284,5 +284,14 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\Toetsenbord.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\Handen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\HandenV2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

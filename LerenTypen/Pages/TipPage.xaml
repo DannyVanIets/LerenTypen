@@ -9,6 +9,23 @@
       Title="Page4" ShowsNavigationUI="False">
 
     <Grid>
-        <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14">Dit is de tippagina</Label>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="32*"/>
+            <ColumnDefinition Width="43*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="103*"/>
+            <RowDefinition Height="255*"/>
+            <RowDefinition Height="211*"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="TipPage_Label_Title" Grid.Column="0" Grid.Row="0" Content="Tips en advies" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Height="53" Width="352"/>
+        <Image Source="/img/HandenV2.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,103,0,0.4" Grid.RowSpan="2"/>
+        <Label Content="Heb jij moeite met blind leren typen? Hopelijk kan deze pagina jou helpen.&#xD;&#xA;Begin met een goede houding. Ontspan je schouders en ga rechtop zitten. Zet je linkerwijsvinger op de F-knop&#xD;&#xA;en je rechterwijsvinger op de J-knop. Op deze knoppen voel je streepjes, die helpen je om deze toetsen altijd&#xD;&#xA;terug te kunnen vinden. Zet vervolgens de rest van je vingers aan je linkerhand op de knoppen; A, S en D. &#xD;&#xA;Voor de rechterhand gaan de vingers op knoppen: K,L en ;. Nu heb je een goede uitgangspositie. &#xD;&#xA;Iedere keer als je een letter hebt getypt, kan je terug naar deze uitgangspositie. &#xD;&#xA;Hiernaast staat een plaatje van een QWERTY-toetsenbord met daarbij informatie over welke vinger op &#xD;&#xA;welke toets moet. De kleuren van de letters komen overeen met de kleuren van de vingers. &#xD;&#xA;Zo kan je zien welke vinger op welke plek moet. Probeer bij het oefenen van een toets niet naar het &#xD;&#xA;toetsenbord te kijken, maar zo veel mogelijk naar het scherm. En vergeet niet, oefening baart kunst!&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;Succes!" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="255" Grid.RowSpan="2" Width="602"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <Label Content="Wil je persoonlijk advies zien? log hier in:" Width="230" />
+            <Button x:Name="loginRegisterButton" Width="300" Click="LoginRegisterButton_Click">Inloggen/registreren om toetsen te oefenen</Button>
+        </StackPanel>
+
     </Grid>
 </Page>

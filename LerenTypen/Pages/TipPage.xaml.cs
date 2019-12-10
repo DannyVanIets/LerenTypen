@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace LerenTypen
 {
@@ -7,9 +8,18 @@ namespace LerenTypen
     /// </summary>
     public partial class TipPage : Page
     {
-        public TipPage()
+
+        private MainWindow MainWindow;
+        public TipPage(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.MainWindow = mainWindow;
+
+        }
+
+        private void LoginRegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.ChangePage(new LoginPage(MainWindow));
         }
     }
 }
