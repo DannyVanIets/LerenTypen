@@ -138,6 +138,10 @@ namespace LerenTypen
                 {
                     pageToggleButton = homePageButton;
                 }
+                if (pageToChangeTo is TestOverviewPage)
+                {
+                    pageToggleButton = testOverviewPageButton;
+                }
                 else if (pageToChangeTo is TipPage)
                 {
                     pageToggleButton = tipPageButton;
@@ -227,11 +231,6 @@ namespace LerenTypen
         {
             client.Disconnect();
             client.Dispose();
-        }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
