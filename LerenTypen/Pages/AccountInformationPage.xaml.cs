@@ -16,7 +16,6 @@ namespace LerenTypen
         List<TestTable> LastMadeContent;
         List<TestTable> CurrentContent = new List<TestTable>();
         List<TestTable> ContentNow = new List<TestTable>();
-        private int UserID;
         private bool myPage;
 
         public AccountInformationPage(MainWindow mainWindow, int UserID = 0)

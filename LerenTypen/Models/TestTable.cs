@@ -8,7 +8,7 @@ namespace LerenTypen
         public int WPFNumber { get; set; }
         public string WPFName { get; set; }
         public int WPFTimesMade { get; set; }
-        public int Highscore { get; set; }
+        public int WordHighscore { get; set; }
         public int AmountOfWords { get; set; }
         public string Difficulty { get; set; }
         public string Uploader { get; set; }
@@ -42,12 +42,12 @@ namespace LerenTypen
         }
 
 
-        public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, int testDifficulty, string uploader)
+        public TestTable(int number, string name, int timesMade, int wordHighscore, int amountOfWords, int testDifficulty, string uploader)
         {
             this.WPFNumber = number;
             this.WPFName = name;
             this.WPFTimesMade = timesMade;
-            this.Highscore = highscore;
+            this.WordHighscore = wordHighscore;
             this.AmountOfWords = amountOfWords;
             this.Uploader = uploader;
 
@@ -68,12 +68,12 @@ namespace LerenTypen
             }
 
         }
-        public TestTable(int number, string name, int timesMade, int highscore, int amountOfWords, int testDifficulty, string uploader, int isPrivate, int testId)
+        public TestTable(int number, string name, int timesMade, int wordHighscore, int amountOfWords, int testDifficulty, string uploader, int isPrivate, int testId)
         {
             this.WPFNumber = number;
             this.WPFName = name;
             this.WPFTimesMade = timesMade;
-            this.Highscore = highscore;
+            this.WordHighscore = wordHighscore;
             this.AmountOfWords = amountOfWords;
             this.Uploader = uploader;
 

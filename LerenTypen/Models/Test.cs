@@ -14,6 +14,7 @@ namespace LerenTypen.Models
         public int TimesMade { get; private set; }
         public int AverageScore { get; private set; }
         public int Highscore { get; private set; }
+        public int WordHighscore { get; private set; }
         public int Version { get; private set; }
         public int Difficulty { get; private set; }
         public bool IsPrivate { get; private set; }
@@ -35,6 +36,7 @@ namespace LerenTypen.Models
 
             TimesMade = TestController.GetTimesMade(ID);
             Highscore = TestController.GetTestHighscore(ID);
+            WordHighscore = TestController.GetWordHighscore(ID);
             AverageScore = TestController.GetTestAverageScore(ID);
         }
 

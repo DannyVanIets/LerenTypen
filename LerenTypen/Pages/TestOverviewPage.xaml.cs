@@ -466,7 +466,7 @@ namespace LerenTypen
             int counter = 1;
             foreach (Test test in trendingTests)
             {
-                TrendingTableContent.Add(new TestTable(counter, test.Name, test.TimesMade, test.Highscore, test.WordCount, test.Difficulty, test.AuthorUsername, 0, test.ID));
+                TrendingTableContent.Add(new TestTable(counter, test.Name, test.TimesMade, test.WordHighscore, test.WordCount, test.Difficulty, test.AuthorUsername, 0, test.ID));
                 counter++;
             }
         }
