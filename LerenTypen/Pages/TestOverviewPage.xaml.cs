@@ -239,7 +239,8 @@ namespace LerenTypen
                 SearchResult = (from t in CurrentContent
                                 where t.WPFName.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0 || t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
                                 select t).ToList();
-            ApplySearchFilter();
+                ApplySearchFilter();
+            }
         }
 
         /// <summary>
