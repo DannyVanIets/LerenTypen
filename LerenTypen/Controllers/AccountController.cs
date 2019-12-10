@@ -9,7 +9,7 @@ namespace LerenTypen.Controllers
     {
 
         //Get all the account information, except for password.
-        public static Account GetAlleAccountInformation(int accountID)
+        public static Account GetAllAccountInformation(int accountID)
         {
             Account account = new Account();
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -132,7 +132,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "SELECT accountUsername FROM accounts WHERE accountID = @accountID AND archived = 0";
+                string query = "SELECT accountUsername FROM accounts WHERE accountID = @accountID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
