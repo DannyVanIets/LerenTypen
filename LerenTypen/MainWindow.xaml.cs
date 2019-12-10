@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using LerenTypen.Models;
 
 namespace LerenTypen
 {
@@ -18,6 +19,9 @@ namespace LerenTypen
         public int Ingelogd { get; set; }
 
         private SshClient client;
+
+        //This class is used to remember the selected options across all tests.
+        public TestOptions testOptions = new TestOptions();
 
         public MainWindow()
         {
@@ -58,11 +62,6 @@ namespace LerenTypen
             ChangePage(new TestOverviewPage(this), testOverviewPageButton);
         }
 
-        private void TrendingTestsPageButton_Click(object sender, RoutedEventArgs e)
-        {
-            ChangePage(new TrendingTestsPage(), trendingTestsPageButton);
-        }
-
         private void TipPageButton_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(new TipPage(), tipPageButton);
@@ -100,6 +99,14 @@ namespace LerenTypen
             }
         }
 
+        private void AccountInformationPage_Click(object sender, RoutedEventArgs e)
+        {
+            if(Ingelogd > 0)
+            {
+                ChangePage(new AccountInformationPage(this));
+            }
+        }
+
         /// <summary>
         /// Changes the page to the specified page if this page is not 
         /// already open and updates the menu buttons accordingly
@@ -131,13 +138,9 @@ namespace LerenTypen
                 {
                     pageToggleButton = homePageButton;
                 }
-                else if (pageToChangeTo is TrendingTestsPage)
+                if (pageToChangeTo is TestOverviewPage)
                 {
-                    pageToggleButton = trendingTestsPageButton;
-                }
-                else if (pageToChangeTo is TrendingTestsPage)
-                {
-                    pageToggleButton = trendingTestsPageButton;
+                    pageToggleButton = testOverviewPageButton;
                 }
                 else if (pageToChangeTo is TipPage)
                 {
@@ -168,7 +171,6 @@ namespace LerenTypen
         {
             homePageButton.IsChecked = false;
             testOverviewPageButton.IsChecked = false;
-            trendingTestsPageButton.IsChecked = false;
             tipPageButton.IsChecked = false;
             leaderboardPageButton.IsChecked = false;
             allUsersPageButton.IsChecked = false;

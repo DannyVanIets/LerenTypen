@@ -108,6 +108,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\AccountInformationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -119,6 +123,7 @@
     <Compile Include="AdminEditAccountWindow.xaml.cs">
       <DependentUpon>AdminEditAccountWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\TestOptions.cs" />
     <Compile Include="Pages\AllMyTestsOverviewPage.xaml.cs">
       <DependentUpon>AllMyTestsOverviewPage.xaml</DependentUpon>
     </Compile>
@@ -130,6 +135,9 @@
     <Compile Include="Controllers\TestResultController.cs" />
     <Compile Include="Pages\CreateTestPage.xaml.cs">
       <DependentUpon>CreateTestPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AccountInformationPage.xaml.cs">
+      <DependentUpon>AccountInformationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>

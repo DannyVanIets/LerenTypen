@@ -64,7 +64,7 @@ namespace LerenTypen
             usernameLinkText.Text = test.AuthorUsername;
             usernameLink.Click += (s, e) =>
             {
-                // Go to account info page, use test.AuthorID
+                mainWindow.ChangePage(new AccountInformationPage(mainWindow, test.AuthorID));
             };
 
             amountOfWordsLabel.Content = test.WordCount;
@@ -90,6 +90,9 @@ namespace LerenTypen
             {
                 startTestButton.Visibility = Visibility.Collapsed;
             }
+
+            //Go through every option to check if they have been enabled in a previous test and been put on true.
+            playSoundsCheckBox.IsChecked = mainWindow.testOptions.Sound;
         }
 
         private void MyResultsListView_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -105,6 +108,16 @@ namespace LerenTypen
 
         private void StartTestButton_Click(object sender, RoutedEventArgs e)
         {
+            //Check if the option for sounds has been clicked on. If so, change the array position 0 to true. If not, to false.
+            if (playSoundsCheckBox.IsChecked == true)
+            {
+                mainWindow.testOptions.Sound = true;
+            }
+            else
+            {
+                mainWindow.testOptions.Sound = false;
+            }
+
             mainWindow.ChangePage(new TestExercisePage(testID, mainWindow));
         }
     }

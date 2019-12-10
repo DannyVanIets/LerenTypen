@@ -7,42 +7,9 @@ namespace LerenTypen.Controllers
 {
     public class AccountController
     {
-        public static List<string> GetAccountType(int accountID)
-        {
-            List<string> results = new List<string>();
-            SqlConnection connection = new SqlConnection(Database.connectionString);
-            try
-            {
-                connection.Open();
-                string query = "select accountType from accounts Where accountID = @accountID";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@accountID", accountID);
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            results.Add(reader.GetString(2));
-                        }
-                    }
-                }
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                connection.Close();
-                connection.Dispose();
-            }
-            return results;
-        }
 
         //Get all the account information, except for password.
-        public static Account GetAlleAccountInformation(int accountID)
+        public static Account GetAllAccountInformation(int accountID)
         {
             Account account = new Account();
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -61,6 +28,44 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             account = new Account((string)reader[0], (DateTime)reader[1], (string)reader[2], (string)reader[3], (string)reader[4], (string)reader[5]);
+                        }
+                    }
+                }
+                return account;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Get an user by its id
+        /// </summary>
+        public static Account GetUserAccount(int accountID)
+        {
+            Account account = new Account();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "SELECT accountUsername, accountBirthdate, accountFirstName, accountSurname FROM accounts WHERE accountID = @id AND archived = 0";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", accountID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            account = new Account((string)reader[0], (DateTime)reader[1], (string)reader[2], (string)reader[3]);
                         }
                     }
                 }
@@ -127,7 +132,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "SELECT accountUsername FROM accounts WHERE accountID = @accountID AND archived = 0";
+                string query = "SELECT accountUsername FROM accounts WHERE accountID = @accountID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -153,6 +158,7 @@ namespace LerenTypen.Controllers
             }
             return null;
         }
+
 
         //In this query we will get all the information from one account. This is used in EditAccountPage to fill in the textboxes with the existing information.
         //Password, type and archived is not selected.
@@ -254,18 +260,18 @@ namespace LerenTypen.Controllers
 
                     command.ExecuteNonQuery();
                 }
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         public static bool UpdateAccount(string userName, string firstName, string surname)
@@ -283,18 +289,18 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@username", userName);
                     command.ExecuteNonQuery();
                 }
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         //Same query as UpdateAccountWithoutPassword, except this one also updated the password. Also used in EditAccountPage.
@@ -323,18 +329,18 @@ namespace LerenTypen.Controllers
 
                     command.ExecuteNonQuery();
                 }
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         public static int GetAccountIDFromUsername(string accountUsername)
@@ -368,6 +374,39 @@ namespace LerenTypen.Controllers
                 connection.Dispose();
             }
             return 0;
+        }
+
+        public static List<UserTable> GetLast3TestsMade()
+        {
+            List<UserTable> queryResult = new List<UserTable>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "select accountID, accountUsername, accountType, accountFirstname, accountSurname from accounts where archived = 0";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            queryResult.Add(new UserTable(reader.GetInt32(0), reader.GetString(1), reader.GetInt16(2), reader.GetString(3), reader.GetString(4)));
+                        }
+                    }
+                }
+                return queryResult;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
         }
 
         public static List<UserTable> GetAllUsers()
@@ -454,18 +493,18 @@ namespace LerenTypen.Controllers
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         // Make the user a student
@@ -482,18 +521,19 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@id", GetAccountIDFromUsername(userName));
                     command.ExecuteNonQuery();
                 }
-                return true;
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
 
         // Make the user teacher        
@@ -510,7 +550,40 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@id", GetAccountIDFromUsername(userName));
                     command.ExecuteNonQuery();
                 }
-                return true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return true;
+        }
+
+        public static string GetAverageTestResultpercentage(string userName)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "select avg(testresults.score) from testresults where accountID = @id";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", AccountController.GetAccountIDFromUsername(userName));
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return reader[0].ToString();
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -521,7 +594,40 @@ namespace LerenTypen.Controllers
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return null;
+        }
+
+
+        public static string GetAverageWordsMinute(string userName)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "select avg(testresults.wordsEachMinute) from testresults where accountID = @id;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", AccountController.GetAccountIDFromUsername(userName));
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return reader[0].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return null;
         }
 
         public static bool DeleteAccount(string userName)
@@ -537,18 +643,19 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@id", AccountController.GetAccountIDFromUsername(userName));
                     command.ExecuteNonQuery();
                 }
-                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
-            return false;
+            return true;
         }
     }
 }

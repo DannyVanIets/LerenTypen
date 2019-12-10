@@ -15,7 +15,6 @@
         <StackPanel Orientation="Horizontal" Height="50" Grid.Row="0">
             <ToggleButton x:Name="homePageButton" Margin="10,10,0,10" Width="50" Click="HomePageButton_Click" Content="Home" IsChecked="True"/>
             <ToggleButton x:Name="testOverviewPageButton" Margin="0,10" Width="150" Click="TestOverviewPageButton_Click" Content="Overzicht alle toetsen"/>
-            <ToggleButton x:Name="trendingTestsPageButton" Margin="0,10" Width="120" Click="TrendingTestsPageButton_Click" Content="Trending toetsen"/>
             <ToggleButton x:Name="tipPageButton" Margin="0,10" Width="100" Click="TipPageButton_Click" Content="Tips/advies"/>
             <ToggleButton x:Name="leaderboardPageButton" Margin="0,10" Width="100" Click="LeaderboardPageButton_Click" Content="Leaderboard"/>
             <ToggleButton x:Name="allUsersPageButton" Margin="0,10" Width="100" Click="AllUsersPageButton_Click" Content="Alle gebruikers" Visibility="Collapsed"/>
@@ -35,7 +34,7 @@
 
     <Window.Resources>
         <ContextMenu x:Key="accountMenu">
-            <MenuItem Header="Accountinformatie"></MenuItem>
+            <MenuItem x:Name="AccountInformationPageButton" Header="Accountinformatie" Click="AccountInformationPage_Click"></MenuItem>
             <MenuItem x:Name="EditAccountPageButton" Header="Account aanpassen" Click="EditAccountPageButton_Click"></MenuItem>
             <MenuItem Header="Uitloggen" Click="LogoutMenuItem_Click"></MenuItem>
         </ContextMenu>

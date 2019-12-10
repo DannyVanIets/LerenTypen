@@ -26,7 +26,7 @@ namespace LerenTypen.Controllers
             }
         }
 
-        public static void RegisterUser(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
+        public static bool RegisterUser(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
@@ -51,12 +51,14 @@ namespace LerenTypen.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
             finally
             {
                 connection.Close();
                 connection.Dispose();
             }
+            return true;
         }
 
         public static int GetAccountIDForLogin(string accountUsername, string password)

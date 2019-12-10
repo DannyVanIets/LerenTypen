@@ -30,7 +30,7 @@ namespace LerenTypen
             //If a user is logged in, we will fill in all the information from his account into the textboxes.
             if (mainWindow.Ingelogd > 0)
             {
-                Account = AccountController.GetAlleAccountInformation(mainWindow.Ingelogd); // QUERY AANPASSEN!
+                Account = AccountController.GetAllAccountInformation(mainWindow.Ingelogd);
 
                 firstNameTextBox.Text = Account.FirstName;
                 lastNameTextbox.Text = Account.Surname;
