@@ -369,7 +369,7 @@ namespace LerenTypen
             {
 
                 CurrentContent = TestController.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd);
-                if (!AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
+                if (!AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && !AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
                 {
                     string searchterm = AllMyTestsOverviewPage_TextBox_Search.Text;
                     SearchResult = (from t in CurrentContent
