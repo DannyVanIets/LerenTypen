@@ -69,7 +69,7 @@ namespace LerenTypen
 
         private void LeaderboardPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new LeaderboardPage(), leaderboardPageButton);
+            ChangePage(new LeaderboardPage(this), leaderboardPageButton);
         }
 
         //In this method we will first check if the user is logged in, if that's the case it means they want to logout. We will first ask a confirmation, then update the property, make sure the loginPageButton texts changes and then put them on the homepage. If the user is not logged in, it will direct them to the login page.
