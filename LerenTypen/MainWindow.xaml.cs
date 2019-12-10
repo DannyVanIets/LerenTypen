@@ -62,11 +62,6 @@ namespace LerenTypen
             ChangePage(new TestOverviewPage(this), testOverviewPageButton);
         }
 
-        private void TrendingTestsPageButton_Click(object sender, RoutedEventArgs e)
-        {
-            ChangePage(new TrendingTestsPage(), trendingTestsPageButton);
-        }
-
         private void TipPageButton_Click(object sender, RoutedEventArgs e)
         {
             ChangePage(new TipPage(), tipPageButton);
@@ -143,14 +138,6 @@ namespace LerenTypen
                 {
                     pageToggleButton = homePageButton;
                 }
-                else if (pageToChangeTo is TrendingTestsPage)
-                {
-                    pageToggleButton = trendingTestsPageButton;
-                }
-                else if (pageToChangeTo is TrendingTestsPage)
-                {
-                    pageToggleButton = trendingTestsPageButton;
-                }
                 else if (pageToChangeTo is TipPage)
                 {
                     pageToggleButton = tipPageButton;
@@ -180,7 +167,6 @@ namespace LerenTypen
         {
             homePageButton.IsChecked = false;
             testOverviewPageButton.IsChecked = false;
-            trendingTestsPageButton.IsChecked = false;
             tipPageButton.IsChecked = false;
             leaderboardPageButton.IsChecked = false;
             allUsersPageButton.IsChecked = false;

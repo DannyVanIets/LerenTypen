@@ -41,7 +41,6 @@ namespace LerenTypen
                 birthdateDatePicker.DisplayDateStart = Date.dateOfToday;
                 birthdateDatePicker.DisplayDateEnd = Date.dateOfTodayHundredYearsAgo;
 
-                Console.WriteLine(Account.SecurityQuestion);
                 //securityQuestionComboBox.SelectedValue = "Wat is je geboorteplaats?";
                 securityQuestionComboBox.SelectedValue = Account.SecurityQuestion;
                 securityAnswerTextBox.Text = Account.SecurityAnswer;
