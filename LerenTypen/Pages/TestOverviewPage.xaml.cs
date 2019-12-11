@@ -82,6 +82,8 @@ namespace LerenTypen
                 AllTestsOverview_Button_ShowOwnTestOnly.Visibility = Visibility.Hidden;
                 AllTestsOverview_CheckBox_MadeBefore.Visibility = Visibility.Hidden;
             }
+
+            // Check if user is teacher to show delete test and edit tests columns
             if (AccountController.IsTeacher(mainWindow.Ingelogd))
             {
                 deleteColumn.Width = 25;

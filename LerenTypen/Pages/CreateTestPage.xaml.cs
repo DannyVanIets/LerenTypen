@@ -31,6 +31,11 @@ namespace LerenTypen
             textInputTestName.MaxLength = 50;
         }
 
+        /// <summary>
+        /// Constructor for editing tests
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="testID"></param>
         public CreateTestPage(MainWindow m, int testID)
         {
             InitializeComponent();
@@ -192,6 +197,8 @@ namespace LerenTypen
             }
 
             int accountID = m.Ingelogd;
+
+            // Check if Test is an update, if so test.Version + 1
             if (newVersion)
             {
                 TestController.AddTest(title, type, difficulty, 0, textBoxValues, test.AuthorID, test.Version + 1);
