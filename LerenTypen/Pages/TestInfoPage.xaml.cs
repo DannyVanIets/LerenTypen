@@ -1,5 +1,6 @@
 ﻿using LerenTypen.Controllers;
 using LerenTypen.Models;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -93,6 +94,9 @@ namespace LerenTypen
 
             //Go through every option to check if they have been enabled in a previous test and been put on true.
             playSoundsCheckBox.IsChecked = mainWindow.testOptions.Sound;
+            //https://github.com/awesome-inc/FontAwesome.Sharp#wpf
+            Star.Text = "&#xf005;";
+            Star3.Text = "&#xf089;";
         }
 
         private void MyResultsListView_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
