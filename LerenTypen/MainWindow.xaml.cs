@@ -50,6 +50,8 @@ namespace LerenTypen
                 }
             }
 
+            TestResultController.DeleteTestResult(164);
+
             frame.Navigate(new HomePage(this));
         }
 
@@ -205,6 +207,9 @@ namespace LerenTypen
                 loginPageButton.Content = "Inloggen/registeren";
                 loginPageButton.ContextMenu = null;
                 allUsersPageButton.Visibility = Visibility.Collapsed;
+
+                resumeTestsButton.Visibility = Visibility.Collapsed;
+                resumeTestsButton.ContextMenu = null;
             }
         }
 
@@ -222,6 +227,10 @@ namespace LerenTypen
                 {
                     resumeTestsButton.ContextMenu = new ContextMenu();
                 }
+                else
+                {
+                    resumeTestsButton.ContextMenu.Items.Clear();
+                }
 
                 foreach (int id in unfinishedTestIDs)
                 {
@@ -229,7 +238,7 @@ namespace LerenTypen
                     item.Header = TestController.GetTestName(id);
                     item.Click += ((s, e) =>
                     {
-                        ChangePage(new TestExercisePage(id, this));
+                        ChangePage(new TestExercisePage(id, this, true));
                     });
                     resumeTestsButton.ContextMenu.Items.Add(item);
                 }

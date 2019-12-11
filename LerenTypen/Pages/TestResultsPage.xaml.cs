@@ -13,7 +13,7 @@ namespace LerenTypen
     {
         private int testID;
         private MainWindow m;
-        private List<string> wrongAnswers;
+        private Dictionary<int, string> wrongAnswers;
         private List<string> hadToBe;
         private List<string> rightAnswers;
         private int testResultID;
@@ -26,7 +26,7 @@ namespace LerenTypen
             this.testResultID = testResultID;
             this.m = m;
 
-            wrongAnswers = new List<string>();
+            wrongAnswers = new Dictionary<int, string>();
             hadToBe = new List<string>();
             rightAnswers = new List<string>();
 
@@ -63,14 +63,14 @@ namespace LerenTypen
         {
             AnswersLv.Items.Clear();
             int i = 0;
-            foreach (string answer in wrongAnswers)
+            foreach (KeyValuePair<int, string> kvp in wrongAnswers)
             {
                 ListViewItem li = new ListViewItem();
                 li.Foreground = Brushes.Red;
 
-                if (!answer.Trim().Equals(""))
+                if (!kvp.Value.Trim().Equals(""))
                 {
-                    li.Content = $"{answer} \nJuiste antwoord: {hadToBe[i]}";
+                    li.Content = $"{kvp.Value} \nJuiste antwoord: {hadToBe[i]}";
                     AnswersLv.Items.Add(li);
                 }
                 else
@@ -116,7 +116,7 @@ namespace LerenTypen
 
             List<string> testResults = TestResultController.GetTestResults(testResultID);
             rightAnswers = TestResultController.GetTestResultsContentRight(testResultID);
-            wrongAnswers = TestResultController.GetTestResultsContentWrong(testResultID);
+            wrongAnswers = TestResultController.GetTestResultsContentWrong(testID, testResultID);
             hadToBe = TestResultController.GetTestResultsContentHadToBe(testResultID);
 
             int amountOfPauses = Convert.ToInt32(testResults[1]);

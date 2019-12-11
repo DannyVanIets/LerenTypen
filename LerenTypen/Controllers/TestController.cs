@@ -1023,5 +1023,63 @@ namespace LerenTypen.Controllers
             }
             return ids;
         }
+
+        /// <summary>
+        /// Gets a dictionary containing the answers as the key and the answerType as the value
+        /// (0 = right, 1 = wrong)
+        /// </summary>
+        public static Dictionary<string, int> GetAllLinesFromResult(int testResultID)
+        {
+            Dictionary<string, int> lines = new Dictionary<string, int>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "Select answer, rightAnswer, answerType from testResultContent Where testResultID = @testResultID and answerType = 1";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testResultID", testResultID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int answerType = Convert.ToInt32(reader["answerType"]);
+
+                            if (answerType == 0)
+                            {
+                                lines.Add(reader["rightAnswer"].ToString(), answerType);
+                            }
+                            else if (answerType == 1)
+                            {
+                                lines.Add(reader["answer"].ToString(), answerType);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return lines;
+        }
+
+        public static List<string> GetAllLinesNotInResult(List<string> linesInResult, List<string> allLines)
+        {
+            List<string> linesNotInResult = new List<string>(allLines);
+
+            foreach (string line in linesInResult)
+            {
+                linesNotInResult.Remove(line);
+            }
+
+            return linesNotInResult;
+        }
     }
 }
