@@ -34,12 +34,13 @@
                     </ComboBox>
                 </StackPanel>
 
-                <ListView x:Name="MoeilijkeLeaderboard" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
+                <ListView x:Name="MoeilijkeLeaderboardWords" MaxHeight="160" Width="515" Height="110" BorderThickness="0"  Margin="0,5,15,0" FontSize="15">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Username" Width="100" DisplayMemberBinding="{Binding WPFName}" />
-                            <GridViewColumn Header ="Toetsnaam" Width="307" DisplayMemberBinding="{Binding Testname}" local:GridViewSort.PropertyName="WPFName"/>
-                            <GridViewColumn Header="Woorden goed" Width="110" DisplayMemberBinding="{Binding WordsGood}" />
+                            <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding WPFPlace}"/>
+                            <GridViewColumn Header="Username" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
+                            <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Header="Woorden goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -57,12 +58,13 @@
                 </ComboBox>
             </StackPanel>
 
-            <ListView x:Name="MoeilijkeLeaderboard2" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
+            <ListView x:Name="MoeilijkeLeaderboardPerc" MaxHeight="160" Width="515" Height="110" BorderThickness="0"  Margin="15,5,0,0" FontSize="15">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Username" Width="120" DisplayMemberBinding="{Binding WPFName}" />
-                        <GridViewColumn Header ="Toetsnaam" Width="290" DisplayMemberBinding="{Binding Testname}" local:GridViewSort.PropertyName="WPFName"/>
-                        <GridViewColumn Header="% goed" Width="110" DisplayMemberBinding="{Binding PercentageGood}" />
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding WPFPlace}"/>
+                        <GridViewColumn Header="Username" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
+                        <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="% goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -79,12 +81,13 @@
                 </ComboBox>
             </StackPanel>
 
-            <ListView x:Name="MoeilijkeLeaderboard3" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
+            <ListView x:Name="MiddelLeaderboardWords" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="0,5,15,0" FontSize="15">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Username" Width="100" DisplayMemberBinding="{Binding WPFName}" />
-                        <GridViewColumn Header ="Toetsnaam" Width="307" DisplayMemberBinding="{Binding Testname}" local:GridViewSort.PropertyName="WPFName"/>
-                        <GridViewColumn Header="Woorden goed" Width="110" DisplayMemberBinding="{Binding WordsGood}" />
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding WPFPlace}"/>
+                        <GridViewColumn Header="Username" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
+                        <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Woorden goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -100,12 +103,13 @@
                 </ComboBox>
             </StackPanel>
 
-            <ListView x:Name="MoeilijkeLeaderboard4" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
+            <ListView x:Name="MiddelLeaderboardperc" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="15,5,-0.2,0.6" FontSize="15">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Username" Width="120" DisplayMemberBinding="{Binding WPFName}" />
-                        <GridViewColumn Header ="Toetsnaam" Width="290" DisplayMemberBinding="{Binding Testname}" local:GridViewSort.PropertyName="WPFName"/>
-                        <GridViewColumn Header="% goed" Width="110" DisplayMemberBinding="{Binding PercentageGood}" />
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding WPFPlace}"/>
+                        <GridViewColumn Header="Username" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
+                        <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="% goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -121,12 +125,13 @@
                 </ComboBox>
             </StackPanel>
 
-            <ListView x:Name="MoeilijkeLeaderboard5" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
+            <ListView x:Name="EasyLeaderboardwords" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="0,5,9.8,0" FontSize="15">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Username" Width="100" DisplayMemberBinding="{Binding WPFName}" />
-                        <GridViewColumn Header ="Toetsnaam" Width="307" DisplayMemberBinding="{Binding Testname}" local:GridViewSort.PropertyName="WPFName"/>
-                        <GridViewColumn Header="Woorden goed" Width="110" DisplayMemberBinding="{Binding WordsGood}" />
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding WPFPlace}"/>
+                        <GridViewColumn Header="Username" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
+                        <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Woorden goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -142,16 +147,16 @@
                 </ComboBox>
             </StackPanel>
 
-            <ListView x:Name="MoeilijkeLeaderboard6" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
+            <ListView x:Name="EasyeLeaderboardperc" MaxHeight="140" Width="515" Height="140" BorderThickness="0"  Margin="15,5,-0.2,0.6" FontSize="15">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Username" Width="120" DisplayMemberBinding="{Binding WPFName}" />
-                        <GridViewColumn Header ="Toetsnaam" Width="290" DisplayMemberBinding="{Binding Testname}" local:GridViewSort.PropertyName="WPFName"/>
-                        <GridViewColumn Header="% goed" Width="110" DisplayMemberBinding="{Binding PercentageGood}" />
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding WPFPlace}"/>
+                        <GridViewColumn Header="Username" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
+                        <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="% goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
                     </GridView>
                 </ListView.View>
             </ListView>
         </StackPanel>
-
     </Grid>
 </Page>
