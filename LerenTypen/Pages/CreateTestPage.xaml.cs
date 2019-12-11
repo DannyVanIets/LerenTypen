@@ -38,7 +38,7 @@ namespace LerenTypen
         /// <param name="testID"></param>
         public CreateTestPage(MainWindow m, int testID)
         {
-            if (TestController.EditingTest(testID).Equals(1))
+            if (TestController.EditingTest(testID).Equals(0))
             {
                 InitializeComponent();
                 this.m = m;

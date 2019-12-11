@@ -882,7 +882,22 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
 
-                string query = "BEGIN TRANSACTION[Tran1] BEGIN TRY DECLARE @beingEdited TinyINT;  SELECT @beingEdited = beingEdited from tests where testID = 15; SELECT @beingEdited  IF @beingEdited = 0 BEGIN  Update tests SET beingEdited = 1 Where testID = 15 END  END TRY BEGIN CATCH ROLLBACK TRANSACTION[Tran1] END CATCH Select beingEdited from tests where testID = 15 COMMIT TRANSACTION[Tran1] GO";
+                string query = "BEGIN TRANSACTION[Tran1] " +
+                    "Select beingEdited from tests where testID = @testID " +
+                    "BEGIN TRY " +
+                    "DECLARE " +
+                    "@beingEdited TinyINT;  " +
+                    "SELECT @beingEdited = beingEdited from tests where testID = @testID; " +
+                    "SELECT @beingEdited " +
+                    "IF @beingEdited = 0 " +
+                    "BEGIN  " +
+                    "Update tests SET beingEdited = 1 Where testID = @testID " +
+                    "END  " +
+                    "END TRY " +
+                    "BEGIN CATCH " +
+                    "ROLLBACK TRANSACTION[Tran1] " +
+                    "END CATCH " +
+                    "COMMIT TRANSACTION[Tran1]";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -891,7 +906,7 @@ namespace LerenTypen.Controllers
                     {
                         while (reader.Read())
                         {
-                            result = int.Parse(reader.GetString(0));
+                            result = Convert.ToInt32(reader[0]);
                         }
                     }
                 }
