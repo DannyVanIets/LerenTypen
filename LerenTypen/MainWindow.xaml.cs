@@ -1,12 +1,10 @@
-﻿using Renci.SshNet;
+﻿using LerenTypen.Controllers;
+using LerenTypen.Models;
+using Renci.SshNet;
 using System;
-using LerenTypen.Controllers;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using LerenTypen.Models;
 
 namespace LerenTypen
 {
@@ -28,7 +26,7 @@ namespace LerenTypen
             InitializeComponent();
 
             client = new SshClient("145.44.233.184", "student", "toor2019");
-            connectSSH:
+        connectSSH:
             try
             {
                 client.Connect();
@@ -101,7 +99,7 @@ namespace LerenTypen
 
         private void AccountInformationPage_Click(object sender, RoutedEventArgs e)
         {
-            if(Ingelogd > 0)
+            if (Ingelogd > 0)
             {
                 ChangePage(new AccountInformationPage(this));
             }
@@ -224,7 +222,7 @@ namespace LerenTypen
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 LogoutUser();
-             }
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)

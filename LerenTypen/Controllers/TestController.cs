@@ -870,6 +870,80 @@ namespace LerenTypen.Controllers
         }
 
         /// <summary>
+        /// Transaction for editing tests, checks if person is editing the test
+        /// </summary>
+        /// <param name="testID"></param>
+        /// <returns></returns>
+        public static int EditingTest(int testID)
+        {
+            int result = 2;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                string query = "BEGIN TRANSACTION[Tran1] BEGIN TRY DECLARE @beingEdited TinyINT;  SELECT @beingEdited = beingEdited from tests where testID = 15; SELECT @beingEdited  IF @beingEdited = 0 BEGIN  Update tests SET beingEdited = 1 Where testID = 15 END  END TRY BEGIN CATCH ROLLBACK TRANSACTION[Tran1] END CATCH Select beingEdited from tests where testID = 15 COMMIT TRANSACTION[Tran1] GO";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testID", testID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            result = int.Parse(reader.GetString(0));
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return 2;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Called after saving new test version
+        /// </summary>        
+        /// <returns></returns>
+        public static bool notBeingEdited(int testID)
+        {
+            bool result;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "Update tests set beingEdited = 0 where testID = @testID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testID", testID);
+                    result = true;
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+
+            }
+            return result;
+
+        }
+
+        /// <summary>
         /// Method adds each line of content of a test to database using its tests ID. testcontent is stored in a separate db.
         /// </summary>        
         private static bool AddTestContent(int testID, List<string> content)

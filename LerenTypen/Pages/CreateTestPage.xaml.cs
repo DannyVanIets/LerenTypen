@@ -38,24 +38,32 @@ namespace LerenTypen
         /// <param name="testID"></param>
         public CreateTestPage(MainWindow m, int testID)
         {
-            InitializeComponent();
-            this.m = m;
-            textBoxes = new List<TextBox>();
-            textBoxValues = new List<string>();
-            test = TestController.GetTest(testID);
-            textInputTestName.Text = test.Name;
-            List<string> content = TestController.GetTestContent(test.ID);
-            foreach (string line in content)
+            if (TestController.EditingTest(testID).Equals(1))
             {
-                CreateInputLine(line);
+                InitializeComponent();
+                this.m = m;
+                textBoxes = new List<TextBox>();
+                textBoxValues = new List<string>();
+                test = TestController.GetTest(testID);
+                textInputTestName.Text = test.Name;
+                List<string> content = TestController.GetTestContent(test.ID);
+                foreach (string line in content)
+                {
+                    CreateInputLine(line);
+                }
+                comboBoxDifficulty.SelectedIndex = test.Difficulty;
+                comboBoxType.SelectedIndex = test.Type;
+                privateRadio.Visibility = Visibility.Hidden;
+                publicRadio.Visibility = Visibility.Hidden;
+                textInputTestName.MaxLength = 50;
+                pageTitle.Content = "Toets Wijzigen";
+                newVersion = true;
             }
-            comboBoxDifficulty.SelectedIndex = test.Difficulty;
-            comboBoxType.SelectedIndex = test.Type;
-            privateRadio.Visibility = Visibility.Hidden;
-            publicRadio.Visibility = Visibility.Hidden;
-            textInputTestName.MaxLength = 50;
-            pageTitle.Content = "Toets Wijzigen";
-            newVersion = true;
+            else
+            {
+                MessageBox.Show("Toets wordt momenteel aangepast");
+                m.ChangePage(new TestOverviewPage(m));
+            }
         }
 
         private void AddLine_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -203,6 +211,7 @@ namespace LerenTypen
             {
                 TestController.AddTest(title, type, difficulty, 0, textBoxValues, test.AuthorID, test.Version + 1);
                 TestController.UpdateTestToArchived(test.ID);
+                TestController.notBeingEdited(test.ID);
             }
             else
             {

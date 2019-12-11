@@ -251,7 +251,7 @@ namespace LerenTypen.UnitTests
             //Arrange
             bool answer;
             //Act
-            answer = TestController.AddTest(testName, testType, testDifficulty, isPrivate, content, uploadedBy);
+            answer = TestController.AddTest(testName, testType, testDifficulty, isPrivate, content, uploadedBy, 1);
             //Assert
             Assert.AreEqual(result, answer);
         }
