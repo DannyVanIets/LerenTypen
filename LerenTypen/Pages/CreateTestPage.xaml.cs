@@ -59,6 +59,10 @@ namespace LerenTypen
             NewVersion = true;
         }
 
+        /// <summary>
+        /// Checks if input same as last version
+        /// </summary>
+        /// <returns></returns>
         private bool checkNewVersionSame()
         {
             if (!test.Name.Equals(textInputTestName.Text))
