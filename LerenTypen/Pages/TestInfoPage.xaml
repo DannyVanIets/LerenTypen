@@ -6,34 +6,36 @@
       xmlns:local="clr-namespace:LerenTypen"
       xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
       mc:Ignorable="d" d:DesignWidth="1050" Background="White"
-      Title="Page4" ShowsNavigationUI="False" Height="676.237">
+      Title="Page4" ShowsNavigationUI="False" Height="691.237">
 
-    <Grid>
+
+    <Grid Margin="0,0,-0.4,0">
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="80*"/>
+            <ColumnDefinition Width="449*"/>
+            <ColumnDefinition Width="262*"/>
+            <ColumnDefinition Width="262*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="75"/>
-            <RowDefinition Height="140"/>
-            <RowDefinition Height="150"/>
+            <RowDefinition MaxHeight="75"/>
+            <RowDefinition MaxHeight="140"/>
+            <RowDefinition MaxHeight="150"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3">
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,0,250.6,0.2">
             <Label x:Name="testNameLabel" FontSize="32" Margin="20,5,0,0" 
                FontWeight="Bold">Toetsnaam</Label>
             <Label x:Name="difficultyLabel" FontSize="14" Margin="10,0,0,0" 
                    VerticalAlignment="Center">Moeilijkheidsgraad</Label>
         </StackPanel>
         <Label x:Name="testVersionLabel" HorizontalAlignment="Right" VerticalAlignment="Center" 
-               Grid.Column="3" Margin="0,0,20,0">Toetsversie</Label>
+               Grid.Column="3" Margin="0,25,7.6,25.2" Height="25" Width="68">Toetsversie</Label>
 
-        <TextBox x:Name="testContentTextBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" IsReadOnly="True" Margin="0,0,20,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+        <TextBox x:Name="testContentTextBox" Grid.Column="2" Grid.ColumnSpan="2" IsReadOnly="True" Margin="11.2,75,7.6,10.2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.RowSpan="2"/>
 
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="20,0,0,0">
+        <StackPanel Orientation="Vertical" Grid.Column="0" Margin="20,75,293.8,0.2" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <StackPanel Orientation="Horizontal">
                 <Label FontWeight="Bold">Auteur:</Label>
                 <TextBlock Height="18">
@@ -64,7 +66,7 @@
             </StackPanel>
         </StackPanel>
 
-        <ListView x:Name="myResultsListView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="20,0,0,0">
+        <ListView x:Name="myResultsListView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="20,139.8,251.2,310.8" Grid.RowSpan="3">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
@@ -79,7 +81,7 @@
             </ListView.ItemContainerStyle>
         </ListView>
 
-        <ListView x:Name="top3FastestTypersListView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="2">
+        <ListView x:Name="top3FastestTypersListView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="11.2,139.8,250.6,310.8" Grid.RowSpan="3">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="265" Header="Top 3 snelste typers">
@@ -89,7 +91,7 @@
             </ListView.View>
         </ListView>
 
-        <ListView x:Name="top3HighestScoresListView" Grid.Row="2" Grid.Column="3" Margin="0,0,20,0" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Background="White">
+        <ListView x:Name="top3HighestScoresListView" Grid.Row="1" Grid.Column="3" Margin="10.8,139.8,7.6,310.8" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Background="White" Grid.RowSpan="3">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Top 3 hoogste scores" Width="245"></GridViewColumn>
@@ -97,7 +99,7 @@
             </ListView.View>
         </ListView>
 
-        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,9.8,-0.4,176.4" Visibility="Visible">
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,9.4,-12.4,176.8" Visibility="Visible">
             <Label FontSize="14" FontWeight="Bold">Opties</Label>
             <CheckBox x:Name="playSoundsCheckBox" Margin="0 2">Geluiden afspelen</CheckBox>
             <CheckBox x:Name="continueUntilAllCorrectCheckBox" Margin="0 2" Visibility="Hidden">Doorgaan tot alle vragen goed beantwoord zijn</CheckBox>
@@ -116,27 +118,36 @@
             <CheckBox x:Name="checkPunctuationCheckBox" Margin="0 2" Visibility="Hidden">Controleer op leestekens</CheckBox>
         </StackPanel>
 
-        <Button x:Name="startTestButton" Grid.Row="4" Grid.Column="3"
+        <Button x:Name="startTestButton" Grid.Row="2" Grid.Column="3"
                 HorizontalAlignment="Right" VerticalAlignment="Top"
-                Margin="0,0,20,20" Width="64" RenderOptions.BitmapScalingMode="HighQuality"
-                Background="Transparent" BorderThickness="0" Click="StartTestButton_Click">
+                Margin="0,149.8,7.6,0" Width="64" RenderOptions.BitmapScalingMode="HighQuality"
+                Background="Transparent" BorderThickness="0" Click="StartTestButton_Click" Height="64" Grid.RowSpan="2">
             <Image Source="/img/resumeButton.png"/>
         </Button>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,68.8,-0.4,0.4">
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,68.4,0.6,176.8">
             <Label x:Name="reviewTitleLabel" FontSize="32"
-               FontWeight="Bold" Content="Review" Margin="0,0,-0.4,0"/>
-            <Label x:Name="averageScoreLabel" FontSize="32" Content="Gemiddelde score: " Margin="0,0,0,0.4" Width="351"/>
-            <fa:IconImage x:Name="star1" Icon="star" Width="24" Height="24"/>
-            <fa:IconImage x:Name="star5" Icon="StarHalf" Width="24" Height="24"/>
-            <TextBlock x:Name="Star" Grid.Column="1" Text="&#xf042;"
-    FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 5 Free Solid"
-    Foreground="Chartreuse"
-    TextAlignment="Center" />
-            <TextBlock x:Name="Star3" Grid.Column="1" Text="&#xf042;"
-    FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 5 Free Solid"
-    Foreground="Chartreuse"
-    TextAlignment="Center" />
+               FontWeight="Bold" Content="Reviews" VerticalAlignment="Center" Margin="0,0,-0.4,0.4"/>
+            <Label x:Name="averageScoreLabel" FontSize="26" VerticalAlignment="Center" Content="Gemiddelde score: " Margin="0,11,0,11.4" Width="244"/>
+            <fa:IconImage x:Name="star1" Icon="star" VerticalAlignment="Center" Width="24" Height="24"/>
+            <fa:IconImage x:Name="star5" Icon="StarHalf" VerticalAlignment="Center" Width="24" Height="24"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,134.4,-0.4,128.8">
+            <Label x:Name="addReviewLabel" FontSize="20" Content="Schrijf een review!" Margin="0,0,-0.4,0.2"/>
+            <Label x:Name="reviewMustsLabel" Content="* = verplicht" Margin="0,0,-0.4,0.2"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,180.8,-12.4,125">
+            <Label x:Name="reviewScoreLabel" Content="Score (1 - 5): " Grid.Column="0"/>
+            <TextBox x:Name="reviewScoreTextbox" Width="99" Margin="0,0,0,-0.2"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,213.4,0.6,0.8">
+            <Label x:Name="reviewDescriptionLabel" Content="Beschrijving: " Grid.Column="0" Margin="0,0,0,65.8"/>
+            <TextBox x:Name="reviewDescriptionTextbox" Width="447" HorizontalAlignment="Left" Margin="1,10,0,9.4"/>
+            <Button x:Name="saveButton"
+                Width="75" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddReviewButton_Click" Margin="10,0,0,0.4" RenderTransformOrigin="0.569,0.032" Content="Toevoegen"/>
         </StackPanel>
     </Grid>
 </Page>

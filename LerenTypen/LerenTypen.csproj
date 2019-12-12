@@ -127,6 +127,7 @@
     <Compile Include="AdminEditAccountWindow.xaml.cs">
       <DependentUpon>AdminEditAccountWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\TestOptions.cs" />
     <Compile Include="Pages\AllMyTestsOverviewPage.xaml.cs">

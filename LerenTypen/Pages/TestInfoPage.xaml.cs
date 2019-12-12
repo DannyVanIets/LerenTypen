@@ -94,9 +94,17 @@ namespace LerenTypen
 
             //Go through every option to check if they have been enabled in a previous test and been put on true.
             playSoundsCheckBox.IsChecked = mainWindow.testOptions.Sound;
-            //https://github.com/awesome-inc/FontAwesome.Sharp#wpf
-            Star.Text = "&#xf005;";
-            Star3.Text = "&#xf089;";
+
+            if (mainWindow.Ingelogd == 0 || ReviewController.CheckIfUserHasMadeAReview(testID, mainWindow.Ingelogd))
+            {
+                addReviewLabel.Visibility = Visibility.Hidden;
+                reviewMustsLabel.Visibility = Visibility.Hidden;
+                reviewScoreLabel.Visibility = Visibility.Hidden;
+                reviewScoreTextbox.Visibility = Visibility.Hidden;
+                reviewDescriptionLabel.Visibility = Visibility.Hidden;
+                reviewDescriptionTextbox.Visibility = Visibility.Hidden;
+                saveButton.Visibility = Visibility.Hidden;
+            }
         }
 
         private void MyResultsListView_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -123,6 +131,53 @@ namespace LerenTypen
             }
 
             mainWindow.ChangePage(new TestExercisePage(testID, mainWindow));
+        }
+
+        private void AddReviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            int reviewScore = int.Parse(reviewScoreTextbox.Text);
+            string reviewDescription = reviewDescriptionTextbox.Text;
+
+            if (string.IsNullOrWhiteSpace(reviewScoreTextbox.Text))
+            {
+                MessageBox.Show("Je moet een review score invoeren!", "Error");
+            }
+            else if (reviewScore < 1 || reviewScore > 5)
+            {
+                MessageBox.Show("De score moet groter of gelijk aan 1 en groter of gelijk aan 5!", "Error");
+            }
+            else if (reviewDescription.Length >= 140)
+            {
+                MessageBox.Show("De beschrijving moet kleiner zijn dan 140 tekens!", "Error");
+            }
+            else if (string.IsNullOrWhiteSpace(reviewDescription))
+            {
+                Review review = new Review(testID, mainWindow.Ingelogd, reviewScore);
+
+                if (ReviewController.AddReviewWithoutDescription(review))
+                {
+                    MessageBox.Show("De review is succesvol toegevoegd!", "Succes");
+                    mainWindow.ChangePage(new TestInfoPage(testID, mainWindow));
+                }
+                else
+                {
+                    MessageBox.Show("De review kon niet worden toegevoegd. Probeer het opnieuw of neem contact op met een administrator.", "Error");
+                }
+            }
+            else
+            {
+                Review review = new Review(testID, mainWindow.Ingelogd, reviewScore, reviewDescription);
+
+                if (ReviewController.AddReviewWithDescription(review))
+                {
+                    MessageBox.Show("De review is succesvol toegevoegd!", "Succes");
+                    mainWindow.ChangePage(new TestInfoPage(testID, mainWindow));
+                }
+                else
+                {
+                    MessageBox.Show("De review kon niet worden toegevoegd. Probeer het opnieuw of neem contact op met een administrator.", "Error");
+                }
+            }
         }
     }
 }

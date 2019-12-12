@@ -6,23 +6,29 @@ using System.Threading.Tasks;
 
 namespace LerenTypen.Models
 {
-    class Review
+    public class Review
     {
+        public int TestID { get; set; }
+        public int AccountID { get; set; }
         public int ReviewScore { get; set; }
-        public Date ReviewDateAdded { get; set; }
+        public DateTime ReviewDateAdded { get; set; }
         public string ReviewDescription { get; set; }
 
-        public Review(int score, Date dateAdded, string description)
+        public Review(int testID, int accountID, int score, string description)
         {
+            TestID = testID;
+            AccountID = accountID;
             ReviewScore = score;
-            ReviewDateAdded = dateAdded;
+            ReviewDateAdded = DateTime.Now;
             ReviewDescription = description;
         }
 
-        public Review(int score, Date dateAdded)
+        public Review(int testID, int accountID, int score)
         {
+            TestID = testID;
+            AccountID = accountID;
             ReviewScore = score;
-            ReviewDateAdded = dateAdded;
+            ReviewDateAdded = DateTime.Now;
         }
     }
 }
