@@ -135,7 +135,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select testID, t.accountID, testName, t.testDifficulty, a.accountUsername from tests t Inner join accounts a on t.accountID=a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0;";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername ,tr.testReviewScore from tests t Inner join accounts a on t.accountID=a.accountID inner join testReviews tr on tr.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -145,7 +145,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             // Adds all the found data to a list
-                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetWordHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(4), -1, reader.GetInt32(0)));
+                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetWordHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(4), -1, reader.GetInt32(0) ,GetTestAverageScore(reader.GetInt32(0))));
                             counter++;
                         }
                     }
@@ -686,7 +686,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //adds all the found data to a list
-                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0])));
+                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0]) , reader.GetInt32(0)));
                             bCounter++;
                         }
                     }
@@ -724,7 +724,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             // add all the found data to a list
-                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0])));
+                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0]) , reader.GetInt32(5)));
                             counter++;
                         }
                     }
@@ -902,7 +902,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //add all the found data to a list
-                            tests.Add(new TestTable(Ccounter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetWordHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(4), -1, reader.GetInt32(0)));
+                            tests.Add(new TestTable(Ccounter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetWordHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(4), -1, reader.GetInt32(0) , reader.GetInt32(5)));
                             Ccounter++;
                         }
                     }
