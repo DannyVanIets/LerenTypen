@@ -998,7 +998,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select testID from testresults where accountID = @id and finished = 0";
+                string query = "select tr.testID from testresults tr join tests t on tr.testID = t.testID where tr.accountID = @id and tr.finished = 0 and t.archived = 0";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
