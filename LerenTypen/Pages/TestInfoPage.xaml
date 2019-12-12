@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:LerenTypen"
       xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
       mc:Ignorable="d" d:DesignWidth="1050" Background="White"
-      Title="Page4" ShowsNavigationUI="False" Height="691.237">
+      Title="Page4" ShowsNavigationUI="False" Height="708.037">
 
 
     <Grid Margin="0,0,-0.4,0">
