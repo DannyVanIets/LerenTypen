@@ -118,7 +118,7 @@ namespace LerenTypen
             {
                 ChangePageHelper(pageToChangeTo, pageToggleButton);
             }
-            else
+            else if (pageToggleButton != null)
             {
                 pageToggleButton.IsChecked = true;
             }
@@ -182,8 +182,6 @@ namespace LerenTypen
                     }
                 }
             }
-
-
             if (shouldChangePage)
             {
                 frame.Content = pageToChangeTo;

@@ -86,8 +86,8 @@ namespace LerenTypen
             // Check if user is teacher to show delete test and edit tests columns
             if (AccountController.IsTeacher(mainWindow.Ingelogd))
             {
-                deleteColumn.Width = 25;
-                editColumn.Width = 35;
+                deleteColumn.Width = 20;
+                editColumn.Width = 30;
             }
         }
 
@@ -518,7 +518,7 @@ namespace LerenTypen
             int testID = Convert.ToInt32(hyperlink.Tag);
             if (TestController.EditingTest(testID).Equals(0))
             {
-                MainWindow.ChangePage(new CreateTestPage(MainWindow, testID));
+                MainWindow.frame.Navigate(new CreateTestPage(MainWindow, testID));
             }
             else
             {
@@ -530,7 +530,7 @@ namespace LerenTypen
         {
             Hyperlink hyperlink = (Hyperlink)sender;
             TestController.UpdateTestToArchived(Convert.ToInt32(hyperlink.Tag));
-            MainWindow.ChangePage(new TestOverviewPage(MainWindow));
+            MainWindow.frame.Navigate(new TestOverviewPage(MainWindow));
         }
     }
 }
