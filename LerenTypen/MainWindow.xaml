@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LerenTypen"
         mc:Ignorable="d"
-        Title="Snel Foutloos Typen" Height="650" Width="1050" Closed="Window_Closed">
+        Title="Snel Foutloos Typen" Height="650" Width="1050" Closed="Window_Closed" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

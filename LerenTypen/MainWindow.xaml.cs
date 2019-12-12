@@ -104,7 +104,7 @@ namespace LerenTypen
 
         private void AccountInformationPage_Click(object sender, RoutedEventArgs e)
         {
-            if(Ingelogd > 0)
+            if (Ingelogd > 0)
             {
                 ChangePage(new AccountInformationPage(this));
             }
@@ -116,27 +116,27 @@ namespace LerenTypen
         /// </summary>
         /// <param name="pageToChangeTo"></param>
         /// <param name="pageToggleButton"></param>
-        private void ChangePage(Page pageToChangeTo, ToggleButton pageToggleButton)
+        public void ChangePage(Page pageToChangeTo, ToggleButton pageToggleButton = null)
         {
-            if (frame.Content != pageToChangeTo)
+            // Check if the current page is not the same as the page to change to
+            if (frame.Content.GetType() != pageToChangeTo.GetType())
             {
-                frame.Navigate(pageToChangeTo);
+                ChangePageHelper(pageToChangeTo, pageToggleButton);
                 SwitchMenuButtons(pageToggleButton);
+            }
+            else
+            {
+                pageToggleButton.IsChecked = true;
             }
         }
 
         /// <summary>
-        /// Changes the page to the specified page if this page is not 
-        /// already open and updates the menu buttons accordingly
+        /// Private helper function for ChangePage that changes the page
         /// </summary>
-        /// <param name="pageToChangeTo"></param>
-        public void ChangePage(Page pageToChangeTo)
+        private void ChangePageHelper(Page pageToChangeTo, ToggleButton pageToggleButton)
         {
-            if (frame.Content != pageToChangeTo)
+            if (pageToggleButton == null)
             {
-                frame.Navigate(pageToChangeTo);
-
-                ToggleButton pageToggleButton = null;
                 if (pageToChangeTo is HomePage)
                 {
                     pageToggleButton = homePageButton;
@@ -161,8 +161,22 @@ namespace LerenTypen
                 {
                     pageToggleButton = loginPageButton;
                 }
+            }
 
-                SwitchMenuButtons(pageToggleButton);
+            bool shouldChangePage = true;
+            if (frame.Content is TestExercisePage)
+            {
+                MessageBoxResult? choice = ShowTestExcersiseQuitWarning();
+
+                if (choice == MessageBoxResult.Cancel)
+                {
+                    shouldChangePage = false;
+                }
+            }
+
+            if (shouldChangePage)
+            {
+                frame.Content = pageToChangeTo;
             }
         }
 
@@ -277,6 +291,31 @@ namespace LerenTypen
         {
             resumeTestsButton.ContextMenu.IsOpen = true;
             resumeTestsButton.IsChecked = false;
+        }
+
+        /// <summary>
+        /// Shows a warning about quitting the test when the user is on the excercise page
+        /// </summary>
+        public MessageBoxResult? ShowTestExcersiseQuitWarning()
+        {
+            if (frame.Content is TestExercisePage)
+            {
+                TestExercisePage page = (TestExercisePage)frame.Content;
+                MessageBoxResult choice = page.AskStopTest();
+                return choice;
+            }
+
+            return null;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult? choice = ShowTestExcersiseQuitWarning();
+
+            if (choice != null && choice == MessageBoxResult.Cancel)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

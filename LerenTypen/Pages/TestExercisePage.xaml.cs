@@ -436,8 +436,14 @@ namespace LerenTypen
         /// </summary>        
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
+            StopTest();
+        }
+
+        public MessageBoxResult AskStopTest()
+        {
             MessageBoxResult choice = MessageBox.Show("Je staat op het punt de toets te stoppen. Wil je je voortgang opslaan zodat je later verder kan gaan waar je gebleven bent?",
                 "Toets verlaten?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+
             if (choice == MessageBoxResult.Yes)
             {
                 StopTest();
@@ -446,6 +452,8 @@ namespace LerenTypen
             {
                 StopTest(false);
             }
+
+            return choice;
         }
 
         /// <summary>
