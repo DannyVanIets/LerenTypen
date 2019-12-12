@@ -1,6 +1,5 @@
 ﻿using LerenTypen.Models;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace LerenTypen
@@ -10,7 +9,7 @@ namespace LerenTypen
     /// </summary>
     public partial class LeaderboardPage : Page
     {
-        //Maak alle listen voor info aan
+        //Create all lists for info
         MainWindow MainWindow;
         List<Test> HardBoardWords1;
         List<Test> HardBoardPerc1;
@@ -24,7 +23,7 @@ namespace LerenTypen
             InitializeComponent();
             MainWindow = mainWindow;
             //Make all boards
-            HardBoardPerc1= new List<Test>();
+            HardBoardPerc1 = new List<Test>();
             HardBoardWords1 = new List<Test>();
 
             MediumBoardPerc1 = new List<Test>();
@@ -33,7 +32,7 @@ namespace LerenTypen
             EasyBoardPerc1 = new List<Test>();
             EasyBoardWords1 = new List<Test>();
 
-           
+
             //Refresh and Load all info
             HardLeaderboardWords.ItemsSource = Controllers.LeaderboardController.LeaderboardHardTestsWords(0);
             HardLeaderboardWords.Items.Refresh();
@@ -55,17 +54,17 @@ namespace LerenTypen
         }
 
         //Check all checkboxes if values are being changed or not.
-        private void Tijdkeuze_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TimePick_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int Value = TimePick.SelectedIndex;
-           if (HardLeaderboardWords != null)
+            if (HardLeaderboardWords != null)
             {
                 HardLeaderboardWords.ItemsSource = Controllers.LeaderboardController.LeaderboardHardTestsWords(Value);
                 HardLeaderboardWords.Items.Refresh();
             }
         }
-        
-        private void Tijdkeuze2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void TimePick2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int Value = TimePick2.SelectedIndex;
             if (HardLeaderboardPerc != null)
@@ -74,7 +73,7 @@ namespace LerenTypen
                 HardLeaderboardPerc.Items.Refresh();
             }
         }
-        private void Tijdkeuze3_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TimePick3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int Value = TimePick3.SelectedIndex;
             if (AverageLeaderboardWords != null)
@@ -83,7 +82,7 @@ namespace LerenTypen
                 AverageLeaderboardWords.Items.Refresh();
             }
         }
-        private void Tijdkeuze4_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TimePick4_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int Value = TimePick4.SelectedIndex;
             if (AverageLeaderboardperc != null)
@@ -92,7 +91,7 @@ namespace LerenTypen
                 AverageLeaderboardperc.Items.Refresh();
             }
         }
-        private void Tijdkeuze5_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TimePick5_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int Value = TimePick5.SelectedIndex;
             if (EasyLeaderboardwords != null)
@@ -101,7 +100,7 @@ namespace LerenTypen
                 EasyLeaderboardwords.Items.Refresh();
             }
         }
-        private void Tijdkeuze6_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TimePick6_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int Value = TimePick6.SelectedIndex;
             if (EasyeLeaderboardperc != null)
