@@ -436,16 +436,22 @@ namespace LerenTypen
         /// </summary>        
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Weet je zeker dat je de toets wilt verlaten?", "Toets verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            MessageBoxResult choice = MessageBox.Show("Je staat op het punt de toets te stoppen. Wil je je voortgang opslaan zodat je later verder kan gaan waar je gebleven bent?",
+                "Toets verlaten?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+            if (choice == MessageBoxResult.Yes)
             {
                 StopTest();
+            }
+            else if (choice == MessageBoxResult.No)
+            {
+                StopTest(false);
             }
         }
 
         /// <summary>
         /// Method for early closing test, user is navigated to testoverview and unfinished test is saved to db
         /// </summary>
-        private void StopTest()
+        private void StopTest(bool save = true)
         {
             // Delete the unfinished result if test is resumed
             if (restoreState)
@@ -453,7 +459,11 @@ namespace LerenTypen
                 TestResultController.DeleteTestResult(unfinishedTestResultID);
             }
 
-            SaveResults(false);
+            if (save)
+            {
+                SaveResults(false);
+            }
+
             m.frame.Navigate(new TestOverviewPage(m));
         }
 
