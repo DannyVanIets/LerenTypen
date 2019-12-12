@@ -66,5 +66,54 @@ namespace LerenTypen.Models
                     }
             }
         }
+
+        /// <summary>
+        /// To display the right finger, we match the tag in the variable names of the rectangles to the fingers.
+        /// </summary>
+        /// <param name="color"></param>
+        //public static void FindCorrespondingFinger(string color)
+        //{
+        //    switch (color)
+        //    {
+        //        case "Orange":
+
+        //            return StartAndEnd;
+        //        case 1:
+        //            StartValue = 1;
+        //            EndValue = 49;
+        //            StartAndEnd[0] = StartValue;
+        //            StartAndEnd[1] = EndValue;
+        //            return StartAndEnd;
+        //        case 2:
+        //            StartValue = 50;
+        //            EndValue = 99;
+        //            StartAndEnd[0] = StartValue;
+        //            StartAndEnd[1] = EndValue;
+        //            return StartAndEnd;
+        //        case 3:
+        //            StartValue = 100;
+        //            EndValue = 149;
+        //            StartAndEnd[0] = StartValue;
+        //            StartAndEnd[1] = EndValue;
+        //            return StartAndEnd;
+        //        case 4:
+        //            StartValue = 150;
+        //            EndValue = 199;
+        //            StartAndEnd[0] = StartValue;
+        //            StartAndEnd[1] = EndValue;
+        //            return StartAndEnd;
+        //        case 5:
+        //            StartValue = 200;
+        //            EndValue = Int32.MaxValue;
+        //            StartAndEnd[0] = StartValue;
+        //            StartAndEnd[1] = EndValue;
+        //            return StartAndEnd;
+        //        default:
+        //            return null;
+        //    }
+
+        //}
+        }
+
     }
-}
+
