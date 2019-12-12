@@ -50,8 +50,6 @@ namespace LerenTypen
                 }
             }
 
-            TestResultController.DeleteTestResult(164);
-
             frame.Navigate(new HomePage(this));
         }
 
@@ -265,6 +263,11 @@ namespace LerenTypen
                     });
                     resumeTestsButton.ContextMenu.Items.Add(item);
                 }
+            }
+            else
+            {
+                resumeTestsButton.Visibility = Visibility.Collapsed;
+                resumeTestsButton.ContextMenu = null;
             }
         }
 
