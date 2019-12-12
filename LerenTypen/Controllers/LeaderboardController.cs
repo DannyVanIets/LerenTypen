@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LerenTypen.Controllers
 {
@@ -228,7 +225,6 @@ namespace LerenTypen.Controllers
                         {
                             counter++;
                             queryResult.Add(new Test(counter, AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
-
                         }
                     }
                 }
