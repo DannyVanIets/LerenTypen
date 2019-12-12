@@ -28,42 +28,39 @@ namespace LerenTypen
 
         private void KeyUp_Clicker(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            var kijk = e.Key.ToString();
             List<string> allNames = new List<string>();
-            foreach (var item in TipPage_StackPanel_Keyboard_Row2.Children)
+            List<string> allTotalNames = new List<string>();
+            List<UIElementCollection> allPanels = new List<UIElementCollection>();
+            allPanels.Add(TipPage_StackPanel_Keyboard_Row0.Children);
+            allPanels.Add(TipPage_StackPanel_Keyboard_Row1.Children);
+            allPanels.Add(TipPage_StackPanel_Keyboard_Row2.Children);
+            allPanels.Add(TipPage_StackPanel_Keyboard_Row3.Children);
+            allPanels.Add(TipPage_StackPanel_Keyboard_Row4.Children);
+            allPanels.Add(TipPage_StackPanel_Keyboard_Row5.Children);
+            allPanels.Add(TipPage_StackPanel_Keyboard_Row6.Children);
+            foreach (UIElementCollection uIElementCollection in allPanels)
             {
-                List<System.Windows.Shapes.Rectangle> allVars = new List<System.Windows.Shapes.Rectangle>();
-                allVars.Add((System.Windows.Shapes.Rectangle)item);
-                foreach (var i in allVars)
-                {
-                    allNames.Add(i.Name.Substring(19));
-
-                }
+                    allNames = Models.TipsController.KeyDistributor(uIElementCollection);
+                    foreach (var item in allNames)
+                    {
+                        allTotalNames.Add(item);
+                    }
             }
-            string check = Models.Tips.ShowKey(e, allNames);
+            //allNames = Models.TipsController.KeyDistributor(TipPage_StackPanel_Keyboard_Row2.Children);
+            string check = Models.TipsController.ShowKey(e, allTotalNames);
            // MessageBox.Show(check);
-            var k = "TipPage_Canvas_Key_" + check;
+            string fullName = "TipPage_Canvas_Key_" + check;
             //MessageBox.Show(k);
-            foreach (var item in TipPage_StackPanel_Keyboard_Row2.Children)
+            foreach (UIElementCollection uIElementCollection in allPanels)
             {
-                List<System.Windows.Shapes.Rectangle> allVars = new List<System.Windows.Shapes.Rectangle>();
-                allVars.Add((System.Windows.Shapes.Rectangle)item);
-                foreach (var i in allVars)
-                {
-                    //MessageBox.Show("i is" + i);
-                    if (i.Name.Equals(k))
-                    {
-                        //MessageBox.Show("same");
-                        i.Visibility = Visibility.Hidden;
-                    }
-                    else
-                    {
-                        i.Visibility = Visibility.Visible;
-                    }
-
-                }
+                Models.TipsController.FindPressedKey(uIElementCollection, fullName);
             }
+
             //MessageBox.Show(test);
             //MessageBox.Show(TipPage_Canvas_Key_44.Name.Substring(19));
         }
+
+
     }
 }

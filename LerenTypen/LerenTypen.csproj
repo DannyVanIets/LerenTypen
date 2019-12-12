@@ -124,7 +124,7 @@
       <DependentUpon>AdminEditAccountWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\TestOptions.cs" />
-    <Compile Include="Models\Tips.cs" />
+    <Compile Include="Controllers\TipsController.cs" />
     <Compile Include="Pages\AllMyTestsOverviewPage.xaml.cs">
       <DependentUpon>AllMyTestsOverviewPage.xaml</DependentUpon>
     </Compile>
@@ -300,6 +300,9 @@
   <ItemGroup>
     <Resource Include="img\KeyboardPlacements.png" />
     <Resource Include="img\KeyboardPlacementsBlack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\which_fingers.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
