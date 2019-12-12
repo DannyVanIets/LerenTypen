@@ -173,6 +173,11 @@ namespace LerenTypen
                 }
             }
 
+            if (frame.Content is TestExercisePage || frame.Content is TestResultsPage)
+            {
+                CheckForUnfinishedTests();
+            }
+
             if (shouldChangePage)
             {
                 frame.Content = pageToChangeTo;
