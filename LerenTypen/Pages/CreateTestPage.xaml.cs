@@ -1,6 +1,5 @@
 ﻿using LerenTypen.Controllers;
 using LerenTypen.Models;
-using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,8 +17,8 @@ namespace LerenTypen
         static int i = 0;
         private MainWindow m;
         private List<string> content;
-        bool newVersion = false;
-        Test test;
+        public bool NewVersion { get; set; } = false;
+        private Test test;
 
         public CreateTestPage(MainWindow m)
         {
@@ -57,8 +56,7 @@ namespace LerenTypen
             publicRadio.Visibility = Visibility.Hidden;
             textInputTestName.MaxLength = 50;
             pageTitle.Content = "Toets Wijzigen";
-            newVersion = true;
-            m.frame.Navigated += NotBeingEdited;
+            NewVersion = true;
         }
 
         private bool checkNewVersionSame()
@@ -188,7 +186,7 @@ namespace LerenTypen
                 if (SaveToDatabase())
                 {
                     MessageBox.Show("Uw toets is succesvol opgeslagen", "Succesvol opgeslagen");
-                    if (!newVersion)
+                    if (!NewVersion)
                     {
                         m.frame.Navigate(new CreateTestPage(m));
                     }
@@ -200,7 +198,7 @@ namespace LerenTypen
             }
         }
 
-        public void NotBeingEdited(object sender, EventArgs e)
+        public void SetNotBeingEdited()
         {
             TestController.NotBeingEdited(test.ID);
         }
@@ -232,7 +230,7 @@ namespace LerenTypen
                 }
                 textBoxValues.Add(t.Text);
             }
-            if (newVersion)
+            if (NewVersion)
             {
                 if (checkNewVersionSame())
                 {
@@ -245,7 +243,7 @@ namespace LerenTypen
             int accountID = m.Ingelogd;
 
             // Check if Test is an update, if so test.Version + 1
-            if (newVersion)
+            if (NewVersion)
             {
                 TestController.AddTest(title, type, difficulty, 0, textBoxValues, test.AuthorID, test.Version + 1);
                 TestController.UpdateTestToArchived(test.ID);
