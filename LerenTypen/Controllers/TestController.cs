@@ -925,10 +925,10 @@ namespace LerenTypen.Controllers
         }
 
         /// <summary>
-        /// Called after saving new test version
+        /// Called hitting save new test version
         /// </summary>        
         /// <returns></returns>
-        public static bool notBeingEdited(int testID)
+        public static bool NotBeingEdited(int testID)
         {
             bool result;
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -940,6 +940,7 @@ namespace LerenTypen.Controllers
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@testID", testID);
+                    command.ExecuteNonQuery();
                     result = true;
                 }
             }

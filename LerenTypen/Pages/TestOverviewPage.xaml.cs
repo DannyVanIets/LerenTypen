@@ -515,7 +515,15 @@ namespace LerenTypen
         private void DG_ATO_Edit_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink hyperlink = (Hyperlink)sender;
-            MainWindow.ChangePage(new CreateTestPage(MainWindow, Convert.ToInt32(hyperlink.Tag)));
+            int testID = Convert.ToInt32(hyperlink.Tag);
+            if (TestController.EditingTest(testID).Equals(0))
+            {
+                MainWindow.ChangePage(new CreateTestPage(MainWindow, testID));
+            }
+            else
+            {
+                MessageBox.Show("Toets wordt momenteel aangepast");
+            }
         }
 
         private void DG_ATO_Delete_Hyperlink_Click(object sender, RoutedEventArgs e)
