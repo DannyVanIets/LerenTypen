@@ -118,7 +118,14 @@ namespace LerenTypen
                 mainWindow.testOptions.Sound = false;
             }
 
-            mainWindow.ChangePage(new TestExercisePage(testID, mainWindow));
+            if (TestController.GetUnfinishedTestsFromAccount(mainWindow.Ingelogd).Contains(testID))
+            {
+                mainWindow.ChangePage(new TestExercisePage(testID, mainWindow, true));
+            }
+            else
+            {
+                mainWindow.ChangePage(new TestExercisePage(testID, mainWindow));
+            }
         }
     }
 }
