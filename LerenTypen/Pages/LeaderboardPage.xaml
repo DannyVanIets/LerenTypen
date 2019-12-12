@@ -21,7 +21,6 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-
         <StackPanel Orientation="Vertical" Grid.Column="0">
             <StackPanel Orientation="Vertical" Grid.Column="1">
                 <Label FontSize="20" Margin="46,5,72.8,0" HorizontalAlignment="Center" FontWeight="Bold" HorizontalContentAlignment="Center"  Content="Woorden per minuut" Height="36" Width="406"/>
@@ -37,7 +36,7 @@
                 <ListView x:Name="MoeilijkeLeaderboardWords" MaxHeight="160" Width="515" Height="110" BorderThickness="0"  Margin="0,5,15,0" FontSize="15">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding WPFPlace}"/>
+                            <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
                             <GridViewColumn Header="Username" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
                             <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
                             <GridViewColumn Header="Woorden goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
@@ -61,7 +60,7 @@
             <ListView x:Name="MoeilijkeLeaderboardPerc" MaxHeight="160" Width="515" Height="110" BorderThickness="0"  Margin="15,5,0,0" FontSize="15">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding WPFPlace}"/>
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
                         <GridViewColumn Header="Username" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
                         <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
                         <GridViewColumn Header="% goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
@@ -84,7 +83,7 @@
             <ListView x:Name="MiddelLeaderboardWords" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="0,5,15,0" FontSize="15">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding WPFPlace}"/>
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
                         <GridViewColumn Header="Username" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
                         <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
                         <GridViewColumn Header="Woorden goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
@@ -106,7 +105,7 @@
             <ListView x:Name="MiddelLeaderboardperc" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="15,5,-0.2,0.6" FontSize="15">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding WPFPlace}"/>
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
                         <GridViewColumn Header="Username" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
                         <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
                         <GridViewColumn Header="% goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
@@ -128,7 +127,7 @@
             <ListView x:Name="EasyLeaderboardwords" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="0,5,9.8,0" FontSize="15">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding WPFPlace}"/>
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
                         <GridViewColumn Header="Username" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
                         <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
                         <GridViewColumn Header="Woorden goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
@@ -150,7 +149,7 @@
             <ListView x:Name="EasyeLeaderboardperc" MaxHeight="140" Width="515" Height="140" BorderThickness="0"  Margin="15,5,-0.2,0.6" FontSize="15">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding WPFPlace}"/>
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
                         <GridViewColumn Header="Username" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
                         <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
                         <GridViewColumn Header="% goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />

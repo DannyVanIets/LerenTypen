@@ -20,15 +20,15 @@ namespace LerenTypen.Controllers
                 string query = "";
                 if (pick == 0)
                 {
-                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
+                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
                 }
                 else if (pick == 1)
                 {
-                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
+                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
                 }
                 else if (pick == 2)
                 {
-                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
+                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
                 }
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
@@ -43,9 +43,12 @@ namespace LerenTypen.Controllers
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        int counter = 0;
                         while (reader.Read())
                         {
-                            queryResult.Add(new Test(AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
+                            counter++;
+                            queryResult.Add(new Test(counter, AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
+
                         }
                     }
                 }
@@ -73,15 +76,15 @@ namespace LerenTypen.Controllers
                 string query = "";
                 if (pick == 0)
                 {
-                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
+                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
                 }
                 else if (pick == 1)
                 {
-                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
+                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
                 }
                 else if (pick == 2)
                 {
-                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
+                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
                 }
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
@@ -96,9 +99,11 @@ namespace LerenTypen.Controllers
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        int counter = 0;
                         while (reader.Read())
                         {
-                            queryResult.Add(new Test(AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
+                            counter++;
+                            queryResult.Add(new Test(counter, AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
                         }
                     }
                 }
@@ -127,15 +132,15 @@ namespace LerenTypen.Controllers
                 string query = "";
                 if (pick == 0)
                 {
-                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
+                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
                 }
                 else if (pick == 1)
                 {
-                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
+                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
                 }
                 else if (pick == 2)
                 {
-                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
+                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
                 }
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
@@ -150,9 +155,11 @@ namespace LerenTypen.Controllers
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        int counter = 0;
                         while (reader.Read())
                         {
-                            queryResult.Add(new Test(AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
+                            counter++;
+                            queryResult.Add(new Test(counter, AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
                         }
                     }
                 }
@@ -180,15 +187,15 @@ namespace LerenTypen.Controllers
                 string query = "";
                 if (pick == 0)
                 {
-                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
+                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
                 }
                 else if (pick == 1)
                 {
-                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
+                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty =1 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
                 }
                 else if (pick == 2)
                 {
-                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
+                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
                 }
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
@@ -203,9 +210,12 @@ namespace LerenTypen.Controllers
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        int counter = 0;
                         while (reader.Read())
                         {
-                            queryResult.Add(new Test(AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
+                            counter++;
+                            queryResult.Add(new Test(counter, AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
+
                         }
                     }
                 }
@@ -233,15 +243,15 @@ namespace LerenTypen.Controllers
                 string query = "";
                 if (pick == 0)
                 {
-                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
+                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
                 }
                 else if (pick == 1)
                 {
-                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
+                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
                 }
                 else if (pick == 2)
                 {
-                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
+                    query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
                 }
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
@@ -256,9 +266,11 @@ namespace LerenTypen.Controllers
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        int counter = 0;
                         while (reader.Read())
                         {
-                            queryResult.Add(new Test(AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
+                            counter++;
+                            queryResult.Add(new Test(counter, AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
                         }
                     }
                 }
@@ -287,15 +299,15 @@ namespace LerenTypen.Controllers
                 string query = "";
                 if (pick == 0)
                 {
-                    query = "select tr.accountID, t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
+                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
                 }
                 else if (pick == 1)
                 {
-                    query = "select tr.accountID, t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
+                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
                 }
                 else if (pick == 2)
                 {
-                    query = "select tr.accountID, t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
+                    query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
                 }
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
@@ -310,12 +322,15 @@ namespace LerenTypen.Controllers
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        int counter = 0;
                         while (reader.Read())
                         {
-                            queryResult.Add(new Test(AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
+                            counter++;
+                            queryResult.Add(new Test(counter, AccountController.GetUsername(Convert.ToInt32(reader[0])), reader.GetString(1), Convert.ToInt32(reader[2])));
                         }
                     }
                 }
+
                 return queryResult;
             }
             catch (SqlException e)

@@ -21,8 +21,9 @@ namespace LerenTypen.Models
         public string CreatedDateTime { get; private set; }
 
 
-        public Test(string userName , string testName , int wordsScore)
+        public Test(int rank ,string userName , string testName , int wordsScore)
         {
+            ID = rank;
             AuthorUsername = userName;
             Name = testName;
             WordHighscore = wordsScore;
