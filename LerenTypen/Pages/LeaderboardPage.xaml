@@ -26,14 +26,14 @@
                 <Label FontSize="20" Margin="46,5,72.8,0" HorizontalAlignment="Center" FontWeight="Bold" HorizontalContentAlignment="Center"  Content="Woorden per minuut" Height="36" Width="406"/>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Moeilijke Toetsen" FontWeight="Bold" FontSize="15" Margin="10,0,3,0"/>
-                    <ComboBox x:Name="Tijdkeuze" Height="28" Width="74" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="Tijdkeuze_SelectionChanged">
+                    <ComboBox x:Name="TimePick" Height="28" Width="74" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="Tijdkeuze_SelectionChanged">
                         <ListBoxItem Content="Weekly"/>
                         <ListBoxItem Content="Monthly"/>
                         <ListBoxItem Content="Yearly"/>
                     </ComboBox>
                 </StackPanel>
 
-                <ListView x:Name="MoeilijkeLeaderboardWords" MaxHeight="160" Width="515" Height="110" BorderThickness="0"  Margin="0,5,15,0" FontSize="15">
+                <ListView x:Name="HardLeaderboardWords" MaxHeight="160" Width="515" Height="110" BorderThickness="0"  Margin="0,5,15,0" FontSize="15">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
@@ -50,14 +50,14 @@
             <Label FontSize="20" Margin="46,5,72.8,0" HorizontalAlignment="Center" FontWeight="Bold" HorizontalContentAlignment="Center"  Content="Typ % goed" Height="36" Width="406"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Moeilijke Toetsen" FontWeight="Bold" FontSize="15" Margin="10,0,3,0"/>
-                <ComboBox x:Name="Tijdkeuze2" Height="28" Width="74" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" RenderTransformOrigin="0.503,0.5" SelectionChanged="Tijdkeuze2_SelectionChanged">
+                <ComboBox x:Name="TimePick2" Height="28" Width="74" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" RenderTransformOrigin="0.503,0.5" SelectionChanged="Tijdkeuze2_SelectionChanged">
                     <ListBoxItem Content="Weekly"/>
                     <ListBoxItem Content="Monthly"/>
                     <ListBoxItem Content="Yearly"/>
                 </ComboBox>
             </StackPanel>
 
-            <ListView x:Name="MoeilijkeLeaderboardPerc" MaxHeight="160" Width="515" Height="110" BorderThickness="0"  Margin="15,5,0,0" FontSize="15">
+            <ListView x:Name="HardLeaderboardPerc" MaxHeight="160" Width="515" Height="110" BorderThickness="0"  Margin="15,5,0,0" FontSize="15">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
@@ -73,14 +73,14 @@
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Gemiddelde Toetsen" FontWeight="Bold" FontSize="15" Margin="10,0,3,0"/>
-                <ComboBox x:Name="Tijdkeuze3" Height="28" Width="74" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" RenderTransformOrigin="0.503,0.5" SelectionChanged="Tijdkeuze3_SelectionChanged">
+                <ComboBox x:Name="TimePick3" Height="28" Width="74" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" RenderTransformOrigin="0.503,0.5" SelectionChanged="Tijdkeuze3_SelectionChanged">
                     <ListBoxItem Content="Weekly"/>
                     <ListBoxItem Content="Monthly"/>
                     <ListBoxItem Content="Yearly"/>
                 </ComboBox>
             </StackPanel>
 
-            <ListView x:Name="MiddelLeaderboardWords" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="0,5,15,0" FontSize="15">
+            <ListView x:Name="AverageLeaderboardWords" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="0,5,15,0" FontSize="15">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
@@ -95,14 +95,14 @@
         <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Gemiddelde Toetsen" FontWeight="Bold" FontSize="15" Margin="10,0,3,0"/>
-                <ComboBox x:Name="Tijdkeuze4" Height="28" Width="74" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="Tijdkeuze4_SelectionChanged">
+                <ComboBox x:Name="TimePick4" Height="28" Width="74" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="Tijdkeuze4_SelectionChanged">
                     <ListBoxItem Content="Weekly"/>
                     <ListBoxItem Content="Monthly"/>
                     <ListBoxItem Content="Yearly"/>
                 </ComboBox>
             </StackPanel>
 
-            <ListView x:Name="MiddelLeaderboardperc" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="15,5,-0.2,0.6" FontSize="15">
+            <ListView x:Name="AverageLeaderboardperc" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="15,5,-0.2,0.6" FontSize="15">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
@@ -117,7 +117,7 @@
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Makkelijke Toetsen" FontWeight="Bold" FontSize="15" Margin="10,0,3,0"/>
-                <ComboBox x:Name="Tijdkeuze5" Height="28" Width="74" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="Tijdkeuze5_SelectionChanged">
+                <ComboBox x:Name="TimePick5" Height="28" Width="74" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="Tijdkeuze5_SelectionChanged">
                     <ListBoxItem Content="Weekly"/>
                     <ListBoxItem Content="Monthly"/>
                     <ListBoxItem Content="Yearly"/>
@@ -139,7 +139,7 @@
         <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="2">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Gemiddelde Toetsen" FontWeight="Bold" FontSize="15" Margin="10,0,3,0"/>
-                <ComboBox x:Name="Tijdkeuze6" Height="28" Width="74" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="Tijdkeuze6_SelectionChanged">
+                <ComboBox x:Name="TimePick6" Height="28" Width="74" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="Tijdkeuze6_SelectionChanged">
                     <ListBoxItem Content="Weekly"/>
                     <ListBoxItem Content="Monthly"/>
                     <ListBoxItem Content="Yearly"/>

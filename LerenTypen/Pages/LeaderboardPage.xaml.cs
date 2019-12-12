@@ -10,6 +10,7 @@ namespace LerenTypen
     /// </summary>
     public partial class LeaderboardPage : Page
     {
+        //Maak alle listen voor info aan
         MainWindow MainWindow;
         List<Test> HardBoardWords1;
         List<Test> HardBoardPerc1;
@@ -34,17 +35,17 @@ namespace LerenTypen
 
            
             //Refresh and Load all info
-            MoeilijkeLeaderboardWords.ItemsSource = Controllers.LeaderboardController.LeaderboardHardTestsWords(0);
-            MoeilijkeLeaderboardWords.Items.Refresh();
+            HardLeaderboardWords.ItemsSource = Controllers.LeaderboardController.LeaderboardHardTestsWords(0);
+            HardLeaderboardWords.Items.Refresh();
 
-            MoeilijkeLeaderboardPerc.ItemsSource = Controllers.LeaderboardController.LeaderboardHardTestsWordsPerc(0);
-            MoeilijkeLeaderboardPerc.Items.Refresh();
+            HardLeaderboardPerc.ItemsSource = Controllers.LeaderboardController.LeaderboardHardTestsWordsPerc(0);
+            HardLeaderboardPerc.Items.Refresh();
 
-            MiddelLeaderboardWords.ItemsSource = Controllers.LeaderboardController.LeaderboardMediumTestsWords(0);
-            MiddelLeaderboardWords.Items.Refresh();
+            AverageLeaderboardWords.ItemsSource = Controllers.LeaderboardController.LeaderboardMediumTestsWords(0);
+            AverageLeaderboardWords.Items.Refresh();
 
-            MiddelLeaderboardperc.ItemsSource = Controllers.LeaderboardController.LeaderboardMediumTestsPerc(0);
-            MiddelLeaderboardperc.Items.Refresh();
+            AverageLeaderboardperc.ItemsSource = Controllers.LeaderboardController.LeaderboardMediumTestsPerc(0);
+            AverageLeaderboardperc.Items.Refresh();
 
             EasyLeaderboardwords.ItemsSource = Controllers.LeaderboardController.LeaderboardEasyTestsWords(0);
             EasyLeaderboardwords.Items.Refresh();
@@ -56,44 +57,44 @@ namespace LerenTypen
         //Check all checkboxes if values are being changed or not.
         private void Tijdkeuze_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int Value = Tijdkeuze.SelectedIndex;
-           if (MoeilijkeLeaderboardWords != null)
+            int Value = TimePick.SelectedIndex;
+           if (HardLeaderboardWords != null)
             {
-                MoeilijkeLeaderboardWords.ItemsSource = Controllers.LeaderboardController.LeaderboardHardTestsWords(Value);
-                MoeilijkeLeaderboardWords.Items.Refresh();
+                HardLeaderboardWords.ItemsSource = Controllers.LeaderboardController.LeaderboardHardTestsWords(Value);
+                HardLeaderboardWords.Items.Refresh();
             }
         }
         
         private void Tijdkeuze2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int Value = Tijdkeuze2.SelectedIndex;
-            if (MoeilijkeLeaderboardPerc != null)
+            int Value = TimePick2.SelectedIndex;
+            if (HardLeaderboardPerc != null)
             {
-                MoeilijkeLeaderboardPerc.ItemsSource = Controllers.LeaderboardController.LeaderboardHardTestsWordsPerc(Value);
-                MoeilijkeLeaderboardPerc.Items.Refresh();
+                HardLeaderboardPerc.ItemsSource = Controllers.LeaderboardController.LeaderboardHardTestsWordsPerc(Value);
+                HardLeaderboardPerc.Items.Refresh();
             }
         }
         private void Tijdkeuze3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int Value = Tijdkeuze3.SelectedIndex;
-            if (MiddelLeaderboardWords != null)
+            int Value = TimePick3.SelectedIndex;
+            if (AverageLeaderboardWords != null)
             {
-                MiddelLeaderboardWords.ItemsSource = Controllers.LeaderboardController.LeaderboardMediumTestsWords(Value);
-                MiddelLeaderboardWords.Items.Refresh();
+                AverageLeaderboardWords.ItemsSource = Controllers.LeaderboardController.LeaderboardMediumTestsWords(Value);
+                AverageLeaderboardWords.Items.Refresh();
             }
         }
         private void Tijdkeuze4_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int Value = Tijdkeuze4.SelectedIndex;
-            if (MiddelLeaderboardperc != null)
+            int Value = TimePick4.SelectedIndex;
+            if (AverageLeaderboardperc != null)
             {
-                MiddelLeaderboardperc.ItemsSource = Controllers.LeaderboardController.LeaderboardMediumTestsPerc(Value);
-                MiddelLeaderboardperc.Items.Refresh();
+                AverageLeaderboardperc.ItemsSource = Controllers.LeaderboardController.LeaderboardMediumTestsPerc(Value);
+                AverageLeaderboardperc.Items.Refresh();
             }
         }
         private void Tijdkeuze5_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int Value = Tijdkeuze5.SelectedIndex;
+            int Value = TimePick5.SelectedIndex;
             if (EasyLeaderboardwords != null)
             {
                 EasyLeaderboardwords.ItemsSource = Controllers.LeaderboardController.LeaderboardEasyTestsWords(Value);
@@ -102,7 +103,7 @@ namespace LerenTypen
         }
         private void Tijdkeuze6_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int Value = Tijdkeuze6.SelectedIndex;
+            int Value = TimePick6.SelectedIndex;
             if (EasyeLeaderboardperc != null)
             {
                 EasyeLeaderboardperc.ItemsSource = Controllers.LeaderboardController.LeaderboardEasyTestsPerc(Value);

@@ -10,6 +10,7 @@ namespace LerenTypen.Controllers
 {
     class LeaderboardController
     {
+        //Fill in all the info for the hard words leaderboard
         public static List<Test> LeaderboardHardTestsWords(int pick)
         {
             List<Test> queryResult = new List<Test>();
@@ -17,7 +18,9 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
+                //start a new query which can be filled
                 string query = "";
+                //check which box is being checked (weekly, monthly, yearly)
                 if (pick == 0)
                 {
                     query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
@@ -34,6 +37,7 @@ namespace LerenTypen.Controllers
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
                 DateTime todayYearAgo = DateTime.Now.AddDays(-365);
 
+                //add the times to the query's to filter them.
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@now", DateTime.Now);
@@ -43,6 +47,7 @@ namespace LerenTypen.Controllers
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        //use a counter to give the leaderboard a ranking
                         int counter = 0;
                         while (reader.Read())
                         {
@@ -65,7 +70,7 @@ namespace LerenTypen.Controllers
             }
             return queryResult;
         }
-
+        //fill the info the hard percentage board
         public static List<Test> LeaderboardHardTestsWordsPerc(int pick)
         {
             List<Test> queryResult = new List<Test>();
@@ -73,7 +78,9 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
+                //start a new query which can be filled
                 string query = "";
+                //check which box is being checked (weekly, monthly, yearly)
                 if (pick == 0)
                 {
                     query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
@@ -121,7 +128,7 @@ namespace LerenTypen.Controllers
             return queryResult;
         }
 
-
+        //Fill the list for the medium words board
         public static List<Test> LeaderboardMediumTestsWords(int pick)
         {
             List<Test> queryResult = new List<Test>();
@@ -129,7 +136,9 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
+                //start a new query which can be filled
                 string query = "";
+                //check which box is being checked (weekly, monthly, yearly)
                 if (pick == 0)
                 {
                     query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";

@@ -208,7 +208,7 @@ namespace LerenTypen.UnitTests
             //Arrange
             int answer = 0;
             //Act
-            answer = TestController.GetFastestTyper(testID);
+            answer = TestController.GetWordHighscore(testID);
             //Assert
             Assert.AreEqual(result, answer);
         }
