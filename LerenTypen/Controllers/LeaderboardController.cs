@@ -185,7 +185,7 @@ namespace LerenTypen.Controllers
             }
             return queryResult;
         }
-
+        //Fill in all the into for the medium board
         public static List<Test> LeaderboardMediumTestsPerc(int pick)
         {
             List<Test> queryResult = new List<Test>();
@@ -193,7 +193,9 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
+                //new query started
                 string query = "";
+                //check which box is picked and run that query.
                 if (pick == 0)
                 {
                     query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
@@ -206,10 +208,11 @@ namespace LerenTypen.Controllers
                 {
                     query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
                 }
+                //see which days etc.
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
                 DateTime todayYearAgo = DateTime.Now.AddDays(-365);
-
+                //Fill in the dates in the code
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@now", DateTime.Now);
@@ -219,6 +222,7 @@ namespace LerenTypen.Controllers
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        //counter to show the rank on the leaderboard
                         int counter = 0;
                         while (reader.Read())
                         {
@@ -242,6 +246,7 @@ namespace LerenTypen.Controllers
             return queryResult;
         }
 
+        //fill in the into for the leaderboard
         public static List<Test> LeaderboardEasyTestsWords(int pick)
         {
             List<Test> queryResult = new List<Test>();
@@ -249,7 +254,9 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
+                //new query start
                 string query = "";
+                //see which box is being picked
                 if (pick == 0)
                 {
                     query = "select tr.accountID  , t.testName , max(wordsEachMinute) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(wordsEachMinute) desc";
@@ -266,6 +273,7 @@ namespace LerenTypen.Controllers
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
                 DateTime todayYearAgo = DateTime.Now.AddDays(-365);
 
+                //fill in the date in the code
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@now", DateTime.Now);
@@ -297,7 +305,7 @@ namespace LerenTypen.Controllers
             return queryResult;
         }
 
-
+        //fill in the info for the leaderboard percentage
         public static List<Test> LeaderboardEasyTestsPerc(int pick)
         {
             List<Test> queryResult = new List<Test>();
@@ -305,7 +313,9 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
+                //start a new quert
                 string query = "";
+                //check which value in combobox is being picked.
                 if (pick == 0)
                 {
                     query = "select tr.accountID  , t.testName , max(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType=1) and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testName ,t.testDifficulty order by max(score) desc";
@@ -321,7 +331,7 @@ namespace LerenTypen.Controllers
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
                 DateTime todayYearAgo = DateTime.Now.AddDays(-365);
-
+                //fill the query with the needed dates.
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@now", DateTime.Now);
@@ -331,6 +341,7 @@ namespace LerenTypen.Controllers
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        //counter to show the rank for the leaderboard.
                         int counter = 0;
                         while (reader.Read())
                         {
