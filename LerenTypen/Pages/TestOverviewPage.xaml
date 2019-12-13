@@ -44,7 +44,7 @@
             <Button x:Name="AllTestsOverview_Button_MakeOwnTest" Content="Maak een nieuwe toets" VerticalAlignment="Top" Width="150" Height="25" Grid.Column="2" Grid.Row="1" Margin="10,3,10,0" Click="AllTestsOverview_Button_MakeOwnTest_Click"/>
         </StackPanel>
 
-        <ListView x:Name="AllTestsOverview_ListView_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6" local:GridViewSort.AutoSort="True" >
+        <ListView x:Name="AllTestsOverview_ListView_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="3" local:GridViewSort.AutoSort="True" >
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
