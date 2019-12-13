@@ -194,7 +194,7 @@ namespace LerenTypen
                     if (ReviewController.AddReviewWithDescription(review))
                     {
                         MessageBox.Show("De review is succesvol toegevoegd!", "Succes");
-                        mainWindow.ChangePage(new TestInfoPage(testID, mainWindow));
+                        mainWindow.frame.Navigate(new TestInfoPage(testID, mainWindow));
                     }
                     else
                     {
