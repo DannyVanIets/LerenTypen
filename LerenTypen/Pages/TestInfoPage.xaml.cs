@@ -16,7 +16,7 @@ namespace LerenTypen
         private MainWindow mainWindow;
         private int testID;
         //Regex is used to check if filled in text has only number. Is used in the OnlyNumberic function.
-        private static readonly Regex _regex = new Regex("[^0-9.-]+");
+        private static readonly Regex _regex = new Regex("[^0-9-]+");
 
         public TestInfoPage(int testID, MainWindow mainWindow)
         {
@@ -143,19 +143,14 @@ namespace LerenTypen
         /// </summary>
         private void AddReviewButton_Click(object sender, RoutedEventArgs e)
         {
-            //Checks if the reviewScore is numberic.
-            if (OnlyNumberic(reviewScoreTextbox.Text))
+            //Checks if the reviewScore is numberic and filled in.
+            if (OnlyNumberic(reviewScoreTextbox.Text) && !string.IsNullOrWhiteSpace(reviewScoreTextbox.Text))
             {
-                decimal reviewScore = decimal.Parse(reviewScoreTextbox.Text);
+                int reviewScore = int.Parse(reviewScoreTextbox.Text);
                 string reviewDescription = reviewDescriptionTextbox.Text;
 
-                //Check if reviewscore has been filled in.
-                if (string.IsNullOrWhiteSpace(reviewScoreTextbox.Text))
-                {
-                    MessageBox.Show("Je moet een review score invoeren!", "Error");
-                }
                 //Check if the reviewScore are between 1 and 5.
-                else if (reviewScore < 1 || reviewScore > 5)
+                if (reviewScore < 1 || reviewScore > 5)
                 {
                     MessageBox.Show("De score moet groter of gelijk aan 1 en groter of gelijk aan 5!", "Error");
                 }
@@ -198,7 +193,7 @@ namespace LerenTypen
             }
             else
             {
-                MessageBox.Show("U moet een cijfer invoeren!");
+                MessageBox.Show("Je moet een geheel cijfer invoeren bij aantal sterren!");
             }
         }
 
