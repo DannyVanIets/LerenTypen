@@ -56,7 +56,7 @@ namespace LerenTypen
                 UserContent = TestController.GetPrivateTestMyAccount(UserID);
                 if (UserContent.Count.Equals(0))
                 {
-                    MijnToetsen.Visibility = Visibility.Collapsed;
+                    MyTests.Visibility = Visibility.Collapsed;
                     AccountTests.Visibility = Visibility.Collapsed;
                     NoMyTestsLbl.Visibility = Visibility.Visible;
                     NoAccountTestsLbl.Visibility = Visibility.Visible;
@@ -65,8 +65,8 @@ namespace LerenTypen
                 {
                     if (myPage)
                     {
-                        MijnToetsen.ItemsSource = UserContent;
-                        MijnToetsen.Items.Refresh();
+                        MyTests.ItemsSource = UserContent;
+                        MyTests.Items.Refresh();
                     }
                     else
                     {
@@ -90,13 +90,13 @@ namespace LerenTypen
                 LastMadeContent = TestController.GetAllMyTestsAlreadyMadeTop3(UserID);
                 if (LastMadeContent.Count.Equals(0))
                 {
-                    LaatstGeoefendeToetsen.Visibility = Visibility.Collapsed;
+                    LastMadeTests.Visibility = Visibility.Collapsed;
                     NoRecentTestsLbl.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    LaatstGeoefendeToetsen.ItemsSource = LastMadeContent;
-                    LaatstGeoefendeToetsen.Items.Refresh();
+                    LastMadeTests.ItemsSource = LastMadeContent;
+                    LastMadeTests.Items.Refresh();
                     ContentNow = LastMadeContent;
                 }
             }
@@ -117,7 +117,7 @@ namespace LerenTypen
                 int id = tt.TestId;
                 TestController.UpdateTestToPrivate(id);
                 //tt.IsPrivate = checkbox.IsChecked;
-                MijnToetsen.Items.Refresh();
+                MyTests.Items.Refresh();
             }
             catch (Exception y)
             {
@@ -131,7 +131,7 @@ namespace LerenTypen
             TestTable tt = checkbox.DataContext as TestTable;
             int id = tt.TestId;
             TestController.UpdateTestToPublic(id);
-            MijnToetsen.Items.Refresh();
+            MyTests.Items.Refresh();
         }
 
         private void AllMyTests_Click(object sender, RoutedEventArgs e)
