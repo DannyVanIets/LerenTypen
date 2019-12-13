@@ -46,6 +46,7 @@ namespace LerenTypen
         private DispatcherTimer t2;
         private int currentLine;
         private List<string> lines;
+        private List<string> unfinishedLines;
         private Dictionary<int, string> wrongAnswers;
         private List<string> rightAnswers;
         private int amountOfPauses;
@@ -58,22 +59,63 @@ namespace LerenTypen
         private SoundPlayer sp = new SoundPlayer();
         Random random = new Random();
 
-        public TestExercisePage(int testID, MainWindow m)
+        private bool restoreState;
+        private int unfinishedTestResultID;
+
+        public TestExercisePage(int testID, MainWindow m, bool restoreState = false)
         {
             InitializeComponent();
+
             // Bool to stop timer when test is closed
             testClosed = false;
-            textInputBox.Focus();
-            // List for lines to be written out by user
-            lines = new List<string>();
+
             this.testID = testID;
             this.m = m;
+            this.restoreState = restoreState;
+            textInputBox.Focus();
 
-            amountOfPauses = 0;
-            wrongAnswers = new Dictionary<int, string>();
-            rightAnswers = new List<string>();
-            currentLine = 0;
-            wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
+            // Gets the tests name and content using the given testID
+            lines = TestController.GetTestContent(testID); // List for lines to be written out by user
+            testName = TestController.GetTestName(testID);
+            testNameLbl.Content = testName;
+
+            if (restoreState)
+            { 
+                // Restore the page in the same state as the unfinished test was saved
+                unfinishedTestResultID = TestResultController.GetUnfinishedTestResultID(m.Ingelogd, testID);         
+                amountOfPauses = TestResultController.GetAmountOfPauses(unfinishedTestResultID);
+                wrongAnswers = TestResultController.GetTestResultsContentWrong(testID, unfinishedTestResultID);
+                rightAnswers = TestResultController.GetTestResultsContentRight(unfinishedTestResultID);
+                unfinishedLines = TestController.GetAllLinesNotInResult(rightAnswers, lines);
+                int timeSeconds = TestResultController.GetTime(unfinishedTestResultID);
+                i = timeSeconds % 60;
+                j = timeSeconds / 60;
+
+                currentLine = lines.Count - unfinishedLines.Count;
+                lineNumberLbl.Content = $"{currentLine + 1}/{lines.Count}";
+                wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";         
+            }
+            else
+            {
+                // Start test from beginning
+                amountOfPauses = 0;
+                wrongAnswers = new Dictionary<int, string>();
+                rightAnswers = new List<string>();
+                currentLine = 0;
+                lineNumberLbl.Content = $"1/{lines.Count}";
+                wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
+            }
+
+            // Check if lines are found
+            if (!lines.Count.Equals(0))
+            {
+                testLineLbl.Content = lines[currentLine];                
+            }
+            else
+            {
+                MessageBox.Show("Geen regels gevonden", "Error");
+                CloseTest();
+            }
 
             // Timer for game and showing answer
             t1 = new DispatcherTimer();
@@ -82,26 +124,11 @@ namespace LerenTypen
             t1.Start();
             t1.Tick += StartTimer;
 
-            // Gets the tests name and content using the given testID
-            lines = TestController.GetTestContent(testID);
-            testName = TestController.GetTestName(testID);
-            testNameLbl.Content = testName;
-
-            // Check if lines are found
-            if (!lines.Count.Equals(0))
-            {
-                testLineLbl.Content = lines[currentLine];
-                lineNumberLbl.Content = $"1/{lines.Count}";
-            }
-            else
-            {
-                MessageBox.Show("Geen regels gevonden", "Error");
-                CloseTest();
-            }
-
             // Make startup overlay visible for countdown
             Overlay.Visibility = Visibility.Visible;
             DrawClock();
+            UpdateCanvas(null, new EventArgs());
+            UpdateTimer(null, new EventArgs());
         }
 
         /// <summary>
@@ -404,17 +431,42 @@ namespace LerenTypen
         /// </summary>        
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Weet je zeker dat je de toets wilt verlaten?", "Toets verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            StopTest();
+        }
+
+        public MessageBoxResult AskStopTest()
+        {
+            MessageBoxResult choice = MessageBox.Show("Je staat op het punt de toets te stoppen. Wil je je voortgang opslaan zodat je later verder kan gaan waar je gebleven bent?",
+                "Toets verlaten?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+
+            if (choice == MessageBoxResult.Yes)
             {
                 StopTest();
             }
+            else if (choice == MessageBoxResult.No)
+            {
+                StopTest(false);
+            }
+
+            return choice;
         }
 
         /// <summary>
-        /// Method for early closing test, user is navigated to testoverview
+        /// Method for early closing test, user is navigated to testoverview and unfinished test is saved to db
         /// </summary>
-        private void StopTest()
+        private void StopTest(bool save = true)
         {
+            // Delete the unfinished result if test is resumed
+            if (restoreState)
+            {
+                TestResultController.DeleteTestResult(unfinishedTestResultID);
+            }
+
+            if (save)
+            {
+                SaveResults(false);
+            }
+
             m.frame.Navigate(new TestOverviewPage(m));
         }
 
@@ -458,7 +510,6 @@ namespace LerenTypen
             {
                 testClosed = true;
             }
-
         }
 
         /// <summary>
@@ -474,7 +525,11 @@ namespace LerenTypen
             }
             else
             {
-                wrongAnswers.Add(currentLine, input);
+                if (!wrongAnswers.ContainsKey(currentLine))
+                {
+                    wrongAnswers.Add(currentLine, input);
+                }
+
                 wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
                 if (currentLine + 4 < lines.Count)
                 {
@@ -493,8 +548,15 @@ namespace LerenTypen
         /// </summary>
         private void CloseTest()
         {
-            testClosed = false;
+            testClosed = true;
             t1.Stop();
+
+            // Delete the unfinished result if test is resumed
+            if (restoreState)
+            {
+                TestResultController.DeleteTestResult(unfinishedTestResultID);
+            }
+
             int resultID = SaveResults();
             TestResultsPage testResultsPage = new TestResultsPage(testID, m, resultID);
             m.frame.Navigate(testResultsPage);
@@ -504,12 +566,12 @@ namespace LerenTypen
         /// Results are stored in database after exercising test
         /// </summary>
         /// <returns></returns>
-        private int SaveResults()
+        private int SaveResults(bool finished = true)
         {
             int amountOfWrong = wrongAnswers.Count;
             decimal wordsPerMinute = CalculateWordsPerMinute();
             decimal percentageRight = CalculatePercentageRight();
-            int resultID = TestResultController.SaveResults(testID, m.Ingelogd, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines, (int)percentageRight);
+            int resultID = TestResultController.SaveResults(testID, m.Ingelogd, (int)wordsPerMinute, amountOfPauses, rightAnswers, wrongAnswers, lines, (int)percentageRight, j * 60 + i, finished);
             return resultID;
         }
 

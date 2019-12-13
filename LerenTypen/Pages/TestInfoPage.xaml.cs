@@ -141,7 +141,15 @@ namespace LerenTypen
                 mainWindow.testOptions.Sound = false;
             }
 
-            mainWindow.ChangePage(new TestExercisePage(testID, mainWindow));
+            // Check if the test already has an unfinished result, if so, resume this result
+            if (TestController.GetUnfinishedTestIDsFromAccount(mainWindow.Ingelogd).Contains(testID))
+            {
+                mainWindow.ChangePage(new TestExercisePage(testID, mainWindow, true));
+            }
+            else
+            {
+                mainWindow.ChangePage(new TestExercisePage(testID, mainWindow));
+            }
         }
 
         /// <summary>
