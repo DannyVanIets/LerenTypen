@@ -203,12 +203,12 @@ namespace LerenTypen.UnitTests
         [TestCase(14, 162)]
         // Unhappy
         [TestCase(1, null)]
-        public void GetFastestTyper_TestID_WordsPerMinute(int testID, int result)
+        public void GetWordHighscore_TestID_WordsPerMinute(int testID, int result)
         {
             //Arrange
             int answer = 0;
             //Act
-            answer = TestController.GetFastestTyper(testID);
+            answer = TestController.GetWordHighscore(testID);
             //Assert
             Assert.AreEqual(result, answer);
         }

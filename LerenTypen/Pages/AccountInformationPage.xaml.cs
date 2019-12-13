@@ -1,5 +1,7 @@
 ﻿using LerenTypen.Controllers;
 using LerenTypen.Models;
+using LiveCharts;
+using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -17,7 +19,7 @@ namespace LerenTypen
         List<TestTable> CurrentContent = new List<TestTable>();
         List<TestTable> ContentNow = new List<TestTable>();
         private bool myPage;
-
+        public SeriesCollection SeriesCollection { get; set; }
         public AccountInformationPage(MainWindow mainWindow, int UserID = 0)
         {
             InitializeComponent();
@@ -104,6 +106,23 @@ namespace LerenTypen
             {
                 Console.WriteLine(e.ToString());
             }
+            CreateChart();
+        }
+
+
+        public void CreateChart()
+        {
+            SeriesCollection = new SeriesCollection
+            {
+                 new LineSeries
+                 {
+                    Values = new ChartValues<double> { 3, 5, 7, 4 }
+                 },
+                 new ColumnSeries
+                 {
+                    Values = new ChartValues<decimal> { 5, 6, 2, 7 }
+                 }
+            };
         }
 
 
