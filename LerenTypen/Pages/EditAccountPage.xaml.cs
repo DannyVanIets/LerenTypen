@@ -170,7 +170,7 @@ namespace LerenTypen
                 MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je je account wilt verwijderen?", "Account Verwijderen", MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("Het Account is succesvol verwijderd!", "Succes");
+                    MessageBox.Show("Het account is succesvol verwijderd!", "Succes");
                     string username = Account.UserName;
                     AccountController.DeleteAccount(username);
                     MainWindow.LogoutUser(true);
@@ -179,7 +179,7 @@ namespace LerenTypen
             catch (Exception r)
             {
                 Console.WriteLine(r.ToString());
-                MessageBox.Show("Error", "Error");
+                MessageBox.Show("Het verwijderen is niet succesvol uitgevoerd. Probeer het opnieuw of neem contact op met een administrator.", "Error");
                 MainWindow.LogoutUser();
             }
         }

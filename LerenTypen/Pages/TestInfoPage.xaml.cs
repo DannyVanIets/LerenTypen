@@ -15,6 +15,7 @@ namespace LerenTypen
     {
         private MainWindow mainWindow;
         private int testID;
+        //Regex is used to check if filled in text has only number. Is used in the OnlyNumberic function.
         private static readonly Regex _regex = new Regex("[^0-9.-]+");
 
         public TestInfoPage(int testID, MainWindow mainWindow)
@@ -97,6 +98,8 @@ namespace LerenTypen
             //Go through every option to check if they have been enabled in a previous test and been put on true.
             playSoundsCheckBox.IsChecked = mainWindow.testOptions.Sound;
 
+            //Check if the user has logged in or has already filled in a review for this test.
+            //If that's true, then the user isn't allowed to see anything that has to do with inserting a new review.
             if (mainWindow.Ingelogd == 0 || ReviewController.CheckIfUserHasMadeAReview(testID, mainWindow.Ingelogd))
             {
                 addReviewLabel.Visibility = Visibility.Hidden;
@@ -135,29 +138,39 @@ namespace LerenTypen
             mainWindow.ChangePage(new TestExercisePage(testID, mainWindow));
         }
 
+        /// <summary>
+        /// This function is used once you press the button that you want to add a review.
+        /// </summary>
         private void AddReviewButton_Click(object sender, RoutedEventArgs e)
         {
-            if (IsTextAllowed(reviewScoreTextbox.Text))
+            //Checks if the reviewScore is numberic.
+            if (OnlyNumberic(reviewScoreTextbox.Text))
             {
-                int reviewScore = int.Parse(reviewScoreTextbox.Text);
+                decimal reviewScore = decimal.Parse(reviewScoreTextbox.Text);
                 string reviewDescription = reviewDescriptionTextbox.Text;
 
+                //Check if reviewscore has been filled in.
                 if (string.IsNullOrWhiteSpace(reviewScoreTextbox.Text))
                 {
                     MessageBox.Show("Je moet een review score invoeren!", "Error");
                 }
+                //Check if the reviewScore are between 1 and 5.
                 else if (reviewScore < 1 || reviewScore > 5)
                 {
                     MessageBox.Show("De score moet groter of gelijk aan 1 en groter of gelijk aan 5!", "Error");
                 }
+                //Check if the reviewDescription is longer than 140 charachters.
                 else if (reviewDescription.Length >= 140)
                 {
                     MessageBox.Show("De beschrijving moet kleiner zijn dan 140 tekens!", "Error");
                 }
+                //Checks if the revieDescription has been filled in. If not, it adds a review without a description.
+                //If it is, it does a different query and adds a review with a description.
                 else if (string.IsNullOrWhiteSpace(reviewDescription))
                 {
                     Review review = new Review(testID, mainWindow.Ingelogd, reviewScore);
 
+                    //Checks if the review has been succesfully added.
                     if (ReviewController.AddReviewWithoutDescription(review))
                     {
                         MessageBox.Show("De review is succesvol toegevoegd!", "Succes");
@@ -189,7 +202,9 @@ namespace LerenTypen
             }
         }
 
-        private static bool IsTextAllowed(string text)
+        //Used to check if the the text is only numberic. If true, the text contains only numbers.
+        //Uses the _regex property. Regex checks if the text matches with the property.
+        private static bool OnlyNumberic(string text)
         {
             return !_regex.IsMatch(text);
         }
