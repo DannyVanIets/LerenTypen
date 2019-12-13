@@ -8,5 +8,12 @@ namespace LerenTypen.Models
         //Now is used to get the current date and time.
         public DateTime dateOfToday = DateTime.Now;
         public DateTime dateOfTodayHundredYearsAgo = DateTime.Now.AddYears(-100);
-    }
+
+        //public DateTime getDateXMonthsAgo(int x)
+        {
+            // return DateTime oneMonthAgo = DateTime.Now.AddMonths(-x);
+        }
+
+
+}
 }

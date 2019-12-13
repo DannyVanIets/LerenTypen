@@ -19,7 +19,10 @@ namespace LerenTypen
         List<TestTable> CurrentContent = new List<TestTable>();
         List<TestTable> ContentNow = new List<TestTable>();
         private bool myPage;
+
         public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> YFormatter { get; set; }
         public AccountInformationPage(MainWindow mainWindow, int UserID = 0)
         {
             InitializeComponent();
@@ -114,16 +117,22 @@ namespace LerenTypen
         {
             SeriesCollection = new SeriesCollection
             {
-                 new LineSeries
-                 {
-                    Values = new ChartValues<double> { 3, 5, 7, 4 }
-                 },
-                 new ColumnSeries
-                 {
-                    Values = new ChartValues<decimal> { 5, 6, 2, 7 }
-                 }
+                new LineSeries
+                {
+                    Title = "Series 1",
+                    Values = new ChartValues<double> { 4, 6, 5, 2 ,4 }
+                }
             };
+
+            Labels = new[] { "1", "2", "3", "4", "5" };
+
+            //modifying any series values will also animate and update the chart
+
+            DataContext = this;
         }
+
+
+
 
 
 

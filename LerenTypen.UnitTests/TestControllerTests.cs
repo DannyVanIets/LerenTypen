@@ -12,7 +12,6 @@ namespace LerenTypen.UnitTests
             Database.Connect();
         }
 
-
         #region Select
         [Test]
         // Happy
