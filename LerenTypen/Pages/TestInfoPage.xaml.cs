@@ -160,7 +160,7 @@ namespace LerenTypen
                     MessageBox.Show("De score moet groter of gelijk aan 1 en groter of gelijk aan 5!", "Error");
                 }
                 //Check if the reviewDescription is longer than 140 charachters.
-                else if (reviewDescription.Length >= 140)
+                else if (reviewDescription.Length >= 141)
                 {
                     MessageBox.Show("De beschrijving moet kleiner zijn dan 140 tekens!", "Error");
                 }
