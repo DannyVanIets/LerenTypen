@@ -239,7 +239,7 @@ namespace LerenTypen
         /// </summary>
         public void CheckForUnfinishedTests()
         {
-            List<int> unfinishedTestIDs = TestController.GetUnfinishedTestsFromAccount(Ingelogd);
+            List<int> unfinishedTestIDs = TestController.GetUnfinishedTestIDsFromAccount(Ingelogd);
             if (unfinishedTestIDs.Count > 0)
             {
                 resumeTestsButton.Visibility = Visibility.Visible;

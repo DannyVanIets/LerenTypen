@@ -18,26 +18,10 @@ namespace LerenTypen
             WordsPerMinute = wordsPerMinute;
         }
 
-        public decimal CalculatePercentageRight()
-        {
-            List<string> rightAnswers = TestResultController.GetTestResultsContentRight(ID);
-            Dictionary<int, string> wrongAnswers = TestResultController.GetTestResultsContentWrong(TestID, ID);
-            decimal percentageRight;
-
-            try
-            {
-                percentageRight = decimal.Divide(rightAnswers.Count, rightAnswers.Count + wrongAnswers.Count) * 100;
-            }
-            catch (DivideByZeroException)
-            {
-                percentageRight = 100;
-            }
-            return percentageRight;
-        }
-
         public override string ToString()
         {
-            return $"{Date}: {WordsPerMinute} woorden per minuut ({(int)CalculatePercentageRight()}% goed)";
+            int score = (int)TestResultController.CalculatePercentageRight(TestID, ID);
+            return $"{Date}: {WordsPerMinute} woorden per minuut ({score}% goed)";
         }
     }
 }

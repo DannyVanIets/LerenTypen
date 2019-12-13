@@ -991,7 +991,10 @@ namespace LerenTypen.Controllers
             return queryResult;
         }
 
-        public static List<int> GetUnfinishedTestsFromAccount(int accountId)
+        /// <summary>
+        /// Gets the ids of all unfinished tests from the specified account
+        /// </summary>
+        public static List<int> GetUnfinishedTestIDsFromAccount(int accountId)
         {
             List<int> ids = new List<int>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -1070,6 +1073,9 @@ namespace LerenTypen.Controllers
             return lines;
         }
 
+        /// <summary>
+        /// Returns all lines that are not in the list of lines from the result 
+        /// </summary>
         public static List<string> GetAllLinesNotInResult(List<string> linesInResult, List<string> allLines)
         {
             List<string> linesNotInResult = new List<string>(allLines);

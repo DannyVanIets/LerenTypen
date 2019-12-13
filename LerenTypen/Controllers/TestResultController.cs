@@ -89,16 +89,19 @@ namespace LerenTypen.Controllers
         }
 
         // Gets the wrong answers of a testResult using testID and testResultID
+        // Dictionary key = line index and value = answer
         public static Dictionary<int, string> GetTestResultsContentWrong(int testID, int testResultID)
         {
             Dictionary<int, string> results = new Dictionary<int, string>();
             Dictionary<string, int> answers = TestController.GetAllLinesFromResult(testResultID);
             int lineCounter = 0;
 
+            // Loop through all the answers in order to set the line index (key) of the answer
             foreach (KeyValuePair<string, int> kvp in answers)
             {
                 lineCounter++;
 
+                // Check if answer is wrong, if so, add it
                 if (kvp.Value == 1)
                 {
                     results.Add(lineCounter, kvp.Key);
@@ -186,14 +189,6 @@ namespace LerenTypen.Controllers
         /// <summary>
         /// inserts results of the test after the test has been made and adds the users input to testresultcontent right after, using the same testresult id
         /// </summary>
-        /// <param name="testID"></param>
-        /// <param name="accountID"></param>
-        /// <param name="wordsEachMinute"></param>
-        /// <param name="pauses"></param>
-        /// <param name="rightAnswers"></param>
-        /// <param name="wrongAnswers"></param>
-        /// <param name="lines"></param>
-        /// <returns></returns>
         public static int SaveResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines, int score, int time, bool finished)
         {
             int testResultID = 0;
@@ -285,6 +280,9 @@ namespace LerenTypen.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the unfinished testresultID from the specified account and test
+        /// </summary>
         public static int GetUnfinishedTestResultID(int accountID, int testID)
         {
             int id = 0;
@@ -347,6 +345,9 @@ namespace LerenTypen.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes the content of the specified test result
+        /// </summary>
         private static void DeleteTestResultContent(int testResultID)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -436,6 +437,26 @@ namespace LerenTypen.Controllers
                 connection.Dispose();
             }
             return time;
+        }
+
+        /// <summary>
+        /// Calculates the percentage of right answers of a test result
+        /// </summary>
+        public static decimal CalculatePercentageRight(int testID, int testResultID)
+        {
+            List<string> rightAnswers = TestResultController.GetTestResultsContentRight(testResultID);
+            Dictionary<int, string> wrongAnswers = TestResultController.GetTestResultsContentWrong(testID, testResultID);
+            decimal percentageRight;
+
+            try
+            {
+                percentageRight = decimal.Divide(rightAnswers.Count, rightAnswers.Count + wrongAnswers.Count) * 100;
+            }
+            catch (DivideByZeroException)
+            {
+                percentageRight = 100;
+            }
+            return percentageRight;
         }
     }
 }
