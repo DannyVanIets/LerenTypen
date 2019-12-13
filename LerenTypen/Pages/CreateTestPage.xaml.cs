@@ -70,6 +70,16 @@ namespace LerenTypen
                 return false;
             }
 
+            if (comboBoxDifficulty.SelectedIndex != test.Difficulty)
+            {
+                return false;
+            }
+
+            if (comboBoxType.SelectedIndex != test.Type)
+            {
+                return false;
+            }
+
             if (textBoxValues.Count != content.Count)
             {
                 return false;
