@@ -15,8 +15,6 @@ namespace LerenTypen
     {
         private MainWindow mainWindow;
         private int testID;
-        //Regex is used to check if filled in text has only number. Is used in the OnlyNumberic function.
-        private static readonly Regex _regex = new Regex("[^0-9]+");
 
         public TestInfoPage(int testID, MainWindow mainWindow)
         {
@@ -144,7 +142,7 @@ namespace LerenTypen
         private void AddReviewButton_Click(object sender, RoutedEventArgs e)
         {
             //Checks if the reviewScore is numberic and filled in.
-            if (OnlyNumberic(reviewScoreTextbox.Text) && !string.IsNullOrWhiteSpace(reviewScoreTextbox.Text))
+            if (ReviewController.OnlyNumberic(reviewScoreTextbox.Text) && !string.IsNullOrWhiteSpace(reviewScoreTextbox.Text))
             {
                 int reviewScore = int.Parse(reviewScoreTextbox.Text);
                 string reviewDescription = reviewDescriptionTextbox.Text;
@@ -195,13 +193,6 @@ namespace LerenTypen
             {
                 MessageBox.Show("Je moet een geheel cijfer invoeren bij aantal sterren!");
             }
-        }
-
-        //Used to check if the the text is only numberic. If true, the text contains only numbers.
-        //Uses the _regex property. Regex checks if the text matches with the property.
-        private static bool OnlyNumberic(string text)
-        {
-            return !_regex.IsMatch(text);
         }
     }
 }
