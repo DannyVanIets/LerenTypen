@@ -638,7 +638,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "update tests set archived=1 where testId=@test;";
+                string query = "UPDATE tests SET archived=1 WHERE testId=@test;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@test", testId);
@@ -935,7 +935,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "Update tests set beingEdited = 0 where testID = @testID";
+                string query = "UPDATE tests SET beingEdited = 0 WHERE testID = @testID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
