@@ -43,6 +43,40 @@ namespace LerenTypen.Controllers
             return 0;
         }
 
+        public static double GetRatingScore(int testID)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "SELECT isnull(Round(AVG(testReviewScore),1),0) FROM testReviews WHERE testID=@id;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", testID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToDouble(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return 0;
+        }
+
         public static int GetTestAverageScore(int testID)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -107,7 +141,7 @@ namespace LerenTypen.Controllers
                             DateTime createdDateTime = (DateTime)reader[9];
                             string createdDateString = createdDateTime.Date.ToString("dd/MM/yyyy");
 
-                            return new Test(testID, testName, testType, authorID, authorUsername, wordCount, version, testDifficulty, rating,isPrivate, createdDateString);
+                            return new Test(testID, testName, testType, authorID, authorUsername, wordCount, version, testDifficulty, rating, isPrivate, createdDateString);
                         }
                     }
                 }
@@ -146,7 +180,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             // Adds all the found data to a list
-                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetWordHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(4), Convert.ToDouble(Math.Round(reader.GetDecimal(5) , 1)) ,GetTestAverageScore(reader.GetInt32(0)) , reader.GetInt32(0)));
+                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetWordHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(4), Convert.ToDouble(Math.Round(reader.GetDecimal(5), 1)), GetTestAverageScore(reader.GetInt32(0)), reader.GetInt32(0)));
                             counter++;
                         }
                     }
@@ -243,7 +277,7 @@ namespace LerenTypen.Controllers
                 string query = $"SELECT t.testID,testName, testType, t.accountID, timesMade, version, testDifficulty, isnull(Round(AVG(tr.testReviewScore), 1), 0) isPrivate, createDate FROM tests t left join testReviews tr on tr.testID = t.testID WHERE t.testID IN {idList} group by t.testID, testName, testType, t.accountID, timesMade, highscore, version, testDifficulty, isPrivate, createDate ORDER BY AVG(tr.testReviewScore) desc";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
-                {                  
+                {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -261,7 +295,7 @@ namespace LerenTypen.Controllers
                             int isPrivate = Convert.ToInt32(reader[7]);
                             DateTime createDateTime = (DateTime)reader[8];
 
-                            trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty,rating, Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
+                            trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty, rating, Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
                         }
                     }
                 }
@@ -688,7 +722,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //adds all the found data to a list
-                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0]) , Convert.ToInt32(reader[0])));
+                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0]), Convert.ToInt32(reader[0])));
                             bCounter++;
                         }
                     }
@@ -726,7 +760,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             // add all the found data to a list
-                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0]) , reader.GetInt32(0)));
+                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0]), reader.GetInt32(0)));
                             counter++;
                         }
                     }

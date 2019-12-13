@@ -41,6 +41,12 @@ namespace LerenTypen.Models
             WordHighscore = TestController.GetWordHighscore(ID);
           }
 
+        public Test(int id, double Ratingscore)
+        {
+            ID = id;
+            Rating = Ratingscore;
+        }
+
         public Test(int id, string name, string authorName)
         {
             ID = id;

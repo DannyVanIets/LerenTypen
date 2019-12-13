@@ -15,6 +15,7 @@ namespace LerenTypen
     {
         private MainWindow mainWindow;
         private int testID;
+        private int Reviewscore;
 
         public TestInfoPage(int testID, MainWindow mainWindow)
         {
@@ -25,6 +26,86 @@ namespace LerenTypen
 
             Test test = TestController.GetTest(testID);
             testNameLabel.Content = test.Name;
+
+            double Review = TestController.GetRatingScore(testID);
+            if(Review == 0)
+            {
+                StarScore.Content = "";
+            }
+            else if(Review == 0.5)
+            {
+                StarScore.Content = "halve ";
+
+            }
+            else if (Review == 1)
+            {
+
+                StarScore.Content = "★ ";
+            }
+            else if (Review == 1.5)
+            {
+                StarScore.Content = "★half ";
+
+            }
+            else if (Review > 1.5)
+            {
+                StarScore.Content = "★★";
+
+            }
+            else if (Review == 2)
+            {
+
+                StarScore.Content = "★★ ";
+            }
+            else if (Review == 2.5)
+            {
+                StarScore.Content = "★★half  ";
+
+            }
+            else if (Review > 2.5)
+            {
+                StarScore.Content = "★★★ ";
+            }
+            else if (Review == 3)
+            {
+
+                StarScore.Content = "★★★ ";
+            }
+            else if (Review == 3.5)
+            {
+                StarScore.Content = "★★★half ";
+
+            }
+            else if (Review > 3.5)
+            {
+                StarScore.Content = "★★★★ ";
+            }
+
+            else if (Review == 4)
+            {
+
+                StarScore.Content = "★★★★ ";
+            }
+            else if (Review == 4.5)
+            {
+                StarScore.Content = "★★★★half  ";
+
+            }
+
+            else if (Review > 4.5)
+            {
+                StarScore.Content = "★★★★★";
+
+            }
+            else if (Review == 5)
+            {
+
+                StarScore.Content = "★★★★★ ";
+            }
+
+
+
+
 
             string difficultyString = "";
             switch (test.Difficulty)
