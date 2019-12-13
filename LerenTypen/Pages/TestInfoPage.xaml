@@ -122,29 +122,29 @@
             <Image Source="/img/resumeButton.png"/>
         </Button>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,68.4,0.6,176.8">
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,68.4,0.6,176.8">
             <Label x:Name="reviewTitleLabel" FontSize="32"
-               FontWeight="Bold" Content="Reviews" VerticalAlignment="Center" Margin="0,0,-0.4,0.4"/>
-            <Label x:Name="averageScoreLabel" FontSize="26" VerticalAlignment="Center" Content="Gemiddelde score: " Margin="0,11,0,11.4" Width="244"/>
+               FontWeight="Bold" Content="Reviews" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-7,0,0,0"/>
+            <Label x:Name="averageScoreLabel" FontSize="22" VerticalAlignment="Center" Content="Gemiddelde score: " Margin="0,20,0,11.4" Width="244"/>
             <fa:IconImage x:Name="star1" Icon="star" VerticalAlignment="Center" Width="24" Height="24"/>
             <fa:IconImage x:Name="star5" Icon="StarHalf" VerticalAlignment="Center" Width="24" Height="24"/>
         </StackPanel>
-
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,134.4,-0.4,128.8">
-            <Label x:Name="addReviewLabel" FontSize="20" Content="Schrijf een review!" Margin="0,0,-0.4,0.2"/>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,134.4,-0.4,128.8">
+            <Label x:Name="addReviewLabel" FontSize="20" Content="Schrijf een review!" Margin="-7,0,-0.4,0.2"/>
             <Label x:Name="reviewMustsLabel" Content="* = verplicht" Margin="0,0,-0.4,0.2"/>
         </StackPanel>
-
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,180.8,-12.4,125">
-            <Label x:Name="reviewScoreLabel" Content="Score (1 - 5): " Grid.Column="0"/>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,180.8,-12.4,125">
+            <Label x:Name="reviewScoreLabel" Content="Score (1 - 5)*: " Grid.Column="0" Margin="-7, 0, 0, 0"/>
             <TextBox x:Name="reviewScoreTextbox" Width="99" Margin="0,0,0,-0.2"/>
         </StackPanel>
-
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,213.4,0.6,0.8">
-            <Label x:Name="reviewDescriptionLabel" Content="Beschrijving: " Grid.Column="0" Margin="0,0,0,65.8"/>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,213.4,0.6,0.8">
+            <Label x:Name="reviewDescriptionLabel" Content="Beschrijving: " Grid.Column="0" Margin="-7,0,5,0"/>
             <TextBox x:Name="reviewDescriptionTextbox" Width="447" HorizontalAlignment="Left" Margin="1,10,0,9.4"/>
             <Button x:Name="saveButton"
-                Width="75" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddReviewButton_Click" Margin="10,0,0,0.4" RenderTransformOrigin="0.569,0.032" Content="Toevoegen"/>
+                Width="75" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddReviewButton_Click" Margin="10,0,0,10" RenderTransformOrigin="0.569,0.032" Content="Toevoegen"/>
         </StackPanel>
     </Grid>
 </Page>
