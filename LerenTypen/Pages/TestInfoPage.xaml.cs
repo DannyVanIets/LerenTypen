@@ -16,7 +16,7 @@ namespace LerenTypen
         private MainWindow mainWindow;
         private int testID;
         //Regex is used to check if filled in text has only number. Is used in the OnlyNumberic function.
-        private static readonly Regex _regex = new Regex("[^0-9-]+");
+        private static readonly Regex _regex = new Regex("[^0-9]+");
 
         public TestInfoPage(int testID, MainWindow mainWindow)
         {
