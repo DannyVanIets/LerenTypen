@@ -112,6 +112,23 @@ namespace LerenTypen
             CreateChart();
         }
 
+        public void getValues()
+        {
+            IChartValues values = new ChartValues<int>
+                    {
+                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, Date.getDateXMonthsAgo(4),  Date.getDateXMonthsAgo(5)),
+                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, Date.getDateXMonthsAgo(2),  Date.getDateXMonthsAgo(3)),
+                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, Date.getDateXMonthsAgo(1),  Date.getDateXMonthsAgo(2)),
+                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, DateTime.Now,  Date.getDateXMonthsAgo(1))
+                    };
+            if (values.Contains(0))
+            {
+                TestResultController.GetWordsPerMinuteByPeriod(MainWindow.Ingelogd, Date.getDateXMonthsAgo(4), Date.getDateXMonthsAgo(5)),
+                        TestResultController.GetWordsPerMinuteByPeriod(MainWindow.Ingelogd, Date.getDateXMonthsAgo(2), Date.getDateXMonthsAgo(3)),
+                        TestResultController.GetWordsPerMinuteByPeriod(MainWindow.Ingelogd, Date.getDateXMonthsAgo(1), Date.getDateXMonthsAgo(2)),
+                        TestResultController.GetWordsPerMinuteByPeriod(MainWindow.Ingelogd, DateTime.Now, Date.getDateXMonthsAgo(1))
+            }
+        }
 
         public void CreateChart()
         {
@@ -119,12 +136,19 @@ namespace LerenTypen
             {
                 new LineSeries
                 {
-                    Title = "Series 1",
-                    Values = new ChartValues<double> { 4, 6, 5, 2 ,4 }
+                    Title = "Woorden per minuut",
+                    Values = new ChartValues<int>
+                    {
+                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, Date.getDateXMonthsAgo(4),  Date.getDateXMonthsAgo(5)),
+                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, Date.getDateXMonthsAgo(2),  Date.getDateXMonthsAgo(3)),
+                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, Date.getDateXMonthsAgo(1),  Date.getDateXMonthsAgo(2)),
+                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, DateTime.Now,  Date.getDateXMonthsAgo(1))
+                    }
+
                 }
             };
 
-            Labels = new[] { "1", "2", "3", "4", "5" };
+            Labels = new[] { Date.getDateXMonthsAgo(4).ToString("MMMM"), Date.getDateXMonthsAgo(3).ToString("MMMM"), Date.getDateXMonthsAgo(2).ToString("MMMM"), Date.getDateXMonthsAgo(1).ToString("MMMM"), DateTime.Now.ToString("MMMM") };
 
             //modifying any series values will also animate and update the chart
 

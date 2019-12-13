@@ -50,6 +50,49 @@ namespace LerenTypen.Controllers
         }
 
         /// <summary>
+        /// Gets the results using resultsID
+        /// </summary>
+        /// <param name="accountID"></param>
+        /// <returns></returns>
+        public static int GetWordsPerMinuteByPeriod(int accountID, DateTime firstDate, DateTime secondDate)
+        {
+            int result = 0;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "select avg(wordsEachMinute) from testresults where testResultsDate BETWEEN @secondDate AND @firstDate and accountID = @accountID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@accountID", accountID);
+                    command.Parameters.AddWithValue("@firstDate", firstDate);
+                    command.Parameters.AddWithValue("@secondDate", secondDate);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (!reader.IsDBNull(0))
+                            {
+                                result = (reader.GetInt32(0));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Gets the right answers of a testResult using testResultID
         /// </summary>
         /// <param name="testResultID"></param>
