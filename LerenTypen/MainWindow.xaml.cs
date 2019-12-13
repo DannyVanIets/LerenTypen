@@ -1,12 +1,10 @@
-﻿using Renci.SshNet;
+﻿using LerenTypen.Controllers;
+using LerenTypen.Models;
+using Renci.SshNet;
 using System;
-using LerenTypen.Controllers;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using LerenTypen.Models;
 
 namespace LerenTypen
 {
@@ -28,7 +26,7 @@ namespace LerenTypen
             InitializeComponent();
 
             client = new SshClient("145.44.233.184", "student", "toor2019");
-            connectSSH:
+        connectSSH:
             try
             {
                 client.Connect();
@@ -101,7 +99,7 @@ namespace LerenTypen
 
         private void AccountInformationPage_Click(object sender, RoutedEventArgs e)
         {
-            if(Ingelogd > 0)
+            if (Ingelogd > 0)
             {
                 ChangePage(new AccountInformationPage(this));
             }
@@ -113,27 +111,26 @@ namespace LerenTypen
         /// </summary>
         /// <param name="pageToChangeTo"></param>
         /// <param name="pageToggleButton"></param>
-        private void ChangePage(Page pageToChangeTo, ToggleButton pageToggleButton)
+        public void ChangePage(Page pageToChangeTo, ToggleButton pageToggleButton = null)
         {
-            if (frame.Content != pageToChangeTo)
+            // Check if the current page is not the same as the page to change to
+            if (frame.Content.GetType() != pageToChangeTo.GetType())
             {
-                frame.Navigate(pageToChangeTo);
-                SwitchMenuButtons(pageToggleButton);
+                ChangePageHelper(pageToChangeTo, pageToggleButton);
+            }
+            else if (pageToggleButton != null)
+            {
+                pageToggleButton.IsChecked = true;
             }
         }
 
         /// <summary>
-        /// Changes the page to the specified page if this page is not 
-        /// already open and updates the menu buttons accordingly
+        /// Private helper function for ChangePage that changes the page
         /// </summary>
-        /// <param name="pageToChangeTo"></param>
-        public void ChangePage(Page pageToChangeTo)
+        private void ChangePageHelper(Page pageToChangeTo, ToggleButton pageToggleButton)
         {
-            if (frame.Content != pageToChangeTo)
+            if (pageToggleButton == null)
             {
-                frame.Navigate(pageToChangeTo);
-
-                ToggleButton pageToggleButton = null;
                 if (pageToChangeTo is HomePage)
                 {
                     pageToggleButton = homePageButton;
@@ -158,9 +155,43 @@ namespace LerenTypen
                 {
                     pageToggleButton = loginPageButton;
                 }
+            }
 
+            bool shouldChangePage = true;
+            if (frame.Content is CreateTestPage)
+            {
+                CreateTestPage createTestPage = (CreateTestPage)frame.Content;
+                if (createTestPage.NewVersion)
+                {
+                    MessageBoxResult result = MessageBox.Show("Wijzigingen gaan verloren bij het verlaten van de pagina", "Weet u zeker dat u deze pagina wilt verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        createTestPage.SetNotBeingEdited();
+                    }
+                    else
+                    {
+                        shouldChangePage = false;
+                    }
+                }
+                else
+                {
+                    MessageBoxResult result = MessageBox.Show("Toets gaat verloren bij het verlaten van de pagina", "Weet u zeker dat u deze pagina wilt verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.No)
+                    {
+                        shouldChangePage = false;
+                    }
+                }
+            }
+            if (shouldChangePage)
+            {
+                frame.Content = pageToChangeTo;
                 SwitchMenuButtons(pageToggleButton);
             }
+            else
+            {
+                pageToggleButton.IsChecked = false;
+            }
+
         }
 
         /// <summary>
@@ -224,7 +255,7 @@ namespace LerenTypen
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 LogoutUser();
-             }
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)

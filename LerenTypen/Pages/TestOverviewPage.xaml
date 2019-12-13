@@ -44,7 +44,7 @@
             <Button x:Name="AllTestsOverview_Button_MakeOwnTest" Content="Maak een nieuwe toets" VerticalAlignment="Top" Width="150" Height="25" Grid.Column="2" Grid.Row="1" Margin="10,3,10,0" Click="AllTestsOverview_Button_MakeOwnTest_Click"/>
         </StackPanel>
 
-        <ListView x:Name="AllTestsOverview_ListView_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6" local:GridViewSort.AutoSort="True">
+        <ListView x:Name="AllTestsOverview_ListView_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="3" Margin="0,3.4,-0.4,2.6" local:GridViewSort.AutoSort="True" >
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
@@ -74,6 +74,28 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
+                        <GridViewColumn x:Name="editColumn" Width="0">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding TestId}" Click="DG_ATO_Edit_Hyperlink_Click" TextDecorations="" >
+                                            <Run Text="✎"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="deleteColumn" Width="0">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding TestId}" Click="DG_ATO_Delete_Hyperlink_Click" TextDecorations="">
+                                            <Run Text="X"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView.Columns>
                 </GridView>
             </ListView.View>

@@ -242,7 +242,7 @@ namespace LerenTypen.Controllers
                 string query = $"SELECT testID, testName, testType, accountID, version, testDifficulty, isPrivate, createDate from tests t WHERE t.testID IN {idList}";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
-                {                  
+                {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -630,6 +630,34 @@ namespace LerenTypen.Controllers
             }
             return true;
         }
+
+
+        public static bool UpdateTestToArchived(int testId)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "update tests set archived=1 where testId=@test;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@test", testId);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return true;
+        }
+
         public static List<TestTable> GetPrivateTestMyAccount(int accountId)
         {
             List<TestTable> queryResult = new List<TestTable>();
@@ -797,7 +825,7 @@ namespace LerenTypen.Controllers
         /// <summary>
         /// Method for adding tests to database. 
         /// </summary>        
-        public static bool AddTest(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy)
+        public static bool AddTest(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy, int version)
         {
             bool result;
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -807,8 +835,8 @@ namespace LerenTypen.Controllers
 
                 // Select SCOPE_IDENTITY is used to insert the tests content into a seperate table with the same id
                 // DateTime.Now is being used to get the current date and time.
-                string query = "INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID) " +
-                    $"VALUES (@testName, @testType, 0, @testDifficulty, @now, @isPrivate, @uploadedBy); SELECT SCOPE_IDENTITY()";
+                string query = "INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID, version) " +
+                    $"VALUES (@testName, @testType, 0, @testDifficulty, @now, @isPrivate, @uploadedBy, @version); SELECT SCOPE_IDENTITY()";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -818,11 +846,102 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@now", DateTime.Now);
                     command.Parameters.AddWithValue("@isPrivate", isPrivate);
                     command.Parameters.AddWithValue("@uploadedBy", uploadedBy);
+                    command.Parameters.AddWithValue("@version", version);
 
                     object testID = command.ExecuteScalar();
                     int intTestID = int.Parse(testID.ToString());
                     result = AddTestContent(intTestID, content);
 
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+
+            }
+            return result;
+
+        }
+
+        /// <summary>
+        /// Transaction for editing tests, checks if person is editing the test
+        /// </summary>
+        /// <param name="testID"></param>
+        /// <returns></returns>
+        public static int EditingTest(int testID)
+        {
+            int result = 2;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                string query = "BEGIN TRANSACTION[Tran1] " +
+                    "Select beingEdited from tests where testID = @testID " +
+                    "BEGIN TRY " +
+                    "DECLARE " +
+                    "@beingEdited TinyINT;  " +
+                    "SELECT @beingEdited = beingEdited from tests where testID = @testID; " +
+                    "SELECT @beingEdited " +
+                    "IF @beingEdited = 0 " +
+                    "BEGIN  " +
+                    "Update tests SET beingEdited = 1 Where testID = @testID " +
+                    "END  " +
+                    "END TRY " +
+                    "BEGIN CATCH " +
+                    "ROLLBACK TRANSACTION[Tran1] " +
+                    "END CATCH " +
+                    "COMMIT TRANSACTION[Tran1]";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testID", testID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            result = Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return 2;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Called hitting save new test version
+        /// </summary>        
+        /// <returns></returns>
+        public static bool NotBeingEdited(int testID)
+        {
+            bool result;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "Update tests set beingEdited = 0 where testID = @testID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testID", testID);
+                    command.ExecuteNonQuery();
+                    result = true;
                 }
             }
             catch (SqlException e)

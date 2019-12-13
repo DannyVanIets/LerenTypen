@@ -203,7 +203,7 @@ namespace LerenTypen.UnitTests
         [TestCase(14, 162)]
         // Unhappy
         [TestCase(1, null)]
-        public void GetFastestTyper_TestID_WordsPerMinute(int testID, int result)
+        public void GetWordHighscore_TestID_WordsPerMinute(int testID, int result)
         {
             //Arrange
             int answer = 0;
@@ -251,7 +251,7 @@ namespace LerenTypen.UnitTests
             //Arrange
             bool answer;
             //Act
-            answer = TestController.AddTest(testName, testType, testDifficulty, isPrivate, content, uploadedBy);
+            answer = TestController.AddTest(testName, testType, testDifficulty, isPrivate, content, uploadedBy, 1);
             //Assert
             Assert.AreEqual(result, answer);
         }

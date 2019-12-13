@@ -21,6 +21,12 @@ namespace LerenTypen
             this.mainWindow = mainWindow;
             this.testID = testID;
 
+            if (AccountController.IsTeacher(mainWindow.Ingelogd))
+            {
+                editTestBtn.Visibility = Visibility.Visible;
+
+            }
+
             Test test = TestController.GetTest(testID);
             testNameLabel.Content = test.Name;
 
@@ -119,6 +125,11 @@ namespace LerenTypen
             }
 
             mainWindow.ChangePage(new TestExercisePage(testID, mainWindow));
+        }
+
+        private void EditTestBtn_Click(object sender, RoutedEventArgs e)
+        {
+            mainWindow.ChangePage(new CreateTestPage(mainWindow, testID));
         }
     }
 }

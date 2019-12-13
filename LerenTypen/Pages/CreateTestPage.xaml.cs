@@ -1,4 +1,5 @@
 ﻿using LerenTypen.Controllers;
+using LerenTypen.Models;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +16,9 @@ namespace LerenTypen
         private List<string> textBoxValues;
         static int i = 0;
         private MainWindow m;
+        private List<string> content;
+        public bool NewVersion { get; set; } = false;
+        private Test test;
 
         public CreateTestPage(MainWindow m)
         {
@@ -26,6 +30,59 @@ namespace LerenTypen
             CreateInputLine();
             CreateInputLine();
             textInputTestName.MaxLength = 50;
+        }
+
+        /// <summary>
+        /// Constructor for editing tests
+        /// </summary>
+        /// <param name="m"></param>
+        /// <param name="testID"></param>
+        public CreateTestPage(MainWindow m, int testID)
+        {
+            InitializeComponent();
+            this.m = m;
+            textBoxes = new List<TextBox>();
+            textBoxValues = new List<string>();
+            test = TestController.GetTest(testID);
+            textInputTestName.Text = test.Name;
+            content = TestController.GetTestContent(test.ID);
+            foreach (string line in content)
+            {
+                CreateInputLine(line);
+            }
+            comboBoxDifficulty.SelectedIndex = test.Difficulty;
+            comboBoxType.SelectedIndex = test.Type;
+            privateRadio.Visibility = Visibility.Hidden;
+            publicRadio.Visibility = Visibility.Hidden;
+            textInputTestName.MaxLength = 50;
+            pageTitle.Content = "Toets Wijzigen";
+            NewVersion = true;
+        }
+
+        /// <summary>
+        /// Checks if input same as last version
+        /// </summary>
+        /// <returns></returns>
+        private bool checkNewVersionSame()
+        {
+            if (!test.Name.Equals(textInputTestName.Text))
+            {
+                return false;
+            }
+
+            if (textBoxValues.Count != content.Count)
+            {
+                return false;
+            }
+
+            foreach (string line in content)
+            {
+                if (!textBoxValues.Contains(line))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void AddLine_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -78,7 +135,7 @@ namespace LerenTypen
         /// Method for adding textinputlines, the lines include a hyperlink to remove themselves.
         /// Tags and Names are added for the RemoveInputLine method.
         /// </summary>
-        private void CreateInputLine()
+        private void CreateInputLine(string content = "")
         {
             Thickness margin = new Thickness();
             StackPanel panel = new StackPanel();
@@ -104,6 +161,7 @@ namespace LerenTypen
             tb.MinWidth = 900;
             tb.Margin = margin;
             tb.Name = "textBox" + i;
+            tb.Text = content;
             textBoxes.Add(tb);
 
             panel.Children.Add(tb);
@@ -132,9 +190,21 @@ namespace LerenTypen
                 if (SaveToDatabase())
                 {
                     MessageBox.Show("Uw toets is succesvol opgeslagen", "Succesvol opgeslagen");
-                    m.frame.Navigate(new CreateTestPage(m));
+                    if (!NewVersion)
+                    {
+                        m.frame.Navigate(new CreateTestPage(m));
+                    }
+                    else
+                    {
+                        m.frame.Navigate(new TestOverviewPage(m));
+                    }
                 }
             }
+        }
+
+        public void SetNotBeingEdited()
+        {
+            TestController.NotBeingEdited(test.ID);
         }
 
         /// <summary>
@@ -164,9 +234,29 @@ namespace LerenTypen
                 }
                 textBoxValues.Add(t.Text);
             }
+            if (NewVersion)
+            {
+                if (checkNewVersionSame())
+                {
+                    MessageBox.Show("Opslaan niet mogelijk, geen veranderingen gemaakt");
+                    textBoxValues.Clear();
+                    return false;
+                }
+            }
 
             int accountID = m.Ingelogd;
-            TestController.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID);
+
+            // Check if Test is an update, if so test.Version + 1
+            if (NewVersion)
+            {
+                TestController.AddTest(title, type, difficulty, 0, textBoxValues, test.AuthorID, test.Version + 1);
+                TestController.UpdateTestToArchived(test.ID);
+                TestController.NotBeingEdited(test.ID);
+            }
+            else
+            {
+                TestController.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID, 1);
+            }
             return true;
         }
 
