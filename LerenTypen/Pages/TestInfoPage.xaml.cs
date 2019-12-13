@@ -2,6 +2,7 @@
 using LerenTypen.Models;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,6 +15,7 @@ namespace LerenTypen
     {
         private MainWindow mainWindow;
         private int testID;
+        private static readonly Regex _regex = new Regex("[^0-9.-]+");
 
         public TestInfoPage(int testID, MainWindow mainWindow)
         {
@@ -135,49 +137,61 @@ namespace LerenTypen
 
         private void AddReviewButton_Click(object sender, RoutedEventArgs e)
         {
-            int reviewScore = int.Parse(reviewScoreTextbox.Text);
-            string reviewDescription = reviewDescriptionTextbox.Text;
+            if (IsTextAllowed(reviewScoreTextbox.Text))
+            {
+                int reviewScore = int.Parse(reviewScoreTextbox.Text);
+                string reviewDescription = reviewDescriptionTextbox.Text;
 
-            if (string.IsNullOrWhiteSpace(reviewScoreTextbox.Text))
-            {
-                MessageBox.Show("Je moet een review score invoeren!", "Error");
-            }
-            else if (reviewScore < 1 || reviewScore > 5)
-            {
-                MessageBox.Show("De score moet groter of gelijk aan 1 en groter of gelijk aan 5!", "Error");
-            }
-            else if (reviewDescription.Length >= 140)
-            {
-                MessageBox.Show("De beschrijving moet kleiner zijn dan 140 tekens!", "Error");
-            }
-            else if (string.IsNullOrWhiteSpace(reviewDescription))
-            {
-                Review review = new Review(testID, mainWindow.Ingelogd, reviewScore);
-
-                if (ReviewController.AddReviewWithoutDescription(review))
+                if (string.IsNullOrWhiteSpace(reviewScoreTextbox.Text))
                 {
-                    MessageBox.Show("De review is succesvol toegevoegd!", "Succes");
-                    mainWindow.ChangePage(new TestInfoPage(testID, mainWindow));
+                    MessageBox.Show("Je moet een review score invoeren!", "Error");
+                }
+                else if (reviewScore < 1 || reviewScore > 5)
+                {
+                    MessageBox.Show("De score moet groter of gelijk aan 1 en groter of gelijk aan 5!", "Error");
+                }
+                else if (reviewDescription.Length >= 140)
+                {
+                    MessageBox.Show("De beschrijving moet kleiner zijn dan 140 tekens!", "Error");
+                }
+                else if (string.IsNullOrWhiteSpace(reviewDescription))
+                {
+                    Review review = new Review(testID, mainWindow.Ingelogd, reviewScore);
+
+                    if (ReviewController.AddReviewWithoutDescription(review))
+                    {
+                        MessageBox.Show("De review is succesvol toegevoegd!", "Succes");
+                        mainWindow.ChangePage(new TestInfoPage(testID, mainWindow));
+                    }
+                    else
+                    {
+                        MessageBox.Show("De review kon niet worden toegevoegd. Probeer het opnieuw of neem contact op met een administrator.", "Error");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("De review kon niet worden toegevoegd. Probeer het opnieuw of neem contact op met een administrator.", "Error");
+                    Review review = new Review(testID, mainWindow.Ingelogd, reviewScore, reviewDescription);
+
+                    if (ReviewController.AddReviewWithDescription(review))
+                    {
+                        MessageBox.Show("De review is succesvol toegevoegd!", "Succes");
+                        mainWindow.ChangePage(new TestInfoPage(testID, mainWindow));
+                    }
+                    else
+                    {
+                        MessageBox.Show("De review kon niet worden toegevoegd. Probeer het opnieuw of neem contact op met een administrator.", "Error");
+                    }
                 }
             }
             else
             {
-                Review review = new Review(testID, mainWindow.Ingelogd, reviewScore, reviewDescription);
-
-                if (ReviewController.AddReviewWithDescription(review))
-                {
-                    MessageBox.Show("De review is succesvol toegevoegd!", "Succes");
-                    mainWindow.ChangePage(new TestInfoPage(testID, mainWindow));
-                }
-                else
-                {
-                    MessageBox.Show("De review kon niet worden toegevoegd. Probeer het opnieuw of neem contact op met een administrator.", "Error");
-                }
+                MessageBox.Show("U moet een cijfer invoeren!");
             }
+        }
+
+        private static bool IsTextAllowed(string text)
+        {
+            return !_regex.IsMatch(text);
         }
     }
 }
