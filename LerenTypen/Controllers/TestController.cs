@@ -135,7 +135,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername ,tr.testReviewScore from tests t Inner join accounts a on t.accountID=a.accountID inner join testReviews tr on t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername , isnull(AVG(tr.testReviewScore),0) from tests t left join testReviews tr on tr.testID = t.testID join accounts a on t.accountID = a.accountID where t.archived = 0 and a.archived = 0 and t.isPrivate = 0 group by t.testID, t.accountID, testName, t.testDifficulty , a.accountUsername ORDER BY AVG(tr.testReviewScore) desc";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -145,7 +145,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             // Adds all the found data to a list
-                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetWordHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(4), -1, reader.GetInt32(0) ,GetTestAverageScore(reader.GetInt32(0))));
+                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetWordHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(4), Convert.ToInt32(Math.Round(reader.GetDecimal(5) , 1)) ,GetTestAverageScore(reader.GetInt32(0)) , reader.GetInt32(0)));
                             counter++;
                         }
                     }
@@ -675,7 +675,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername ,tr.testReviewScore from tests t Inner join accounts a on t.accountID=a.accountID inner join testReviews tr on t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername , isnull(AVG(tr.testReviewScore),0) from tests t left join testReviews tr on tr.testID = t.testID join accounts a on t.accountID = a.accountID where t.archived = 0 and a.archived = 0 and t.isPrivate = 0 group by t.testID, t.accountID, testName, t.testDifficulty , a.accountUsername ORDER BY AVG(tr.testReviewScore) desc";
                 int bCounter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -686,7 +686,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //adds all the found data to a list
-                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0]) , reader.GetInt32(0)));
+                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0]) , reader.GetInt32(5)));
                             bCounter++;
                         }
                     }
@@ -712,7 +712,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.accountID=@accountID and t.archived=0 and a.archived=0 group by t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername , AVG(tr.testReviewScore) from tests t Inner join accounts a on t.accountID = a.accountID inner join testReviews tr on t.accountID = a.accountID where t.archived = 0 and a.archived = 0 and tr.testID = t.testID and t.isPrivate = 0 group by t.testID, t.accountID, testName, t.testDifficulty , a.accountUsername ORDER BY AVG(tr.testReviewScore); ";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -724,7 +724,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             // add all the found data to a list
-                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0]) , reader.GetInt32(5)));
+                            queryResult.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0]) , reader.GetInt32(0)));
                             counter++;
                         }
                     }
@@ -890,7 +890,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername ,tr.testReviewScore from tests t Inner join accounts a on t.accountID=a.accountID inner join testReviews tr on t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername , AVG(tr.testReviewScore) from tests t Inner join accounts a on t.accountID = a.accountID inner join testReviews tr on t.accountID = a.accountID where t.archived = 0 and a.archived = 0 and t.isPrivate = 0 group by t.testID, t.accountID, testName, t.testDifficulty , a.accountUsername ORDER BY AVG(tr.testReviewScore)";
                 int Ccounter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))

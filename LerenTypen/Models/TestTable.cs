@@ -16,7 +16,7 @@ namespace LerenTypen
         public int DifficultyBinder { get; set; }
         public bool IsPrivate { get; set; }
         public int TestId { get; set; }
-        public int Rating { get; set; }
+        public decimal Rating { get; set; }
 
         public TestTable(int number, string name, int testID)
         {
@@ -43,7 +43,7 @@ namespace LerenTypen
         }
 
 
-        public TestTable(int number, string name, int timesMade, int wordHighscore, int amountOfWords, int testDifficulty, string uploader , int score)
+        public TestTable(int number, string name, int timesMade, int wordHighscore, int amountOfWords, int testDifficulty, string uploader , decimal reviewscore)
         {
             this.WPFNumber = number;
             this.WPFName = name;
@@ -51,7 +51,7 @@ namespace LerenTypen
             this.WordHighscore = wordHighscore;
             this.AmountOfWords = amountOfWords;
             this.Uploader = uploader;
-            this.Rating = score;
+            this.Rating = reviewscore;
             
 
             if (testDifficulty == 0)
@@ -71,7 +71,7 @@ namespace LerenTypen
             }
 
         }
-        public TestTable(int number, string name, int timesMade, int wordHighscore, int amountOfWords, int testDifficulty, string uploader, int Score, int isPrivate, int testId)
+        public TestTable(int number, string name, int timesMade, int wordHighscore, int amountOfWords, int testDifficulty, string uploader, decimal reviewscore, int isPrivate, int testId)
         {
             this.WPFNumber = number;
             this.WPFName = name;
@@ -79,7 +79,7 @@ namespace LerenTypen
             this.WordHighscore = wordHighscore;
             this.AmountOfWords = amountOfWords;
             this.Uploader = uploader;
-            this.Rating = Score;
+            this.Rating = reviewscore;
             if (testDifficulty == 0)
             {
                 DifficultyBinder = 0;
