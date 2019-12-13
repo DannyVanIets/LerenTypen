@@ -102,13 +102,13 @@ namespace LerenTypen
             //If that's true, then the user isn't allowed to see anything that has to do with inserting a new review.
             if (mainWindow.Ingelogd == 0 || ReviewController.CheckIfUserHasMadeAReview(testID, mainWindow.Ingelogd))
             {
-                addReviewLabel.Visibility = Visibility.Hidden;
-                reviewMustsLabel.Visibility = Visibility.Hidden;
-                reviewScoreLabel.Visibility = Visibility.Hidden;
-                reviewScoreTextbox.Visibility = Visibility.Hidden;
-                reviewDescriptionLabel.Visibility = Visibility.Hidden;
-                reviewDescriptionTextbox.Visibility = Visibility.Hidden;
-                saveButton.Visibility = Visibility.Hidden;
+                addReviewLabel.Visibility = Visibility.Collapsed;
+                reviewMustsLabel.Visibility = Visibility.Collapsed;
+                reviewScoreLabel.Visibility = Visibility.Collapsed;
+                reviewScoreTextbox.Visibility = Visibility.Collapsed;
+                reviewDescriptionLabel.Visibility = Visibility.Collapsed;
+                reviewDescriptionTextbox.Visibility = Visibility.Collapsed;
+                saveButton.Visibility = Visibility.Collapsed;
             }
         }
 

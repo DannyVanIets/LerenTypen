@@ -20,7 +20,7 @@
             <RowDefinition Height="75"/>
             <RowDefinition Height="140"/>
             <RowDefinition Height="150"/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3">
@@ -136,12 +136,12 @@
         </StackPanel>
         
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,180.8,-12.4,125">
-            <Label x:Name="reviewScoreLabel" Content="Score (1 - 5)*: " Grid.Column="0" Margin="-7, 0, 0, 0"/>
+            <Label x:Name="reviewScoreLabel" Content="Aantal sterren (1 - 5)*: " Grid.Column="0" Margin="-7, 0, 0, 0"/>
             <TextBox x:Name="reviewScoreTextbox" Width="99" Margin="0,0,0,-0.2"/>
         </StackPanel>
         
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,213.4,0.6,0.8">
-            <Label x:Name="reviewDescriptionLabel" Content="Beschrijving: " Grid.Column="0" Margin="-7,0,5,0"/>
+            <Label x:Name="reviewDescriptionLabel" Content="Beschrijving: " Grid.Column="0" Margin="-7,0,50,0"/>
             <TextBox x:Name="reviewDescriptionTextbox" Width="447" HorizontalAlignment="Left" Margin="1,10,0,9.4"/>
             <Button x:Name="saveButton"
                 Width="75" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddReviewButton_Click" Margin="10,0,0,10" RenderTransformOrigin="0.569,0.032" Content="Toevoegen"/>
