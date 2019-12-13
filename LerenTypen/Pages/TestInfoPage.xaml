@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LerenTypen"
+      xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
       mc:Ignorable="d" 
       d:DesignHeight="570" d:DesignWidth="1050" Background="White"
       Title="Page4" ShowsNavigationUI="False">
@@ -82,9 +83,7 @@
         <ListView x:Name="top3FastestTypersListView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="265" Header="Top 3 snelste typers">
-                       
-                    </GridViewColumn>                    
+                    <GridViewColumn Width="265" Header="Top 3 snelste typers"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -92,7 +91,7 @@
         <ListView x:Name="top3HighestScoresListView" Grid.Row="2" Grid.Column="3" Margin="0,0,20,0" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Background="White">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Top 3 hoogste scores" Width="245"></GridViewColumn>
+                    <GridViewColumn Header="Top 3 hoogste scores" Width="245"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -117,11 +116,36 @@
         </StackPanel>
 
         <Button x:Name="startTestButton" Grid.Row="4" Grid.Column="3"
-                HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                Margin="0,0,20,20" Width="64" RenderOptions.BitmapScalingMode="HighQuality"
+                HorizontalAlignment="Right" VerticalAlignment="Top"
+                Margin="0,20,20,20" Width="64" RenderOptions.BitmapScalingMode="HighQuality"
                 Background="Transparent" BorderThickness="0" Click="StartTestButton_Click">
             <Image Source="/img/resumeButton.png"/>
         </Button>
         <Button x:Name="editTestBtn" Content="Toets Wijzigen" Grid.Column="3" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Center" Width="100" Margin="0,20,0,0" Visibility="Collapsed" Click="EditTestBtn_Click"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,68.4,0.6,176.8">
+            <Label x:Name="reviewTitleLabel" FontSize="32"
+               FontWeight="Bold" Content="Reviews" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-7,0,0,0"/>
+            <Label x:Name="averageScoreLabel" FontSize="22" VerticalAlignment="Center" Content="Gemiddelde score: " Margin="0,20,0,11.4" Width="244"/>
+            <fa:IconImage x:Name="star1" Icon="star" VerticalAlignment="Center" Width="24" Height="24"/>
+            <fa:IconImage x:Name="star5" Icon="StarHalf" VerticalAlignment="Center" Width="24" Height="24"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,134.4,-0.4,128.8">
+            <Label x:Name="addReviewLabel" FontSize="20" Content="Schrijf een review!" Margin="-7,0,-0.4,0.2"/>
+            <Label x:Name="reviewMustsLabel" Content="* = verplicht" Margin="0,0,-0.4,0.2"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,180.8,-12.4,125">
+            <Label x:Name="reviewScoreLabel" Content="Score (1 - 5)*: " Grid.Column="0" Margin="-7, 0, 0, 0"/>
+            <TextBox x:Name="reviewScoreTextbox" Width="99" Margin="0,0,0,-0.2"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,213.4,0.6,0.8">
+            <Label x:Name="reviewDescriptionLabel" Content="Beschrijving: " Grid.Column="0" Margin="-7,0,5,0"/>
+            <TextBox x:Name="reviewDescriptionTextbox" Width="447" HorizontalAlignment="Left" Margin="1,10,0,9.4"/>
+            <Button x:Name="saveButton"
+                Width="75" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddReviewButton_Click" Margin="10,0,0,10" RenderTransformOrigin="0.569,0.032" Content="Toevoegen"/>
+        </StackPanel>
     </Grid>
 </Page>
