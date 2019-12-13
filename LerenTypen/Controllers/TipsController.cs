@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Shapes;
 
 namespace LerenTypen.Models
 {
-   public class TipsController
+    public class TipsController
     {
-
+        /// <summary>
+        /// Couples the right rectangle to the right pressed key
+        /// </summary>
+        /// <param name="e"></param>
+        /// <param name="names"></param>
+        /// <returns></returns>
         public static string ShowKey(KeyEventArgs e, List<string> names)
         {
             string result = "no outcome";
 
-            //e.Key == System.Windows.Input.Key.D;
             foreach (string name in names)
             {
                 var checkKey = e.Key;
@@ -29,91 +30,83 @@ namespace LerenTypen.Models
             }
             return result;
         }
-
+        /// <summary>
+        /// We take the names of all the rectangles and find the difference bewteen them by substringing them till the variable names are different
+        /// Then we add all the variable names to one list and return this list
+        /// </summary>
+        /// <param name="names"></param>
+        /// <returns></returns>
         public static List<string> KeyDistributor(UIElementCollection names)
         {
             List<string> allNamesInStackPanel = new List<string>();
             foreach (var item in names)
             {
-                    List<System.Windows.Shapes.Rectangle> allVars = new List<System.Windows.Shapes.Rectangle>();
-                    allVars.Add((System.Windows.Shapes.Rectangle)item);
-                    foreach (var i in allVars)
-                    {
-                        allNamesInStackPanel.Add(i.Name.Substring(19));
-                    }
+                List<Rectangle> allVars = new List<Rectangle>();
+                allVars.Add((Rectangle)item);
+                foreach (var i in allVars)
+                {
+                    allNamesInStackPanel.Add(i.Name.Substring(19));
+                }
             }
             return allNamesInStackPanel;
         }
 
-        public static void FindPressedKey(UIElementCollection allTotalnames, string fullName)
+        /// <summary>
+        /// This function makes a rectangle hidden if its key is pressed. It also returns the tag of the Rectangle so we can use it to
+        /// match it to the right finger
+        /// </summary>
+        /// <param name="allTotalnames"></param>
+        /// <param name="fullName"></param>
+        /// <returns></returns>
+        public static Rectangle FindPressedKey(UIElementCollection allTotalnames, string fullName)
         {
+            Rectangle result = null;
+            List<Rectangle> allVars = new List<Rectangle>();
+
             foreach (var item in allTotalnames)
             {
-                    List<System.Windows.Shapes.Rectangle> allVars = new List<System.Windows.Shapes.Rectangle>();
-                    allVars.Add((System.Windows.Shapes.Rectangle)item);
-                    foreach (var i in allVars)
+                allVars.Add((Rectangle)item);
+                foreach (Rectangle i in allVars)
+                {
+                    if (i.Name.Equals(fullName))
                     {
-                        //MessageBox.Show("i is" + i);
-                        if (i.Name.Equals(fullName))
-                        {
-                            //MessageBox.Show("same");
-                            i.Visibility = Visibility.Hidden;
-                        }
-                        else
-                        {
-                            i.Visibility = Visibility.Visible;
-                        }
+                        i.Visibility = Visibility.Hidden;
+                        result = i;
                     }
+                    else
+                    {
+                        i.Visibility = Visibility.Visible;
+                    }
+                }
             }
+            return result;
         }
 
         /// <summary>
         /// To display the right finger, we match the tag in the variable names of the rectangles to the fingers.
         /// </summary>
         /// <param name="color"></param>
-        //public static void FindCorrespondingFinger(string color)
-        //{
-        //    switch (color)
-        //    {
-        //        case "Orange":
+        public static void FindCorrespondingFinger(string color, List<System.Windows.Shapes.Ellipse> ellipses)
+        {
+            foreach (Ellipse item in ellipses)
+            {
+                item.Visibility = Visibility.Visible;
+            }
+            foreach (Ellipse item in ellipses)
+            {
+                if (item.Tag.ToString().Equals(color))
+                {
+                    item.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    item.Visibility = Visibility.Visible;
+                }
+            }
 
-        //            return StartAndEnd;
-        //        case 1:
-        //            StartValue = 1;
-        //            EndValue = 49;
-        //            StartAndEnd[0] = StartValue;
-        //            StartAndEnd[1] = EndValue;
-        //            return StartAndEnd;
-        //        case 2:
-        //            StartValue = 50;
-        //            EndValue = 99;
-        //            StartAndEnd[0] = StartValue;
-        //            StartAndEnd[1] = EndValue;
-        //            return StartAndEnd;
-        //        case 3:
-        //            StartValue = 100;
-        //            EndValue = 149;
-        //            StartAndEnd[0] = StartValue;
-        //            StartAndEnd[1] = EndValue;
-        //            return StartAndEnd;
-        //        case 4:
-        //            StartValue = 150;
-        //            EndValue = 199;
-        //            StartAndEnd[0] = StartValue;
-        //            StartAndEnd[1] = EndValue;
-        //            return StartAndEnd;
-        //        case 5:
-        //            StartValue = 200;
-        //            EndValue = Int32.MaxValue;
-        //            StartAndEnd[0] = StartValue;
-        //            StartAndEnd[1] = EndValue;
-        //            return StartAndEnd;
-        //        default:
-        //            return null;
-        //    }
-
-        //}
         }
-
     }
+}
+
+
 

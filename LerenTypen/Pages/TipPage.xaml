@@ -10,8 +10,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="32*"/>
-            <ColumnDefinition Width="43*"/>
+            <ColumnDefinition Width="615*"/>
+            <ColumnDefinition Width="434*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="103*"/>
@@ -19,15 +19,21 @@
             <RowDefinition Height="401*"/>
             <RowDefinition Height="66*"/>
         </Grid.RowDefinitions>
+        <Border Grid.Row="1" Grid.Column="1"/>
+        <Border Grid.Row="1" Grid.Column="0"/>
+        <Border Grid.Row="2" Grid.Column="0" Background="LightYellow"/>
+        <Border Grid.Row="2" Grid.Column="1" Background="LightYellow"/>
+
 
         <Label x:Name="TipPage_Label_Title" Grid.Column="0" Grid.Row="0" Content="Tips en advies" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Height="53" Width="352"/>
-        <Image Source="/img/KeyboardPlacements.png" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,103,0,3" Grid.RowSpan="2"/>
-        <Label Content="Heb jij moeite met blind leren typen? Hopelijk kan deze pagina jou helpen.&#xD;&#xA;Begin met een goede houding. Ontspan je schouders en ga rechtop zitten. Zet je linkerwijsvinger op de F-knop&#xD;&#xA;en je rechterwijsvinger op de J-knop. Op deze knoppen voel je streepjes, die helpen je om deze toetsen altijd&#xD;&#xA;terug te kunnen vinden. Zet vervolgens de rest van je vingers aan je linkerhand op de knoppen; A, S en D. &#xD;&#xA;Voor de rechterhand gaan de vingers op knoppen: K,L en ;. Nu heb je een goede uitgangspositie. &#xD;&#xA;Iedere keer als je een letter hebt getypt, kan je terug naar deze uitgangspositie. &#xD;&#xA;Hiernaast staat een plaatje van een QWERTY-toetsenbord met daarbij informatie over welke vinger op &#xD;&#xA;welke toets moet. De kleuren van de letters komen overeen met de kleuren van de vingers. &#xD;&#xA;Zo kan je zien welke vinger op welke plek moet. Probeer bij het oefenen van een toets niet naar het &#xD;&#xA;toetsenbord te kijken, maar zo veel mogelijk naar het scherm. En vergeet niet, oefening baart kunst!&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;Succes!" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="255" Grid.RowSpan="2" Width="602" Margin="0,103,-0.4,0"/>
-        <Image x:Name="TipPage_Image_HandsBlack" Source="/img/which_fingers.png" Grid.Column="1" Grid.Row="2" MaxHeight="235" MaxWidth="329" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Label Content="Wil je gaan oefenen? log hier in:" Width="230" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right"/>
-        <Button x:Name="loginRegisterButton" Width="300" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3" Click="LoginRegisterButton_Click">Inloggen/registreren om toetsen te oefenen</Button>
-        <TextBox x:Name="TipPage_TestBox" HorizontalAlignment="Left" Height="23" Margin="161,132,0,0" Grid.Row="2" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" KeyDown="KeyUp_Clicker"/>
-        <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row0" Orientation="Horizontal" MaxHeight="22" MaxWidth="329" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="0,5,271.6,208.2" Width="330">
+        <Image Source="/img/which_fingers.png" RenderOptions.BitmapScalingMode="HighQuality" Grid.Row="1" Grid.Column="1" Margin="0.8,0.2,-0.4,0"/>
+        <Label Content="Heb jij moeite met blind leren typen? Hopelijk kan deze pagina jou helpen.&#xD;&#xA;Begin met een goede houding. Ontspan je schouders en ga rechtop zitten. Zet je linkerwijsvinger op de F-knop&#xD;&#xA;en je rechterwijsvinger op de J-knop. Op deze knoppen voel je streepjes, die helpen je om deze toetsen altijd&#xD;&#xA;terug te kunnen vinden. Zet vervolgens de rest van je vingers aan je linkerhand op de knoppen; A, S en D. &#xD;&#xA;Voor de rechterhand gaan de vingers op knoppen: K,L en ;. Nu heb je een goede uitgangspositie. &#xD;&#xA;Iedere keer als je een letter hebt getypt, kan je terug naar deze uitgangspositie. &#xD;&#xA;Hiernaast staat een plaatje van een QWERTY-toetsenbord met daarbij informatie over welke vinger op &#xD;&#xA;welke toets moet. De kleuren van de letters komen overeen met de kleuren van de vingers. &#xD;&#xA;Zo kan je zien welke vinger op welke plek moet. Probeer bij het oefenen van een toets niet naar het &#xD;&#xA;toetsenbord te kijken, maar zo veel mogelijk naar het scherm. En vergeet niet, oefening baart kunst!&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;Succes!" HorizontalAlignment="Left" VerticalAlignment="Top" Height="230" Grid.Column="0" Width="602" Margin="10,0.2,0,0" Grid.Row="1"/>
+        <Image x:Name="TipPage_Image_HandsBlack" Source="/img/which_fingers.png" Grid.Row="2" MaxHeight="235" MaxWidth="329" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="0"/>
+        <Label Content="Wil je gaan oefenen? log hier in:" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left"/>
+        <Button x:Name="loginRegisterButton" HorizontalAlignment="Right" Grid.Row="3" Click="LoginRegisterButton_Click" Grid.Column="1" >Inloggen/registreren om toetsen te oefenen</Button>
+        <TextBox x:Name="TipPage_TestBox" HorizontalAlignment="Left" Height="23" Margin="173.8,171,0,0" Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="115" KeyDown="KeyUp_Clicker"/>
+        <StackPanel x:Name="TipPage_StackPanel_GeneralCanvas" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Height="234" Margin="142,0,142.2,0">
+        <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row0" Orientation="Horizontal" MaxHeight="22" MaxWidth="329" Margin="0,5,0,1">
             <Rectangle x:Name="TipPage_Canvas_Key_Oem3" Tag="Orange" Fill="Black" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Rectangle x:Name="TipPage_Canvas_Key_D1" Tag="Orange" Fill="Black" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,0"/>
             <Rectangle x:Name="TipPage_Canvas_Key_D2" Tag="Purple" Fill="Black" Height="20" Width="21" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,0"/>
@@ -43,7 +49,7 @@
             <Rectangle x:Name="TipPage_Canvas_Key_OemPlus" Tag="Yellow" Fill="Black" Height="20" Width="22" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,0"/>
             <Rectangle x:Name="TipPage_Canvas_Key_Return" Tag="Yellow" Fill="Black" Height="20" Width="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1,0"/>
         </StackPanel>
-        <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row1" Orientation="Horizontal" MaxHeight="24" MaxWidth="331" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="0,28,270.6,183.2" Width="331">
+            <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row1" Orientation="Horizontal" Margin="0,1" MaxHeight="24" MaxWidth="331" Grid.Row="2" HorizontalAlignment="Center" Width="331" Grid.ColumnSpan="2">
             <Rectangle x:Name="TipPage_Canvas_Key_Tab" Tag="Orange" Fill="Black" Width="30" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Rectangle x:Name="TipPage_Canvas_Key_Q" Tag="Orange" Fill="Black" Height="22" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,0"/>
             <Rectangle x:Name="TipPage_Canvas_Key_W" Tag="Purple" Fill="Black" Height="22" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,0"/>
@@ -59,7 +65,7 @@
             <Rectangle x:Name="TipPage_Canvas_Key_Oem6" Tag="Yellow" Fill="Black" Height="22" Width="21" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,0"/>
             <Rectangle x:Name="TipPage_Canvas_Key_Oem5" Tag="Yellow" Fill="Black" Height="22" Width="21" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="1,0"/>
         </StackPanel>
-        <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row2" Orientation="Horizontal" MaxHeight="23" MaxWidth="331" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="0,52,271.6,160.2" Width="330">
+            <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row2" Orientation="Horizontal" Margin="0,1" MaxHeight="23" MaxWidth="331" Grid.Row="2" HorizontalAlignment="Center" Width="330" Grid.ColumnSpan="2">
             <Rectangle x:Name="TipPage_Canvas_Key_Capital" Tag="Orange" Fill="Black" Width="39" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Rectangle x:Name="TipPage_Canvas_Key_A" Tag="Orange" Fill="Black" Height="22" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,0"/>
             <Rectangle x:Name="TipPage_Canvas_Key_S" Tag="Purple" Fill="Black" Height="22" Width="21" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,0"/>
@@ -74,7 +80,7 @@
             <Rectangle x:Name="TipPage_Canvas_Key_OemQuotes" Tag="Yellow" Fill="Black" Height="22" Width="21" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,0"/>
             <Rectangle x:Name="TipPage_Canvas_Key_Enter" Tag="Yellow" Fill="Black" Height="22" Width="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,0"/>
         </StackPanel>
-        <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row3" Orientation="Horizontal" MaxHeight="22" MaxWidth="331" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="0,75,271.6,138.2" Width="330">
+            <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row3" Orientation="Horizontal" Margin="0,2" MaxHeight="22" MaxWidth="331" Grid.Row="2" HorizontalAlignment="Center" Width="330" Grid.ColumnSpan="2">
             <Rectangle x:Name="TipPage_Canvas_Key_LeftShift" Tag="Orange" Fill="Black" Width="48" Height="21" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
             <Rectangle x:Name="TipPage_Canvas_Key_Z" Tag="Orange" Fill="Black" Height="21" Width="22" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0"/>
             <Rectangle x:Name="TipPage_Canvas_Key_X" Tag="Purple" Fill="Black" Height="21" Width="20" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
@@ -88,7 +94,7 @@
             <Rectangle x:Name="TipPage_Canvas_Key_OemQuestion" Tag="Yellow" Fill="Black" Height="21" Width="21" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1,0"/>
             <Rectangle x:Name="TipPage_Canvas_Key_RightShift" Tag="Yellow" Fill="Black" Height="21" Width="54" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1,0"/>
         </StackPanel>
-        <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row4" Orientation="Horizontal" MaxHeight="24" MaxWidth="264" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="0,97,337.6,114.2" Width="264">
+            <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row4" Orientation="Horizontal" Margin="1,0" MaxHeight="24" MaxWidth="264" Grid.Row="2" HorizontalAlignment="left" Width="264" Grid.ColumnSpan="2">
             <Rectangle x:Name="TipPage_Canvas_Key_LeftCtrl" Tag="Orange" Fill="Black" Width="23" Height="21" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
             <Rectangle x:Name="TipPage_Canvas_Key_Nothing1" Tag="Orange" Fill="Black" Height="21" Width="21" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1,0"/>
             <Rectangle x:Name="TipPage_Canvas_Key_LWin" Tag="Orange" Fill="Black" Height="21" Width="22" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1,0"/>
@@ -98,18 +104,10 @@
             <Rectangle x:Name="TipPage_Canvas_Key_RightCtrl" Tag="Grey" Fill="Black" Height="21" Width="22" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1,0"/>
         </StackPanel>
 
-        <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row5" Orientation="Horizontal" MaxHeight="11" MaxWidth="62" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="264,97,272.6,127.2" Width="65">
-            <Rectangle x:Name="TipPage_Canvas_Key_Empty" Fill="Black" Height="11" Width="22" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="21,0"/>
-        </StackPanel>
-        <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row6" Orientation="Horizontal" MaxHeight="13" MaxWidth="65" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Margin="264,108,272.6,114.2" Width="65">
 
-            <Rectangle x:Name="TipPage_Canvas_Key_RightControl" Fill="Black" Height="11" Width="19" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1,0"/>
-            <Rectangle x:Name="TipPage_Canvas_Key_RightControler" Fill="Black" Height="11" Width="22" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,1"/>
-            <Rectangle x:Name="TipPage_Canvas_Key_right" Fill="Black" Height="11" Width="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1,1"/>
 
-        </StackPanel>
-        <Canvas Grid.Column="1" HorizontalAlignment="Left" Height="96" Margin="63,108,0,0" Grid.Row="2" VerticalAlignment="Top" Width="217">
-            <Ellipse x:Name="TipPage_Canvas_Finger_LeftPink" Fill="Black" Width="10" Height="13" Canvas.Top="50" RenderTransformOrigin="0.5,0.5" Canvas.Left="2">
+        <Canvas x:Name="TipPage_Canvas_AllFingers" HorizontalAlignment="Center" Height="96" Margin="0,0,204,0" VerticalAlignment="Top">
+            <Ellipse x:Name="TipPage_Canvas_Finger_LeftPink" Tag="Orange" Fill="Black" Width="10" Height="13" Canvas.Top="37" RenderTransformOrigin="0.5,0.5" Canvas.Left="2">
                 <Ellipse.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -119,8 +117,8 @@
                     </TransformGroup>
                 </Ellipse.RenderTransform>
             </Ellipse>
-            <Ellipse x:Name="TipPage_Canvas_Finger_LeftRingFinger" Fill="Black" Width="10" Height="13" Canvas.Left="19" Canvas.Top="28"/>
-            <Ellipse x:Name="TipPage_Canvas_Finger_LeftRingMiddleFinger" Fill="Black" Width="10" Height="14" Canvas.Left="35" RenderTransformOrigin="0.5,0.5" Canvas.Top="20">
+            <Ellipse x:Name="TipPage_Canvas_Finger_LeftRingFinger" Tag="Purple" Fill="Black" Width="10" Height="13" Canvas.Left="19" Canvas.Top="15"/>
+            <Ellipse x:Name="TipPage_Canvas_Finger_LeftRingMiddleFinger" Tag="Aubergine" Fill="Black" Width="10" Height="14" Canvas.Left="35" RenderTransformOrigin="0.5,0.5" Canvas.Top="10">
                 <Ellipse.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -130,7 +128,7 @@
                     </TransformGroup>
                 </Ellipse.RenderTransform>
             </Ellipse>
-            <Ellipse x:Name="TipPage_Canvas_Finger_LeftIndexfinger" Fill="Black" Width="10" Height="13" Canvas.Left="55" Canvas.Top="34" RenderTransformOrigin="0.5,0.5">
+            <Ellipse x:Name="TipPage_Canvas_Finger_LeftIndexfinger" Tag="Green" Fill="Black" Width="10" Height="13" Canvas.Left="55" Canvas.Top="22" RenderTransformOrigin="0.5,0.5">
                 <Ellipse.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -140,7 +138,7 @@
                     </TransformGroup>
                 </Ellipse.RenderTransform>
             </Ellipse>
-            <Ellipse x:Name="TipPage_Canvas_Finger_LeftThumb" Fill="Black" Width="10" Height="13" Canvas.Left="76" Canvas.Top="80" RenderTransformOrigin="0.5,0.5">
+            <Ellipse x:Name="TipPage_Canvas_Finger_LeftThumb" Tag="Blue" Fill="Black" Width="10" Height="13" Canvas.Left="76" Canvas.Top="68" RenderTransformOrigin="0.5,0.5">
                 <Ellipse.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -150,7 +148,7 @@
                     </TransformGroup>
                 </Ellipse.RenderTransform>
             </Ellipse>
-            <Ellipse x:Name="TipPage_Canvas_Finger_RightThumb" Fill="Black" Width="7" Height="11" Canvas.Left="99" Canvas.Top="82" RenderTransformOrigin="0.5,0.5">
+            <Ellipse x:Name="TipPage_Canvas_Finger_RightThumb" Tag="Blue" Fill="Black" Width="7" Height="11" Canvas.Left="99" Canvas.Top="69" RenderTransformOrigin="0.5,0.5">
                 <Ellipse.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -160,7 +158,7 @@
                     </TransformGroup>
                 </Ellipse.RenderTransform>
             </Ellipse>
-            <Ellipse x:Name="TipPage_Canvas_Finger_RightIndexFinger" Fill="Black" Width="10" Height="13" Canvas.Left="121" Canvas.Top="36" RenderTransformOrigin="0.5,0.5">
+            <Ellipse x:Name="TipPage_Canvas_Finger_RightIndexFinger" Tag="Pink" Fill="Black" Width="10" Height="13" Canvas.Left="121" Canvas.Top="23" RenderTransformOrigin="0.5,0.5">
                 <Ellipse.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -170,7 +168,7 @@
                     </TransformGroup>
                 </Ellipse.RenderTransform>
             </Ellipse>
-            <Ellipse x:Name="TipPage_Canvas_Finger_RightMiddleFinger" Fill="Black" Width="10" Height="15" Canvas.Left="140" Canvas.Top="20" RenderTransformOrigin="0.5,0.5">
+            <Ellipse x:Name="TipPage_Canvas_Finger_RightMiddleFinger" Tag="OceanBlue" Fill="Black" Width="10" Height="15" Canvas.Left="140" Canvas.Top="10" RenderTransformOrigin="0.5,0.5">
                 <Ellipse.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -180,7 +178,7 @@
                     </TransformGroup>
                 </Ellipse.RenderTransform>
             </Ellipse>
-            <Ellipse x:Name="TipPage_Canvas_Finger_RightRingFinger" Fill="Black" Width="10" Height="13" Canvas.Left="156" Canvas.Top="29" RenderTransformOrigin="0.5,0.5">
+            <Ellipse x:Name="TipPage_Canvas_Finger_RightRingFinger" Tag="Grey" Fill="Black" Width="10" Height="13" Canvas.Left="156" Canvas.Top="17" RenderTransformOrigin="0.5,0.5">
                 <Ellipse.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -190,7 +188,7 @@
                     </TransformGroup>
                 </Ellipse.RenderTransform>
             </Ellipse>
-            <Ellipse x:Name="TipPage_Canvas_Finger_RightPink" Fill="Black" Width="8" Height="12" Canvas.Left="175" Canvas.Top="51" RenderTransformOrigin="0.5,0.5">
+            <Ellipse x:Name="TipPage_Canvas_Finger_RightPink" Tag="Yellow" Fill="Black" Width="8" Height="12" Canvas.Left="175" Canvas.Top="38" RenderTransformOrigin="0.5,0.5">
                 <Ellipse.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -201,6 +199,9 @@
                 </Ellipse.RenderTransform>
             </Ellipse>
         </Canvas>
+        </StackPanel>
+        <Label Content="Wil jij weten hoe een bepaald woord getypt wordt? Typ het woord hier in&#xD;&#xA; en zie in het plaatje hiernaast per letter hoe je het moet typen" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Height="52" Width="397"/>
+        <Label Content="Typ hier het woord: " HorizontalAlignment="Left" Margin="174,72,0,0" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Height="26" Width="115"/>
 
     </Grid>
 </Page>

@@ -25,20 +25,26 @@ namespace LerenTypen
         {
             MainWindow.ChangePage(new LoginPage(MainWindow));
         }
-
+        /// <summary>
+        /// Event when a key gets pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void KeyUp_Clicker(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            var kijk = e.Key.ToString();
+            string fingerTag = "";
             List<string> allNames = new List<string>();
             List<string> allTotalNames = new List<string>();
             List<UIElementCollection> allPanels = new List<UIElementCollection>();
+
+            // Adding all the rectangles of each stackpanel to one list
             allPanels.Add(TipPage_StackPanel_Keyboard_Row0.Children);
             allPanels.Add(TipPage_StackPanel_Keyboard_Row1.Children);
             allPanels.Add(TipPage_StackPanel_Keyboard_Row2.Children);
             allPanels.Add(TipPage_StackPanel_Keyboard_Row3.Children);
             allPanels.Add(TipPage_StackPanel_Keyboard_Row4.Children);
-            allPanels.Add(TipPage_StackPanel_Keyboard_Row5.Children);
-            allPanels.Add(TipPage_StackPanel_Keyboard_Row6.Children);
+
+            // Now we add the rectangles' variable names to one list
             foreach (UIElementCollection uIElementCollection in allPanels)
             {
                     allNames = Models.TipsController.KeyDistributor(uIElementCollection);
@@ -47,18 +53,35 @@ namespace LerenTypen
                         allTotalNames.Add(item);
                     }
             }
-            //allNames = Models.TipsController.KeyDistributor(TipPage_StackPanel_Keyboard_Row2.Children);
-            string check = Models.TipsController.ShowKey(e, allTotalNames);
-           // MessageBox.Show(check);
-            string fullName = "TipPage_Canvas_Key_" + check;
-            //MessageBox.Show(k);
-            foreach (UIElementCollection uIElementCollection in allPanels)
+            // After getting all the variable names, we find the right key 
+            string FoundKey = Models.TipsController.ShowKey(e, allTotalNames);
+
+            // Convert the found key back to the full variable name
+            string fullName = "TipPage_Canvas_Key_" + FoundKey;
+
+
+            List<System.Windows.Shapes.Ellipse> ellipses = new List<System.Windows.Shapes.Ellipse>();
+
+            // Adds all the ellipses from the fingernails to a list.
+            foreach (System.Windows.Shapes.Ellipse item in TipPage_Canvas_AllFingers.Children)
             {
-                Models.TipsController.FindPressedKey(uIElementCollection, fullName);
+                ellipses.Add(item);
             }
 
-            //MessageBox.Show(test);
-            //MessageBox.Show(TipPage_Canvas_Key_44.Name.Substring(19));
+            // After getting the right variable, coupled with the pressed key, we can now make the right rectangle hidden
+            foreach (UIElementCollection uIElementCollection in allPanels)
+            {
+              System.Windows.Shapes.Rectangle foundRectangle = Models.TipsController.FindPressedKey(uIElementCollection, fullName);
+                if (foundRectangle != null)
+                {
+                    // This stores the colortag of the pressed key, so we can use it to find the corresponding finger
+                    fingerTag = foundRectangle.Tag.ToString();
+                }
+            }
+
+            // Here we find the corresponding finger to the pressed key
+            Models.TipsController.FindCorrespondingFinger(fingerTag, ellipses);
+
         }
 
 
