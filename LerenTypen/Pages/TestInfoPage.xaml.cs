@@ -1,6 +1,8 @@
 ﻿using LerenTypen.Controllers;
 using LerenTypen.Models;
+using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -93,6 +95,19 @@ namespace LerenTypen
 
             //Go through every option to check if they have been enabled in a previous test and been put on true.
             playSoundsCheckBox.IsChecked = mainWindow.testOptions.Sound;
+
+            //Check if the user has logged in or has already filled in a review for this test.
+            //If that's true, then the user isn't allowed to see anything that has to do with inserting a new review.
+            if (mainWindow.Ingelogd == 0 || ReviewController.CheckIfUserHasMadeAReview(testID, mainWindow.Ingelogd))
+            {
+                addReviewLabel.Visibility = Visibility.Collapsed;
+                reviewMustsLabel.Visibility = Visibility.Collapsed;
+                reviewScoreLabel.Visibility = Visibility.Collapsed;
+                reviewScoreTextbox.Visibility = Visibility.Collapsed;
+                reviewDescriptionLabel.Visibility = Visibility.Collapsed;
+                reviewDescriptionTextbox.Visibility = Visibility.Collapsed;
+                saveButton.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void MyResultsListView_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -119,6 +134,65 @@ namespace LerenTypen
             }
 
             mainWindow.ChangePage(new TestExercisePage(testID, mainWindow));
+        }
+
+        /// <summary>
+        /// This function is used once you press the button that you want to add a review.
+        /// </summary>
+        private void AddReviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Checks if the reviewScore is numberic and filled in.
+            if (ReviewController.OnlyNumberic(reviewScoreTextbox.Text) && !string.IsNullOrWhiteSpace(reviewScoreTextbox.Text))
+            {
+                int reviewScore = int.Parse(reviewScoreTextbox.Text);
+                string reviewDescription = reviewDescriptionTextbox.Text;
+
+                //Check if the reviewScore are between 1 and 5.
+                if (reviewScore < 1 || reviewScore > 5)
+                {
+                    MessageBox.Show("De score moet groter of gelijk aan 1 en groter of gelijk aan 5!", "Error");
+                }
+                //Check if the reviewDescription is longer than 140 charachters.
+                else if (reviewDescription.Length >= 141)
+                {
+                    MessageBox.Show("De beschrijving moet kleiner zijn dan 140 tekens!", "Error");
+                }
+                //Checks if the revieDescription has been filled in. If not, it adds a review without a description.
+                //If it is, it does a different query and adds a review with a description.
+                else if (string.IsNullOrWhiteSpace(reviewDescription))
+                {
+                    Review review = new Review(testID, mainWindow.Ingelogd, reviewScore);
+
+                    //Checks if the review has been succesfully added.
+                    if (ReviewController.AddReviewWithoutDescription(review))
+                    {
+                        MessageBox.Show("De review is succesvol toegevoegd!", "Succes");
+                        mainWindow.ChangePage(new TestInfoPage(testID, mainWindow));
+                    }
+                    else
+                    {
+                        MessageBox.Show("De review kon niet worden toegevoegd. Probeer het opnieuw of neem contact op met een administrator.", "Error");
+                    }
+                }
+                else
+                {
+                    Review review = new Review(testID, mainWindow.Ingelogd, reviewScore, reviewDescription);
+
+                    if (ReviewController.AddReviewWithDescription(review))
+                    {
+                        MessageBox.Show("De review is succesvol toegevoegd!", "Succes");
+                        mainWindow.ChangePage(new TestInfoPage(testID, mainWindow));
+                    }
+                    else
+                    {
+                        MessageBox.Show("De review kon niet worden toegevoegd. Probeer het opnieuw of neem contact op met een administrator.", "Error");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Je moet een geheel cijfer invoeren bij aantal sterren!");
+            }
         }
     }
 }
