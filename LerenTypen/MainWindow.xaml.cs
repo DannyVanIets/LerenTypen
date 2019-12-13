@@ -5,6 +5,8 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using LerenTypen.Models;
+using System.Collections.Generic;
 
 namespace LerenTypen
 {
@@ -158,34 +160,25 @@ namespace LerenTypen
             }
 
             bool shouldChangePage = true;
-            if (frame.Content is CreateTestPage)
+            if (frame.Content is TestExercisePage)
             {
-                CreateTestPage createTestPage = (CreateTestPage)frame.Content;
-                if (createTestPage.NewVersion)
+                MessageBoxResult? choice = ShowTestExcersiseQuitWarning();
+
+                if (choice == MessageBoxResult.Cancel)
                 {
-                    MessageBoxResult result = MessageBox.Show("Wijzigingen gaan verloren bij het verlaten van de pagina", "Weet u zeker dat u deze pagina wilt verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        createTestPage.SetNotBeingEdited();
-                    }
-                    else
-                    {
-                        shouldChangePage = false;
-                    }
-                }
-                else
-                {
-                    MessageBoxResult result = MessageBox.Show("Toets gaat verloren bij het verlaten van de pagina", "Weet u zeker dat u deze pagina wilt verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                    if (result == MessageBoxResult.No)
-                    {
-                        shouldChangePage = false;
-                    }
+                    shouldChangePage = false;
                 }
             }
+
+            if (frame.Content is TestExercisePage || frame.Content is TestResultsPage)
+            {
+                CheckForUnfinishedTests();
+            }
+
             if (shouldChangePage)
             {
                 frame.Content = pageToChangeTo;
-                SwitchMenuButtons(pageToggleButton);
+                SwitchMenuButtons(pageToggleButton);         
             }
             else
             {
@@ -227,12 +220,54 @@ namespace LerenTypen
                 {
                     allUsersPageButton.Visibility = Visibility.Visible;
                 }
+
+                CheckForUnfinishedTests();
             }
             else
             {
                 loginPageButton.Content = "Inloggen/registeren";
                 loginPageButton.ContextMenu = null;
                 allUsersPageButton.Visibility = Visibility.Collapsed;
+
+                resumeTestsButton.Visibility = Visibility.Collapsed;
+                resumeTestsButton.ContextMenu = null;
+            }
+        }
+
+        /// <summary>
+        /// Used to show a button in the menu to resume unfinished tests if the logged in user has any
+        /// </summary>
+        public void CheckForUnfinishedTests()
+        {
+            List<int> unfinishedTestIDs = TestController.GetUnfinishedTestIDsFromAccount(Ingelogd);
+            if (unfinishedTestIDs.Count > 0)
+            {
+                resumeTestsButton.Visibility = Visibility.Visible;
+
+                if (resumeTestsButton.ContextMenu == null)
+                {
+                    resumeTestsButton.ContextMenu = new ContextMenu();
+                }
+                else
+                {
+                    resumeTestsButton.ContextMenu.Items.Clear();
+                }
+
+                foreach (int id in unfinishedTestIDs)
+                {
+                    MenuItem item = new MenuItem();
+                    item.Header = TestController.GetTestName(id);
+                    item.Click += ((s, e) =>
+                    {
+                        ChangePage(new TestExercisePage(id, this, true));
+                    });
+                    resumeTestsButton.ContextMenu.Items.Add(item);
+                }
+            }
+            else
+            {
+                resumeTestsButton.Visibility = Visibility.Collapsed;
+                resumeTestsButton.ContextMenu = null;
             }
         }
 
@@ -262,6 +297,37 @@ namespace LerenTypen
         {
             client.Disconnect();
             client.Dispose();
+        }
+
+        private void ResumeTestsButton_Click(object sender, RoutedEventArgs e)
+        {
+            resumeTestsButton.ContextMenu.IsOpen = true;
+            resumeTestsButton.IsChecked = false;
+        }
+
+        /// <summary>
+        /// Shows a warning about quitting the test when the user is on the excercise page
+        /// </summary>
+        public MessageBoxResult? ShowTestExcersiseQuitWarning()
+        {
+            if (frame.Content is TestExercisePage)
+            {
+                TestExercisePage page = (TestExercisePage)frame.Content;
+                MessageBoxResult choice = page.AskStopTest();
+                return choice;
+            }
+
+            return null;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult? choice = ShowTestExcersiseQuitWarning();
+
+            if (choice != null && choice == MessageBoxResult.Cancel)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

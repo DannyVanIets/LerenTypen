@@ -88,37 +88,26 @@ namespace LerenTypen.Controllers
             return results;
         }
 
-        // Gets the wrong answers of a testResult using testResultID
-        public static List<string> GetTestResultsContentWrong(int testResultID)
+        // Gets the wrong answers of a testResult using testID and testResultID
+        // Dictionary key = line index and value = answer
+        public static Dictionary<int, string> GetTestResultsContentWrong(int testID, int testResultID)
         {
-            List<string> results = new List<string>();
-            SqlConnection connection = new SqlConnection(Database.connectionString);
-            try
-            {
-                connection.Open();
-                string query = "Select answer from testResultContent Where testResultID = @testResultID and answerType = 1";
+            Dictionary<int, string> results = new Dictionary<int, string>();
+            Dictionary<string, int> answers = TestController.GetAllLinesFromResult(testResultID);
+            int lineCounter = 0;
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+            // Loop through all the answers in order to set the line index (key) of the answer
+            foreach (KeyValuePair<string, int> kvp in answers)
+            {
+                lineCounter++;
+
+                // Check if answer is wrong, if so, add it
+                if (kvp.Value == 1)
                 {
-                    command.Parameters.AddWithValue("@testResultID", testResultID);
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            results.Add(reader["answer"].ToString());
-                        }
-                    }
+                    results.Add(lineCounter, kvp.Key);
                 }
             }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                connection.Close();
-                connection.Dispose();
-            }
+
             return results;
         }
 
@@ -180,7 +169,7 @@ namespace LerenTypen.Controllers
                             string date = dateTime.Date.ToString("dd/MM/yyyy");
                             int wordsPerMin = Convert.ToInt32(reader[2]);
 
-                            results.Add(new TestResult(id, date, wordsPerMin));
+                            results.Add(new TestResult(id, testID, date, wordsPerMin));
                         }
                     }
                 }
@@ -200,15 +189,7 @@ namespace LerenTypen.Controllers
         /// <summary>
         /// inserts results of the test after the test has been made and adds the users input to testresultcontent right after, using the same testresult id
         /// </summary>
-        /// <param name="testID"></param>
-        /// <param name="accountID"></param>
-        /// <param name="wordsEachMinute"></param>
-        /// <param name="pauses"></param>
-        /// <param name="rightAnswers"></param>
-        /// <param name="wrongAnswers"></param>
-        /// <param name="lines"></param>
-        /// <returns></returns>
-        public static int SaveResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines, int score)
+        public static int SaveResults(int testID, int accountID, int wordsEachMinute, int pauses, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines, int score, int time, bool finished)
         {
             int testResultID = 0;
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -216,7 +197,15 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score) VALUES (@testID, @accountID, CURRENT_TIMESTAMP, @WordsEachMinute, @pauses, @score); Select SCOPE_IDENTITY();";
+                string query;
+                if (finished)
+                {
+                    query = "INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score, time) VALUES (@testID, @accountID, CURRENT_TIMESTAMP, @WordsEachMinute, @pauses, @score, @time); Select SCOPE_IDENTITY();";
+                }
+                else
+                {
+                    query = "INSERT INTO testresults (testID, accountID, testResultsDate, wordsEachMinute, pauses, score, time, finished) VALUES (@testID, @accountID, CURRENT_TIMESTAMP, @WordsEachMinute, @pauses, @score, @time, 0); Select SCOPE_IDENTITY();";
+                }
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -225,6 +214,7 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@wordsEachMinute", wordsEachMinute);
                     command.Parameters.AddWithValue("@pauses", pauses);
                     command.Parameters.AddWithValue("@score", score);
+                    command.Parameters.AddWithValue("@time", time);
 
                     testResultID = Convert.ToInt32(command.ExecuteScalar());
                 }
@@ -262,15 +252,11 @@ namespace LerenTypen.Controllers
                         command.Parameters.AddWithValue("@answerType", 0);
                         command.ExecuteNonQuery();
                     }
-
                 }
-
-
 
                 // Position of right answer in lines is stored in keyvaluepairs int
                 foreach (KeyValuePair<int, string> wrongAnswer in wrongAnswers)
                 {
-
                     string query = "INSERT INTO testresultcontent (testResultID, answer, answerType, rightAnswer) VALUES (@testResultID, @answer, @answerType, @rightAnswer)";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -292,7 +278,185 @@ namespace LerenTypen.Controllers
                 connection.Close();
                 connection.Dispose();
             }
+        }
 
+        /// <summary>
+        /// Gets the unfinished testresultID from the specified account and test
+        /// </summary>
+        public static int GetUnfinishedTestResultID(int accountID, int testID)
+        {
+            int id = 0;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "SELECT testResultID FROM testresults WHERE testID = @testID AND accountID = @accID AND finished = 0";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@accID", accountID);
+                    command.Parameters.AddWithValue("@testID", testID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            id = Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return id;
+        }
+
+        public static void DeleteTestResult(int testResultID)
+        {
+            DeleteTestResultContent(testResultID);
+
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "DELETE FROM testresults WHERE testResultID = @testresID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testresID", testResultID);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Deletes the content of the specified test result
+        /// </summary>
+        private static void DeleteTestResultContent(int testResultID)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "DELETE FROM testresultcontent WHERE testResultID = @testresID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testresID", testResultID);
+                    int rowsAffected = command.ExecuteNonQuery();
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+        }
+
+        public static int GetAmountOfPauses(int testResultID)
+        {
+            int amount = 0;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "SELECT pauses FROM testresults WHERE testResultID = @testResultID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testResultID", testResultID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            amount = Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return amount;
+        }
+
+        public static int GetTime(int testResultID)
+        {
+            int time = 0;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "SELECT time FROM testresults WHERE testResultID = @testResultID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testResultID", testResultID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            time = Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return time;
+        }
+
+        /// <summary>
+        /// Calculates the percentage of right answers of a test result
+        /// </summary>
+        public static decimal CalculatePercentageRight(int testID, int testResultID)
+        {
+            List<string> rightAnswers = TestResultController.GetTestResultsContentRight(testResultID);
+            Dictionary<int, string> wrongAnswers = TestResultController.GetTestResultsContentWrong(testID, testResultID);
+            decimal percentageRight;
+
+            try
+            {
+                percentageRight = decimal.Divide(rightAnswers.Count, rightAnswers.Count + wrongAnswers.Count) * 100;
+            }
+            catch (DivideByZeroException)
+            {
+                percentageRight = 100;
+            }
+            return percentageRight;
         }
     }
 }
