@@ -84,7 +84,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "SELECT testName, testType, accountID, timesMade, highscore, version, testDifficulty, isPrivate, createDate FROM tests WHERE testID = @testID";
+                string query = "SELECT testName, testType, t.accountID, timesMade, highscore, version, testDifficulty, isnull(Round(AVG(tr.testReviewScore),1),0), isPrivate, createDate FROM tests t left join testReviews tr on tr.testID=t.testID WHERE t.testID = @testID group by testName, testType, t.accountID, timesMade, highscore, version, testDifficulty, isPrivate, createDate ORDER BY AVG(tr.testReviewScore) desc";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -102,11 +102,12 @@ namespace LerenTypen.Controllers
                             double highscore = Convert.ToDouble(reader[4]);
                             int version = Convert.ToInt32(reader[5]);
                             int testDifficulty = Convert.ToInt32(reader[6]);
-                            bool isPrivate = Convert.ToBoolean(reader[7]);
-                            DateTime createdDateTime = (DateTime)reader[8];
+                            double rating = Convert.ToInt32(reader[7]);
+                            bool isPrivate = Convert.ToBoolean(reader[8]);
+                            DateTime createdDateTime = (DateTime)reader[9];
                             string createdDateString = createdDateTime.Date.ToString("dd/MM/yyyy");
 
-                            return new Test(testID, testName, testType, authorID, authorUsername, wordCount, version, testDifficulty, isPrivate, createdDateString);
+                            return new Test(testID, testName, testType, authorID, authorUsername, wordCount, version, testDifficulty, rating,isPrivate, createdDateString);
                         }
                     }
                 }
@@ -239,7 +240,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
 
-                string query = $"SELECT testID, testName, testType, accountID, version, testDifficulty, isPrivate, createDate from tests t WHERE t.testID IN {idList}";
+                string query = $"SELECT t.testID,testName, testType, t.accountID, timesMade, version, testDifficulty, isnull(Round(AVG(tr.testReviewScore), 1), 0) isPrivate, createDate FROM tests t left join testReviews tr on tr.testID = t.testID WHERE t.testID IN {idList} group by t.testID, testName, testType, t.accountID, timesMade, highscore, version, testDifficulty, isPrivate, createDate ORDER BY AVG(tr.testReviewScore) desc";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {                  
@@ -256,10 +257,11 @@ namespace LerenTypen.Controllers
                             int timesMade = TestController.GetTimesMade(id);
                             int version = Convert.ToInt32(reader[4]);
                             int difficulty = Convert.ToInt32(reader[5]);
-                            int isPrivate = Convert.ToInt32(reader[6]);
-                            DateTime createDateTime = (DateTime)reader[7];
+                            double rating = Convert.ToInt32(reader[6]);
+                            int isPrivate = Convert.ToInt32(reader[7]);
+                            DateTime createDateTime = (DateTime)reader[8];
 
-                            trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty, Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
+                            trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty,rating, Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
                         }
                     }
                 }
@@ -890,7 +892,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername , AVG(tr.testReviewScore) from tests t Inner join accounts a on t.accountID = a.accountID inner join testReviews tr on t.accountID = a.accountID where t.archived = 0 and a.archived = 0 and t.isPrivate = 0 group by t.testID, t.accountID, testName, t.testDifficulty , a.accountUsername ORDER BY AVG(tr.testReviewScore)";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername , isnull(Round(AVG(tr.testReviewScore),1),0)  from tests t left join testReviews tr on tr.testID = t.testID join accounts a on t.accountID = a.accountID where tr.accountID = @accountID and t.archived=0 and a.archived=0 and t.isPrivate=0 group by t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername ORDER BY AVG(tr.testReviewScore) desc";
                 int Ccounter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -902,7 +904,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //add all the found data to a list
-                            tests.Add(new TestTable(Ccounter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetWordHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), reader.GetInt16(3), reader.GetString(4), -1, reader.GetInt32(0) , reader.GetInt32(5)));
+                            tests.Add(new TestTable(Ccounter, reader.GetString(2), GetTimesMade(reader.GetInt32(0)), GetWordHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(reader.GetInt32(0)), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[0]), Convert.ToInt32(reader[0])));
                             Ccounter++;
                         }
                     }

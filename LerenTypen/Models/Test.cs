@@ -10,6 +10,7 @@ namespace LerenTypen.Models
         public int Type { get; private set; }
         public int AuthorID { get; private set; }
         public string AuthorUsername { get; private set; }
+        public double Rating { get; set; }
         public int WordCount { get; private set; }
         public int TimesMade { get; private set; }
         public int AverageScore { get; private set; }
@@ -21,7 +22,7 @@ namespace LerenTypen.Models
         public string CreatedDateTime { get; private set; }
 
         public Test(int id, string name, int type, int authorID, string authorUsername, int wordCount,
-            int version, int difficulty, bool isPrivate, string createdDateTime)
+            int version, int difficulty,double reviewscore, bool isPrivate, string createdDateTime)
         {
             ID = id;
             Name = name;
@@ -31,14 +32,14 @@ namespace LerenTypen.Models
             WordCount = wordCount;
             Version = version;
             Difficulty = difficulty;
+            Rating = reviewscore;
             IsPrivate = isPrivate;
             CreatedDateTime = createdDateTime;
 
             TimesMade = TestController.GetTimesMade(ID);
             Highscore = TestController.GetTestHighscore(ID);
             WordHighscore = TestController.GetWordHighscore(ID);
-            AverageScore = TestController.GetTestAverageScore(ID);
-        }
+          }
 
         public Test(int id, string name, string authorName)
         {
