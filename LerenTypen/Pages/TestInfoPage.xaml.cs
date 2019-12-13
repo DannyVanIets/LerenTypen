@@ -15,8 +15,6 @@ namespace LerenTypen
     {
         private MainWindow mainWindow;
         private int testID;
-        //Regex is used to check if filled in text has only number. Is used in the OnlyNumberic function.
-        private static readonly Regex _regex = new Regex("[^0-9.-]+");
 
         public TestInfoPage(int testID, MainWindow mainWindow)
         {
@@ -108,13 +106,13 @@ namespace LerenTypen
             //If that's true, then the user isn't allowed to see anything that has to do with inserting a new review.
             if (mainWindow.Ingelogd == 0 || ReviewController.CheckIfUserHasMadeAReview(testID, mainWindow.Ingelogd))
             {
-                addReviewLabel.Visibility = Visibility.Hidden;
-                reviewMustsLabel.Visibility = Visibility.Hidden;
-                reviewScoreLabel.Visibility = Visibility.Hidden;
-                reviewScoreTextbox.Visibility = Visibility.Hidden;
-                reviewDescriptionLabel.Visibility = Visibility.Hidden;
-                reviewDescriptionTextbox.Visibility = Visibility.Hidden;
-                saveButton.Visibility = Visibility.Hidden;
+                addReviewLabel.Visibility = Visibility.Collapsed;
+                reviewMustsLabel.Visibility = Visibility.Collapsed;
+                reviewScoreLabel.Visibility = Visibility.Collapsed;
+                reviewScoreTextbox.Visibility = Visibility.Collapsed;
+                reviewDescriptionLabel.Visibility = Visibility.Collapsed;
+                reviewDescriptionTextbox.Visibility = Visibility.Collapsed;
+                saveButton.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -157,19 +155,14 @@ namespace LerenTypen
         /// </summary>
         private void AddReviewButton_Click(object sender, RoutedEventArgs e)
         {
-            //Checks if the reviewScore is numberic.
-            if (OnlyNumberic(reviewScoreTextbox.Text))
+            //Checks if the reviewScore is numberic and filled in.
+            if (ReviewController.OnlyNumberic(reviewScoreTextbox.Text) && !string.IsNullOrWhiteSpace(reviewScoreTextbox.Text))
             {
-                decimal reviewScore = decimal.Parse(reviewScoreTextbox.Text);
+                int reviewScore = int.Parse(reviewScoreTextbox.Text);
                 string reviewDescription = reviewDescriptionTextbox.Text;
 
-                //Check if reviewscore has been filled in.
-                if (string.IsNullOrWhiteSpace(reviewScoreTextbox.Text))
-                {
-                    MessageBox.Show("Je moet een review score invoeren!", "Error");
-                }
                 //Check if the reviewScore are between 1 and 5.
-                else if (reviewScore < 1 || reviewScore > 5)
+                if (reviewScore < 1 || reviewScore > 5)
                 {
                     MessageBox.Show("De score moet groter of gelijk aan 1 en groter of gelijk aan 5!", "Error");
                 }
@@ -212,15 +205,8 @@ namespace LerenTypen
             }
             else
             {
-                MessageBox.Show("U moet een cijfer invoeren!");
+                MessageBox.Show("Je moet een geheel cijfer invoeren bij aantal sterren!");
             }
-        }
-
-        //Used to check if the the text is only numberic. If true, the text contains only numbers.
-        //Uses the _regex property. Regex checks if the text matches with the property.
-        private static bool OnlyNumberic(string text)
-        {
-            return !_regex.IsMatch(text);
         }
 
         private void EditTestBtn_Click(object sender, RoutedEventArgs e)

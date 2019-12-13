@@ -3,12 +3,16 @@ using System;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace LerenTypen.Controllers
 {
     //In this controller we have all the testReviews queries we use in this applicaiton.
     public static class ReviewController
     {
+        //Regex is used to check if filled in text has only number. Is used in the OnlyNumberic function.
+        private static readonly Regex _regex = new Regex("[^0-9]+");
+
         //In this query we will check if the user has already made a review on a certain test.
         //If that's true, then we return true and we won't show textboxes and button to add a review on the testinfopage.
         public static bool CheckIfUserHasMadeAReview(int testID, int accountID)
@@ -119,6 +123,13 @@ namespace LerenTypen.Controllers
                 connection.Dispose();
             }
             return true;
+        }
+
+        //Used to check if the the text is only numberic. If true, the text contains only numbers.
+        //Uses the _regex property. Regex checks if the text matches with the property.
+        public static bool OnlyNumberic(string text)
+        {
+            return !_regex.IsMatch(text);
         }
     }
 }
