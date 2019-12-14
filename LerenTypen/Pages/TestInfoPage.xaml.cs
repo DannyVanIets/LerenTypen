@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 
 namespace LerenTypen
 {
@@ -35,77 +36,48 @@ namespace LerenTypen
             else if(Review == 0.5)
             {
                 StarScore.Content = "halve ";
-
             }
-            else if (Review == 1)
+            else if (Review > 0.6 && Review < 1.5)
             {
-
-                StarScore.Content = "★ ";
+                StarScore.Content = "★";
             }
             else if (Review == 1.5)
             {
-                StarScore.Content = "★half ";
-
+                StarScore.Content = @"★ u2BE8";
             }
-            else if (Review > 1.5)
+            else if (Review > 1.5 && Review <2.5)
             {
                 StarScore.Content = "★★";
-
-            }
-            else if (Review == 2)
-            {
-
-                StarScore.Content = "★★ ";
             }
             else if (Review == 2.5)
             {
-                StarScore.Content = "★★half  ";
-
+                StarScore.Content = "★★";
             }
-            else if (Review > 2.5)
+            else if (Review > 2.5 && Review <3.5)
             {
-                StarScore.Content = "★★★ ";
-            }
-            else if (Review == 3)
-            {
-
-                StarScore.Content = "★★★ ";
+                StarScore.Content = "★★★";
             }
             else if (Review == 3.5)
             {
-                StarScore.Content = "★★★half ";
-
+                StarScore.Content = "★★★ \u2BEA ";
             }
-            else if (Review > 3.5)
+            else if (Review > 3.5 && Review <4.5)
             {
-                StarScore.Content = "★★★★ ";
-            }
-
-            else if (Review == 4)
-            {
-
                 StarScore.Content = "★★★★ ";
             }
             else if (Review == 4.5)
             {
                 StarScore.Content = "★★★★half  ";
-
             }
 
-            else if (Review > 4.5)
+            else if (Review > 4.5 && Review<5.1)
             {
                 StarScore.Content = "★★★★★";
-
             }
-            else if (Review == 5)
+            else
             {
-
-                StarScore.Content = "★★★★★ ";
+                System.Windows.MessageBox.Show("Reviews kunnne niet zo groot zijn");
             }
-
-
-
-
 
             string difficultyString = "";
             switch (test.Difficulty)
