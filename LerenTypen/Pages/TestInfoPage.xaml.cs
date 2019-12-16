@@ -13,6 +13,7 @@ namespace LerenTypen
     {
         private MainWindow mainWindow;
         private int testID;
+        private bool resumeTest;
 
         public TestInfoPage(int testID, MainWindow mainWindow)
         {
@@ -93,6 +94,13 @@ namespace LerenTypen
 
             //Go through every option to check if they have been enabled in a previous test and been put on true.
             playSoundsCheckBox.IsChecked = mainWindow.testOptions.Sound;
+
+            // Check if the test already has an unfinished result
+            if (TestController.GetUnfinishedTestIDsFromAccount(mainWindow.Ingelogd).Contains(testID))
+            {
+                this.resumeTest = true;
+                resumeTestLabel.Visibility = Visibility.Visible;
+            }
         }
 
         private void MyResultsListView_PreviewMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -116,7 +124,7 @@ namespace LerenTypen
             else
             {
                 mainWindow.testOptions.Sound = false;
-            }
+            }            
 
             // Check if the test already has an unfinished result, if so, resume this result
             if (TestController.GetUnfinishedTestIDsFromAccount(mainWindow.Ingelogd).Contains(testID))
