@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -68,6 +69,24 @@ namespace LerenTypen
             lines = new List<string>();
             this.testID = testID;
             this.m = m;
+
+            // Set the mute button's state according to the user's choice to play sounds or not
+            if (m.testOptions.Sound)
+            {
+                Image unmutedImg = new Image();
+                unmutedImg.Source = new BitmapImage(new Uri("/img/unmutedButton.png", UriKind.Relative));
+                muteButton.Content = unmutedImg;
+
+                // Set the tag to 0 (unmuted) so we can check the state later in the click event 
+                muteButton.Tag = 0; 
+            }
+            else
+            {
+                Image mutedImg = new Image();
+                mutedImg.Source = new BitmapImage(new Uri("/img/mutedButton.png", UriKind.Relative));
+                muteButton.Content = mutedImg;
+                muteButton.Tag = 1;
+            }
 
             amountOfPauses = 0;
             wrongAnswers = new Dictionary<int, string>();
@@ -419,11 +438,26 @@ namespace LerenTypen
         }
 
         /// <summary>
-        /// Empty method for now (other user story)
+        /// Mute or unmute the sounds for the test
         /// </summary>
         private void MuteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if ((int)muteButton.Tag == 0)
+            {
+                m.testOptions.Sound = false;
+                Image mutedImg = new Image();
+                mutedImg.Source = new BitmapImage(new Uri("/img/mutedButton.png", UriKind.Relative));
+                muteButton.Content = mutedImg;
+                muteButton.Tag = 1;
+            }
+            else if ((int)muteButton.Tag == 1)
+            {
+                m.testOptions.Sound = true;
+                Image unmutedImg = new Image();
+                unmutedImg.Source = new BitmapImage(new Uri("/img/unmutedButton.png", UriKind.Relative));
+                muteButton.Content = unmutedImg;
+                muteButton.Tag = 0;
+            }
         }
 
         /// <summary>
