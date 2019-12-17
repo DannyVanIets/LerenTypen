@@ -44,7 +44,9 @@
         <Label x:Name="lineNumberLbl" Content="RegelNummer" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
         <Label x:Name="testLineLbl" Content="ToetsRegel"  Grid.Column="0" Grid.ColumnSpan="3" FontSize="20" HorizontalAlignment="Center" Margin="0,-150,0,0" Grid.Row="1" VerticalAlignment="Center"/>
         <Label x:Name="testNameLbl" Content="ToetsNaam" FontSize="30" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"/>
-        <Button x:Name="muteButton" Visibility="Collapsed" Content="Mute" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="75" Click="MuteButton_Click"/>
+        <Button x:Name="muteButton" Visibility="Visible" HorizontalAlignment="Center" Background="Transparent" RenderOptions.BitmapScalingMode="HighQuality" BorderThickness="0" Grid.Row="2" VerticalAlignment="Center" Width="40" Click="MuteButton_Click">
+            <Image Source="/img/unmutedButton.png"/>
+        </Button>
         <Label x:Name="wrongCounterLbl" Content="AantalFouten" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Row="1"/>        
     </Grid>    
 </Page>

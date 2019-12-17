@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -73,6 +74,37 @@ namespace LerenTypen
             this.m = m;
             this.restoreState = restoreState;
             textInputBox.Focus();
+
+            // Set the mute button's state according to the user's choice to play sounds or not
+            if (m.testOptions.Sound)
+            {
+                Image unmutedImg = new Image();
+                unmutedImg.Source = new BitmapImage(new Uri("/img/unmutedButton.png", UriKind.Relative));
+                muteButton.Content = unmutedImg;
+
+                // Set the tag to 0 (unmuted) so we can check the state later in the click event 
+                muteButton.Tag = 0; 
+            }
+            else
+            {
+                Image mutedImg = new Image();
+                mutedImg.Source = new BitmapImage(new Uri("/img/mutedButton.png", UriKind.Relative));
+                muteButton.Content = mutedImg;
+                muteButton.Tag = 1;
+            }
+
+            amountOfPauses = 0;
+            wrongAnswers = new Dictionary<int, string>();
+            rightAnswers = new List<string>();
+            currentLine = 0;
+            wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
+
+            // Timer for game and showing answer
+            t1 = new DispatcherTimer();
+            t2 = new DispatcherTimer();
+            t1.Interval = new TimeSpan(0, 0, 1);
+            t1.Start();
+            t1.Tick += StartTimer;
 
             // Gets the tests name and content using the given testID
             lines = TestController.GetTestContent(testID); // List for lines to be written out by user
@@ -471,11 +503,26 @@ namespace LerenTypen
         }
 
         /// <summary>
-        /// Empty method for now (other user story)
+        /// Mute or unmute the sounds for the test
         /// </summary>
         private void MuteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if ((int)muteButton.Tag == 0)
+            {
+                m.testOptions.Sound = false;
+                Image mutedImg = new Image();
+                mutedImg.Source = new BitmapImage(new Uri("/img/mutedButton.png", UriKind.Relative));
+                muteButton.Content = mutedImg;
+                muteButton.Tag = 1;
+            }
+            else if ((int)muteButton.Tag == 1)
+            {
+                m.testOptions.Sound = true;
+                Image unmutedImg = new Image();
+                unmutedImg.Source = new BitmapImage(new Uri("/img/unmutedButton.png", UriKind.Relative));
+                muteButton.Content = unmutedImg;
+                muteButton.Tag = 0;
+            }
         }
 
         /// <summary>
