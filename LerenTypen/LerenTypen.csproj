@@ -289,19 +289,6 @@
     <Resource Include="img\Toetsenbord.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\Handen.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="img\HandenV2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="img\HandenV2Black.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="img\KeyboardPlacements.png" />
-    <Resource Include="img\KeyboardPlacementsBlack.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="img\which_fingers.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

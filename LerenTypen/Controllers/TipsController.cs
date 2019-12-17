@@ -16,7 +16,7 @@ namespace LerenTypen.Models
         /// <returns></returns>
         public static string ShowKey(KeyEventArgs e, List<string> names)
         {
-            string result = "no outcome";
+            string result = "";
 
             foreach (string name in names)
             {
@@ -37,7 +37,7 @@ namespace LerenTypen.Models
         /// </summary>
         /// <param name="names"></param>
         /// <returns></returns>
-        public static List<string> KeyDistributor(UIElementCollection names)
+        public static List<string> SubstringRectangleVariables(UIElementCollection names)
         {
             List<string> allNamesInStackPanel = new List<string>();
             foreach (var item in names)
