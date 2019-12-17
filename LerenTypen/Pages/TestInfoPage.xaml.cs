@@ -15,6 +15,7 @@ namespace LerenTypen
     {
         private MainWindow mainWindow;
         private int testID;
+        private bool resumeTest;
 
         public TestInfoPage(int testID, MainWindow mainWindow)
         {
@@ -103,6 +104,13 @@ namespace LerenTypen
             //Go through every option to check if they have been enabled in a previous test and been put on true.
             playSoundsCheckBox.IsChecked = mainWindow.testOptions.Sound;
 
+            // Check if the test already has an unfinished result
+            if (TestController.GetUnfinishedTestIDsFromAccount(mainWindow.Ingelogd).Contains(testID))
+            {
+                this.resumeTest = true;
+                resumeTestLabel.Visibility = Visibility.Visible;
+            }
+
             //Check if the user has logged in or has already filled in a review for this test.
             //If that's true, then the user isn't allowed to see anything that has to do with inserting a new review.
             if (mainWindow.Ingelogd == 0 || ReviewController.CheckIfUserHasMadeAReview(testID, mainWindow.Ingelogd))
@@ -138,7 +146,7 @@ namespace LerenTypen
             else
             {
                 mainWindow.testOptions.Sound = false;
-            }
+            }            
 
             // Check if the test already has an unfinished result, if so, resume this result
             if (TestController.GetUnfinishedTestIDsFromAccount(mainWindow.Ingelogd).Contains(testID))

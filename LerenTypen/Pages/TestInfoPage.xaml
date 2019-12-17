@@ -115,13 +115,6 @@
             <CheckBox x:Name="readQuestionsAloudCHeckBox" Margin="0 2" Visibility="Hidden">Vragen voorlezen</CheckBox>
             <CheckBox x:Name="checkPunctuationCheckBox" Margin="0 2" Visibility="Hidden">Controleer op leestekens</CheckBox>
         </StackPanel>
-
-        <Button x:Name="startTestButton" Grid.Row="3" Grid.Column="3"
-                HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                Margin="0,0,20,0" Width="64" RenderOptions.BitmapScalingMode="HighQuality"
-                Background="Transparent" BorderThickness="0" Click="StartTestButton_Click">
-            <Image Source="/img/resumeButton.png"/>
-        </Button>
         <Button x:Name="editTestBtn" Content="Toets Wijzigen" Grid.Column="3" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Center" Width="100" Margin="0,20,0,0" Visibility="Collapsed" Click="EditTestBtn_Click"/>
 
         <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" >
@@ -149,6 +142,15 @@
                 <Button x:Name="saveButton"
                 Width="75" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddReviewButton_Click" Margin="10,0,0,10" RenderTransformOrigin="0.569,0.032" Content="Toevoegen"/>
             </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Right">
+            <Button x:Name="startTestButton" HorizontalAlignment="Center" VerticalAlignment="Center" Width="48" 
+                    RenderOptions.BitmapScalingMode="HighQuality" Margin="0,8,0,0"
+                    Background="Transparent" BorderThickness="0" Click="StartTestButton_Click">
+                <Image Source="/img/resumeButton.png"/>
+            </Button>
+            <Label x:Name="resumeTestLabel" Visibility="Hidden" HorizontalAlignment="Center"
+                   FontSize="12" FontWeight="Bold" Margin="0,0,5,0">Toets hervatten</Label>
         </StackPanel>
     </Grid>
 </Page>
