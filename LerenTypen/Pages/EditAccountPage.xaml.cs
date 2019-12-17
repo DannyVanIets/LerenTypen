@@ -178,7 +178,6 @@ namespace LerenTypen
             {
                 Console.WriteLine(r.Message);
                 MessageBox.Show("Het archiveren is niet succesvol uitgevoerd. Probeer het opnieuw of neem contact op met een administrator.", "Error");
-                MainWindow.LogoutUser();
             }
         }
     }

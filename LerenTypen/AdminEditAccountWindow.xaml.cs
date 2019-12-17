@@ -100,16 +100,11 @@ namespace LerenTypen
                     AccountController.DeleteAccount(username);
                     this.Close();
                 }
-                else if (messageBoxResult == MessageBoxResult.No)
-                {
-                    this.Close();
-                }
             }
             catch (Exception r)
             {
                 Console.WriteLine(r.Message);
                 MessageBox.Show("Het account kon niet gearchiveerd worden, probeer het later opnieuw of neem contact op met de beheerders.", "Error");
-                this.Close();
             }
         }
     }
