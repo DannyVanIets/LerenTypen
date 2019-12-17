@@ -20,7 +20,11 @@ namespace LerenTypen
             this.MainWindow = mainWindow;
 
         }
-
+        /// <summary>
+        /// Event to process the buttonclick to go to the loginPage
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoginRegisterButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.ChangePage(new LoginPage(MainWindow));
@@ -92,6 +96,7 @@ namespace LerenTypen
             circleTag = fingerTag + "Circle";
             // Here we find the corresponding finger to the pressed key
             Models.TipsController.FindCorrespondingFinger(fingerTag, ellipses);
+            // Here we find the corresponding circle around the finger
             Models.TipsController.FindCorrespondingCircle(circleTag, ellipsesForCircles);
         }
     }

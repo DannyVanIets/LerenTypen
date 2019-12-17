@@ -101,6 +101,12 @@ namespace LerenTypen.Models
             }
         }
 
+
+        /// <summary>
+        /// Finds the circle around the finger
+        /// </summary>
+        /// <param name="circleColor"></param>
+        /// <param name="ellipsesForCircles"></param>
         public static void FindCorrespondingCircle(string circleColor, List<Ellipse> ellipsesForCircles)
         {
             foreach (Ellipse item in ellipsesForCircles)
