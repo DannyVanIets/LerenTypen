@@ -5,7 +5,6 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using LerenTypen.Models;
 using System.Collections.Generic;
 
 namespace LerenTypen
