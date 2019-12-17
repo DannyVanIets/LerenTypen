@@ -9,21 +9,22 @@ namespace LerenTypen.Models
         public DateTime dateOfToday = DateTime.Now;
         public DateTime dateOfTodayHundredYearsAgo = DateTime.Now.AddYears(-100);
 
-        public DateTime getDateXyearsAgo(int x)
+        public static DateTime GetDateXMinutesAgo(int x)
         {
-            return DateTime.Now.AddMonths(-x);
+            return DateTime.Now.AddMinutes(-x);
         }
-        public DateTime getDateXMonthsAgo(int x)
+
+        public static DateTime GetDateXMonthsAgo(int x)
         {
             return DateTime.Now.AddMonths(-x);
         }
 
-        public DateTime getDateXWeeksAgo(int x)
+        public static DateTime GetDateXWeeksAgo(int x)
         {
-            return DateTime.Now.AddMonths(-x);
+            return DateTime.Now.AddDays(-x * 7);
         }
 
-        public DateTime getDateXDaysAgo(int x)
+        public static DateTime GetDateXDaysAgo(int x)
         {
             return DateTime.Now.AddDays(-x);
         }

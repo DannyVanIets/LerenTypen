@@ -19,10 +19,9 @@ namespace LerenTypen
         List<TestTable> CurrentContent = new List<TestTable>();
         List<TestTable> ContentNow = new List<TestTable>();
         private bool myPage;
-
-        public SeriesCollection SeriesCollection { get; set; }
-        public string[] Labels { get; set; }
-        public Func<double, string> YFormatter { get; set; }
+        private int userID;
+        private List<DateTime> statisticsMarks;
+        private List<string> labels;
         public AccountInformationPage(MainWindow mainWindow, int UserID = 0)
         {
             InitializeComponent();
@@ -47,6 +46,7 @@ namespace LerenTypen
                 AccountPanel.Visibility = Visibility.Visible;
                 myPage = false;
             }
+            userID = UserID;
             // Fill all the labels with info
             string firstname = Account.FirstName;
             string lastname = Account.Surname;
@@ -109,55 +109,125 @@ namespace LerenTypen
             {
                 Console.WriteLine(e.ToString());
             }
-            CreateChart();
+            OverallChart();
         }
 
-        public void getValues()
+        public void OverallChart()
         {
-            IChartValues values = new ChartValues<int>
-                    {
-                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, Date.getDateXMonthsAgo(4),  Date.getDateXMonthsAgo(5)),
-                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, Date.getDateXMonthsAgo(2),  Date.getDateXMonthsAgo(3)),
-                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, Date.getDateXMonthsAgo(1),  Date.getDateXMonthsAgo(2)),
-                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, DateTime.Now,  Date.getDateXMonthsAgo(1))
-                    };
-            if (values.Contains(0))
+            statisticsMarks = new List<DateTime>();
+            labels = new List<string>();
+
+            int divider = TestResultController.GetDateRange(userID);
+            statisticsMarks.Add(Date.GetDateXMinutesAgo(divider));
+            statisticsMarks.Add(Date.GetDateXMinutesAgo(divider / 4 * 3));
+            statisticsMarks.Add(Date.GetDateXMinutesAgo(divider / 4 * 2));
+            statisticsMarks.Add(Date.GetDateXMinutesAgo(divider / 4));
+            statisticsMarks.Add(DateTime.Now);
+
+            string format = "ddd";
+            //Week in minutes
+            if (divider > 10080)
             {
-                TestResultController.GetWordsPerMinuteByPeriod(MainWindow.Ingelogd, Date.getDateXMonthsAgo(4), Date.getDateXMonthsAgo(5)),
-                        TestResultController.GetWordsPerMinuteByPeriod(MainWindow.Ingelogd, Date.getDateXMonthsAgo(2), Date.getDateXMonthsAgo(3)),
-                        TestResultController.GetWordsPerMinuteByPeriod(MainWindow.Ingelogd, Date.getDateXMonthsAgo(1), Date.getDateXMonthsAgo(2)),
-                        TestResultController.GetWordsPerMinuteByPeriod(MainWindow.Ingelogd, DateTime.Now, Date.getDateXMonthsAgo(1))
+                format = "ddd-M";
             }
-        }
-
-        public void CreateChart()
-        {
-            SeriesCollection = new SeriesCollection
+            //month in minutes
+            if (divider > 43200)
             {
-                new LineSeries
-                {
-                    Title = "Woorden per minuut",
-                    Values = new ChartValues<int>
-                    {
-                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, Date.getDateXMonthsAgo(4),  Date.getDateXMonthsAgo(5)),
-                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, Date.getDateXMonthsAgo(2),  Date.getDateXMonthsAgo(3)),
-                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, Date.getDateXMonthsAgo(1),  Date.getDateXMonthsAgo(2)),
-                        TestResultController.GetWordsPerMinuteByPeriod( MainWindow.Ingelogd, DateTime.Now,  Date.getDateXMonthsAgo(1))
-                    }
+                format = "MMM";
+            }
+            //year in minutes
+            if (divider > 525600)
+            {
+                format = "MMM-Y";
+            }
+            //3years in minutes
+            if (divider > 2073600)
+            {
+                format = "yyyy";
+            }
 
-                }
-            };
+            Labels.Labels = new string[] { $"{statisticsMarks[0].ToString(format)} - {statisticsMarks[1].ToString(format)}", $"{statisticsMarks[1].ToString(format)} - {statisticsMarks[2].ToString(format)}", $"{statisticsMarks[2].ToString(format)} - {statisticsMarks[3].ToString(format)}", $"{statisticsMarks[3].ToString(format)} - {statisticsMarks[4].ToString(format)}" };
 
-            Labels = new[] { Date.getDateXMonthsAgo(4).ToString("MMMM"), Date.getDateXMonthsAgo(3).ToString("MMMM"), Date.getDateXMonthsAgo(2).ToString("MMMM"), Date.getDateXMonthsAgo(1).ToString("MMMM"), DateTime.Now.ToString("MMMM") };
+            LineSeries.Title = "Woorden per minuut";
+            ChartValues<int> values = new ChartValues<int>();
+            for (int i = 1; i < statisticsMarks.Count; i++)
+            {
+                values.Add(TestResultController.GetWordsPerMinuteByPeriod(userID, statisticsMarks[i - 1], statisticsMarks[i]));
+            }
+            LineSeries.Values = values;
+            Chart.Update();
+        }
 
-            //modifying any series values will also animate and update the chart
-
-            DataContext = this;
+        private void UpdateChart()
+        {
+            Labels.Labels = labels.ToArray();
+            ChartValues<int> values = new ChartValues<int>();
+            for (int i = 1; i < statisticsMarks.Count; i++)
+            {
+                values.Add(TestResultController.GetWordsPerMinuteByPeriod(userID, statisticsMarks[i - 1], statisticsMarks[i]));
+            }
+            LineSeries.Values = values;
+            Chart.Update();
         }
 
 
+        private void YearChart()
+        {
+            statisticsMarks.Clear();
+            labels.Clear();
+            string format = "MMM";
+            for (int m = 0; m < 13; m++)
+            {
+                DateTime date = Date.GetDateXMonthsAgo(12 - m);
+                statisticsMarks.Add(date);
+                if (m != 0)
+                {
+                    labels.Add(date.ToString(format));
+                }
+            }
+            UpdateChart();
+        }
 
+        private void MonthChart()
+        {
+            statisticsMarks.Clear();
+            labels.Clear();
+            System.Globalization.CultureInfo cul = System.Globalization.CultureInfo.CurrentCulture;
 
+            for (int m = 0; m < 5; m++)
+            {
+                DateTime date = Date.GetDateXWeeksAgo(4 - m);
+                int weekNum = cul.Calendar.GetWeekOfYear(
+                    date,
+                    System.Globalization.CalendarWeekRule.FirstFourDayWeek,
+                    DayOfWeek.Monday);
+                statisticsMarks.Add(date);
+                if (m != 0)
+                {
+                    labels.Add($"Week {weekNum}");
+                }
+
+            }
+            UpdateChart();
+        }
+
+        private void WeekChart()
+        {
+            statisticsMarks.Clear();
+            labels.Clear();
+            string format = "ddd";
+            for (int m = 0; m < 8; m++)
+            {
+                DateTime date = Date.GetDateXDaysAgo(7 - m);
+                statisticsMarks.Add(date);
+
+                if (m != 0)
+                {
+                    labels.Add(date.ToString(format));
+                }
+            }
+            UpdateChart();
+        }
 
 
         private void DG_Checkbox_Check(object sender, RoutedEventArgs e)
@@ -195,6 +265,26 @@ namespace LerenTypen
         {
             MainWindow.ChangePage(new CreateTestPage(MainWindow));
 
+        }
+
+        private void comboboxStatistics_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboboxStatistics.SelectedIndex.Equals(0))
+            {
+                OverallChart();
+            }
+            else if (comboboxStatistics.SelectedIndex.Equals(1))
+            {
+                YearChart();
+            }
+            else if (comboboxStatistics.SelectedIndex.Equals(2))
+            {
+                MonthChart();
+            }
+            else if (comboboxStatistics.SelectedIndex.Equals(3))
+            {
+                WeekChart();
+            }
         }
     }
 }
