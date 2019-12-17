@@ -92,24 +92,19 @@ namespace LerenTypen
         {
             try
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het account wilt archiveren?", "Account Verwijderen", MessageBoxButton.YesNo);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het account wilt archiveren?", "Account archiveren", MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("Het Account is succesvol gearchiveerd!", "Succes");
+                    MessageBox.Show("Het account is succesvol gearchiveerd!", "Succes");
                     string username = account.UserName;
                     AccountController.DeleteAccount(username);
-                    this.Close();
-                }
-                else if (messageBoxResult == MessageBoxResult.No)
-                {
                     this.Close();
                 }
             }
             catch (Exception r)
             {
-                Console.WriteLine(r.ToString());
-                MessageBox.Show("Error", "Error");
-                this.Close();
+                Console.WriteLine(r.Message);
+                MessageBox.Show("Het account kon niet gearchiveerd worden, probeer het later opnieuw of neem contact op met de beheerders.", "Error");
             }
         }
     }

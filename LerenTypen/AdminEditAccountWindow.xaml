@@ -35,6 +35,6 @@
             <ComboBoxItem Tag="docent" Content="Docent"/>
             <ComboBoxItem Tag="admin" Content="Admin" />
         </ComboBox>
-        <Button x:Name="DeleteAcc" Content="Verwijder Account!" MouseEnter="DeleteAccountButton_MouseEnter" MouseLeave="DeleteAccountButton_MouseLeave" Background="Red" Foreground="White" HorizontalAlignment="Left" Height="29" Margin="20,103.8,0,-82.4" Grid.Row="4" VerticalAlignment="Top" Width="138" Click="DeleteAcc_Click"/>
+        <Button x:Name="DeleteAcc" Content="Account archiveren" MouseEnter="DeleteAccountButton_MouseEnter" MouseLeave="DeleteAccountButton_MouseLeave" Background="Red" Foreground="White" HorizontalAlignment="Left" Height="29" Margin="20,103.8,0,-82.4" Grid.Row="4" VerticalAlignment="Top" Width="138" Click="DeleteAcc_Click"/>
     </Grid>
 </Window>
