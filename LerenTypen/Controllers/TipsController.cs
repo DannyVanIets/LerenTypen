@@ -86,12 +86,8 @@ namespace LerenTypen.Models
         /// To display the right finger, we match the tag in the variable names of the rectangles to the fingers.
         /// </summary>
         /// <param name="color"></param>
-        public static void FindCorrespondingFinger(string color, List<System.Windows.Shapes.Ellipse> ellipses)
+        public static void FindCorrespondingFinger(string color, List<Ellipse> ellipses)
         {
-            foreach (Ellipse item in ellipses)
-            {
-                item.Visibility = Visibility.Visible;
-            }
             foreach (Ellipse item in ellipses)
             {
                 if (item.Tag.ToString().Equals(color))
@@ -103,7 +99,21 @@ namespace LerenTypen.Models
                     item.Visibility = Visibility.Visible;
                 }
             }
+        }
 
+        public static void FindCorrespondingCircle(string circleColor, List<Ellipse> ellipsesForCircles)
+        {
+            foreach (Ellipse item in ellipsesForCircles)
+            {
+                if (item.Tag.ToString().Equals(circleColor))
+                {
+                    item.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    item.Visibility = Visibility.Hidden;
+                }
+            }
         }
     }
 }

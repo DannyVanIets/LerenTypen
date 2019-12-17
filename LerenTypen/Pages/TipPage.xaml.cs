@@ -25,14 +25,16 @@ namespace LerenTypen
         {
             MainWindow.ChangePage(new LoginPage(MainWindow));
         }
+
         /// <summary>
         /// Event when a key gets pressed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void KeyUp_Clicker(object sender, System.Windows.Input.KeyEventArgs e)
+        private void PreviewKeyDown_Clicker(object sender, System.Windows.Input.KeyEventArgs e)
         {
             string fingerTag = "";
+            string circleTag = "";
             List<string> allNames = new List<string>();
             List<string> allTotalNames = new List<string>();
             List<UIElementCollection> allPanels = new List<UIElementCollection>();
@@ -47,11 +49,11 @@ namespace LerenTypen
             // Now we add the rectangles' variable names to one list
             foreach (UIElementCollection uIElementCollection in allPanels)
             {
-                    allNames = Models.TipsController.KeyDistributor(uIElementCollection);
-                    foreach (var item in allNames)
-                    {
-                        allTotalNames.Add(item);
-                    }
+                allNames = Models.TipsController.KeyDistributor(uIElementCollection);
+                foreach (var item in allNames)
+                {
+                    allTotalNames.Add(item);
+                }
             }
             // After getting all the variable names, we find the right key 
             string FoundKey = Models.TipsController.ShowKey(e, allTotalNames);
@@ -61,17 +63,25 @@ namespace LerenTypen
 
 
             List<System.Windows.Shapes.Ellipse> ellipses = new List<System.Windows.Shapes.Ellipse>();
+            List<System.Windows.Shapes.Ellipse> ellipsesForCircles = new List<System.Windows.Shapes.Ellipse>();
 
             // Adds all the ellipses from the fingernails to a list.
             foreach (System.Windows.Shapes.Ellipse item in TipPage_Canvas_AllFingers.Children)
             {
-                ellipses.Add(item);
+                if (item.Tag.ToString().Contains("Circle"))
+                {
+                    ellipsesForCircles.Add(item);
+                }
+                else
+                {
+                    ellipses.Add(item);
+                }
             }
 
             // After getting the right variable, coupled with the pressed key, we can now make the right rectangle hidden
             foreach (UIElementCollection uIElementCollection in allPanels)
             {
-              System.Windows.Shapes.Rectangle foundRectangle = Models.TipsController.FindPressedKey(uIElementCollection, fullName);
+                System.Windows.Shapes.Rectangle foundRectangle = Models.TipsController.FindPressedKey(uIElementCollection, fullName);
                 if (foundRectangle != null)
                 {
                     // This stores the colortag of the pressed key, so we can use it to find the corresponding finger
@@ -79,11 +89,10 @@ namespace LerenTypen
                 }
             }
 
+            circleTag = fingerTag + "Circle";
             // Here we find the corresponding finger to the pressed key
             Models.TipsController.FindCorrespondingFinger(fingerTag, ellipses);
-
+            Models.TipsController.FindCorrespondingCircle(circleTag, ellipsesForCircles);
         }
-
-
     }
 }
