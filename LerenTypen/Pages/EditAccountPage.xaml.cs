@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -167,19 +166,18 @@ namespace LerenTypen
         {
             try
             {
-                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Weet je zeker dat je je account wilt verwijderen?", "Account Verwijderen", MessageBoxButton.YesNo);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je je account wilt verwijderen?", "Account archiveren", MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
-                {
-                    MessageBox.Show("Het account is succesvol verwijderd!", "Succes");
-                    string username = Account.UserName;
-                    AccountController.DeleteAccount(username);
+                {               
+                    AccountController.DeleteAccount(Account.UserName);
+                    MessageBox.Show("Je account is succesvol gearchiveerd!", "Succes");
                     MainWindow.LogoutUser(true);
                 }
             }
             catch (Exception r)
             {
-                Console.WriteLine(r.ToString());
-                MessageBox.Show("Het verwijderen is niet succesvol uitgevoerd. Probeer het opnieuw of neem contact op met een administrator.", "Error");
+                Console.WriteLine(r.Message);
+                MessageBox.Show("Het archiveren is niet succesvol uitgevoerd. Probeer het opnieuw of neem contact op met een administrator.", "Error");
                 MainWindow.LogoutUser();
             }
         }
