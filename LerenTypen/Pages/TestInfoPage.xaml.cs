@@ -97,6 +97,7 @@ namespace LerenTypen
             if (mainWindow.Ingelogd == 0)
             {
                 startTestButton.Visibility = Visibility.Collapsed;
+                playSoundsCheckBox.IsEnabled = false;
             }
 
             //Go through every option to check if they have been enabled in a previous test and been put on true.
