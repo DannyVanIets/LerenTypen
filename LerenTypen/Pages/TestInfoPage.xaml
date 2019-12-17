@@ -5,8 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LerenTypen"
       xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
-      mc:Ignorable="d" 
-      d:DesignHeight="1000" d:DesignWidth="1050" Background="White"
+      mc:Ignorable="d" d:DesignWidth="1000"  Height="1200" Background="White"
       Title="Page4" ShowsNavigationUI="False">
 
     <Grid>
@@ -148,14 +147,55 @@
                 Width="75" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddReviewButton_Click" Margin="10,0,0,10" RenderTransformOrigin="0.569,0.032" Content="Toevoegen"/>
             </StackPanel>
 
-            <StackPanel Orientation="Vertical" Grid.Row="5" Grid.Column="0" Height="300" Margin="0,0,-0.4,0">
-                <Label x:Name="labeltoe" Content="User reviews" FontWeight="Bold" FontSize="32" Margin="0,0,0,0"/>
+
+            <StackPanel Orientation="Vertical" Grid.Row="5" Grid.Column="0" MaxHeight="500" Margin="0,0,-0.4,0">
+                <Label x:Name="userreviewtext" Content="User reviews" FontWeight="Bold" FontSize="32" Margin="0,0,0,0"/>
+
                 <StackPanel Orientation="Horizontal">
                     <Label Content="*name*" FontSize="24" Height="43" Margin="0,-55,0,0" Width="122"/>
-                    <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical" Width="0">
                         <Label Content="*Score*" FontSize="24" Height="43" Margin="-120,50,0,0" Width="122"/>
                     </StackPanel>
-                    <Label x:Name="Reviewpage1" Height="100" Width="447" HorizontalAlignment="Left" Margin="50,0,0,0.4"/>
+                    <Label x:Name="Reviewpage1" Height="92" Width="447" HorizontalAlignment="Left" Margin="50,0,0,0.4"/>
+                    <Label Name="Dateadd1" Content="*Date Added*" HorizontalAlignment="Center" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="154" Height="88" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Height="86">
+                    <Label Content="*name*" FontSize="24" Height="43" Margin="0,-55,0,0" Width="122"/>
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="*Score*" FontSize="24" Height="43" Margin="-120,40,0,0" Width="122"/>
+                    </StackPanel>
+                    <Label x:Name="Reviewpage2" Height="92" Width="447" HorizontalAlignment="Left" Margin="50,0,0,0.4"/>
+                    <Label Name="Dateadd2" Content="*Date Added*" HorizontalAlignment="Center" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="154" Height="88" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Height="86">
+                    <Label Content="*name*" FontSize="24" Height="43" Margin="0,-55,0,0" Width="122"/>
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="*Score*" FontSize="24" Height="43" Margin="-120,40,0,0" Width="122"/>
+                    </StackPanel>
+                    <Label x:Name="Reviewpage3" Height="92" Width="447" HorizontalAlignment="Left" Margin="50,0,0,0.4"/>
+                    <Label Name="Dateadd3" Content="*Date Added*" HorizontalAlignment="Center" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="154" Height="88" />
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Height="86">
+                    <Label Content="*name*" FontSize="24" Height="43" Margin="0,-55,0,0" Width="122"/>
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="*Score*" FontSize="24" Height="43" Margin="-120,40,0,0" Width="122"/>
+                    </StackPanel>
+                    <Label x:Name="Reviewpage4" Height="92" Width="447" HorizontalAlignment="Left" Margin="50,0,0,0.4"/>
+                    <Label Name="Dateadd4" Content="*Date Added*" HorizontalAlignment="Center" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="154" Height="88" />
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Height="86">
+                    <Label Content="*name*" FontSize="24" Height="43" Margin="0,-55,0,0" Width="122"/>
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="*Score*" FontSize="24" Height="43" Margin="-120,40,0,0" Width="122"/>
+                    </StackPanel>
+                    <Label x:Name="Reviewpage5" Width="447" HorizontalAlignment="Left" Margin="50,0,0,0.4"/>
+                    <Label Name="Dateadd5" Content="*Date Added*" HorizontalAlignment="Center" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="154" Height="88" />
                 </StackPanel>
             </StackPanel>
 

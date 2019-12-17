@@ -25,6 +25,13 @@ namespace LerenTypen.Models
             ReviewDescription = description;
         }
 
+        public Review(string username , int score , string reviewtext , DateTime date)
+        {
+            ReviewScore = score;
+            ReviewDescription = reviewtext;
+            ReviewDateAdded = date;
+        }
+
         public Review(int testID, int accountID, int score)
         {
             TestID = testID;

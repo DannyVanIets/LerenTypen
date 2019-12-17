@@ -1,5 +1,6 @@
 ﻿using LerenTypen.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
@@ -55,6 +56,40 @@ namespace LerenTypen.Controllers
                 connection.Dispose();
             }
             return result;
+        }
+
+        public static string DisplayUsersReviewInfo(int testID)
+        {
+            List<Review> queryResult = new List<Review>();
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                string query = "select a.accountUsername , trs.testReviewScore , trs.testReviewDescription , trs.testReviewDateAdded from accounts a inner join testReviews trs on a.accountID = trs.accountID where trs.testID=@ID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ID", testID);
+                    connection.Open();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            queryResult.Add(new Review(reader.GetString(0), reader.GetInt16(1) , reader.GetString(2) , reader.GetDateTime(3)));
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return queryResult.ToString();
         }
 
         //In this query we will insert a review with a description added to it. Other than that, same as "AddReviewWithoutDescription".

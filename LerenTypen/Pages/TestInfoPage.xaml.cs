@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 
 namespace LerenTypen
 {
@@ -28,6 +27,8 @@ namespace LerenTypen
             Test test = TestController.GetTest(testID);
             testNameLabel.Content = test.Name;
 
+            string text = ReviewController.DisplayUsersReviewInfo(testID);
+            
             double Review = TestController.GetRatingScore(testID);
             if(Review == 0)
             {
