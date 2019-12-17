@@ -173,6 +173,77 @@
                         </TransformGroup>
                     </Ellipse.RenderTransform>
                 </Ellipse>
+                <Ellipse HorizontalAlignment="Left" Height="47" Grid.Row="2" Stroke="Yellow" StrokeThickness="3" Visibility="Hidden" Tag="YellowCircle" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.5,0.5" Canvas.Left="164" Canvas.Top="28">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="36.079"/>
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse HorizontalAlignment="Left" Height="47" Grid.Row="2" Stroke="Gray" StrokeThickness="3" Visibility="Hidden" Tag="GreyCircle" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.5,0.5" Canvas.Left="150" Canvas.Top="13">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="1.049"/>
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse HorizontalAlignment="Left" Height="47" Grid.Row="2" Stroke="SlateBlue" StrokeThickness="3" Visibility="Hidden" Tag="OceanBlueCircle" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.5,0.5" Canvas.Left="135" Canvas.Top="2">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="-5.167"/>
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse HorizontalAlignment="Left" Height="47" Stroke="Pink" Tag="PinkCircle" Visibility="Hidden" StrokeThickness="3"  VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.5,0.5" Canvas.Left="118" Canvas.Top="17">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="-19.121"/>
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse HorizontalAlignment="Left" Height="31" Stroke="Blue" Tag="BlueCircle" StrokeThickness="3" Visibility="Hidden" VerticalAlignment="Top" Width="15" RenderTransformOrigin="0.5,0.5" Canvas.Left="98" Canvas.Top="60">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="-53.847"/>
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse HorizontalAlignment="Left" Height="31" Stroke="Blue" Tag="BlueCircle" StrokeThickness="3" Visibility="Hidden" VerticalAlignment="Top" Width="15" RenderTransformOrigin="0.5,0.5" Canvas.Left="70" Canvas.Top="59">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="66.759"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse HorizontalAlignment="Left" Height="47" Stroke="Green" Tag="GreenCircle" StrokeThickness="3" Visibility="Hidden" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.5,0.5" Canvas.Left="46" Canvas.Top="14">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="21.11"/>
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse HorizontalAlignment="Left" Height="47" Stroke="IndianRed" StrokeThickness="3" Tag="AubergineCircle" Visibility="Hidden" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.5,0.5" Canvas.Left="29" Canvas.Top="4">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="1.654"/>
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse HorizontalAlignment="Left" Height="47" Stroke="Purple" StrokeThickness="3" Tag="PurpleCircle" Visibility="Hidden" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.5,0.5" Canvas.Left="14" Canvas.Top="6">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="-7.759"/>
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse HorizontalAlignment="Left" Height="39" Stroke="Orange" StrokeThickness="3" Tag="OrangeCircle" Visibility="Hidden" VerticalAlignment="Top" Width="16" RenderTransformOrigin="0.5,0.5" Canvas.Left="1" Canvas.Top="28">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="-29.34"/>
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
             </Canvas>
         </StackPanel>
         
