@@ -436,19 +436,25 @@ namespace LerenTypen
 
         public MessageBoxResult AskStopTest()
         {
-            MessageBoxResult choice = MessageBox.Show("Je staat op het punt de toets te stoppen. Wil je je voortgang opslaan zodat je later verder kan gaan waar je gebleven bent?",
-                "Toets verlaten?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
-
-            if (choice == MessageBoxResult.Yes)
+            // Check if the overlay isn't visible so that the user can't quit the test between answers (can cause issues!)
+            if (Overlay.Visibility != Visibility.Visible)
             {
-                StopTest();
-            }
-            else if (choice == MessageBoxResult.No)
-            {
-                StopTest(false);
+                MessageBoxResult choice = MessageBox.Show("Je staat op het punt de toets te stoppen. Wil je je voortgang opslaan zodat je later verder kan gaan waar je gebleven bent?",
+                    "Toets verlaten?", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+
+                if (choice == MessageBoxResult.Yes)
+                {
+                    StopTest();
+                }
+                else if (choice == MessageBoxResult.No)
+                {
+                    StopTest(false);
+                }
+
+                return choice;
             }
 
-            return choice;
+            return MessageBoxResult.Cancel;
         }
 
         /// <summary>
