@@ -83,7 +83,7 @@ namespace LerenTypen
                 muteButton.Content = unmutedImg;
 
                 // Set the tag to 0 (unmuted) so we can check the state later in the click event 
-                muteButton.Tag = 0; 
+                muteButton.Tag = 0;
             }
             else
             {
@@ -112,9 +112,9 @@ namespace LerenTypen
             testNameLbl.Content = testName;
 
             if (restoreState)
-            { 
+            {
                 // Restore the page in the same state as the unfinished test was saved
-                unfinishedTestResultID = TestResultController.GetUnfinishedTestResultID(m.Ingelogd, testID);         
+                unfinishedTestResultID = TestResultController.GetUnfinishedTestResultID(m.Ingelogd, testID);
                 amountOfPauses = TestResultController.GetAmountOfPauses(unfinishedTestResultID);
                 wrongAnswers = TestResultController.GetTestResultsContentWrong(testID, unfinishedTestResultID);
                 rightAnswers = TestResultController.GetTestResultsContentRight(unfinishedTestResultID);
@@ -125,7 +125,7 @@ namespace LerenTypen
 
                 currentLine = lines.Count - unfinishedLines.Count;
                 lineNumberLbl.Content = $"{currentLine + 1}/{lines.Count}";
-                wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";         
+                wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
             }
             else
             {
@@ -141,20 +141,13 @@ namespace LerenTypen
             // Check if lines are found
             if (!lines.Count.Equals(0))
             {
-                testLineLbl.Content = lines[currentLine];                
+                testLineLbl.Content = lines[currentLine];
             }
             else
             {
                 MessageBox.Show("Geen regels gevonden", "Error");
                 CloseTest();
             }
-
-            // Timer for game and showing answer
-            t1 = new DispatcherTimer();
-            t2 = new DispatcherTimer();
-            t1.Interval = new TimeSpan(0, 0, 1);
-            t1.Start();
-            t1.Tick += StartTimer;
 
             // Make startup overlay visible for countdown
             Overlay.Visibility = Visibility.Visible;
