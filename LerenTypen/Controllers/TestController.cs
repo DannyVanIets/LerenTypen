@@ -177,7 +177,7 @@ namespace LerenTypen.Controllers
                 string query = "";
                 if (limit == 0)
                 {
-                    query = "select tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID)";
+                    query = "select tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID) DESC";
                 }
                 else
                 {
@@ -219,47 +219,36 @@ namespace LerenTypen.Controllers
         {
             List<Test> trendingTests = new List<Test>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
-            string idList = "(";
             List<int> ids = GetTrendingTestIDs(limit);
-
-            foreach (int id in ids)
-            {
-                // Check if this is not the last id
-                if (id != ids[ids.Count - 1])
-                {
-                    idList += $"{id}, ";
-                }
-                else
-                {
-                    idList += $"{id})";
-                }
-            }
 
             try
             {
+                string query;
                 connection.Open();
 
-                string query = $"SELECT testID, testName, testType, accountID, version, testDifficulty, isPrivate, createDate from tests t WHERE t.testID IN {idList}";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
+                foreach (int id in ids)
                 {
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            int id = Convert.ToInt32(reader[0]);
-                            string name = reader.GetString(1);
-                            int type = Convert.ToInt32(reader[2]);
-                            int authorID = Convert.ToInt32(reader[3]);
-                            string authorName = AccountController.GetUsername(authorID);
-                            int wordCount = TestController.GetAmountOfWordsFromTest(id);
-                            int timesMade = TestController.GetTimesMade(id);
-                            int version = Convert.ToInt32(reader[4]);
-                            int difficulty = Convert.ToInt32(reader[5]);
-                            int isPrivate = Convert.ToInt32(reader[6]);
-                            DateTime createDateTime = (DateTime)reader[7];
+                    query = $"SELECT testName, testType, accountID, version, testDifficulty, isPrivate, createDate from tests WHERE testID = {id}";
 
-                            trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty, Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string name = reader.GetString(0);
+                                int type = Convert.ToInt32(reader[1]);
+                                int authorID = Convert.ToInt32(reader[2]);
+                                string authorName = AccountController.GetUsername(authorID);
+                                int wordCount = TestController.GetAmountOfWordsFromTest(id);
+                                int timesMade = TestController.GetTimesMade(id);
+                                int version = Convert.ToInt32(reader[3]);
+                                int difficulty = Convert.ToInt32(reader[4]);
+                                int isPrivate = Convert.ToInt32(reader[5]);
+                                DateTime createDateTime = (DateTime)reader[6];
+
+                                trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty, Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
+                            }
                         }
                     }
                 }
@@ -284,42 +273,29 @@ namespace LerenTypen.Controllers
         {
             List<Test> trendingTests = new List<Test>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
-            string idList = "(";
             List<int> ids = GetTrendingTestIDs(limit);
-
-            foreach (int id in ids)
-            {
-                // Check if this is not the last id
-                if (id != ids[ids.Count - 1])
-                {
-                    idList += $"{id}, ";
-                }
-                else
-                {
-                    idList += $"{id})";
-                }
-            }
 
             try
             {
+                string query;
                 connection.Open();
 
-                string query = $"SELECT testID, testName, accountID from tests t WHERE t.testID IN {idList}";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
+                foreach (int id in ids)
                 {
-                    command.Parameters.AddWithValue("@ids", idList);
+                    query = $"SELECT testName, accountID from tests WHERE testID = {id}";
 
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        while (reader.Read())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            int id = Convert.ToInt32(reader[0]);
-                            string name = reader.GetString(1);
-                            int authorID = Convert.ToInt32(reader[2]);
-                            string authorName = AccountController.GetUsername(authorID);
+                            while (reader.Read())
+                            {
+                                string name = reader.GetString(0);
+                                int authorID = Convert.ToInt32(reader[1]);
+                                string authorName = AccountController.GetUsername(authorID);
 
-                            trendingTests.Add(new Test(id, name, authorName));
+                                trendingTests.Add(new Test(id, name, authorName));
+                            }
                         }
                     }
                 }
