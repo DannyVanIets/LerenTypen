@@ -30,6 +30,7 @@ namespace LerenTypen.Models
             }
             return result;
         }
+
         /// <summary>
         /// We take the names of all the rectangles and find the difference bewteen them by substringing them till the variable names are different
         /// Then we add all the variable names to one list and return this list
@@ -100,7 +101,6 @@ namespace LerenTypen.Models
                 }
             }
         }
-
 
         /// <summary>
         /// Finds the circle around the finger

@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 
 namespace LerenTypen
 {
@@ -20,6 +17,7 @@ namespace LerenTypen
             this.MainWindow = mainWindow;
 
         }
+
         /// <summary>
         /// Event to process the buttonclick to go to the loginPage
         /// </summary>
@@ -64,7 +62,6 @@ namespace LerenTypen
 
             // Convert the found key back to the full variable name
             string fullName = "TipPage_Canvas_Key_" + FoundKey;
-
 
             List<System.Windows.Shapes.Ellipse> ellipses = new List<System.Windows.Shapes.Ellipse>();
             List<System.Windows.Shapes.Ellipse> ellipsesForCircles = new List<System.Windows.Shapes.Ellipse>();
