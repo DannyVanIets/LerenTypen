@@ -355,8 +355,8 @@ namespace LerenTypen
                 }
 
                 //Sp.soundlocation is used to make sure the soundplayer goes to the right file and sp.load loads in the file.
-                m.sp.SoundLocation = @"../../../" + file;
-                m.sp.Load();
+                sp.SoundLocation = @"../../../" + file;
+                sp.Load();
 
                 //This lambda query is used to delay the application until the loading from the soundfile is complete.
                 //This way it doesn't stop the whole user-interface.
