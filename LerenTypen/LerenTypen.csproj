@@ -131,6 +131,7 @@
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\TestOptions.cs" />
+    <Compile Include="Controllers\TipsController.cs" />
     <Compile Include="Pages\AllMyTestsOverviewPage.xaml.cs">
       <DependentUpon>AllMyTestsOverviewPage.xaml</DependentUpon>
     </Compile>
@@ -290,6 +291,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\Toetsenbord.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\which_fingers.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\mutedButton.png" />
