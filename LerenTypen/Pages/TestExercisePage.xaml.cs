@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Media;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -357,7 +358,7 @@ namespace LerenTypen
 
                 //This lambda query is used to delay the application until the loading from the soundfile is complete.
                 //This way it doesn't stop the whole user-interface.
-                Task.Factory.StartNew(() => { while (!sp.IsLoadCompleted) ; });
+                Task.Factory.StartNew(() => { while (!sp.IsLoadCompleted) Thread.Sleep(500); });
                 sp.Play();
             }
             else
