@@ -38,7 +38,7 @@ namespace LerenTypen
             string id = UserTable.Accountnumber.ToString();
             string usertype = UserTable.UserTypeID.ToString();
             AccountController.GetAccountNamesAndBirthdate(int.Parse(id));
-            var newWindow = new AdminEditAccountWindow(int.Parse(id), int.Parse(usertype));
+            var newWindow = new AdminEditAccountWindow(int.Parse(id), int.Parse(usertype), Mainwindow);
             newWindow.ShowDialog();
             Mainwindow.frame.Navigate(new AllUsersPage(Mainwindow));
         }

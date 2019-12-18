@@ -11,9 +11,15 @@ namespace LerenTypen
     public partial class AdminEditAccountWindow : Window
     {
         private Account account;
-        public AdminEditAccountWindow(int id, int acctype)
+        private int accountID;
+        private MainWindow mainWindow;
+
+        public AdminEditAccountWindow(int id, int acctype, MainWindow mainWindow)
         {
             InitializeComponent();
+            accountID = id;
+            this.mainWindow = mainWindow;
+
             try
             {
                 account = AccountController.GetAccountNamesAndBirthdate(id);
@@ -39,6 +45,22 @@ namespace LerenTypen
 
             try
             {
+                // Check if own account is being edited
+                bool logout = true;
+                if (accountID == mainWindow.Ingelogd)
+                {
+                    MessageBoxResult result = MessageBox.Show("Je staat op het punt om je eigen account aan te passen. Als je doorgaat zal je opnieuw moeten inloggen. Wil je doorgaan?");
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        logout = true;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(firstname) || !string.IsNullOrEmpty(surname) || !string.IsNullOrEmpty(username))
                 {
                     AccountController.UpdateAccount(username, firstname, surname);
@@ -70,6 +92,11 @@ namespace LerenTypen
                 else
                 {
                     MessageBox.Show("Geen geldige rol", "Error");
+                }
+
+                if (logout)
+                {
+                    mainWindow.LogoutUser(true);
                 }
             }
             catch (Exception q)
