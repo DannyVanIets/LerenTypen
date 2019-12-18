@@ -121,32 +121,31 @@ namespace LerenTypen
             LineSeries.Title = "Woorden per minuut";
 
             // Checks date range for using the right filtering when page is loaded
-            int divider = TestResultController.GetDateRange(userID);
-            if (divider == 0)
+            int ResultSpanInHours = TestResultController.GetDateRange(userID);
+            if (ResultSpanInHours == 0)
             {
                 StatisticsGrid.Visibility = Visibility.Collapsed;
                 LblNoResults.Visibility = Visibility.Visible;
             }
-            if (divider < 168)
+            if (ResultSpanInHours < 168)
             {
                 ComboboxStatistics.SelectedIndex = 3;
             }
             //Week in hours
-            else if (divider > 168 && divider < 2000)
+            else if (ResultSpanInHours > 168 && ResultSpanInHours < 2000)
             {
                 ComboboxStatistics.SelectedIndex = 2;
             }
             //3months in hours
-            else if (divider > 2000 && divider < 16000)
+            else if (ResultSpanInHours > 2000 && ResultSpanInHours < 16000)
             {
                 ComboboxStatistics.SelectedIndex = 1;
             }
             //2years in hours
-            else if (divider > 16000)
+            else if (ResultSpanInHours > 16000)
             {
                 ComboboxStatistics.SelectedIndex = 0;
             }
-
         }
 
         /// <summary>
@@ -172,7 +171,7 @@ namespace LerenTypen
             string format = "yyyy";
             for (int m = 0; m < 6; m++)
             {
-                DateTime date = Date.GetDateXYearsAgo(4 - m);
+                DateTime date = DateController.GetDateXYearsAgo(4 - m);
                 statisticsMarks.Add(date);
                 labels.Add(date.ToString(format));
             }
@@ -187,7 +186,7 @@ namespace LerenTypen
             string format = "MMMMMMMMM";
             for (int m = 0; m < 13; m++)
             {
-                DateTime date = Date.GetDateXMonthsAgo(11 - m);
+                DateTime date = DateController.GetDateXMonthsAgo(11 - m);
                 statisticsMarks.Add(date);
                 labels.Add(date.ToString(format, dutch));
             }
@@ -199,14 +198,12 @@ namespace LerenTypen
         /// </summary>
         private void MonthChart()
         {
-            System.Globalization.CultureInfo cul = System.Globalization.CultureInfo.CurrentCulture;
-
             for (int m = 0; m < 5; m++)
             {
-                DateTime date = Date.GetDateXWeeksAgo(3 - m);
-                int weekNum = cul.Calendar.GetWeekOfYear(
+                DateTime date = DateController.GetDateXWeeksAgo(3 - m);
+                int weekNum = dutch.Calendar.GetWeekOfYear(
                     date,
-                    System.Globalization.CalendarWeekRule.FirstFourDayWeek,
+                    CalendarWeekRule.FirstFourDayWeek,
                     DayOfWeek.Monday);
                 statisticsMarks.Add(date);
                 labels.Add($"Week {weekNum}");
@@ -222,7 +219,7 @@ namespace LerenTypen
             string format = "ddddddddd";
             for (int m = 0; m < 8; m++)
             {
-                DateTime date = Date.GetDateXDaysAgo(6 - m);
+                DateTime date = DateController.GetDateXDaysAgo(6 - m);
                 statisticsMarks.Add(date);
                 labels.Add(date.ToString(format, dutch));
             }

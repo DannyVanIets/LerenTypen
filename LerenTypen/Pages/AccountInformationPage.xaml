@@ -115,7 +115,7 @@
             </StackPanel>
         </Grid>
 
-        <StackPanel x:Name = "MyAccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" >
+        <StackPanel x:Name="MyAccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" >
             <Label FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" FontWeight="Bold" Content="Mijn Toetsen"/>
             <Label x:Name="NoMyTestsLbl" Content="Geen toetsen gevonden" Visibility="Collapsed"/>
             <ListView x:Name="MyTests" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
@@ -123,7 +123,7 @@
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                            <GridViewColumn Header ="Toetsnaam" Width="400" local:GridViewSort.PropertyName="WPFName">
+                            <GridViewColumn Header="Toetsnaam" Width="400" local:GridViewSort.PropertyName="WPFName">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock>
@@ -155,7 +155,7 @@
             </StackPanel>
         </StackPanel>
         
-        <StackPanel x:Name = "AccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" Visibility="Collapsed">
+        <StackPanel x:Name= "AccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" Visibility="Collapsed">
             <Label FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" FontWeight="Bold" Content="Door gebruiker gemaakte toetsen"/>
             <Label x:Name="NoAccountTestsLbl" Content="Geen toetsen gevonden" Visibility="Collapsed"/>
             <ListView x:Name="AccountTests" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
