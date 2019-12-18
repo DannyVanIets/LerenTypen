@@ -17,6 +17,11 @@ namespace LerenTypen
         {
             InitializeComponent();
             this.MainWindow = mainWindow;
+            if(mainWindow.Ingelogd != 0)
+            {
+                TipPage_Label_InlogLabel.Visibility = Visibility.Hidden;
+                loginRegisterButton.Visibility = Visibility.Hidden;
+            }
 
         }
 

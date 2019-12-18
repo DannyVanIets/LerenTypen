@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:LerenTypen"
       mc:Ignorable="d" 
       d:DesignHeight="570" d:DesignWidth="1050" Background="White"
-      Title="Page4" ShowsNavigationUI="False" KeyDown="PreviewKeyDown_Clicker">
+      Title="Page4" ShowsNavigationUI="False">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,11 +25,11 @@
         <Border Grid.Row="2" Grid.Column="1" Background="LightYellow"/>
 
         <Label x:Name="TipPage_Label_Title" Grid.Column="0" Grid.Row="0" Content="Tips en advies" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Height="53" Width="352"/>
-        <Image Source="/img/which_fingers.png" RenderOptions.BitmapScalingMode="HighQuality" Grid.Row="1" Grid.Column="1" Margin="0.8,0.2,-0.4,0"/>
-        <Label Content="Heb jij moeite met blind leren typen? Hopelijk kan deze pagina jou helpen.&#xD;&#xA;Begin met een goede houding. Ontspan je schouders en ga rechtop zitten. Zet je linkerwijsvinger op de F-knop&#xD;&#xA;en je rechterwijsvinger op de J-knop. Op deze knoppen voel je streepjes, die helpen je om deze toetsen altijd&#xD;&#xA;terug te kunnen vinden. Zet vervolgens de rest van je vingers aan je linkerhand op de knoppen; A, S en D. &#xD;&#xA;Voor de rechterhand gaan de vingers op knoppen: K,L en ;. Nu heb je een goede uitgangspositie. &#xD;&#xA;Iedere keer als je een letter hebt getypt, kan je terug naar deze uitgangspositie. &#xD;&#xA;Hiernaast staat een plaatje van een QWERTY-toetsenbord met daarbij informatie over welke vinger op &#xD;&#xA;welke toets moet. De kleuren van de letters komen overeen met de kleuren van de vingers. &#xD;&#xA;Zo kan je zien welke vinger op welke plek moet. Probeer bij het oefenen van een toets niet naar het &#xD;&#xA;toetsenbord te kijken, maar zo veel mogelijk naar het scherm. En vergeet niet, oefening baart kunst!&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;Succes!" HorizontalAlignment="Left" VerticalAlignment="Top" Height="230" Grid.Column="0" Width="602" Margin="10,0.2,0,0" Grid.Row="1"/>
+        <Image Source="/img/which_fingers.png" RenderOptions.BitmapScalingMode="HighQuality" Grid.Row="1" Grid.Column="1"/>
+        <Label Content="Heb jij moeite met blind leren typen? Hopelijk kan deze pagina jou helpen.&#xD;&#xA;Begin met een goede houding. Ontspan je schouders en ga rechtop zitten. Zet je linkerwijsvinger op de F-knop&#xD;&#xA;en je rechterwijsvinger op de J-knop. Op deze knoppen voel je streepjes, die helpen je om deze toetsen altijd&#xD;&#xA;terug te kunnen vinden. Zet vervolgens de rest van je vingers aan je linkerhand op de knoppen; A, S en D. &#xD;&#xA;Voor de rechterhand gaan de vingers op knoppen: K,L en ;. Nu heb je een goede uitgangspositie. &#xD;&#xA;Iedere keer als je een letter hebt getypt, kan je terug naar deze uitgangspositie. &#xD;&#xA;Hiernaast staat een plaatje van een QWERTY-toetsenbord met daarbij informatie over welke vinger op &#xD;&#xA;welke toets moet. De kleuren van de letters komen overeen met de kleuren van de vingers. &#xD;&#xA;Zo kan je zien welke vinger op welke plek moet. Probeer bij het oefenen van een toets niet naar het &#xD;&#xA;toetsenbord te kijken, maar zo veel mogelijk naar het scherm. En vergeet niet, oefening baart kunst!&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;Succes!" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" Margin="10,0.2,0,0" Grid.Row="1"/>
         <Image x:Name="TipPage_Image_HandsBlack" Source="/img/which_fingers.png" Grid.Row="2" MaxHeight="235" MaxWidth="329" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="0"/>
-        <Label Content="Wil je gaan oefenen? log hier in:" Grid.Row="3" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="525,0.8,0,-0.4"/>
-        <Button x:Name="loginRegisterButton" HorizontalAlignment="Right" Grid.Row="2" Click="LoginRegisterButton_Click" Grid.Column="1" Margin="0,235,-0.4,-0.4" Grid.RowSpan="2" Width="254" >Inloggen/registreren om toetsen te oefenen</Button>
+        <Label x:Name="TipPage_Label_InlogLabel" Content="Wil je gaan oefenen? log hier in:" Grid.Row="3" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="525,0.8,0,0"/>
+        <Button x:Name="loginRegisterButton" HorizontalAlignment="Right" Grid.Row="3" Click="LoginRegisterButton_Click" Grid.Column="1" Width="254" >Inloggen/registreren om toetsen te oefenen</Button>
 
         <StackPanel x:Name="TipPage_StackPanel_GeneralCanvas" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Height="234" Margin="142,0,142.2,0">
             <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row0" Orientation="Horizontal" MaxHeight="22" MaxWidth="329" Margin="0,5,0,1">
@@ -97,7 +97,7 @@
                 <Rectangle x:Name="TipPage_Canvas_Key_RightShift" Tag="Yellow" Fill="Black" Height="21" Width="54" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1,0"/>
             </StackPanel>
 
-            <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row4" Orientation="Horizontal" Margin="1,0" MaxHeight="24" MaxWidth="264" Grid.Row="2" HorizontalAlignment="left" Width="264" Grid.ColumnSpan="2">
+            <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row4" Orientation="Horizontal" MaxHeight="24" MaxWidth="264" Grid.Row="2" HorizontalAlignment="left" Width="331" Grid.ColumnSpan="2">
                 <Rectangle x:Name="TipPage_Canvas_Key_LeftCtrl" Tag="Orange" Fill="Black" Width="23" Height="21" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                 <Rectangle x:Name="TipPage_Canvas_Key_Nothing1" Tag="Orange" Fill="Black" Height="21" Width="21" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
                 <Rectangle x:Name="TipPage_Canvas_Key_LWin" Tag="Orange" Fill="Black" Height="21" Width="22" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="1,0"/>
