@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace LerenTypen
 {
@@ -28,55 +29,78 @@ namespace LerenTypen
             Test test = TestController.GetTest(testID);
             testNameLabel.Content = test.Name;
 
-            double Review = TestController.GetRatingScore(testID);
-            if(Review == 0)
+            List<Review> inforeview = ReviewController.GetUserReviewDetails(testID);
+
+            foreach (Review review in inforeview)
             {
-                StarScore.Content = "";
-            }
-            else if(Review == 0.5)
-            {
-                StarScore.Content = "halve ";
-            }
-            else if (Review > 0.6 && Review < 1.5)
-            {
-                StarScore.Content = "★";
-            }
-            else if (Review == 1.5)
-            {
-                StarScore.Content = @"★ u2BE8";
-            }
-            else if (Review > 1.5 && Review <2.5)
-            {
-                StarScore.Content = "★★";
-            }
-            else if (Review == 2.5)
-            {
-                StarScore.Content = "★★";
-            }
-            else if (Review > 2.5 && Review <3.5)
-            {
-                StarScore.Content = "★★★";
-            }
-            else if (Review == 3.5)
-            {
-                StarScore.Content = "★★★ \u2BEA ";
-            }
-            else if (Review > 3.5 && Review <4.5)
-            {
-                StarScore.Content = "★★★★ ";
-            }
-            else if (Review == 4.5)
-            {
-                StarScore.Content = "★★★★half  ";
+                Border border = new Border();
+                border.BorderThickness = new Thickness(1);
+                border.BorderBrush = Brushes.Black;
+                UserInfoFill.Children.Add(border);
+
+                Label username = new Label();
+                username.FontSize = 15;
+                username.Content = review.AccountUsername;
+
+                StackPanel starscore = new StackPanel();
+                starscore.Orientation = Orientation.Horizontal;
+                double Reviewscore = TestController.GetRatingScore(testID);
+                int ratingscore = (int)Math.Floor(Reviewscore);
+
+                for (int i = 0; i < ratingscore; i++)
+                {
+                    Image fullstar = new Image();
+                    fullstar.Source = new BitmapImage(new Uri("/img/FullStar.png", UriKind.Relative));
+                    fullstar.Width = 16;
+                    starscore.Children.Add(fullstar);
+                }
+
+                if (Reviewscore % 1 != 0)
+                {
+                    Image halfstar = new Image();
+                    halfstar.Source = new BitmapImage(new Uri("/img/HalfStar.png", UriKind.Relative));
+                    halfstar.Width = 16;
+                    starscore.Children.Add(halfstar);
+                }
+
+                Label date = new Label();
+                date.FontSize = 15;
+                date.Content = review.ReviewDateAdded;
+
+                StackPanel scores = new StackPanel();
+                scores.Orientation = Orientation.Horizontal;
+                scores.Children.Add(username);
+                scores.Children.Add(starscore);
+                scores.Children.Add(date);
+
+                UserInfoFill.Children.Add(scores);
+                if (review.ReviewDescription != null)
+                {
+                    Label description = new Label();
+                    description.FontSize = 15;
+                    description.Content = review.ReviewDescription;
+                    UserInfoFill.Children.Add(description);
+                }
             }
 
-            else if (Review > 4.5 && Review<5.1)
+            double Review = TestController.GetRatingScore(testID);
+
+            int rating = (int)Math.Floor(Review);
+
+            for (int i = 0; i < rating; i++)
             {
-                StarScore.Content = "★★★★★";
+                Image fullstar = new Image();
+                fullstar.Source = new BitmapImage(new Uri("/img/FullStar.png", UriKind.Relative));
+                fullstar.Width = 16;
+                ReviewScorePanel.Children.Add(fullstar);
             }
-            else
+
+            if (Review % 1 != 0)
             {
-                System.Windows.MessageBox.Show("Reviews kunnne niet zo groot zijn");
+                Image halfstar = new Image();
+                halfstar.Source = new BitmapImage(new Uri("/img/HalfStar.png", UriKind.Relative));
+                halfstar.Width = 16;
+                ReviewScorePanel.Children.Add(halfstar);
             }
 
             string difficultyString = "";
@@ -94,7 +118,6 @@ namespace LerenTypen
 
             }
             difficultyLabel.Content = $"Moeilijkheidsgraad: {difficultyString}";
-
             testVersionLabel.Content = $"Versie {test.Version} - {test.CreatedDateTime}";
 
             string testTypeString = "";
@@ -185,7 +208,6 @@ namespace LerenTypen
             {
                 mainWindow.testOptions.Sound = false;
             }
-
             mainWindow.ChangePage(new TestExercisePage(testID, mainWindow));
         }
 

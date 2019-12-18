@@ -43,7 +43,7 @@ namespace LerenTypen.Controllers
             return 0;
         }
 
-        public static double GetRatingScore(int testID)
+       public static double GetRatingScore(int testID)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
