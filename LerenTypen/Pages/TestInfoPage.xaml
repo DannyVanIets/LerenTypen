@@ -4,7 +4,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LerenTypen"
-      xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
       mc:Ignorable="d" 
       d:DesignHeight="570" d:DesignWidth="1050" Background="White"
       Title="Page4" ShowsNavigationUI="False">
@@ -122,8 +121,6 @@
                 <Label x:Name="reviewTitleLabel" FontSize="32"
                FontWeight="Bold" Content="Reviews" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-7,0,0,0"/>
                 <Label x:Name="averageScoreLabel" FontSize="22" VerticalAlignment="Center" Content="Gemiddelde score: " Margin="0,20,0,11.4" Width="244"/>
-                <fa:IconImage x:Name="star1" Icon="star" VerticalAlignment="Center" Width="24" Height="24"/>
-                <fa:IconImage x:Name="star5" Icon="StarHalf" VerticalAlignment="Center" Width="24" Height="24"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,-0.4,0">
