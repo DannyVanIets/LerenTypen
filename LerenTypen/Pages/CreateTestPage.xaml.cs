@@ -268,12 +268,12 @@ namespace LerenTypen
             {
                 if (TestController.GetTestByName(title))
                 {
-                    TestController.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID, 1);
+                    MessageBox.Show("Er bestaat al een toets met deze titel", "Opslaan niet mogelijk");
+                    return false;
                 }
                 else
                 {
-                    MessageBox.Show("Er bestaat al een toets met deze titel", "Opslaan niet mogelijk");
-                    return false;
+                    TestController.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID, 1);
                 }
             }
             return true;

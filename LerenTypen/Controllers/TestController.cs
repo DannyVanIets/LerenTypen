@@ -84,7 +84,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "SELECT * FROM tests WHERE testName=@testName";
+                string query = "SELECT Count(*) FROM tests WHERE testName=@testName";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -94,10 +94,10 @@ namespace LerenTypen.Controllers
                     {
                         while (reader.Read())
                         {
-                            if (reader.IsDBNull(0))
+                            if (reader.GetInt32(0) >= 1)
                             {
                                 return true;
-                            }
+                            };
                         }
                     }
                 }
