@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Media;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -59,10 +58,10 @@ namespace LerenTypen
         private bool testClosed;
         private string testName;
         private MainWindow m;
-        Random random = new Random();
         //Soundplayer is the class we use for sounds. It can only include a file, play a file and stop playing any sounds.
         //It's pretty limited, but it's good enough for what we use it for. It also only supports .wav files!
-        private SoundPlayer sp = new SoundPlayer(@"../../../soundsCorrect/EmptyWav.wav");
+        private SoundPlayer sp = new SoundPlayer();
+        Random random = new Random();
 
         private bool restoreState;
         private int unfinishedTestResultID;
@@ -70,8 +69,6 @@ namespace LerenTypen
         public TestExercisePage(int testID, MainWindow m, bool restoreState = false)
         {
             InitializeComponent();
-
-            sp.PlayLooping();
 
             // Bool to stop timer when test is closed
             testClosed = false;
@@ -374,7 +371,6 @@ namespace LerenTypen
                 //This lambda query is used to delay the application until the loading from the soundfile is complete.
                 //This way it doesn't stop the whole user-interface.
                 Task.Factory.StartNew(() => { while (!sp.IsLoadCompleted) ; });
-
                 sp.Play();
             }
             else

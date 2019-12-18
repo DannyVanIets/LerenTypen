@@ -296,11 +296,11 @@
     <Resource Include="img\Toetsenbord.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\mutedButton.png" />
-    <Resource Include="img\unmutedButton.png" />
+    <Resource Include="img\which_fingers.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\which_fingers.png" />
+    <Resource Include="img\mutedButton.png" />
+    <Resource Include="img\unmutedButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
