@@ -290,8 +290,6 @@ namespace LerenTypen
             //Check if the option for sounds is turned on. If not, only change the brushes.
             if (m.testOptions.Sound)
             {
-                //sp.stop() stops any sound or music that's still going on.
-                sp.Stop();
                 string file = "";
                 int randomNumber = random.Next(0, 6);
 
@@ -358,7 +356,7 @@ namespace LerenTypen
 
                 //This lambda query is used to delay the application until the loading from the soundfile is complete.
                 //This way it doesn't stop the whole user-interface.
-                Task.Factory.StartNew(() => { while (!sp.IsLoadCompleted) Thread.Sleep(500); });
+                Task.Factory.StartNew(() => { while (!sp.IsLoadCompleted) ; });
                 sp.Play();
             }
             else
