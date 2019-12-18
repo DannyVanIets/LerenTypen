@@ -78,6 +78,43 @@ namespace LerenTypen.Controllers
             return 0;
         }
 
+        public static bool GetTestByName(string testName)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "SELECT * FROM tests WHERE testName=@testName";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testName", testName);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.IsDBNull(0))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return false;
+        }
+
         public static Test GetTest(int testID)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
