@@ -122,7 +122,7 @@ namespace LerenTypen
 
             // Checks date range for using the right filtering when page is loaded
             int ResultSpanInHours = TestResultController.GetDateRange(userID);
-            if (ResultSpanInHours == 0)
+            if (ResultSpanInHours == -1)
             {
                 StatisticsGrid.Visibility = Visibility.Collapsed;
                 LblNoResults.Visibility = Visibility.Visible;

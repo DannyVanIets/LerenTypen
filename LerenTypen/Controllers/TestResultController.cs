@@ -99,7 +99,7 @@ namespace LerenTypen.Controllers
         /// <returns></returns>
         public static int GetDateRange(int accountID)
         {
-            int result = 0;
+            int result = -1;
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
