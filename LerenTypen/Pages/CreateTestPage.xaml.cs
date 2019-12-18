@@ -45,6 +45,7 @@ namespace LerenTypen
             textBoxValues = new List<string>();
             test = TestController.GetTest(testID);
             textInputTestName.Text = test.Name;
+            textInputTestName.IsReadOnly = true;
             content = TestController.GetTestContent(test.ID);
             foreach (string line in content)
             {
@@ -259,13 +260,21 @@ namespace LerenTypen
             // Check if Test is an update, if so test.Version + 1
             if (NewVersion)
             {
-                TestController.AddTest(title, type, difficulty, 0, textBoxValues, test.AuthorID, test.Version + 1);
+                TestController.AddTest(test.Name, type, difficulty, 0, textBoxValues, test.AuthorID, test.Version + 1);
                 TestController.UpdateTestToArchived(test.ID);
                 TestController.NotBeingEdited(test.ID);
             }
             else
             {
-                TestController.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID, 1);
+                if (TestController.GetTestByName(title))
+                {
+                    MessageBox.Show("Er bestaat al een toets met deze titel", "Opslaan niet mogelijk");
+                    return false;
+                }
+                else
+                {
+                    TestController.AddTest(title, type, difficulty, privateTest, textBoxValues, accountID, 1);
+                }
             }
             return true;
         }
