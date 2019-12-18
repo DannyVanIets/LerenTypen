@@ -4,6 +4,7 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,8 +21,10 @@ namespace LerenTypen
         List<TestTable> ContentNow = new List<TestTable>();
         private bool myPage;
         private int userID;
-        private List<DateTime> statisticsMarks;
-        private List<string> labels;
+        //Make lists for statistics (statisticsMarks is for statistic date points)
+        private List<DateTime> statisticsMarks = new List<DateTime>();
+        private CultureInfo dutch = new CultureInfo("nl-NL", false);
+        private List<string> labels = new List<string>();
         public AccountInformationPage(MainWindow mainWindow, int UserID = 0)
         {
             InitializeComponent();
@@ -109,55 +112,45 @@ namespace LerenTypen
             {
                 Console.WriteLine(e.ToString());
             }
-            OverallChart();
+            CreateChart();
         }
 
-        public void OverallChart()
+        public void CreateChart()
         {
-            statisticsMarks = new List<DateTime>();
-            labels = new List<string>();
-
-            int divider = TestResultController.GetDateRange(userID);
-            statisticsMarks.Add(Date.GetDateXMinutesAgo(divider));
-            statisticsMarks.Add(Date.GetDateXMinutesAgo(divider / 4 * 3));
-            statisticsMarks.Add(Date.GetDateXMinutesAgo(divider / 4 * 2));
-            statisticsMarks.Add(Date.GetDateXMinutesAgo(divider / 4));
-            statisticsMarks.Add(DateTime.Now);
-
-            string format = "ddd";
-            //Week in minutes
-            if (divider > 10080)
-            {
-                format = "ddd-M";
-            }
-            //month in minutes
-            if (divider > 43200)
-            {
-                format = "MMM";
-            }
-            //year in minutes
-            if (divider > 525600)
-            {
-                format = "MMM-Y";
-            }
-            //3years in minutes
-            if (divider > 2073600)
-            {
-                format = "yyyy";
-            }
-
-            Labels.Labels = new string[] { $"{statisticsMarks[0].ToString(format)} - {statisticsMarks[1].ToString(format)}", $"{statisticsMarks[1].ToString(format)} - {statisticsMarks[2].ToString(format)}", $"{statisticsMarks[2].ToString(format)} - {statisticsMarks[3].ToString(format)}", $"{statisticsMarks[3].ToString(format)} - {statisticsMarks[4].ToString(format)}" };
-
             LineSeries.Title = "Woorden per minuut";
-            ChartValues<int> values = new ChartValues<int>();
-            for (int i = 1; i < statisticsMarks.Count; i++)
+
+            // Checks date range for using the right filtering when page is loaded
+            int divider = TestResultController.GetDateRange(userID);
+            if (divider == 0)
             {
-                values.Add(TestResultController.GetWordsPerMinuteByPeriod(userID, statisticsMarks[i - 1], statisticsMarks[i]));
+                StatisticsGrid.Visibility = Visibility.Collapsed;
+                LblNoResults.Visibility = Visibility.Visible;
             }
-            LineSeries.Values = values;
-            Chart.Update();
+            if (divider < 168)
+            {
+                ComboboxStatistics.SelectedIndex = 3;
+            }
+            //Week in hours
+            else if (divider > 168 && divider < 2000)
+            {
+                ComboboxStatistics.SelectedIndex = 2;
+            }
+            //3months in hours
+            else if (divider > 2000 && divider < 16000)
+            {
+                ComboboxStatistics.SelectedIndex = 1;
+            }
+            //2years in hours
+            else if (divider > 16000)
+            {
+                ComboboxStatistics.SelectedIndex = 0;
+            }
+
         }
 
+        /// <summary>
+        /// Updates the chart using the lists contents
+        /// </summary>
         private void UpdateChart()
         {
             Labels.Labels = labels.ToArray();
@@ -170,61 +163,67 @@ namespace LerenTypen
             Chart.Update();
         }
 
-
-        private void YearChart()
+        /// <summary>
+        /// Fills the lists with the current information (5 years)
+        /// </summary>
+        private void FiveYearChart()
         {
-            statisticsMarks.Clear();
-            labels.Clear();
-            string format = "MMM";
-            for (int m = 0; m < 13; m++)
+            string format = "yyyy";
+            for (int m = 0; m < 6; m++)
             {
-                DateTime date = Date.GetDateXMonthsAgo(12 - m);
+                DateTime date = Date.GetDateXYearsAgo(4 - m);
                 statisticsMarks.Add(date);
-                if (m != 0)
-                {
-                    labels.Add(date.ToString(format));
-                }
+                labels.Add(date.ToString(format));
             }
             UpdateChart();
         }
 
+        /// <summary>
+        /// Fills the lists with the current information (12 months)
+        /// </summary>
+        private void YearChart()
+        {
+            string format = "MMMMMMMMM";
+            for (int m = 0; m < 13; m++)
+            {
+                DateTime date = Date.GetDateXMonthsAgo(11 - m);
+                statisticsMarks.Add(date);
+                labels.Add(date.ToString(format, dutch));
+            }
+            UpdateChart();
+        }
+
+        /// <summary>
+        /// Fills the lists with the current information (4 weeks)
+        /// </summary>
         private void MonthChart()
         {
-            statisticsMarks.Clear();
-            labels.Clear();
             System.Globalization.CultureInfo cul = System.Globalization.CultureInfo.CurrentCulture;
 
             for (int m = 0; m < 5; m++)
             {
-                DateTime date = Date.GetDateXWeeksAgo(4 - m);
+                DateTime date = Date.GetDateXWeeksAgo(3 - m);
                 int weekNum = cul.Calendar.GetWeekOfYear(
                     date,
                     System.Globalization.CalendarWeekRule.FirstFourDayWeek,
                     DayOfWeek.Monday);
                 statisticsMarks.Add(date);
-                if (m != 0)
-                {
-                    labels.Add($"Week {weekNum}");
-                }
-
+                labels.Add($"Week {weekNum}");
             }
             UpdateChart();
         }
 
+        /// <summary>
+        /// Fills the lists with the current information (seven days)
+        /// </summary>
         private void WeekChart()
         {
-            statisticsMarks.Clear();
-            labels.Clear();
-            string format = "ddd";
+            string format = "ddddddddd";
             for (int m = 0; m < 8; m++)
             {
-                DateTime date = Date.GetDateXDaysAgo(7 - m);
+                DateTime date = Date.GetDateXDaysAgo(6 - m);
                 statisticsMarks.Add(date);
-
-                if (m != 0)
-                {
-                    labels.Add(date.ToString(format));
-                }
+                labels.Add(date.ToString(format, dutch));
             }
             UpdateChart();
         }
@@ -267,21 +266,24 @@ namespace LerenTypen
 
         }
 
-        private void comboboxStatistics_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboboxStatistics_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (comboboxStatistics.SelectedIndex.Equals(0))
+            statisticsMarks.Clear();
+            labels.Clear();
+
+            if (ComboboxStatistics.SelectedIndex.Equals(0))
             {
-                OverallChart();
+                FiveYearChart();
             }
-            else if (comboboxStatistics.SelectedIndex.Equals(1))
+            else if (ComboboxStatistics.SelectedIndex.Equals(1))
             {
                 YearChart();
             }
-            else if (comboboxStatistics.SelectedIndex.Equals(2))
+            else if (ComboboxStatistics.SelectedIndex.Equals(2))
             {
                 MonthChart();
             }
-            else if (comboboxStatistics.SelectedIndex.Equals(3))
+            else if (ComboboxStatistics.SelectedIndex.Equals(3))
             {
                 WeekChart();
             }

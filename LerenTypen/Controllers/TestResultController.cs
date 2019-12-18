@@ -93,7 +93,7 @@ namespace LerenTypen.Controllers
         }
 
         /// <summary>
-        /// Gets the results date range
+        /// Gets the results date range (first date - last date)
         /// </summary>
         /// <param name="accountID"></param>
         /// <returns></returns>
@@ -108,7 +108,7 @@ namespace LerenTypen.Controllers
                     "Declare @end_date DATETIME;" +
                     "set @start_date = (select min(testResultsDate) from testresults where accountID = @accountID);" +
                     "set @end_date = (select max(testResultsDate) from testresults where accountID = @accountID);" +
-                    " select DATEDIFF(Minute, @start_date, @end_date);";
+                    " select DATEDIFF(Hour, @start_date, @end_date);";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
