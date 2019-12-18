@@ -40,12 +40,22 @@
 
         <StackPanel Orientation="Vertical" Grid.Column="1">
             <Label FontSize="20" Margin="0,5,0,0" HorizontalAlignment="Center" FontWeight="Bold" Grid.Column="0" Content="Laatst Geoefende Toetsen"/>
-            <ListView x:Name="LaatstGeoefendeToetsen" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
+            <ListView x:Name="LastMadeTests" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
+                            <GridViewColumn Header ="Toetsnaam" Width="400" local:GridViewSort.PropertyName="WPFName">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding TestId}" Click="Hyperlink_Click" >
+                                            <Run Text="{Binding WPFName}"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                             <GridViewColumn x:Name="AllMyLastMadeTests_DG_TestId" Header="TestId" DisplayMemberBinding="{Binding TestId}" local:GridViewSort.PropertyName="TestId" Width="0"/>
                         </GridView.Columns>
                     </GridView>
@@ -72,13 +82,13 @@
             </StackPanel>
             <lvc:CartesianChart x:Name="Chart"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,20,0,40">
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="W/m" MinValue="0"></lvc:Axis>
+                    <lvc:Axis Title="W/m" MinValue="0" ></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis x:Name="Labels"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.Series>
-                    <lvc:LineSeries x:Name="LineSeries" Values="0">
+                    <lvc:LineSeries x:Name="LineSeries" LineSmoothness="1">
 
                     </lvc:LineSeries>
                 </lvc:CartesianChart.Series>
@@ -108,12 +118,21 @@
         <StackPanel x:Name = "MyAccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" >
             <Label FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" FontWeight="Bold" Content="Mijn Toetsen"/>
             <Label x:Name="NoMyTestsLbl" Content="Geen toetsen gevonden" Visibility="Collapsed"/>
-            <ListView x:Name="MijnToetsen" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
+            <ListView x:Name="MyTests" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName">                               
+                            <GridViewColumn Header ="Toetsnaam" Width="400" local:GridViewSort.PropertyName="WPFName">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                        <Hyperlink Tag="{Binding TestId}" Click="Hyperlink_Click" >
+                                            <Run Text="{Binding WPFName}"/>
+                                        </Hyperlink>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="70" local:GridViewSort.PropertyName="IsPrivate">
                                 <GridViewColumn.CellTemplate>
@@ -144,7 +163,17 @@
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
+                            <GridViewColumn Header ="Toetsnaam" Width="400" local:GridViewSort.PropertyName="WPFName">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                        <Hyperlink Tag="{Binding TestId}" Click="Hyperlink_Click" >
+                                            <Run Text="{Binding WPFName}"/>
+                                        </Hyperlink>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>
