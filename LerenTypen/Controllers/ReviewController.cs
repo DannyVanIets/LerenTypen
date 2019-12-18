@@ -66,7 +66,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select a.accountUsername , trs.testReviewScore , trs.testReviewDescription , trs.testReviewDateAdded from testReviews trs inner join accounts a on a.accountID = trs.accountID where a.archived =0 and trs.testID=@id order by testReviewDateAdded desc;";
+                string query = "select a.accountUsername, trs.testReviewScore, trs.testReviewDescription, trs.testReviewDateAdded from testReviews trs inner join accounts a on a.accountID = trs.accountID where a.archived =0 and trs.testID=@id order by testReviewDateAdded desc;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

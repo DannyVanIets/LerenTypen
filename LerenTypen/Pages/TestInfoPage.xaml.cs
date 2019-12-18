@@ -25,28 +25,34 @@ namespace LerenTypen
 
             this.mainWindow = mainWindow;
             this.testID = testID;
-
+            
+            // Get tests
             Test test = TestController.GetTest(testID);
             testNameLabel.Content = test.Name;
 
+            //Get all the review info
             List<Review> inforeview = ReviewController.GetUserReviewDetails(testID);
 
             foreach (Review review in inforeview)
             {
+                //Make border around review part.
                 Border border = new Border();
                 border.BorderThickness = new Thickness(1);
                 border.BorderBrush = Brushes.Black;
                 UserInfoFill.Children.Add(border);
-
+                
+                //Get username
                 Label username = new Label();
                 username.FontSize = 15;
                 username.Content = review.AccountUsername;
 
+                //get the score then convert them into stars.
                 StackPanel starscore = new StackPanel();
                 starscore.Orientation = Orientation.Horizontal;
                 double Reviewscore = TestController.GetRatingScore(testID);
                 int ratingscore = (int)Math.Floor(Reviewscore);
 
+                //Print all the full stars
                 for (int i = 0; i < ratingscore; i++)
                 {
                     Image fullstar = new Image();
@@ -54,7 +60,7 @@ namespace LerenTypen
                     fullstar.Width = 16;
                     starscore.Children.Add(fullstar);
                 }
-
+                //print the half stars for the score
                 if (Reviewscore % 1 != 0)
                 {
                     Image halfstar = new Image();
@@ -62,11 +68,11 @@ namespace LerenTypen
                     halfstar.Width = 16;
                     starscore.Children.Add(halfstar);
                 }
-
+                //print the date which the user made the review
                 Label date = new Label();
                 date.FontSize = 15;
                 date.Content = review.ReviewDateAdded;
-
+                //Put the stackpanel together
                 StackPanel scores = new StackPanel();
                 scores.Orientation = Orientation.Horizontal;
                 scores.Children.Add(username);
@@ -74,6 +80,7 @@ namespace LerenTypen
                 scores.Children.Add(date);
 
                 UserInfoFill.Children.Add(scores);
+                //check if the description isnt empty
                 if (review.ReviewDescription != null)
                 {
                     Label description = new Label();
