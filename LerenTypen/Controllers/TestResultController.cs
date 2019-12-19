@@ -61,13 +61,13 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select avg(wordsEachMinute) from testresults where testResultsDate BETWEEN @firstDate AND @secondDate and accountID = @accountID";
+                string query = "select avg(wordsEachMinute) from testresults where testResultsDate BETWEEN CAST(@firstDate AS DATETIME) AND CAST(@secondDate AS DATETIME) and accountID = @accountID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@accountID", accountID);
-                    command.Parameters.AddWithValue("@firstDate", firstDate.ToString());
-                    command.Parameters.AddWithValue("@secondDate", secondDate.ToString());
+                    command.Parameters.AddWithValue("@firstDate", firstDate);
+                    command.Parameters.AddWithValue("@secondDate", secondDate);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
