@@ -649,10 +649,8 @@ namespace LerenTypen
             }
             else
             {
-                if (!wrongAnswers.ContainsKey(currentLine))
-                {
-                    wrongAnswers.Add(currentLine, input);
-                }
+
+                wrongAnswers.Add(currentLine, input);
 
                 wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
                 if (currentLine + 4 < lines.Count)
