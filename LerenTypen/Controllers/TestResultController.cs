@@ -61,7 +61,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select avg(wordsEachMinute) from testresults where testResultsDate BETWEEN CAST(@firstDate AS DATETIME) AND CAST(@secondDate AS DATETIME) and accountID = @accountID";
+                string query = "select avg(wordsEachMinute) from testresults where testResultsDate BETWEEN CAST(@firstDate AS DATETIME) AND CAST(@secondDate AS DATETIME) and accountID = @accountID and finished = 1";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
