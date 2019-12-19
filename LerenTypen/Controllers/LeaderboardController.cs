@@ -11,28 +11,29 @@ namespace LerenTypen.Controllers
     class LeaderboardController
     {
         //Fill in all the info for the hard words leaderboard
-        public static List<Test> LeaderboardHardTests(int pick)
+        public static List<Test> GetHardTests(int timespan)
         {
             List<Test> queryResult = new List<Test>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
                 connection.Open();
-                //start a new query which can be filled
                 string query = "";
+
                 //check which box is being checked (weekly, monthly, yearly)
-                if (pick == 0)
+                if (timespan == 0)
                 {
-                    query = "select tr.accountID  , AVG(wordsEachMinute) , AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc"; 
+                    query = "select tr.accountID, AVG(wordsEachMinute), AVG(score), t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc"; 
                 }
-                else if (pick == 1)
+                else if (timespan == 1)
                 {
-                    query = "select tr.accountID  , AVG(wordsEachMinute) , AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID, AVG(wordsEachMinute), AVG(score), t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
-                else if (pick == 2)
+                else if (timespan == 2)
                 {
-                    query = "select tr.accountID  , AVG(wordsEachMinute) , AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID, AVG(wordsEachMinute), AVG(score), t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
+
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
                 DateTime todayYearAgo = DateTime.Now.AddDays(-365);
@@ -70,35 +71,36 @@ namespace LerenTypen.Controllers
             }
             return queryResult;
         }
-        //fill the info the hard percentage board
        
         //Fill in all the into for the medium board
-        public static List<Test> LeaderboardMediumTests(int pick)
+        public static List<Test> GetMediumTests(int timespan)
         {
             List<Test> queryResult = new List<Test>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
                 connection.Open();
-                //new query started
                 string query = "";
+
                 //check which box is picked and run that query.
-                if (pick == 0)
+                if (timespan == 0)
                 {
                     query = "select tr.accountID  , AVG(wordsEachMinute) , AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
-                else if (pick == 1)
+                else if (timespan == 1)
                 {
                     query = "select tr.accountID  , AVG(wordsEachMinute) , AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
-                else if (pick == 2)
+                else if (timespan == 2)
                 {
                     query = "select tr.accountID  , AVG(wordsEachMinute) , AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
+
                 //see which days etc.
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
                 DateTime todayYearAgo = DateTime.Now.AddDays(-365);
+
                 //Fill in the dates in the code
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -132,32 +134,31 @@ namespace LerenTypen.Controllers
             }
             return queryResult;
         }
-
-        //fill in the into for the leaderboard
         
         //fill in the info for the leaderboard percentage
-        public static List<Test> LeaderboardEasyTests(int pick)
+        public static List<Test> GetEasyTests(int timespan)
         {
             List<Test> queryResult = new List<Test>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
                 connection.Open();
-                //start a new quert
                 string query = "";
+
                 //check which value in combobox is being picked.
-                if (pick == 0)
+                if (timespan == 0)
                 {
-                    query = "select tr.accountID  , AVG(wordsEachMinute) , AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID , AVG(wordsEachMinute), AVG(score), t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
-                else if (pick == 1)
+                else if (timespan == 1)
                 {
-                    query = "select tr.accountID  , AVG(wordsEachMinute) , AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and  t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID, AVG(wordsEachMinute), AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and  t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
-                else if (pick == 2)
+                else if (timespan == 2)
                 {
-                    query = "select tr.accountID  , AVG(wordsEachMinute) , AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID, AVG(wordsEachMinute), AVG(score), t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
+
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
                 DateTime todayYearAgo = DateTime.Now.AddDays(-365);
@@ -194,7 +195,5 @@ namespace LerenTypen.Controllers
             }
             return queryResult;
         }
-
-
     }
 }
