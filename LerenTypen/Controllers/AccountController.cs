@@ -45,6 +45,41 @@ namespace LerenTypen.Controllers
             return null;
         }
 
+
+        public static int GetAmountOfAdmins(int accountID)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "Select count(accountID) from accounts where accountType = @id";
+               
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", accountID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return  Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return 1;
+        }
+
+
         /// <summary>
         /// Get an user by its id
         /// </summary>
