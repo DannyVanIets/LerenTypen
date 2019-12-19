@@ -148,9 +148,11 @@
                 Width="75" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddReviewButton_Click" Margin="10,0,0,10" RenderTransformOrigin="0.569,0.032" Content="Toevoegen"/>
             </StackPanel>
 
-            <StackPanel x:Name="UserInfoFill" Orientation="Vertical" Grid.Row="5" Grid.Column="0" Height="553" Margin="0,0,-0.4,0">
-                <Label x:Name="UserReviewText" Content="User reviews" FontWeight="Bold" FontSize="32" Margin="0,0,0,0"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <StackPanel x:Name="UserInfoFill" VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Vertical" Grid.Row="5" Grid.Column="0" Margin="0,0,-0.4,0">
+                <Label x:Name="UserReviewText"  FontWeight="Bold" FontSize="32" Margin="0,0,0,0"/>
             </StackPanel>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </Page>
