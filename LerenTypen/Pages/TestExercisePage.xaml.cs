@@ -115,15 +115,18 @@ namespace LerenTypen
             lines = TestController.GetTestContent(testID); // List for lines to be written out by user
             testName = TestController.GetTestName(testID);
             testNameLbl.Content = testName;
+            lineNumberLbl.Content = $"1/{lines.Count}";
 
             if (restoreState)
             {
                 // Restore the page in the same state as the unfinished test was saved
+
                 unfinishedTestResultID = TestResultController.GetUnfinishedTestResultID(m.Ingelogd, testID);
+                lines = TestController.GetAllLinesFromResult(unfinishedTestResultID, 2);
                 amountOfPauses = TestResultController.GetAmountOfPauses(unfinishedTestResultID);
                 wrongAnswers = TestResultController.GetTestResultsContentWrong(testID, unfinishedTestResultID);
                 rightAnswers = TestResultController.GetTestResultsContentRight(unfinishedTestResultID);
-                unfinishedLines = TestController.GetAllLinesNotInResult(rightAnswers, lines);
+                //unfinishedLines = TestController.GetAllLinesFromResult(unfinishedTestResultID, 2);
                 int timeSeconds = TestResultController.GetTime(unfinishedTestResultID);
                 i = timeSeconds % 60;
                 j = timeSeconds / 60;
@@ -132,31 +135,9 @@ namespace LerenTypen
                 restoredRightAnswers = rightAnswers.Count;
                 restoredWrongAnswers = wrongAnswers.Count;
                 wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
-                foreach (KeyValuePair<int, string> answer in wrongAnswers)
-                {
-                    if (answer.Key + 4 < lines.Count)
-                    {
-                        lines.Insert(answer.Key + 4, lines[answer.Key]);
-
-                    }
-                    else
-                    {
-                        lines.Add(lines[answer.Key]);
-                    }
-                }
                 lineNumberLbl.Content = $"{currentLine + 1}/{lines.Count}";
             }
-            else
-            {
-                // Start test from beginning
-                amountOfPauses = 0;
-                wrongAnswers = new Dictionary<int, string>();
-                rightAnswers = new List<string>();
-                currentLine = 0;
-                //currentLineIndex = 0;
-                lineNumberLbl.Content = $"1/{lines.Count}";
-                wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
-            }
+
 
             // Check if lines are found
             if (!lines.Count.Equals(0))
