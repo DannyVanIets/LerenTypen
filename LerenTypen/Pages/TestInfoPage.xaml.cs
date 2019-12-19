@@ -37,7 +37,7 @@ namespace LerenTypen
             {
                 //Make border around review part.
                 Border border = new Border();
-                border.BorderThickness = new Thickness(1);
+                border.BorderThickness = new Thickness(0.5);
                 border.BorderBrush = Brushes.Black;
                 UserInfoFill.Children.Add(border);
                 
@@ -91,6 +91,7 @@ namespace LerenTypen
             }
 
             double Review = TestController.GetRatingScore(testID);
+            averageScoreLabel.Content += Review.ToString();
 
             int rating = (int)Math.Floor(Review);
 
@@ -98,7 +99,7 @@ namespace LerenTypen
             {
                 Image fullstar = new Image();
                 fullstar.Source = new BitmapImage(new Uri("/img/FullStar.png", UriKind.Relative));
-                fullstar.Width = 16;
+                fullstar.Width = 32;
                 ReviewScorePanel.Children.Add(fullstar);
             }
 
@@ -106,7 +107,7 @@ namespace LerenTypen
             {
                 Image halfstar = new Image();
                 halfstar.Source = new BitmapImage(new Uri("/img/HalfStar.png", UriKind.Relative));
-                halfstar.Width = 16;
+                halfstar.Width = 32;
                 ReviewScorePanel.Children.Add(halfstar);
             }
 

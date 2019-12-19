@@ -124,16 +124,16 @@
         </Button>
 
         <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" >
-            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,0.6,0">
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,20,0">
                 <Label x:Name="reviewTitleLabel" FontSize="32"
                FontWeight="Bold" Content="Reviews" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-7,0,0,0"/>
-                <Label x:Name="averageScoreLabel" FontSize="22" VerticalAlignment="Center" Content="Gemiddelde score: " Margin="0,20,0,11.4" Width="206"/>
-                <StackPanel x:Name="ReviewScorePanel" MaxHeight="16" HorizontalAlignment="Center"  Orientation="Horizontal"/>
+                <Label x:Name="averageScoreLabel" FontSize="22" VerticalAlignment="Center" Content="Gemiddelde beoordeling: " Margin="0,20,0,11.4"/>
+                <StackPanel x:Name="ReviewScorePanel" MaxHeight="64" HorizontalAlignment="Center" Orientation="Horizontal"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,-0.4,0">
                 <Label x:Name="addReviewLabel" FontSize="20" Content="Schrijf een review!" Margin="-7,0,-0.4,0.2"/>
-                <Label x:Name="reviewMustsLabel" Content="* = verplicht" Margin="0,0,-0.4,0.2"/>
+                <Label x:Name="reviewMustsLabel" Content="* = verplicht" Margin="0,0,-0.4,0.2" VerticalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,-12.4,0">
@@ -148,9 +148,7 @@
                 Width="75" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddReviewButton_Click" Margin="10,0,0,10" RenderTransformOrigin="0.569,0.032" Content="Toevoegen"/>
             </StackPanel>
 
-            <StackPanel x:Name="UserInfoFill" Orientation="Vertical" Grid.Row="5" Grid.Column="0" Height="553" Margin="0,0,-0.4,0">
-                <Label x:Name="UserReviewText" Content="User reviews" FontWeight="Bold" FontSize="32" Margin="0,0,0,0"/>
-            </StackPanel>
+            <StackPanel x:Name="UserInfoFill" Orientation="Vertical" Grid.Row="5" Grid.Column="0" Height="553" Margin="20,0"/>
         </StackPanel>
     </Grid>
 </Page>

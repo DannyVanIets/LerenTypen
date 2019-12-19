@@ -58,7 +58,7 @@
                         <GridViewColumn Header="Meeste woorden per minuut" Width="170" DisplayMemberBinding="{Binding WordHighscore}" local:GridViewSort.PropertyName="Highscore"/>
                         <GridViewColumn Header="Aantal woorden" Width="90" DisplayMemberBinding="{Binding AmountOfWords}" local:GridViewSort.PropertyName="AmountOfWords"/>
                         <GridViewColumn Header="Moeilijkheidsgraad" Width="110" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>
-                        <GridViewColumn Header="Geüpload door" Width="120" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
+                        <GridViewColumn Header="Geüpload door" Width="110" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -67,7 +67,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Rating" Width="70" DisplayMemberBinding="{Binding Rating}" local:GridViewSort.PropertyName="Rating"/>
+                        <GridViewColumn Header="Beoordeling" Width="90" DisplayMemberBinding="{Binding Rating}" local:GridViewSort.PropertyName="Rating"/>
                         <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
                         <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="50" local:GridViewSort.PropertyName="IsPrivate">
                             <GridViewColumn.CellTemplate>
