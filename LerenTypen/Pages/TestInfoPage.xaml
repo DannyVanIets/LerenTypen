@@ -124,16 +124,16 @@
         </Button>
 
         <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" >
-            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,0.6,0">
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,20,0">
                 <Label x:Name="reviewTitleLabel" FontSize="32"
                FontWeight="Bold" Content="Reviews" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-7,0,0,0"/>
-                <Label x:Name="averageScoreLabel" FontSize="22" VerticalAlignment="Center" Content="Gemiddelde score: " Margin="0,20,0,11.4" Width="206"/>
-                <StackPanel x:Name="ReviewScorePanel" MaxHeight="16" HorizontalAlignment="Center"  Orientation="Horizontal"/>
+                <Label x:Name="averageScoreLabel" FontSize="22" VerticalAlignment="Center" Content="Gemiddelde beoordeling: " Margin="0,20,0,11.4"/>
+                <StackPanel x:Name="ReviewScorePanel" MaxHeight="64" HorizontalAlignment="Center" Orientation="Horizontal"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,-0.4,0">
                 <Label x:Name="addReviewLabel" FontSize="20" Content="Schrijf een review!" Margin="-7,0,-0.4,0.2"/>
-                <Label x:Name="reviewMustsLabel" Content="* = verplicht" Margin="0,0,-0.4,0.2"/>
+                <Label x:Name="reviewMustsLabel" Content="* = verplicht" Margin="0,0,-0.4,0.2" VerticalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,-12.4,0">
