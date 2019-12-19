@@ -93,9 +93,11 @@ namespace LerenTypen.Controllers
         public static Dictionary<int, string> GetTestResultsContentWrong(int testID, int testResultID)
         {
             Dictionary<int, string> results = new Dictionary<int, string>();
-            Dictionary<string, int> answers = TestController.GetAllLinesFromResult(testResultID);
+            results = TestController.GetAllLinesFromResult(testResultID);
+            /*
             int lineCounter = 0;
 
+            
             // Loop through all the answers in order to set the line index (key) of the answer
             foreach (KeyValuePair<string, int> kvp in answers)
             {
@@ -107,7 +109,7 @@ namespace LerenTypen.Controllers
                     results.Add(lineCounter, kvp.Key);
                 }
             }
-
+            */
             return results;
         }
 

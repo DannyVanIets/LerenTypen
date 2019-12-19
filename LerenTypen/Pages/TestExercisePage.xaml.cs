@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Media;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -47,7 +46,7 @@ namespace LerenTypen
         private DispatcherTimer t1;
         private DispatcherTimer t2;
         private int currentLine; // user friendly line number (not zero-indexed)
-        private int currentLineIndex; // zero-indexed line number
+        //private int currentLineIndex; // zero-indexed line number
         private int restoredWrongAnswers;
         private int restoredRightAnswers;
         private List<string> lines;
@@ -131,9 +130,21 @@ namespace LerenTypen
 
                 currentLine = rightAnswers.Count + wrongAnswers.Count;
                 restoredRightAnswers = rightAnswers.Count;
-                restoredWrongAnswers = wrongAnswers.Count;         
-                lineNumberLbl.Content = $"{currentLine}/{lines.Count + restoredWrongAnswers - restoredRightAnswers}";
+                restoredWrongAnswers = wrongAnswers.Count;
                 wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
+                foreach (KeyValuePair<int, string> answer in wrongAnswers)
+                {
+                    if (answer.Key + 4 < lines.Count)
+                    {
+                        lines.Insert(answer.Key + 4, lines[answer.Key]);
+
+                    }
+                    else
+                    {
+                        lines.Add(lines[answer.Key]);
+                    }
+                }
+                lineNumberLbl.Content = $"{currentLine + 1}/{lines.Count}";
             }
             else
             {
@@ -142,7 +153,7 @@ namespace LerenTypen
                 wrongAnswers = new Dictionary<int, string>();
                 rightAnswers = new List<string>();
                 currentLine = 0;
-                currentLineIndex = 0;
+                //currentLineIndex = 0;
                 lineNumberLbl.Content = $"1/{lines.Count}";
                 wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
             }
@@ -150,14 +161,16 @@ namespace LerenTypen
             // Check if lines are found
             if (!lines.Count.Equals(0))
             {
-                if (restoreState)
-                {
-                    testLineLbl.Content = unfinishedLines[currentLineIndex];
-                }
-                else
-                {
-                    testLineLbl.Content = lines[currentLine];
-                }
+                /* if (restoreState)
+                 {
+                     testLineLbl.Content = unfinishedLines[currentLineIndex];
+                 }
+
+                 else
+                 {
+                 */
+                testLineLbl.Content = lines[currentLine];
+                // }
             }
             else
             {
@@ -393,15 +406,16 @@ namespace LerenTypen
             t1.Stop();
 
             lineCheckLbl.Visibility = Visibility.Visible;
-
-            if (restoreState)
-            {
-                lineCheckLbl.Content = unfinishedLines[currentLineIndex];
-            }
-            else
-            {
-                lineCheckLbl.Content = lines[currentLineIndex];
-            }
+            /*
+                        if (restoreState)
+                        {
+                            lineCheckLbl.Content = unfinishedLines[currentLineIndex];
+                        }
+                        else
+                        {
+                        */
+            lineCheckLbl.Content = lines[currentLine];
+            //}
 
             if (input.Trim().Equals(""))
             {
@@ -573,30 +587,37 @@ namespace LerenTypen
             ShowRightOrWrong(right, input);
 
             bool shouldGoToNextLine;
-            if (restoreState)
+            /*if (restoreState)
             {
-                shouldGoToNextLine = currentLineIndex < unfinishedLines.Count - 1;          
+                shouldGoToNextLine = currentLineIndex < unfinishedLines.Count - 1;
             }
             else
             {
-                shouldGoToNextLine = currentLine < lines.Count;
+            */
+            shouldGoToNextLine = true;
+            if (!(currentLine < lines.Count - 1))
+            {
+                shouldGoToNextLine = false;
             }
+            // }
 
             if (shouldGoToNextLine)
             {
                 currentLine++;
-                currentLineIndex++;
-                
-                if (restoreState)
+                //currentLineIndex++;
+
+                /*if (restoreState)
                 {
                     testLineLbl.Content = unfinishedLines[currentLineIndex];
                     lineNumberLbl.Content = $"{currentLine}/{lines.Count + restoredWrongAnswers - restoredRightAnswers}";
                 }
                 else
                 {
-                    testLineLbl.Content = lines[currentLineIndex];
-                    lineNumberLbl.Content = $"{currentLine + 1}/{lines.Count}";
-                }               
+                */
+                testLineLbl.Content = lines[currentLine];
+
+                lineNumberLbl.Content = $"{currentLine + 1}/{lines.Count}";
+                // }
             }
             else
             {
@@ -608,17 +629,18 @@ namespace LerenTypen
         /// Checks if users input equals the currentLine when trimmed, if wrong input, 
         /// amount of wrong answers gets added by one and the line is added to the test again to be made 4 lines later.
         /// </summary>
-        private bool CheckInput(string input)
+        private bool CheckInput(string input, int key = -1)
         {
             bool answerCorrect;
-            if (restoreState)
+            /*if (restoreState)
             {
                 answerCorrect = input.Trim().Equals(unfinishedLines[currentLineIndex].Trim());
             }
             else
             {
-                answerCorrect = input.Trim().Equals(lines[currentLine].Trim());
-            }
+            */
+            answerCorrect = input.Trim().Equals(lines[currentLine].Trim());
+            //}
 
             if (answerCorrect)
             {
@@ -635,21 +657,20 @@ namespace LerenTypen
                 wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
                 if (currentLine + 4 < lines.Count)
                 {
-                    if (restoreState)
-                    {
-                        unfinishedLines.Insert(currentLine + 4, lines[currentLine]);
-                    }
-
                     lines.Insert(currentLine + 4, lines[currentLine]);
                 }
                 else
                 {
+                    /*
                     if (restoreState)
                     {
-                        lines.Add(lines[currentLine]);
+                        lines.Add(lines[currentLineIndex]);
                     }
-
+                    else
+                    {
+                    */
                     lines.Add(lines[currentLine]);
+                    //}
                 }
             }
             return false;

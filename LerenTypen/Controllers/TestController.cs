@@ -1163,9 +1163,9 @@ namespace LerenTypen.Controllers
         /// Gets a dictionary containing the answers as the key and the answerType as the value
         /// (0 = right, 1 = wrong)
         /// </summary>
-        public static Dictionary<string, int> GetAllLinesFromResult(int testResultID)
+        public static Dictionary<int, string> GetAllLinesFromResult(int testResultID)
         {
-            Dictionary<string, int> lines = new Dictionary<string, int>();
+            Dictionary<int, string> lines = new Dictionary<int, string>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
@@ -1177,18 +1177,20 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@testResultID", testResultID);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
+                        int i = 0;
                         while (reader.Read())
                         {
                             int answerType = Convert.ToInt32(reader["answerType"]);
 
                             if (answerType == 0)
                             {
-                                lines.Add(reader["rightAnswer"].ToString(), answerType);
+                                lines.Add(i, reader["rightAnswer"].ToString());
                             }
                             else if (answerType == 1)
                             {
-                                lines.Add(reader["answer"].ToString(), answerType);
+                                lines.Add(i, reader["answer"].ToString());
                             }
+                            i++;
                         }
                     }
                 }
