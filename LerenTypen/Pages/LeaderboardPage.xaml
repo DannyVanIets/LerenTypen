@@ -5,38 +5,38 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LerenTypen"
       mc:Ignorable="d" 
-      d:DesignHeight="670" d:DesignWidth="1050" Background="White"
+      d:DesignHeight="560" d:DesignWidth="1050" Background="White"
       Title="Page5" ShowsNavigationUI="False">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="170"/>
+            <RowDefinition Height="170"/>
+            <RowDefinition Height="170"/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Label Content="Leaderboard" FontSize="42" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" Margin="0,0,0,0.4" Width="1048"/>
+            <Label Content="Leaderboard" FontSize="32" FontWeight="Bold" Margin="10,0,0,0" Width="1048"/>
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Row="1">
-            <StackPanel Orientation="Vertical" Background="#DC143C" Grid.Column="1" Height="198" Margin="0,0,-0.4,0">
+            <StackPanel Orientation="Vertical" Background="#b30000" Grid.Column="1" Height="170" Margin="0,0,-0.4,0">
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="Moeilijke toetsen leaderboard" FontWeight="Bold" FontSize="25" Margin="10,0,3,0"/>
-                    <ComboBox x:Name="TimePick" Height="37" FontSize="15" Width="108" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="Tijdkeuze_SelectionChanged">
+                    <Label Content="Moeilijke toetsen" Foreground="White" FontWeight="Bold" FontSize="20" Margin="10,0,3,0"/>
+                    <ComboBox x:Name="TimePick" Height="28" FontSize="15" Width="108" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="Tijdkeuze_SelectionChanged">
                         <ListBoxItem Content="Wekelijks" FontSize="15"/>
                         <ListBoxItem Content="Maandelijks" FontSize="15"/>
                         <ListBoxItem Content="Jaarlijks" FontSize="15"/>
                     </ComboBox>
                 </StackPanel>
 
-                <ListView x:Name="HardLeaderboardWords" MaxHeight="160" Background="#DC143C" Height="148" BorderThickness="0" Margin="10,5,175.6,0" FontSize="20">
+                <ListView x:Name="HardLeaderboardWords" Height="100" BorderThickness="0" Margin="10,5,175.6,0" FontSize="16">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="#" Width="50" DisplayMemberBinding="{Binding ID}"/>
+                            <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding ID}"/>
                             <GridViewColumn Header="Gebruikersnaam" Width="225" DisplayMemberBinding="{Binding AuthorUsername}" />
-                            <GridViewColumn Header="Gemiddelde Woorden per minuut" Width="330" DisplayMemberBinding="{Binding WordHighscore}" />
+                            <GridViewColumn Header="Gemiddelde woorden per minuut" Width="300" DisplayMemberBinding="{Binding WordHighscore}" />
                             <GridViewColumn Header="Gemiddelde % goed" Width="255" DisplayMemberBinding="{Binding PercentageRight}"/>
                         </GridView>
                     </ListView.View>
@@ -44,9 +44,9 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Row="2" Background="#FFD700">
+        <StackPanel Orientation="Vertical" Grid.Row="2" Background="#eb8902">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Gemiddelde toetsen leaderboard" FontWeight="Bold" FontSize="25" Margin="10,0,3,0"/>
+                <Label Content="Gemiddelde toetsen" FontWeight="Bold" FontSize="20" Margin="10,0,3,0" Foreground="White"/>
                 <ComboBox x:Name="TimePick2" Height="28" Width="90" FontSize="15" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="Tijdkeuze2_SelectionChanged">
                     <ListBoxItem Content="Wekelijks" FontSize="15"/>
                     <ListBoxItem Content="Maandelijks" FontSize="15"/>
@@ -54,34 +54,33 @@
                 </ComboBox>
             </StackPanel>
 
-            <ListView x:Name="AverageWordsboard" Background="#FFD700" MaxHeight="160" Height="148" BorderThickness="0"  Margin="10,5,175.6,0" FontSize="20">
+            <ListView x:Name="AverageWordsboard" Height="100" BorderThickness="0" Margin="10,5,175.6,0" FontSize="16">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="#" Width="50" DisplayMemberBinding="{Binding ID}"/>
+                        <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding ID}"/>
                         <GridViewColumn Header="Gebruikersnaam" Width="225" DisplayMemberBinding="{Binding AuthorUsername}" />
-                        <GridViewColumn Header="Gemiddelde Woorden per minuut" Width="330" DisplayMemberBinding="{Binding WordHighscore}" />
+                        <GridViewColumn Header="Gemiddelde woorden per minuut" Width="300" DisplayMemberBinding="{Binding WordHighscore}" />
                         <GridViewColumn Header="Gemiddelde % goed" Width="255" DisplayMemberBinding="{Binding PercentageRight}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </StackPanel>
 
-
-        <StackPanel Orientation="Vertical" Grid.Row="3" Background="#32CD32">
+        <StackPanel Orientation="Vertical" Grid.Row="3" Background="#0d9600">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Makkelijke toetsen leaderboard" FontWeight="Bold" FontSize="25"  Margin="10,0,3,0"/>
+                <Label Content="Makkelijke toetsen" FontWeight="Bold" Foreground="White" FontSize="20" Margin="10,0,3,0"/>
                 <ComboBox x:Name="TimePick3" Height="28" FontSize="15" Width="90" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="Tijdkeuze3_SelectionChanged">
                     <ListBoxItem Content="Wekelijks" FontSize="15"/>
                     <ListBoxItem Content="Maandelijks" FontSize="15"/>
                     <ListBoxItem Content="Jaarlijks" FontSize="15"/>
                 </ComboBox>
             </StackPanel>
-            <ListView x:Name="EasyLeaderboardWords" Background ="#32CD32" MaxHeight="160" Height="148" BorderThickness="0"  Margin="10,5,175.6,0" FontSize="20">
+            <ListView x:Name="EasyLeaderboardWords" Height="100" BorderThickness="0"  Margin="10,5,175.6,0" FontSize="16">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="#" Width="50" DisplayMemberBinding="{Binding ID}"/>
+                        <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding ID}"/>
                         <GridViewColumn Header="Gebruikersnaam" Width="225" DisplayMemberBinding="{Binding AuthorUsername}" />
-                        <GridViewColumn Header="Gemiddelde Woorden per minuut" Width="330" DisplayMemberBinding="{Binding WordHighscore}" />
+                        <GridViewColumn Header="Gemiddelde woorden per minuut" Width="300" DisplayMemberBinding="{Binding WordHighscore}" />
                         <GridViewColumn Header="Gemiddelde % goed" Width="255" DisplayMemberBinding="{Binding PercentageRight}"/>
                     </GridView>
                 </ListView.View>
