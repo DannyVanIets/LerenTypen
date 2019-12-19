@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace LerenTypen.Models
@@ -120,6 +121,21 @@ namespace LerenTypen.Models
                     item.Visibility = Visibility.Hidden;
                 }
             }
+        }
+
+        public static void SelectKey(Rectangle r, List<Ellipse> ellipses, List<Ellipse> ellipsesForCircles)
+        {
+            r.Visibility = Visibility.Hidden;
+            string fingerTag = r.Tag.ToString();
+            string circleTag = fingerTag + "Circle";
+            TipsController.FindCorrespondingFinger(fingerTag, ellipses);
+            TipsController.FindCorrespondingCircle(circleTag, ellipsesForCircles);
+        }
+
+        public static void BorderSetter(Label l, Brush color, int thickness)
+        {
+            l.BorderBrush = color;
+            l.BorderThickness = new Thickness(thickness);
         }
     }
 }

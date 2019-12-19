@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:LerenTypen"
       mc:Ignorable="d" 
       d:DesignHeight="570" d:DesignWidth="1050" Background="White"
-      Title="Page4" ShowsNavigationUI="False" KeyDown="PreviewKeyDown_Clicker">
+      Title="Page4" ShowsNavigationUI="False">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -246,16 +246,24 @@
                 </Ellipse>
             </Canvas>
         </StackPanel>
-
-            <Button Content="Voorbeeldwoorden" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Width="120" Height="20" VerticalAlignment="Top"/>
-        <Button Content="Maak " HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" Width="50" Height="20" VerticalAlignment="Top"/>
-
-        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-
-
-            <Label Content="Wil jij weten hoe een bepaald woord getypt wordt? Typ het woord hier in&#xD;&#xA; en zie in het plaatje hiernaast per letter hoe je het moet typen" HorizontalAlignment="Center" VerticalAlignment="Center" Height="52" Width="397"/>
-            <Label Content="Typ hier het woord: " HorizontalAlignment="Center" VerticalAlignment="Center" Height="26" Width="115"/>
-            <TextBox x:Name="TipPage_TestBox" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="115" PreviewKeyDown="PreviewKeyDown_Clicker"/>
+        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1">
+            <Label x:Name="TipPage_Label_Uitleg2" Grid.Row="2" Grid.Column="1" Content="Wil jij meer informatie in detail hebben? Kies een optie hieronder om &#xD;&#xA;meer te weten te komen over individele letters. Bekijk voorbeelden of&#xD;&#xA;maak je eigen woorden en kom erachter hoe het geschreven wordt." HorizontalAlignment="Center" VerticalAlignment="Top" Height="70" Width="397"/>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="TipPage_Button_Voorbeeldwoorden" Content="Voorbeeldwoorden" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Margin="10,0" Width="120" Height="20" Click="TipPage_Button_Voorbeeldwoorden_Click"/>
+                <Button x:Name="TipPage_Button_MaakZelfWoorden" Content="Maak zelf woorden" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" Margin="150,0" Width="120" Height="20" Click="TipPage_Button_MaakZelfWoorden_Click"/>
+            </StackPanel>
+            <Rectangle Width="500" Height="2" Fill="Black" Margin="0,5"/>
         </StackPanel>
+        <Label x:Name="TipPage_Label_Intro" Visibility="Visible" Grid.Row="2" Grid.Column="1" Content="" Width="400" Margin="16.8,102,17.6,102.2"/>
+
+        <StackPanel x:Name="TipPage_StackPanel_AllLetters" Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,80,0,0">
+            <Label x:Name="TipPage_Label_Letter1" Content="" Height="30" Width="30"/>
+            <Label x:Name="TipPage_Label_Letter2" Content="" Height="30" Width="30"/>
+            <Label x:Name="TipPage_Label_Letter3" Content="" Height="30" Width="30"/>
+            <Label x:Name="TipPage_Label_Letter4" Content="" Height="30" Width="30"/>
+            <Label x:Name="TipPage_Label_Letter5" Content="" Height="30" Width="30"/>
+        </StackPanel>
+        <TextBox x:Name="TipPage_TestBox" IsEnabled="False" Visibility="Visible" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,30" Text="" VerticalAlignment="Bottom" Width="200" Height="30" PreviewKeyDown="PreviewKeyDown_Clicker"/>
+
     </Grid>
 </Page>
