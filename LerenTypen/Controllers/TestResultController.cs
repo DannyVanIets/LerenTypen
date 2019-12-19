@@ -181,21 +181,39 @@ namespace LerenTypen.Controllers
         public static Dictionary<int, string> GetTestResultsContentWrong(int testID, int testResultID)
         {
             Dictionary<int, string> results = new Dictionary<int, string>();
-            Dictionary<string, int> answers = TestController.GetAllLinesFromResult(testResultID);
-            int lineCounter = 0;
-
-            // Loop through all the answers in order to set the line index (key) of the answer
-            foreach (KeyValuePair<string, int> kvp in answers)
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
             {
-                lineCounter++;
+                connection.Open();
+                string query = "Select rightAnswer, answerType, answer from testResultContent Where testResultID = @testResultID";
 
-                // Check if answer is wrong, if so, add it
-                if (kvp.Value == 1)
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    results.Add(lineCounter, kvp.Key);
+                    command.Parameters.AddWithValue("@testResultID", testResultID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        int i = 0;
+                        while (reader.Read())
+                        {
+                            if (Convert.ToInt32(reader["answerType"]) == 1)
+                            {
+                                results.Add(i, reader["answer"].ToString());
+                            }
+                            i++;
+
+                        }
+                    }
                 }
             }
-
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
             return results;
         }
 
@@ -317,11 +335,11 @@ namespace LerenTypen.Controllers
                 connection.Dispose();
             }
 
-            InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines);
+            InsertResultsContent(testResultID, rightAnswers, wrongAnswers, lines, finished);
             return testResultID;
         }
 
-        private static void InsertResultsContent(int testResultID, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines)
+        private static void InsertResultsContent(int testResultID, List<string> rightAnswers, Dictionary<int, string> wrongAnswers, List<string> lines, bool finished)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
@@ -356,6 +374,24 @@ namespace LerenTypen.Controllers
                         command.ExecuteNonQuery();
                     }
                 }
+                if (!finished)
+                {
+                    List<string> unfinishedLines = TestController.GetAllLinesNotInResult(rightAnswers, wrongAnswers, lines);
+                    foreach (string line in unfinishedLines)
+                    {
+                        string query = "INSERT INTO testresultcontent (testResultID, answer, answerType) VALUES (@testResultID, @answer, @answerType)";
+
+                        using (SqlCommand command = new SqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@testResultID", testResultID);
+                            command.Parameters.AddWithValue("@answer", line);
+                            command.Parameters.AddWithValue("@answerType", 2);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+
+                }
+
             }
             catch (SqlException e)
             {
