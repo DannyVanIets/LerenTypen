@@ -73,7 +73,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Rating" DisplayMemberBinding="{Binding Rating}" Width="50"/>
+                        <GridViewColumn Header="Beoordeling" DisplayMemberBinding="{Binding Rating}" Width="75"/>
                         <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
                         <GridViewColumn x:Name="editColumn" Width="0">
                             <GridViewColumn.CellTemplate>
