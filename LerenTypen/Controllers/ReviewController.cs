@@ -59,18 +59,19 @@ namespace LerenTypen.Controllers
         }
 
 
-        public static List<Review> GetUserReviewDetails(int testID)
+        public static List<Review> GetUserReviewDetails(int testID , int userID)
         {
             List<Review> queryResult = new List<Review>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
                 connection.Open();
-                string query = "select a.accountUsername, trs.testReviewScore, trs.testReviewDescription, trs.testReviewDateAdded from testReviews trs inner join accounts a on a.accountID = trs.accountID where a.archived =0 and trs.testID=@id order by testReviewID desc;";
+                           string query = "select a.accountUsername, testReviewScore , trs.testReviewDescription, trs.testReviewDateAdded ,a.accountID from testReviews trs inner join accounts a on a.accountID = trs.accountID where a.archived=0 and testID=@testid and a.accountID = @accountid order by testReviewID desc; ";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id", testID);
+                    command.Parameters.AddWithValue("@testid", testID);
+                    command.Parameters.AddWithValue("@accountid", userID);
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {

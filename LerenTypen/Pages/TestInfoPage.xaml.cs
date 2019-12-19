@@ -17,6 +17,7 @@ namespace LerenTypen
     {
         private MainWindow mainWindow;
         private int testID;
+        private string name;
         private int Reviewscore;
 
         public TestInfoPage(int testID, MainWindow mainWindow)
@@ -31,7 +32,7 @@ namespace LerenTypen
             testNameLabel.Content = test.Name;
 
             //Get all the review info
-            List<Review> inforeview = ReviewController.GetUserReviewDetails(testID);
+            List<Review> inforeview = TestController.GetUserRating(testID , AccountController.GetAccountIDFromUsername(name));
 
             foreach (Review review in inforeview)
             {
@@ -46,10 +47,12 @@ namespace LerenTypen
                 username.FontSize = 15;
                 username.Content = review.AccountUsername;
 
+                int accountID = AccountController.GetAccountIDFromUsername(review.AccountUsername);
+
                 //get the score then convert them into stars.
                 StackPanel starscore = new StackPanel();
                 starscore.Orientation = Orientation.Horizontal;
-                double Reviewscore = TestController.GetRatingScore(testID);
+                double Reviewscore = Convert.ToDouble(TestController.GetUserRating(testID , accountID));
                 int ratingscore = (int)Math.Floor(Reviewscore);
 
                 //Print all the full stars
@@ -80,6 +83,7 @@ namespace LerenTypen
                 scores.Children.Add(date);
 
                 UserInfoFill.Children.Add(scores);
+               
                 //check if the description isnt empty
                 if (review.ReviewDescription != null)
                 {

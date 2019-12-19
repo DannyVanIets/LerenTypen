@@ -565,6 +565,7 @@ namespace LerenTypen.Controllers
             return true;
         }
 
+
         public static string GetAverageTestResultpercentage(string userName)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
