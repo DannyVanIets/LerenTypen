@@ -24,7 +24,7 @@
 
         </Grid.RowDefinitions>
         <StackPanel x:Name="titlePane" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="0,0,-0.4,0">
-            <Label Content="Toets Aanmaken" Margin="20,5,0,0" FontSize="32" FontWeight="Bold"/>
+            <Label x:Name="pageTitle"  Content="Toets Aanmaken" Margin="20,5,0,0" FontSize="32" FontWeight="Bold"/>
         </StackPanel>
         <DockPanel x:Name="optionsPane" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  Margin="0,0,0,0" VerticalAlignment="Top" >
             <Label Content="Naam:" FontSize="15" Margin="50,0,0,0" VerticalAlignment="Center"/>

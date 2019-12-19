@@ -23,7 +23,7 @@
 
         <TextBox x:Name="AllMyTestsOverviewPage_TextBox_Search" HorizontalAlignment="Left" Height="25" Grid.Row="1" TextWrapping="Wrap" Text="Zoek toetsnaam" BorderThickness="2" VerticalAlignment="Top" Width="155" Margin="10,3.2,0,0" TextChanged="Search_Event" PreviewMouseDown="Search_Remove_Event"/>
 
-        <CheckBox x:Name="AllMyTestsOverviewPage_CheckBox_MadeBefore" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="Toon alleen zelf geoefende toetsen" HorizontalAlignment="Center" Height="21" Width="220" Margin="13.8,8.2,13.4,6" Checked="AllMyTestsOverviewPage_CheckBox_MadeBefore_Checked" Unchecked="AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked"/>
+        <CheckBox x:Name="AllMyTestsOverviewPage_CheckBox_MadeBefore" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="Toon alleen zelf geoefende toetsen" HorizontalAlignment="Center" Height="21" Width="210" Margin="13.8,8.2,13.4,6" Checked="AllMyTestsOverviewPage_CheckBox_MadeBefore_Checked" Unchecked="AllMyTestsOverviewPage_CheckBox_MadeBefore_Unchecked"/>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="1" Margin="0,0.2,-1.4,0" Width="381">
             <Label x:Name="AllMyTestsOverviewPage_Label_AmountOfWords" Content="Aantal woorden: " VerticalAlignment="Top" Grid.Column="2" Grid.Row="2" Height="32" Width="95" Margin="0,2,0,0" />
@@ -37,12 +37,12 @@
             </ComboBox>
             <Button x:Name="AllMyTestsOverviewPage_Button_MakeOwnTest" Content="Maak een nieuwe toets" VerticalAlignment="Top" Width="150" Height="25" Grid.Column="2" Grid.Row="1" Margin="10,3,10,0" Click="AllMyTestsOverviewPage_Button_MakeOwnTest_Click"/>
         </StackPanel>
-        <ListView x:Name="AllMyTestsOverviewPage_ListView_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="2" Margin="0,3,-0.4,2.6" local:GridViewSort.AutoSort="True">
+        <ListView x:Name="AllMyTestsOverviewPage_ListView_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="2" local:GridViewSort.AutoSort="True">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                        <GridViewColumn Header="Naam" Width="200" local:GridViewSort.PropertyName="WPFName">
+                        <GridViewColumn Header="Naam" Width="170" local:GridViewSort.PropertyName="WPFName">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -56,9 +56,9 @@
                         <!-- Binding is used for collecting properties of objects in lists-->
                         <GridViewColumn Header="Totaal aantal keren geoefend" Width="180" DisplayMemberBinding="{Binding WPFTimesMade}" local:GridViewSort.PropertyName="WPFTimesMade"/>
                         <GridViewColumn Header="Meeste woorden per minuut" Width="180" DisplayMemberBinding="{Binding WordHighscore}" local:GridViewSort.PropertyName="Highscore"/>
-                        <GridViewColumn Header="Aantal woorden" Width="125" DisplayMemberBinding="{Binding AmountOfWords}" local:GridViewSort.PropertyName="AmountOfWords"/>
-                        <GridViewColumn Header="Moeilijkheidsgraad" Width="150" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>
-                        <GridViewColumn Header="Geüpload door" Width="120" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
+                        <GridViewColumn Header="Aantal woorden" Width="110" DisplayMemberBinding="{Binding AmountOfWords}" local:GridViewSort.PropertyName="AmountOfWords"/>
+                        <GridViewColumn Header="Moeilijkheidsgraad" Width="130" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>
+                        <GridViewColumn Header="Geüpload door" Width="110" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -68,7 +68,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
-                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="70" local:GridViewSort.PropertyName="IsPrivate">
+                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="55" local:GridViewSort.PropertyName="IsPrivate">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox Tag="{Binding AmountOfWords}" Checked="DG_Checkbox_Check" Unchecked="DG_Checkbox_Uncheck" IsChecked="{Binding IsPrivate}"/>

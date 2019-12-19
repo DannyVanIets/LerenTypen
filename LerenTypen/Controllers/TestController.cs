@@ -78,6 +78,43 @@ namespace LerenTypen.Controllers
             return 0;
         }
 
+        public static bool GetTestByName(string testName)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "SELECT Count(*) FROM tests WHERE testName=@testName";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testName", testName);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.GetInt32(0) >= 1)
+                            {
+                                return true;
+                            };
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return false;
+        }
+
         public static Test GetTest(int testID)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -177,7 +214,7 @@ namespace LerenTypen.Controllers
                 string query = "";
                 if (limit == 0)
                 {
-                    query = "select tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID)";
+                    query = "select tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID) DESC";
                 }
                 else
                 {
@@ -219,47 +256,36 @@ namespace LerenTypen.Controllers
         {
             List<Test> trendingTests = new List<Test>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
-            string idList = "(";
             List<int> ids = GetTrendingTestIDs(limit);
-
-            foreach (int id in ids)
-            {
-                // Check if this is not the last id
-                if (id != ids[ids.Count - 1])
-                {
-                    idList += $"{id}, ";
-                }
-                else
-                {
-                    idList += $"{id})";
-                }
-            }
 
             try
             {
+                string query;
                 connection.Open();
 
-                string query = $"SELECT testID, testName, testType, accountID, version, testDifficulty, isPrivate, createDate from tests t WHERE t.testID IN {idList}";
+                foreach (int id in ids)
+                {
+                    query = $"SELECT testName, testType, accountID, version, testDifficulty, isPrivate, createDate from tests WHERE testID = {id}";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {                  
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        while (reader.Read())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            int id = Convert.ToInt32(reader[0]);
-                            string name = reader.GetString(1);
-                            int type = Convert.ToInt32(reader[2]);
-                            int authorID = Convert.ToInt32(reader[3]);
-                            string authorName = AccountController.GetUsername(authorID);
-                            int wordCount = TestController.GetAmountOfWordsFromTest(id);
-                            int timesMade = TestController.GetTimesMade(id);
-                            int version = Convert.ToInt32(reader[4]);
-                            int difficulty = Convert.ToInt32(reader[5]);
-                            int isPrivate = Convert.ToInt32(reader[6]);
-                            DateTime createDateTime = (DateTime)reader[7];
+                            while (reader.Read())
+                            {
+                                string name = reader.GetString(0);
+                                int type = Convert.ToInt32(reader[1]);
+                                int authorID = Convert.ToInt32(reader[2]);
+                                string authorName = AccountController.GetUsername(authorID);
+                                int wordCount = TestController.GetAmountOfWordsFromTest(id);
+                                int timesMade = TestController.GetTimesMade(id);
+                                int version = Convert.ToInt32(reader[3]);
+                                int difficulty = Convert.ToInt32(reader[4]);
+                                int isPrivate = Convert.ToInt32(reader[5]);
+                                DateTime createDateTime = (DateTime)reader[6];
 
-                            trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty, Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
+                                trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty, Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
+                            }
                         }
                     }
                 }
@@ -284,42 +310,29 @@ namespace LerenTypen.Controllers
         {
             List<Test> trendingTests = new List<Test>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
-            string idList = "(";
             List<int> ids = GetTrendingTestIDs(limit);
-
-            foreach (int id in ids)
-            {
-                // Check if this is not the last id
-                if (id != ids[ids.Count - 1])
-                {
-                    idList += $"{id}, ";
-                }
-                else
-                {
-                    idList += $"{id})";
-                }
-            }
 
             try
             {
+                string query;
                 connection.Open();
 
-                string query = $"SELECT testID, testName, accountID from tests t WHERE t.testID IN {idList}";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
+                foreach (int id in ids)
                 {
-                    command.Parameters.AddWithValue("@ids", idList);
+                    query = $"SELECT testName, accountID from tests WHERE testID = {id}";
 
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        while (reader.Read())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            int id = Convert.ToInt32(reader[0]);
-                            string name = reader.GetString(1);
-                            int authorID = Convert.ToInt32(reader[2]);
-                            string authorName = AccountController.GetUsername(authorID);
+                            while (reader.Read())
+                            {
+                                string name = reader.GetString(0);
+                                int authorID = Convert.ToInt32(reader[1]);
+                                string authorName = AccountController.GetUsername(authorID);
 
-                            trendingTests.Add(new Test(id, name, authorName));
+                                trendingTests.Add(new Test(id, name, authorName));
+                            }
                         }
                     }
                 }
@@ -630,6 +643,34 @@ namespace LerenTypen.Controllers
             }
             return true;
         }
+
+
+        public static bool UpdateTestToArchived(int testId)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "UPDATE tests SET archived=1 WHERE testId=@test;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@test", testId);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return true;
+        }
+
         public static List<TestTable> GetPrivateTestMyAccount(int accountId)
         {
             List<TestTable> queryResult = new List<TestTable>();
@@ -797,7 +838,7 @@ namespace LerenTypen.Controllers
         /// <summary>
         /// Method for adding tests to database. 
         /// </summary>        
-        public static bool AddTest(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy)
+        public static bool AddTest(string testName, int testType, int testDifficulty, int isPrivate, List<string> content, int uploadedBy, int version)
         {
             bool result;
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -807,8 +848,8 @@ namespace LerenTypen.Controllers
 
                 // Select SCOPE_IDENTITY is used to insert the tests content into a seperate table with the same id
                 // DateTime.Now is being used to get the current date and time.
-                string query = "INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID) " +
-                    $"VALUES (@testName, @testType, 0, @testDifficulty, @now, @isPrivate, @uploadedBy); SELECT SCOPE_IDENTITY()";
+                string query = "INSERT INTO tests (testName, testType, archived, testDifficulty, createDate, isPrivate, accountID, version) " +
+                    $"VALUES (@testName, @testType, 0, @testDifficulty, @now, @isPrivate, @uploadedBy, @version); SELECT SCOPE_IDENTITY()";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -818,11 +859,102 @@ namespace LerenTypen.Controllers
                     command.Parameters.AddWithValue("@now", DateTime.Now);
                     command.Parameters.AddWithValue("@isPrivate", isPrivate);
                     command.Parameters.AddWithValue("@uploadedBy", uploadedBy);
+                    command.Parameters.AddWithValue("@version", version);
 
                     object testID = command.ExecuteScalar();
                     int intTestID = int.Parse(testID.ToString());
                     result = AddTestContent(intTestID, content);
 
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+
+            }
+            return result;
+
+        }
+
+        /// <summary>
+        /// Transaction for editing tests, checks if person is editing the test
+        /// </summary>
+        /// <param name="testID"></param>
+        /// <returns></returns>
+        public static int EditingTest(int testID)
+        {
+            int result = 2;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                string query = "BEGIN TRANSACTION[Tran1] " +
+                    "Select beingEdited from tests where testID = @testID " +
+                    "BEGIN TRY " +
+                    "DECLARE " +
+                    "@beingEdited TinyINT;  " +
+                    "SELECT @beingEdited = beingEdited from tests where testID = @testID; " +
+                    "SELECT @beingEdited " +
+                    "IF @beingEdited = 0 " +
+                    "BEGIN  " +
+                    "Update tests SET beingEdited = 1 Where testID = @testID " +
+                    "END  " +
+                    "END TRY " +
+                    "BEGIN CATCH " +
+                    "ROLLBACK TRANSACTION[Tran1] " +
+                    "END CATCH " +
+                    "COMMIT TRANSACTION[Tran1]";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testID", testID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            result = Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+                return 2;
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Called hitting save new test version
+        /// </summary>        
+        /// <returns></returns>
+        public static bool NotBeingEdited(int testID)
+        {
+            bool result;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "UPDATE tests SET beingEdited = 0 WHERE testID = @testID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testID", testID);
+                    command.ExecuteNonQuery();
+                    result = true;
                 }
             }
             catch (SqlException e)

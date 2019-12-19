@@ -11,9 +11,15 @@ namespace LerenTypen
     public partial class AdminEditAccountWindow : Window
     {
         private Account account;
-        public AdminEditAccountWindow(int id, int acctype)
+        private int accountID;
+        private MainWindow mainWindow;
+
+        public AdminEditAccountWindow(int id, int acctype, MainWindow mainWindow)
         {
             InitializeComponent();
+            accountID = id;
+            this.mainWindow = mainWindow;
+
             try
             {
                 account = AccountController.GetAccountNamesAndBirthdate(id);
@@ -39,6 +45,22 @@ namespace LerenTypen
 
             try
             {
+                // Check if own account is being edited
+                bool logout = true;
+                if (accountID == mainWindow.Ingelogd)
+                {
+                    MessageBoxResult result = MessageBox.Show("Je staat op het punt om je eigen account aan te passen. Als je doorgaat zal je opnieuw moeten inloggen. Wil je doorgaan?");
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        logout = true;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
                 if (!string.IsNullOrEmpty(firstname) || !string.IsNullOrEmpty(surname) || !string.IsNullOrEmpty(username))
                 {
                     AccountController.UpdateAccount(username, firstname, surname);
@@ -71,6 +93,11 @@ namespace LerenTypen
                 {
                     MessageBox.Show("Geen geldige rol", "Error");
                 }
+
+                if (logout)
+                {
+                    mainWindow.LogoutUser(true);
+                }
             }
             catch (Exception q)
             {
@@ -92,24 +119,19 @@ namespace LerenTypen
         {
             try
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het account wilt archiveren?", "Account Verwijderen", MessageBoxButton.YesNo);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het account wilt archiveren?", "Account archiveren", MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("Het Account is succesvol gearchiveerd!", "Succes");
+                    MessageBox.Show("Het account is succesvol gearchiveerd!", "Succes");
                     string username = account.UserName;
                     AccountController.DeleteAccount(username);
-                    this.Close();
-                }
-                else if (messageBoxResult == MessageBoxResult.No)
-                {
                     this.Close();
                 }
             }
             catch (Exception r)
             {
-                Console.WriteLine(r.ToString());
-                MessageBox.Show("Error", "Error");
-                this.Close();
+                Console.WriteLine(r.Message);
+                MessageBox.Show("Het account kon niet gearchiveerd worden, probeer het later opnieuw of neem contact op met de beheerders.", "Error");
             }
         }
     }

@@ -82,6 +82,13 @@ namespace LerenTypen
                 AllTestsOverview_Button_ShowOwnTestOnly.Visibility = Visibility.Hidden;
                 AllTestsOverview_CheckBox_MadeBefore.Visibility = Visibility.Hidden;
             }
+
+            // Check if user is teacher to show delete test and edit tests columns
+            if (AccountController.IsTeacher(mainWindow.Ingelogd))
+            {
+                deleteColumn.Width = 20;
+                editColumn.Width = 30;
+            }
         }
 
         /// <summary>
@@ -503,6 +510,27 @@ namespace LerenTypen
                 ActiveFilter = 0;
                 Dispatcher.Invoke(() => Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]));
             });
+        }
+
+        private void DG_ATO_Edit_Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            Hyperlink hyperlink = (Hyperlink)sender;
+            int testID = Convert.ToInt32(hyperlink.Tag);
+            if (TestController.EditingTest(testID).Equals(0))
+            {
+                MainWindow.frame.Navigate(new CreateTestPage(MainWindow, testID));
+            }
+            else
+            {
+                MessageBox.Show("Toets wordt momenteel aangepast");
+            }
+        }
+
+        private void DG_ATO_Delete_Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            Hyperlink hyperlink = (Hyperlink)sender;
+            TestController.UpdateTestToArchived(Convert.ToInt32(hyperlink.Tag));
+            MainWindow.frame.Navigate(new TestOverviewPage(MainWindow));
         }
     }
 }

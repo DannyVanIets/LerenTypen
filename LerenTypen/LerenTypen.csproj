@@ -50,6 +50,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FontAwesome.Sharp, Version=5.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.Sharp.5.8.3\lib\net40\FontAwesome.Sharp.dll</HintPath>
+    </Reference>
     <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
     </Reference>
@@ -70,6 +73,7 @@
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -88,7 +92,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AdminEditAccountWindow.xaml">
+    <Page Include="Windows\AdminEditAccountWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -116,14 +120,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AdminEditAccountWindow.xaml.cs">
+    <Compile Include="Windows\AdminEditAccountWindow.xaml.cs">
       <DependentUpon>AdminEditAccountWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\LeaderboardController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
+    <Compile Include="Models\Review.cs" />
     <Compile Include="Models\TestOptions.cs" />
+    <Compile Include="Controllers\TipsController.cs" />
     <Compile Include="Pages\AllMyTestsOverviewPage.xaml.cs">
       <DependentUpon>AllMyTestsOverviewPage.xaml</DependentUpon>
     </Compile>
@@ -157,7 +165,7 @@
       <DependentUpon>EditAccountPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GridViewSort.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -173,7 +181,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PrivacyInfoWindow.xaml">
+    <Page Include="Windows\PrivacyInfoWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -210,7 +218,7 @@
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\UserTable.cs" />
-    <Compile Include="PrivacyInfoWindow.xaml.cs">
+    <Compile Include="Windows\PrivacyInfoWindow.xaml.cs">
       <DependentUpon>PrivacyInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TestOverviewPage.xaml.cs">
@@ -283,6 +291,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\Toetsenbord.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\mutedButton.png" />
+    <Resource Include="img\unmutedButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\which_fingers.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

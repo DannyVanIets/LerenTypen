@@ -18,8 +18,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="75"/>
             <RowDefinition Height="140"/>
-            <RowDefinition Height="150"/>
-            <RowDefinition/>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3">
@@ -82,9 +83,7 @@
         <ListView x:Name="top3FastestTypersListView" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="265" Header="Top 3 snelste typers">
-
-                    </GridViewColumn>
+                    <GridViewColumn Width="265" Header="Top 3 snelste typers"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -92,7 +91,7 @@
         <ListView x:Name="top3HighestScoresListView" Grid.Row="2" Grid.Column="3" Margin="0,0,20,0" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Background="White">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Top 3 hoogste scores" Width="245"></GridViewColumn>
+                    <GridViewColumn Header="Top 3 hoogste scores" Width="245"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -115,16 +114,40 @@
             <CheckBox x:Name="readQuestionsAloudCHeckBox" Margin="0 2" Visibility="Hidden">Vragen voorlezen</CheckBox>
             <CheckBox x:Name="checkPunctuationCheckBox" Margin="0 2" Visibility="Hidden">Controleer op leestekens</CheckBox>
         </StackPanel>
+        <Button x:Name="editTestBtn" Content="Toets Wijzigen" Grid.Column="3" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Center" Width="100" Margin="0,20,0,0" Visibility="Collapsed" Click="EditTestBtn_Click"/>
 
-        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Right" 
-                    VerticalAlignment="Bottom" Width="125" Height="125">
-            <Label x:Name="resumeTestLabel" Visibility="Hidden" HorizontalAlignment="Center"
-                   FontSize="14" FontWeight="Bold">Toets hervatten</Label>
-            <Button x:Name="startTestButton" HorizontalAlignment="Center" VerticalAlignment="Center" Width="64" 
-                    RenderOptions.BitmapScalingMode="HighQuality"
+        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" >
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,0.6,0">
+                <Label x:Name="reviewTitleLabel" FontSize="32"
+               FontWeight="Bold" Content="Reviews" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-7,0,0,0"/>
+                <Label x:Name="averageScoreLabel" FontSize="22" VerticalAlignment="Center" Content="Gemiddelde score: " Margin="0,20,0,11.4" Width="244"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,-0.4,0">
+                <Label x:Name="addReviewLabel" FontSize="20" Content="Schrijf een review!" Margin="-7,0,-0.4,0.2"/>
+                <Label x:Name="reviewMustsLabel" Content="* = verplicht" Margin="0,0,-0.4,0.2"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,-12.4,0">
+                <Label x:Name="reviewScoreLabel" Content="Aantal sterren (1 - 5)*: " Grid.Column="0" Margin="-7, 0, 0, 0"/>
+                <TextBox x:Name="reviewScoreTextbox" Width="99" Margin="0,0,0,-0.2"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,0.6,0.8">
+                <Label x:Name="reviewDescriptionLabel" Content="Beschrijving: " Grid.Column="0" Margin="-7,0,50,0"/>
+                <TextBox x:Name="reviewDescriptionTextbox" Height="100" Width="447" HorizontalAlignment="Left" Margin="1,10,0,9.4"/>
+                <Button x:Name="saveButton"
+                Width="75" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddReviewButton_Click" Margin="10,0,0,10" RenderTransformOrigin="0.569,0.032" Content="Toevoegen"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Right">
+            <Button x:Name="startTestButton" HorizontalAlignment="Center" VerticalAlignment="Center" Width="48" 
+                    RenderOptions.BitmapScalingMode="HighQuality" Margin="0,8,0,0"
                     Background="Transparent" BorderThickness="0" Click="StartTestButton_Click">
                 <Image Source="/img/resumeButton.png"/>
             </Button>
+            <Label x:Name="resumeTestLabel" Visibility="Hidden" HorizontalAlignment="Center"
+                   FontSize="12" FontWeight="Bold" Margin="0,0,5,0">Toets hervatten</Label>
         </StackPanel>
     </Grid>
 </Page>

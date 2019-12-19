@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Media;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -44,7 +46,10 @@ namespace LerenTypen
 
         private DispatcherTimer t1;
         private DispatcherTimer t2;
-        private int currentLine;
+        private int currentLine; // user friendly line number (not zero-indexed)
+        private int currentLineIndex; // zero-indexed line number
+        private int restoredWrongAnswers;
+        private int restoredRightAnswers;
         private List<string> lines;
         private List<string> unfinishedLines;
         private Dictionary<int, string> wrongAnswers;
@@ -54,10 +59,10 @@ namespace LerenTypen
         private bool testClosed;
         private string testName;
         private MainWindow m;
+        Random random = new Random();
         //Soundplayer is the class we use for sounds. It can only include a file, play a file and stop playing any sounds.
         //It's pretty limited, but it's good enough for what we use it for. It also only supports .wav files!
-        private SoundPlayer sp = new SoundPlayer();
-        Random random = new Random();
+        private SoundPlayer sp = new SoundPlayer(@"../../../soundsCorrect/EmptyWav.wav");
 
         private bool restoreState;
         private int unfinishedTestResultID;
@@ -65,6 +70,8 @@ namespace LerenTypen
         public TestExercisePage(int testID, MainWindow m, bool restoreState = false)
         {
             InitializeComponent();
+
+            sp.PlayLooping();
 
             // Bool to stop timer when test is closed
             testClosed = false;
@@ -74,15 +81,46 @@ namespace LerenTypen
             this.restoreState = restoreState;
             textInputBox.Focus();
 
+            // Set the mute button's state according to the user's choice to play sounds or not
+            if (m.testOptions.Sound)
+            {
+                Image unmutedImg = new Image();
+                unmutedImg.Source = new BitmapImage(new Uri("/img/unmutedButton.png", UriKind.Relative));
+                muteButton.Content = unmutedImg;
+
+                // Set the tag to 0 (unmuted) so we can check the state later in the click event 
+                muteButton.Tag = 0;
+            }
+            else
+            {
+                Image mutedImg = new Image();
+                mutedImg.Source = new BitmapImage(new Uri("/img/mutedButton.png", UriKind.Relative));
+                muteButton.Content = mutedImg;
+                muteButton.Tag = 1;
+            }
+
+            amountOfPauses = 0;
+            wrongAnswers = new Dictionary<int, string>();
+            rightAnswers = new List<string>();
+            currentLine = 0;
+            wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
+
+            // Timer for game and showing answer
+            t1 = new DispatcherTimer();
+            t2 = new DispatcherTimer();
+            t1.Interval = new TimeSpan(0, 0, 1);
+            t1.Start();
+            t1.Tick += StartTimer;
+
             // Gets the tests name and content using the given testID
             lines = TestController.GetTestContent(testID); // List for lines to be written out by user
             testName = TestController.GetTestName(testID);
             testNameLbl.Content = testName;
 
             if (restoreState)
-            { 
+            {
                 // Restore the page in the same state as the unfinished test was saved
-                unfinishedTestResultID = TestResultController.GetUnfinishedTestResultID(m.Ingelogd, testID);         
+                unfinishedTestResultID = TestResultController.GetUnfinishedTestResultID(m.Ingelogd, testID);
                 amountOfPauses = TestResultController.GetAmountOfPauses(unfinishedTestResultID);
                 wrongAnswers = TestResultController.GetTestResultsContentWrong(testID, unfinishedTestResultID);
                 rightAnswers = TestResultController.GetTestResultsContentRight(unfinishedTestResultID);
@@ -91,9 +129,11 @@ namespace LerenTypen
                 i = timeSeconds % 60;
                 j = timeSeconds / 60;
 
-                currentLine = lines.Count - unfinishedLines.Count;
-                lineNumberLbl.Content = $"{currentLine + 1}/{lines.Count}";
-                wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";         
+                currentLine = rightAnswers.Count + wrongAnswers.Count;
+                restoredRightAnswers = rightAnswers.Count;
+                restoredWrongAnswers = wrongAnswers.Count;         
+                lineNumberLbl.Content = $"{currentLine}/{lines.Count + restoredWrongAnswers - restoredRightAnswers}";
+                wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
             }
             else
             {
@@ -102,6 +142,7 @@ namespace LerenTypen
                 wrongAnswers = new Dictionary<int, string>();
                 rightAnswers = new List<string>();
                 currentLine = 0;
+                currentLineIndex = 0;
                 lineNumberLbl.Content = $"1/{lines.Count}";
                 wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
             }
@@ -109,20 +150,20 @@ namespace LerenTypen
             // Check if lines are found
             if (!lines.Count.Equals(0))
             {
-                testLineLbl.Content = lines[currentLine];                
+                if (restoreState)
+                {
+                    testLineLbl.Content = unfinishedLines[currentLineIndex];
+                }
+                else
+                {
+                    testLineLbl.Content = lines[currentLine];
+                }
             }
             else
             {
                 MessageBox.Show("Geen regels gevonden", "Error");
                 CloseTest();
             }
-
-            // Timer for game and showing answer
-            t1 = new DispatcherTimer();
-            t2 = new DispatcherTimer();
-            t1.Interval = new TimeSpan(0, 0, 1);
-            t1.Start();
-            t1.Tick += StartTimer;
 
             // Make startup overlay visible for countdown
             Overlay.Visibility = Visibility.Visible;
@@ -333,6 +374,7 @@ namespace LerenTypen
                 //This lambda query is used to delay the application until the loading from the soundfile is complete.
                 //This way it doesn't stop the whole user-interface.
                 Task.Factory.StartNew(() => { while (!sp.IsLoadCompleted) ; });
+
                 sp.Play();
             }
             else
@@ -351,7 +393,16 @@ namespace LerenTypen
             t1.Stop();
 
             lineCheckLbl.Visibility = Visibility.Visible;
-            lineCheckLbl.Content = lines[currentLine];
+
+            if (restoreState)
+            {
+                lineCheckLbl.Content = unfinishedLines[currentLineIndex];
+            }
+            else
+            {
+                lineCheckLbl.Content = lines[currentLineIndex];
+            }
+
             if (input.Trim().Equals(""))
             {
                 countDownLbl.Content = "Geen invoer";
@@ -477,11 +528,26 @@ namespace LerenTypen
         }
 
         /// <summary>
-        /// Empty method for now (other user story)
+        /// Mute or unmute the sounds for the test
         /// </summary>
         private void MuteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if ((int)muteButton.Tag == 0)
+            {
+                m.testOptions.Sound = false;
+                Image mutedImg = new Image();
+                mutedImg.Source = new BitmapImage(new Uri("/img/mutedButton.png", UriKind.Relative));
+                muteButton.Content = mutedImg;
+                muteButton.Tag = 1;
+            }
+            else if ((int)muteButton.Tag == 1)
+            {
+                m.testOptions.Sound = true;
+                Image unmutedImg = new Image();
+                unmutedImg.Source = new BitmapImage(new Uri("/img/unmutedButton.png", UriKind.Relative));
+                muteButton.Content = unmutedImg;
+                muteButton.Tag = 0;
+            }
         }
 
         /// <summary>
@@ -505,12 +571,32 @@ namespace LerenTypen
             textInputBox.Text = "";
             bool right = CheckInput(input);
             ShowRightOrWrong(right, input);
-            currentLine++;
 
-            if (currentLine < lines.Count)
+            bool shouldGoToNextLine;
+            if (restoreState)
             {
-                testLineLbl.Content = lines[currentLine];
-                lineNumberLbl.Content = $"{currentLine + 1}/{lines.Count}";
+                shouldGoToNextLine = currentLineIndex < unfinishedLines.Count - 1;          
+            }
+            else
+            {
+                shouldGoToNextLine = currentLine < lines.Count;
+            }
+
+            if (shouldGoToNextLine)
+            {
+                currentLine++;
+                currentLineIndex++;
+                
+                if (restoreState)
+                {
+                    testLineLbl.Content = unfinishedLines[currentLineIndex];
+                    lineNumberLbl.Content = $"{currentLine}/{lines.Count + restoredWrongAnswers - restoredRightAnswers}";
+                }
+                else
+                {
+                    testLineLbl.Content = lines[currentLineIndex];
+                    lineNumberLbl.Content = $"{currentLine + 1}/{lines.Count}";
+                }               
             }
             else
             {
@@ -524,7 +610,17 @@ namespace LerenTypen
         /// </summary>
         private bool CheckInput(string input)
         {
-            if (input.Trim().Equals(lines[currentLine].Trim()))
+            bool answerCorrect;
+            if (restoreState)
+            {
+                answerCorrect = input.Trim().Equals(unfinishedLines[currentLineIndex].Trim());
+            }
+            else
+            {
+                answerCorrect = input.Trim().Equals(lines[currentLine].Trim());
+            }
+
+            if (answerCorrect)
             {
                 rightAnswers.Add(input);
                 return true;
@@ -539,10 +635,20 @@ namespace LerenTypen
                 wrongCounterLbl.Content = $"Aantal fouten: {wrongAnswers.Count}";
                 if (currentLine + 4 < lines.Count)
                 {
+                    if (restoreState)
+                    {
+                        unfinishedLines.Insert(currentLine + 4, lines[currentLine]);
+                    }
+
                     lines.Insert(currentLine + 4, lines[currentLine]);
                 }
                 else
                 {
+                    if (restoreState)
+                    {
+                        lines.Add(lines[currentLine]);
+                    }
+
                     lines.Add(lines[currentLine]);
                 }
             }

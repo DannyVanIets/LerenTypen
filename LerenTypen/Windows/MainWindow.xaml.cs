@@ -1,12 +1,10 @@
-﻿using Renci.SshNet;
+﻿using LerenTypen.Controllers;
+using LerenTypen.Models;
+using Renci.SshNet;
 using System;
-using LerenTypen.Controllers;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using LerenTypen.Models;
 using System.Collections.Generic;
 
 namespace LerenTypen
@@ -29,7 +27,7 @@ namespace LerenTypen
             InitializeComponent();
 
             client = new SshClient("145.44.233.184", "student", "toor2019");
-            connectSSH:
+        connectSSH:
             try
             {
                 client.Connect();
@@ -65,12 +63,12 @@ namespace LerenTypen
 
         private void TipPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new TipPage(), tipPageButton);
+            ChangePage(new TipPage(this), tipPageButton);
         }
 
         private void LeaderboardPageButton_Click(object sender, RoutedEventArgs e)
         {
-            ChangePage(new LeaderboardPage(), leaderboardPageButton);
+            ChangePage(new LeaderboardPage(this), leaderboardPageButton);
         }
 
         //In this method we will first check if the user is logged in, if that's the case it means they want to logout. We will first ask a confirmation, then update the property, make sure the loginPageButton texts changes and then put them on the homepage. If the user is not logged in, it will direct them to the login page.
@@ -185,6 +183,7 @@ namespace LerenTypen
             {
                 pageToggleButton.IsChecked = false;
             }
+
         }
 
         /// <summary>
@@ -290,7 +289,7 @@ namespace LerenTypen
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 LogoutUser();
-             }
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)

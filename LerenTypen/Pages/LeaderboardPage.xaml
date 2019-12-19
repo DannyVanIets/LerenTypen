@@ -9,6 +9,152 @@
       Title="Page5" ShowsNavigationUI="False">
 
     <Grid>
-        <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14">Dit is het leaderboard</Label>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical" Grid.Column="0">
+            <StackPanel Orientation="Vertical" Grid.Column="1">
+                <Label FontSize="20" Margin="46,5,72.8,0" HorizontalAlignment="Center" FontWeight="Bold" HorizontalContentAlignment="Center"  Content="Woorden per minuut" Height="36" Width="406"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Moeilijke Toetsen" FontWeight="Bold" FontSize="15" Margin="10,0,3,0"/>
+                    <ComboBox x:Name="TimePick" Height="28" Width="90" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="TimePick_SelectionChanged">
+                        <ListBoxItem Content="Wekelijks"/>
+                        <ListBoxItem Content="Maandelijks"/>
+                        <ListBoxItem Content="Jaarlijks"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <ListView x:Name="HardLeaderboardWords" MaxHeight="160" Width="515" Height="110" BorderThickness="0"  Margin="0,5,15,0" FontSize="15">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
+                            <GridViewColumn Header="Gebruikersnaam" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
+                            <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Header="Woorden goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="0">
+            <Label FontSize="20" Margin="46,5,72.8,0" HorizontalAlignment="Center" FontWeight="Bold" HorizontalContentAlignment="Center"  Content="Typ % goed" Height="36" Width="406"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Moeilijke Toetsen" FontWeight="Bold" FontSize="15" Margin="10,0,3,0"/>
+                <ComboBox x:Name="TimePick2" Height="28" Width="90" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="TimePick2_SelectionChanged">
+                    <ListBoxItem Content="Wekelijks"/>
+                    <ListBoxItem Content="Maandelijks"/>
+                    <ListBoxItem Content="Jaarlijks"/>
+                </ComboBox>
+            </StackPanel>
+
+            <ListView x:Name="HardLeaderboardPerc" MaxHeight="160" Width="515" Height="110" BorderThickness="0"  Margin="15,5,0,0" FontSize="15">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
+                        <GridViewColumn Header="Gebruikersnaam" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
+                        <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="% goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Gemiddelde Toetsen" FontWeight="Bold" FontSize="15" Margin="10,0,3,0"/>
+                <ComboBox x:Name="TimePick3" Height="28" Width="90" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="TimePick3_SelectionChanged">
+                    <ListBoxItem Content="Wekelijks"/>
+                    <ListBoxItem Content="Maandelijks"/>
+                    <ListBoxItem Content="Jaarlijks"/>
+                </ComboBox>
+            </StackPanel>
+
+            <ListView x:Name="AverageLeaderboardWords" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="0,5,15,0" FontSize="15">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
+                        <GridViewColumn Header="Gebruikersnaam" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
+                        <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Woorden goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Gemiddelde Toetsen" FontWeight="Bold" FontSize="15" Margin="10,0,3,0"/>
+                <ComboBox x:Name="TimePick4" Height="28" Width="90" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="TimePick4_SelectionChanged">
+                    <ListBoxItem Content="Wekelijks"/>
+                    <ListBoxItem Content="Maandelijks"/>
+                    <ListBoxItem Content="Jaarlijks"/>
+                </ComboBox>
+            </StackPanel>
+
+            <ListView x:Name="AverageLeaderboardperc" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="15,5,-0.2,0.6" FontSize="15">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
+                        <GridViewColumn Header="Gebruikersnaam" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
+                        <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="% goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Makkelijke Toetsen" FontWeight="Bold" FontSize="15" Margin="10,0,3,0"/>
+                <ComboBox x:Name="TimePick5" Height="28" Width="90" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="TimePick5_SelectionChanged">
+                    <ListBoxItem Content="Wekelijks"/>
+                    <ListBoxItem Content="Maandelijks"/>
+                    <ListBoxItem Content="Jaarlijks"/>
+                </ComboBox>
+            </StackPanel>
+
+            <ListView x:Name="EasyLeaderboardwords" MaxHeight="140" Width="515" Height="140" BorderThickness="0" Margin="0,5,9.8,0" FontSize="15">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
+                        <GridViewColumn Header="Gebruikersnaam" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
+                        <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Woorden goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="2">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Gemiddelde Toetsen" FontWeight="Bold" FontSize="15" Margin="10,0,3,0"/>
+                <ComboBox x:Name="TimePick6" Height="28" Width="90" IsReadOnly="True" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" Margin="11,0,11.8,0" SelectionChanged="TimePick6_SelectionChanged">
+                    <ListBoxItem Content="Wekelijks"/>
+                    <ListBoxItem Content="Maandelijks"/>
+                    <ListBoxItem Content="Jaarlijks"/>
+                </ComboBox>
+            </StackPanel>
+
+            <ListView x:Name="EasyeLeaderboardperc" MaxHeight="140" Width="515" Height="140" BorderThickness="0"  Margin="15,5,-0.2,0.6" FontSize="15">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="#" Width="25" DisplayMemberBinding="{Binding ID}"/>
+                        <GridViewColumn Header="Gebruikersnaam" Width="115" DisplayMemberBinding="{Binding AuthorUsername}" />
+                        <GridViewColumn Header ="Toetsnaam" Width="245" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="% goed" Width="105" DisplayMemberBinding="{Binding WordHighscore}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
     </Grid>
 </Page>

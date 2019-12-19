@@ -79,10 +79,9 @@
                 <PasswordBox x:Name="password_login_textbox" Height="31" KeyDown="Password_login_textbox_KeyDown" Canvas.Left="795" Canvas.Top="255" Width="162"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="inloggen_button" Content="Inloggen" Height="30" Width="80" Margin="5" Cursor="Hand" Click="Login_click"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Button x:Name="inloggen_button" Content="Inloggen" Height="30" Width="80" Margin="7" Cursor="Hand" Click="Login_click"/>
             </StackPanel>
-
         </StackPanel>
         
         <Border x:Name="Line" BorderBrush="#FF525252" BorderThickness="1" HorizontalAlignment="Center" Height="492" Margin="0,30,0,0" VerticalAlignment="Top" Width="3" Background="Black" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2">

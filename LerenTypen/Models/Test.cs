@@ -20,6 +20,15 @@ namespace LerenTypen.Models
         public bool IsPrivate { get; private set; }
         public string CreatedDateTime { get; private set; }
 
+
+        public Test(int rank ,string userName , string testName , int wordsScore)
+        {
+            ID = rank;
+            AuthorUsername = userName;
+            Name = testName;
+            WordHighscore = wordsScore;
+        }
+
         public Test(int id, string name, int type, int authorID, string authorUsername, int wordCount,
             int version, int difficulty, bool isPrivate, string createdDateTime)
         {
