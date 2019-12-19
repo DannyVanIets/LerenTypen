@@ -50,6 +50,94 @@ namespace LerenTypen.Controllers
         }
 
         /// <summary>
+        /// Gets the results using resultsID
+        /// </summary>
+        /// <param name="accountID"></param>
+        /// <returns></returns>
+        public static int GetWordsPerMinuteByPeriod(int accountID, DateTime firstDate, DateTime secondDate)
+        {
+            int result = 0;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "select avg(wordsEachMinute) from testresults where testResultsDate BETWEEN @firstDate AND @secondDate and accountID = @accountID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@accountID", accountID);
+                    command.Parameters.AddWithValue("@firstDate", firstDate.ToString());
+                    command.Parameters.AddWithValue("@secondDate", secondDate.ToString());
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (!reader.IsDBNull(0))
+                            {
+                                result = (reader.GetInt32(0));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the results date range (first date - last date)
+        /// </summary>
+        /// <param name="accountID"></param>
+        /// <returns></returns>
+        public static int GetDateRange(int accountID)
+        {
+            int result = -1;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "Declare @start_date DATETIME;" +
+                    "Declare @end_date DATETIME;" +
+                    "set @start_date = (select min(testResultsDate) from testresults where accountID = @accountID);" +
+                    "set @end_date = (select max(testResultsDate) from testresults where accountID = @accountID);" +
+                    " select DATEDIFF(Hour, @start_date, @end_date);";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@accountID", accountID);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            if (!reader.IsDBNull(0))
+                            {
+                                result = (reader.GetInt32(0));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Gets the right answers of a testResult using testResultID
         /// </summary>
         /// <param name="testResultID"></param>
