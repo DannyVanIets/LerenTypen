@@ -49,7 +49,7 @@
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                        <GridViewColumn Header="Naam" Width="200" local:GridViewSort.PropertyName="WPFName">
+                        <GridViewColumn Header="Naam" Width="180" local:GridViewSort.PropertyName="WPFName">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -73,6 +73,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+                        <GridViewColumn Header="Rating" DisplayMemberBinding="{Binding Rating}" Width="50"/>
                         <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
                         <GridViewColumn x:Name="editColumn" Width="0">
                             <GridViewColumn.CellTemplate>

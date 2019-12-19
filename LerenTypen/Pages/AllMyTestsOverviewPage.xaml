@@ -42,7 +42,7 @@
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                        <GridViewColumn Header="Naam" Width="170" local:GridViewSort.PropertyName="WPFName">
+                        <GridViewColumn Header="Naam" Width="150" local:GridViewSort.PropertyName="WPFName">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -54,11 +54,11 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <!-- Binding is used for collecting properties of objects in lists-->
-                        <GridViewColumn Header="Totaal aantal keren geoefend" Width="180" DisplayMemberBinding="{Binding WPFTimesMade}" local:GridViewSort.PropertyName="WPFTimesMade"/>
-                        <GridViewColumn Header="Meeste woorden per minuut" Width="180" DisplayMemberBinding="{Binding WordHighscore}" local:GridViewSort.PropertyName="Highscore"/>
-                        <GridViewColumn Header="Aantal woorden" Width="110" DisplayMemberBinding="{Binding AmountOfWords}" local:GridViewSort.PropertyName="AmountOfWords"/>
-                        <GridViewColumn Header="Moeilijkheidsgraad" Width="130" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>
-                        <GridViewColumn Header="Geüpload door" Width="110" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
+                        <GridViewColumn Header="Totaal aantal keren geoefend" Width="165" DisplayMemberBinding="{Binding WPFTimesMade}" local:GridViewSort.PropertyName="WPFTimesMade"/>
+                        <GridViewColumn Header="Meeste woorden per minuut" Width="170" DisplayMemberBinding="{Binding WordHighscore}" local:GridViewSort.PropertyName="Highscore"/>
+                        <GridViewColumn Header="Aantal woorden" Width="90" DisplayMemberBinding="{Binding AmountOfWords}" local:GridViewSort.PropertyName="AmountOfWords"/>
+                        <GridViewColumn Header="Moeilijkheidsgraad" Width="110" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>
+                        <GridViewColumn Header="Geüpload door" Width="120" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -67,15 +67,16 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+                        <GridViewColumn Header="Rating" Width="70" DisplayMemberBinding="{Binding Rating}" local:GridViewSort.PropertyName="Rating"/>
                         <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
-                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="55" local:GridViewSort.PropertyName="IsPrivate">
+                        <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="50" local:GridViewSort.PropertyName="IsPrivate">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox Tag="{Binding AmountOfWords}" Checked="DG_Checkbox_Check" Unchecked="DG_Checkbox_Uncheck" IsChecked="{Binding IsPrivate}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Width="35">
+                        <GridViewColumn Width="30">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>

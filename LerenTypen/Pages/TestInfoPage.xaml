@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LerenTypen"
       mc:Ignorable="d" 
-      d:DesignHeight="570" d:DesignWidth="1050" Background="White"
+      d:DesignHeight="750" d:DesignWidth="1050" Background="White"
       Title="Page4" ShowsNavigationUI="False">
 
     <Grid>
@@ -120,7 +120,8 @@
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,0.6,0">
                 <Label x:Name="reviewTitleLabel" FontSize="32"
                FontWeight="Bold" Content="Reviews" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-7,0,0,0"/>
-                <Label x:Name="averageScoreLabel" FontSize="22" VerticalAlignment="Center" Content="Gemiddelde score: " Margin="0,20,0,11.4" Width="244"/>
+                <Label x:Name="averageScoreLabel" FontSize="22" VerticalAlignment="Center" Content="Gemiddelde score: " Margin="0,20,0,11.4" Width="206"/>
+                <StackPanel x:Name="ReviewScorePanel" MaxHeight="16" HorizontalAlignment="Center"  Orientation="Horizontal"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,-0.4,0">
@@ -138,6 +139,10 @@
                 <TextBox x:Name="reviewDescriptionTextbox" Height="100" Width="447" HorizontalAlignment="Left" Margin="1,10,0,9.4"/>
                 <Button x:Name="saveButton"
                 Width="75" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddReviewButton_Click" Margin="10,0,0,10" RenderTransformOrigin="0.569,0.032" Content="Toevoegen"/>
+            </StackPanel>
+
+            <StackPanel x:Name="UserInfoFill" Orientation="Vertical" Grid.Row="5" Grid.Column="0" Height="553" Margin="0,0,-0.4,0">
+                <Label x:Name="UserReviewText" Content="User reviews" FontWeight="Bold" FontSize="32" Margin="0,0,0,0"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Right">

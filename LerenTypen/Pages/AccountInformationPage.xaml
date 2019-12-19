@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Vertical" Grid.Column="0">
-            <Label FontSize="30" Margin="20,5,-0.2,0" FontWeight="Bold" Grid.Column="0" Content="Accountinformatie" Height="57"/>
+            <Label FontSize="30" Margin="20,5,-0.2,0" FontWeight="Bold" Grid.Column="0" Content="Account Informatie" Height="57"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Gebruikersnaam :" Margin="20,0,0,0"  Height="47" FontSize="16" Width="200"/>
                 <Label x:Name="userNamelabel" Content="*Not loaded*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>

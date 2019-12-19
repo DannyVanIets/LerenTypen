@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace LerenTypen
 {
@@ -16,6 +18,7 @@ namespace LerenTypen
         private MainWindow mainWindow;
         private int testID;
         private bool resumeTest;
+        private int Reviewscore;
 
         public TestInfoPage(int testID, MainWindow mainWindow)
         {
@@ -29,9 +32,90 @@ namespace LerenTypen
                 editTestBtn.Visibility = Visibility.Visible;
 
             }
-
+            
+            // Get tests
             Test test = TestController.GetTest(testID);
             testNameLabel.Content = test.Name;
+
+            //Get all the review info
+            List<Review> inforeview = ReviewController.GetUserReviewDetails(testID);
+
+            foreach (Review review in inforeview)
+            {
+                //Make border around review part.
+                Border border = new Border();
+                border.BorderThickness = new Thickness(1);
+                border.BorderBrush = Brushes.Black;
+                UserInfoFill.Children.Add(border);
+                
+                //Get username
+                Label username = new Label();
+                username.FontSize = 15;
+                username.Content = review.AccountUsername;
+
+                //get the score then convert them into stars.
+                StackPanel starscore = new StackPanel();
+                starscore.Orientation = Orientation.Horizontal;
+                double Reviewscore = TestController.GetRatingScore(testID);
+                int ratingscore = (int)Math.Floor(Reviewscore);
+
+                //Print all the full stars
+                for (int i = 0; i < ratingscore; i++)
+                {
+                    Image fullstar = new Image();
+                    fullstar.Source = new BitmapImage(new Uri("/img/FullStar.png", UriKind.Relative));
+                    fullstar.Width = 16;
+                    starscore.Children.Add(fullstar);
+                }
+                //print the half stars for the score
+                if (Reviewscore % 1 != 0)
+                {
+                    Image halfstar = new Image();
+                    halfstar.Source = new BitmapImage(new Uri("/img/HalfStar.png", UriKind.Relative));
+                    halfstar.Width = 16;
+                    starscore.Children.Add(halfstar);
+                }
+                //print the date which the user made the review
+                Label date = new Label();
+                date.FontSize = 15;
+                date.Content = review.ReviewDateAdded;
+                //Put the stackpanel together
+                StackPanel scores = new StackPanel();
+                scores.Orientation = Orientation.Horizontal;
+                scores.Children.Add(username);
+                scores.Children.Add(starscore);
+                scores.Children.Add(date);
+
+                UserInfoFill.Children.Add(scores);
+                //check if the description isnt empty
+                if (review.ReviewDescription != null)
+                {
+                    Label description = new Label();
+                    description.FontSize = 15;
+                    description.Content = review.ReviewDescription;
+                    UserInfoFill.Children.Add(description);
+                }
+            }
+
+            double Review = TestController.GetRatingScore(testID);
+
+            int rating = (int)Math.Floor(Review);
+
+            for (int i = 0; i < rating; i++)
+            {
+                Image fullstar = new Image();
+                fullstar.Source = new BitmapImage(new Uri("/img/FullStar.png", UriKind.Relative));
+                fullstar.Width = 16;
+                ReviewScorePanel.Children.Add(fullstar);
+            }
+
+            if (Review % 1 != 0)
+            {
+                Image halfstar = new Image();
+                halfstar.Source = new BitmapImage(new Uri("/img/HalfStar.png", UriKind.Relative));
+                halfstar.Width = 16;
+                ReviewScorePanel.Children.Add(halfstar);
+            }
 
             string difficultyString = "";
             switch (test.Difficulty)
@@ -48,7 +132,6 @@ namespace LerenTypen
 
             }
             difficultyLabel.Content = $"Moeilijkheidsgraad: {difficultyString}";
-
             testVersionLabel.Content = $"Versie {test.Version} - {test.CreatedDateTime}";
 
             string testTypeString = "";

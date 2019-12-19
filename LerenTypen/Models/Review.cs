@@ -10,6 +10,7 @@ namespace LerenTypen.Models
     public class Review
     {
         public int TestID { get; set; }
+        public string AccountUsername { get; set; }
         public int AccountID { get; set; }
         public int ReviewScore { get; set; }
         public DateTime ReviewDateAdded { get; set; }
@@ -25,6 +26,14 @@ namespace LerenTypen.Models
             ReviewDescription = description;
         }
 
+        public Review(string accusername , int reviewscoregiven , string reviewdescription, DateTime date)
+        {
+            AccountUsername = accusername;
+            ReviewScore = reviewscoregiven;
+            ReviewDescription = reviewdescription;
+            ReviewDateAdded = date;
+
+        }
         public Review(int testID, int accountID, int score)
         {
             TestID = testID;
