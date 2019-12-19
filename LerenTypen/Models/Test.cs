@@ -16,18 +16,19 @@ namespace LerenTypen.Models
         public int AverageScore { get; private set; }
         public int Highscore { get; private set; }
         public int WordHighscore { get; private set; }
+        public int PercentageRight { get; set; }
         public int Version { get; private set; }
         public int Difficulty { get; private set; }
         public bool IsPrivate { get; private set; }
         public string CreatedDateTime { get; private set; }
 
 
-        public Test(int rank ,string userName , string testName , int wordsScore)
+        public Test(int rank ,string userName , int wordsright , int percentageright)
         {
             ID = rank;
             AuthorUsername = userName;
-            Name = testName;
-            WordHighscore = wordsScore;
+            WordHighscore = wordsright;
+            PercentageRight = percentageright;
         }
 
         public Test(int id, string name, int type, int authorID, string authorUsername, int wordCount,
