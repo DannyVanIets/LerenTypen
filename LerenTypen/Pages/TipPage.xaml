@@ -22,7 +22,8 @@
         <Border Grid.Row="1" Grid.Column="1"/>
         <Border Grid.Row="1" Grid.Column="0"/>
         <Border Grid.Row="2" Grid.Column="0" Background="LightYellow"/>
-        <Border Grid.Row="2" Grid.Column="1" Background="LightYellow"/>
+        <Border Grid.Row="2" Grid.Column="1" Background="LightYellow">
+        </Border>
 
         <Label x:Name="TipPage_Label_Title" Grid.Column="0" Grid.Row="0" Content="Tips en advies" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" Height="53" Width="352"/>
         <Image Source="/img/which_fingers.png" RenderOptions.BitmapScalingMode="HighQuality" Grid.Row="1" Grid.Column="1" Margin="0.8,0.2,-0.4,0"/>
@@ -245,7 +246,13 @@
                 </Ellipse>
             </Canvas>
         </StackPanel>
+
+            <Button Content="Voorbeeldwoorden" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Width="120" Height="20" VerticalAlignment="Top"/>
+        <Button Content="Maak " HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" Width="50" Height="20" VerticalAlignment="Top"/>
+
         <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+
             <Label Content="Wil jij weten hoe een bepaald woord getypt wordt? Typ het woord hier in&#xD;&#xA; en zie in het plaatje hiernaast per letter hoe je het moet typen" HorizontalAlignment="Center" VerticalAlignment="Center" Height="52" Width="397"/>
             <Label Content="Typ hier het woord: " HorizontalAlignment="Center" VerticalAlignment="Center" Height="26" Width="115"/>
             <TextBox x:Name="TipPage_TestBox" HorizontalAlignment="Center" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="115" PreviewKeyDown="PreviewKeyDown_Clicker"/>
