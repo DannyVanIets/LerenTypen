@@ -47,6 +47,6 @@
         <Button x:Name="muteButton" Visibility="Visible" HorizontalAlignment="Center" Background="Transparent" RenderOptions.BitmapScalingMode="HighQuality" BorderThickness="0" Grid.Row="2" VerticalAlignment="Center" Width="40" Click="MuteButton_Click">
             <Image Source="/img/unmutedButton.png"/>
         </Button>
-        <Label x:Name="wrongCounterLbl" Content="Aantal fout(en): 0" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Row="1"/>        
+        <Label x:Name="wrongCounterLbl" Content="Aantal fout: 0" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Grid.Row="1"/>        
     </Grid>    
 </Page>

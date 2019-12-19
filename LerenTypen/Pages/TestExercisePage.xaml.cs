@@ -102,7 +102,7 @@ namespace LerenTypen
             wrongAnswers = new Dictionary<int, string>();
             rightAnswers = new List<string>();
             currentLine = 0;
-            wrongCounterLbl.Content = $"Aantal fout(en): {wrongAnswers.Count}";
+            wrongCounterLbl.Content = $"Aantal fout: {wrongAnswers.Count}";
 
             // Timer for game and showing answer
             t1 = new DispatcherTimer();
