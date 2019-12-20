@@ -61,6 +61,8 @@ namespace LerenTypen
 
             TableContent = new List<TestTable>();
 
+            allMyTests.Columns.Remove(AllMyTestsOverviewPage_DG_TestId);
+
             // Add the data to the ListView and refresh to show
             try
             {
