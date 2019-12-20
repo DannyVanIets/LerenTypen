@@ -302,7 +302,7 @@ namespace LerenTypen.Controllers
 
                 foreach (int id in ids)
                 {
-                    query = $"SELECT testName,testType, t.accountID, timesMade, version, testDifficulty, isnull(Round(AVG(tr.testReviewScore), 1), 0) isPrivate, createDate FROM tests t left join testReviews tr on tr.testID = t.testID WHERE t.testID = {id} group by t.testID, testName, testType, t.accountID, timesMade, highscore, version, testDifficulty, isPrivate, createDate ORDER BY AVG(tr.testReviewScore) desc";
+                    query = $"SELECT testName,testType, t.accountID, timesMade, version, testDifficulty, isPrivate, createDate FROM tests t WHERE t.testID = {id} group by t.testID, testName, testType, t.accountID, timesMade, highscore, version, testDifficulty, isPrivate, createDate";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -318,7 +318,7 @@ namespace LerenTypen.Controllers
                                 int timesMade = TestController.GetTimesMade(id);
                                 int version = Convert.ToInt32(reader[3]);
                                 int difficulty = Convert.ToInt32(reader[4]);
-                                double rating = Convert.ToInt32(reader[5]);
+                                double rating = Convert.ToInt32(ReviewController.GetRatingScore(id));
                                 int isPrivate = Convert.ToInt32(reader[6]);
                                 DateTime createDateTime = (DateTime)reader[7];
 
@@ -1073,7 +1073,7 @@ namespace LerenTypen.Controllers
                         {
                             //add all the found data to a list
                             int testID = Convert.ToInt32(reader[0]);
-                            tests.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(testID), GetWordHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(testID), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(ReviewController.GetRatingScore(testID)), testID);
+                            tests.Add(new TestTable(counter, reader.GetString(2), GetTimesMade(testID), GetWordHighscore(reader.GetInt32(0)), GetAmountOfWordsFromTest(testID), Convert.ToInt32(reader[3]), reader.GetString(4), ReviewController.GetRatingScore(testID), testID));
                             counter++;
                         }
                     }
