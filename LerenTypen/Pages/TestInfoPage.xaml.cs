@@ -53,9 +53,9 @@ namespace LerenTypen
                 StackPanel starscore = new StackPanel();
                 starscore.Orientation = Orientation.Horizontal;
 
-                TestController.GetUserRating(testID , accountID);
+                TestController.GetUserRating(testID, accountID);
 
-                Review r = TestController.GetUserRating(testID , accountID);
+                Review r = TestController.GetUserRating(testID, accountID);
                 int ratingscore = (int)Math.Floor(r.ReviewScore);
 
                 //Print all the full stars
