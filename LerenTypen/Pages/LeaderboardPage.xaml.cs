@@ -34,16 +34,18 @@ namespace LerenTypen
             AverageWordsboard.ItemsSource = LeaderboardController.GetMediumTests(0);
             AverageWordsboard.Items.Refresh();
 
-            EasyLeaderboardWords.ItemsSource = LeaderboardController.GetMediumTests(0);
+            EasyLeaderboardWords.ItemsSource = LeaderboardController.GetEasyTests(0);
             EasyLeaderboardWords.Items.Refresh();
         }
 
         //Check all checkboxes if values are being changed or not.
         private void TimePick_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            System.Console.WriteLine("1");
             int value = TimePick.SelectedIndex;
             if (HardLeaderboardWords != null)
             {
+                HardLeaderboardWords.Items.Refresh();
                 HardLeaderboardWords.ItemsSource = LeaderboardController.GetHardTests(value);
                 HardLeaderboardWords.Items.Refresh();
             }
@@ -51,6 +53,7 @@ namespace LerenTypen
         
         private void TimePick2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            System.Console.WriteLine("12");
             int value = TimePick2.SelectedIndex;
             if (AverageWordsboard != null)
             {
@@ -60,6 +63,8 @@ namespace LerenTypen
         }
         private void TimePick3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+            System.Console.WriteLine("123");
             int Value = TimePick3.SelectedIndex;
             if (EasyLeaderboardWords != null)
             {
