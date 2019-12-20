@@ -49,7 +49,7 @@
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                        <GridViewColumn Header="Naam" Width="200" local:GridViewSort.PropertyName="WPFName">
+                        <GridViewColumn Header="Naam" Width="180" local:GridViewSort.PropertyName="WPFName">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -63,8 +63,8 @@
                         <GridViewColumn Header="Totaal aantal keren geoefend" Width="170" DisplayMemberBinding="{Binding WPFTimesMade}" local:GridViewSort.PropertyName="WPFTimesMade"/>
                         <GridViewColumn Header="Meeste woorden per minuut" Width="180" DisplayMemberBinding="{Binding WordHighscore}" local:GridViewSort.PropertyName="Highscore"/>
                         <GridViewColumn Header="Aantal woorden" Width="125" DisplayMemberBinding="{Binding AmountOfWords}" local:GridViewSort.PropertyName="AmountOfWords"/>
-                        <GridViewColumn Header="Moeilijkheidsgraad" Width="150" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>
-                        <GridViewColumn Header="Geüpload door" Width="120" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
+                        <GridViewColumn Header="Moeilijkheidsgraad" Width="130" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>
+                        <GridViewColumn Header="Geüpload door" Width="110" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -73,6 +73,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+                        <GridViewColumn Header="Beoordeling" DisplayMemberBinding="{Binding Rating}" Width="95" local:GridViewSort.PropertyName="Rating"/>
                         <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
                         <GridViewColumn x:Name="editColumn" Width="0">
                             <GridViewColumn.CellTemplate>

@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:LerenTypen"
       xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
       mc:Ignorable="d" 
-      d:DesignHeight="570" d:DesignWidth="1050" Background="White"
+      d:DesignHeight="750" d:DesignWidth="1050" Background="White"
       Title="Page4" ShowsNavigationUI="False">
 
     <Grid>
@@ -115,20 +115,20 @@
             <CheckBox x:Name="readQuestionsAloudCHeckBox" Margin="0 2" Visibility="Hidden">Vragen voorlezen</CheckBox>
             <CheckBox x:Name="checkPunctuationCheckBox" Margin="0 2" Visibility="Hidden">Controleer op leestekens</CheckBox>
         </StackPanel>
-        <Button x:Name="editTestBtn" Content="Toets Wijzigen" Grid.Column="3" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Center" Width="100" Margin="0,20,0,0" Visibility="Collapsed" Click="EditTestBtn_Click"/>
+        <Button x:Name="editTestBtn" Content="Toets aanpassen" Grid.Column="3" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Center" Width="100" Margin="0,20,0,0" Visibility="Collapsed" Click="EditTestBtn_Click"/>
 
         <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" >
-            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,0.6,0">
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,20,0">
                 <Label x:Name="reviewTitleLabel" FontSize="32"
                FontWeight="Bold" Content="Reviews" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="-7,0,0,0"/>
-                <Label x:Name="averageScoreLabel" FontSize="22" VerticalAlignment="Center" Content="Gemiddelde score: " Margin="0,20,0,11.4" Width="244"/>
-                <fa:IconImage x:Name="star1" Icon="star" VerticalAlignment="Center" Width="24" Height="24"/>
-                <fa:IconImage x:Name="star5" Icon="StarHalf" VerticalAlignment="Center" Width="24" Height="24"/>
+                <Label x:Name="averageScoreLabel" FontSize="22" VerticalAlignment="Center" Content="Gemiddelde beoordeling: " Margin="0,20,0,11.4"/>
+                <StackPanel x:Name="ReviewScorePanel" MaxHeight="64" HorizontalAlignment="Center" Orientation="Horizontal"/>
+
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,-0.4,0">
                 <Label x:Name="addReviewLabel" FontSize="20" Content="Schrijf een review!" Margin="-7,0,-0.4,0.2"/>
-                <Label x:Name="reviewMustsLabel" Content="* = verplicht" Margin="0,0,-0.4,0.2"/>
+                <Label x:Name="reviewMustsLabel" Content="* = verplicht" Margin="0,0,-0.4,0.2" VerticalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="20,0,-12.4,0">
@@ -142,6 +142,8 @@
                 <Button x:Name="saveButton"
                 Width="75" Height="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="AddReviewButton_Click" Margin="10,0,0,10" RenderTransformOrigin="0.569,0.032" Content="Toevoegen"/>
             </StackPanel>
+
+            <StackPanel x:Name="UserInfoFill" Orientation="Vertical" Grid.Row="5" Grid.Column="0" Height="553" Margin="20,0"/>
         </StackPanel>
         <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Right">
             <Button x:Name="startTestButton" HorizontalAlignment="Center" VerticalAlignment="Center" Width="48" 

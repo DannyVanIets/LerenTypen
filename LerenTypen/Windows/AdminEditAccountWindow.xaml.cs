@@ -11,9 +11,15 @@ namespace LerenTypen
     public partial class AdminEditAccountWindow : Window
     {
         private Account account;
-        public AdminEditAccountWindow(int id, int acctype)
+        private int accountID;
+        private MainWindow mainWindow;
+
+        public AdminEditAccountWindow(int id, int acctype, MainWindow mainWindow)
         {
             InitializeComponent();
+            accountID = id;
+            this.mainWindow = mainWindow;
+
             try
             {
                 account = AccountController.GetAccountNamesAndBirthdate(id);
@@ -39,27 +45,85 @@ namespace LerenTypen
 
             try
             {
+                //get amount of admin accounts on application
+                int amount = AccountController.GetAmountOfAdmins(2);
+               
+                /*
+                 * // Check if own account is being edited
+                bool logout = true;
+                if (accountID == mainWindow.Ingelogd)
+                {
+                    MessageBoxResult result = MessageBox.Show("Je staat op het punt om je eigen account aan te passen. Als je doorgaat zal je opnieuw moeten inloggen. Wil je doorgaan?");
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        logout = true;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                */
+
+
                 if (!string.IsNullOrEmpty(firstname) || !string.IsNullOrEmpty(surname) || !string.IsNullOrEmpty(username))
                 {
                     AccountController.UpdateAccount(username, firstname, surname);
                 }
                 else
                 {
-                    MessageBox.Show("Vul alle velden in!", "Vul alles in");
+                   
                 }
 
                 if (comboboxvalue == "student")
                 {
-                    AccountController.MakeStudent(username);
-                    MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
-                    this.Close();
+                    if (amount == 1)
+                    {
+                        MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het laastste admin account wilt archiveren?", "Alle admins archiveren", MessageBoxButton.YesNo);
+                        if (messageBoxResult == MessageBoxResult.Yes)
+                        {
+                            AccountController.MakeStudent(username);
+                            MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                            this.Close();
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        AccountController.MakeStudent(username);
+                        MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                        this.Close();
+                    }
                 }
+
                 else if (comboboxvalue == "docent")
                 {
-                    AccountController.MakeTeacher(username);
-                    MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
-                    this.Close();
+                    if (amount == 1)
+                    {
+                        MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het laastste admin account wilt archiveren?", "Alle admins archiveren", MessageBoxButton.YesNo);
+                        if (messageBoxResult == MessageBoxResult.Yes)
+                        {
+                            AccountController.MakeTeacher(username);
+                            MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                            this.Close();
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        AccountController.MakeTeacher(username);
+                        MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                        this.Close();
+                    }
                 }
+
                 else if (comboboxvalue == "admin")
                 {
                     AccountController.MakeAdmin(username);
@@ -71,6 +135,12 @@ namespace LerenTypen
                 {
                     MessageBox.Show("Geen geldige rol", "Error");
                 }
+
+             /*   if (logout)
+                {
+                    mainWindow.LogoutUser(true);
+                }
+                */
             }
             catch (Exception q)
             {

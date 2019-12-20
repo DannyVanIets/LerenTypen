@@ -56,7 +56,7 @@ namespace LerenTypen
             privateRadio.Visibility = Visibility.Hidden;
             publicRadio.Visibility = Visibility.Hidden;
             textInputTestName.MaxLength = 50;
-            pageTitle.Content = "Toets Wijzigen";
+            pageTitle.Content = "Toets aanpassen";
             NewVersion = true;
         }
 

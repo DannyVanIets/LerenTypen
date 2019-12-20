@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       xmlns:local="clr-namespace:LerenTypen"
       mc:Ignorable="d" 
       d:DesignHeight="570" d:DesignWidth="1050" Background="White"
@@ -20,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Vertical" Grid.Column="0">
-            <Label FontSize="30" Margin="20,5,-0.2,0" FontWeight="Bold" Grid.Column="0" Content="Accountinformatie" Height="57"/>
+            <Label FontSize="30" Margin="20,5,-0.2,0" FontWeight="Bold" Grid.Column="0" Content="Account Informatie" Height="57"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Gebruikersnaam :" Margin="20,0,0,0"  Height="47" FontSize="16" Width="200"/>
                 <Label x:Name="userNamelabel" Content="*Not loaded*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
@@ -44,7 +45,17 @@
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
+                            <GridViewColumn Header ="Toetsnaam" Width="400" local:GridViewSort.PropertyName="WPFName">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <Hyperlink Tag="{Binding TestId}" Click="Hyperlink_Click" >
+                                            <Run Text="{Binding WPFName}"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                             <GridViewColumn x:Name="AllMyLastMadeTests_DG_TestId" Header="TestId" DisplayMemberBinding="{Binding TestId}" local:GridViewSort.PropertyName="TestId" Width="0"/>
                         </GridView.Columns>
                     </GridView>
@@ -52,42 +63,59 @@
             </ListView>
             <Label x:Name="NoRecentTestsLbl" Content="Geen toetsen gevonden" Visibility="Collapsed"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <Grid Margin="0,10,0,-0.2" Width="526">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
+        <Label x:Name="LblNoResults" Visibility="Collapsed" Content="Geen Resultaten gevonden" Grid.Column="0" Grid.Row="1" Margin="20"></Label>
+        <Grid x:Name="StatisticsGrid" Grid.Column="0" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Vertical" Grid.Column="0">
-                    <TextBox HorizontalAlignment="Left" HorizontalContentAlignment="Center" Height="47" BorderThickness="0" Margin="20,0,0,0" TextWrapping="Wrap" Text="Gemiddeld aantal goede woorden per minuut." Width="210" FontSize="15"/>
-                    <Label x:Name="AverageWordsMinute" Content="*error*" VerticalAlignment="Top" HorizontalAlignment="Left" Height="68" HorizontalContentAlignment="Center" Width="263" Margin="0,0,0,0" FontSize="30"/>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>            
+
+            <StackPanel Orientation="Vertical" Grid.Column="0">
+                <TextBox HorizontalAlignment="Left" HorizontalContentAlignment="Center" Height="47" BorderThickness="0" Margin="20,0,0,0" TextWrapping="Wrap" Text="Gemiddeld aantal goede woorden per minuut." Width="210" FontSize="15"/>
+                <Label x:Name="AverageWordsMinute" Content="*error*" VerticalAlignment="Top" HorizontalAlignment="Left" Height="68" HorizontalContentAlignment="Center" Width="263" Margin="0,0,0,0" FontSize="30"/>
+            </StackPanel>
+            <lvc:CartesianChart x:Name="Chart"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,20,0,40">
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="W/m" MinValue="0" ></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis x:Name="Labels"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.Series>
+                    <lvc:LineSeries x:Name="LineSeries" LineSmoothness="1">
+
+                    </lvc:LineSeries>
+                </lvc:CartesianChart.Series>
+
+            </lvc:CartesianChart>
+            <ComboBox x:Name="ComboboxStatistics" Grid.Column="1" Grid.Row="0" Width="200" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,10,0" SelectionChanged="ComboboxStatistics_SelectionChanged">
+                <ComboBoxItem Content="Laatste vijf jaar"></ComboBoxItem>
+                <ComboBoxItem Content="Jaar"></ComboBoxItem>
+                <ComboBoxItem Content="Maand"></ComboBoxItem>
+                <ComboBoxItem Content="Week"></ComboBoxItem>
+            </ComboBox>
+
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <StackPanel Orientation="Vertical">
+                    <TextBox HorizontalAlignment="Left" BorderThickness="0" TextAlignment="Center" Margin="20,0,0,0.0" TextWrapping="Wrap" Text="Gemiddeld % woorden goed per toets." Width="209" FontSize="15"/>
+                    <Label x:Name="AveragePercentage" Content="*error*" HorizontalAlignment="Left"  Height="68" HorizontalContentAlignment="Center" Width="263" Margin="0,0,0,0"  FontSize="30"/>
                 </StackPanel>
+            </StackPanel>
 
-                <StackPanel Orientation="Vertical" Grid.ColumnSpan="2" Margin="263,0,0.4,137.2" Grid.RowSpan="2">
-                    <!--    <Label Content="Hier komt de grafiek!" Margin="0,0,-0.2,0" Height="47" FontSize="15"/> -->
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Grid.Row="1">
-                    <StackPanel Orientation="Vertical">
-                        <TextBox HorizontalAlignment="Left" BorderThickness="0" TextAlignment="Center" Margin="20,0,0,0.0" TextWrapping="Wrap" Text="Gemiddeld % woorden goed per toets." Width="209" FontSize="15"/>
-                        <Label x:Name="AveragePercentageMinute" Content="*error*" HorizontalAlignment="Left"  Height="68" HorizontalContentAlignment="Center" Width="263" Margin="0,0,0,0"  FontSize="30"/>
-                    </StackPanel>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-                    <!--     <TextBox HorizontalAlignment="Left" Margin="0,0,0,89.6" TextWrapping="Wrap" BorderThickness="0" Text="Leaderboardrank :" Width="145" FontSize="15"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                <!--     <TextBox HorizontalAlignment="Left" Margin="0,0,0,89.6" TextWrapping="Wrap" BorderThickness="0" Text="Leaderboardrank :" Width="145" FontSize="15"/>
                     <Label Content="Label" Height="48" VerticalAlignment="Top" Width="117"/> -->
-                </StackPanel>
-            </Grid>
-        </StackPanel>
+            </StackPanel>
+        </Grid>
 
-        <StackPanel x:Name = "MyAccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" >
+        <StackPanel x:Name="MyAccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" >
             <Label FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" FontWeight="Bold" Content="Mijn Toetsen"/>
             <Label x:Name="NoMyTestsLbl" Content="Geen toetsen gevonden" Visibility="Collapsed"/>
             <ListView x:Name="MyTests" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
@@ -95,7 +123,16 @@
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName">                               
+                            <GridViewColumn Header="Toetsnaam" Width="400" local:GridViewSort.PropertyName="WPFName">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                        <Hyperlink Tag="{Binding TestId}" Click="Hyperlink_Click" >
+                                            <Run Text="{Binding WPFName}"/>
+                                        </Hyperlink>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="70" local:GridViewSort.PropertyName="IsPrivate">
                                 <GridViewColumn.CellTemplate>
@@ -118,7 +155,7 @@
             </StackPanel>
         </StackPanel>
         
-        <StackPanel x:Name = "AccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" Visibility="Collapsed">
+        <StackPanel x:Name= "AccountPanel" Orientation="Vertical" Grid.Row="1" Grid.Column="1" Visibility="Collapsed">
             <Label FontSize="20" Margin="0,0,0,0" HorizontalAlignment="Center" FontWeight="Bold" Content="Door gebruiker gemaakte toetsen"/>
             <Label x:Name="NoAccountTestsLbl" Content="Geen toetsen gevonden" Visibility="Collapsed"/>
             <ListView x:Name="AccountTests" MaxHeight="160"  Margin="0,5,-0.2,0.6" FontSize="15">
@@ -126,7 +163,17 @@
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
-                            <GridViewColumn Header ="Toetsnaam" Width="400" DisplayMemberBinding="{Binding WPFName}" local:GridViewSort.PropertyName="WPFName"/>
+                            <GridViewColumn Header ="Toetsnaam" Width="400" local:GridViewSort.PropertyName="WPFName">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                        <Hyperlink Tag="{Binding TestId}" Click="Hyperlink_Click" >
+                                            <Run Text="{Binding WPFName}"/>
+                                        </Hyperlink>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>
