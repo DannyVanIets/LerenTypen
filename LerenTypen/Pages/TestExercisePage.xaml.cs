@@ -60,7 +60,8 @@ namespace LerenTypen
         private MainWindow m;
         //Soundplayer is the class we use for sounds. It can only include a file, play a file and stop playing any sounds.
         //It's pretty limited, but it's good enough for what we use it for. It also only supports .wav files!
-        private SoundPlayer sp = new SoundPlayer();
+        //We also already load in an sound that we can play on a loop. You can't hear this sound!
+        private SoundPlayer sp = new SoundPlayer(@"../../../soundsCorrect/EmptyWav.wav");
         Random random = new Random();
 
         private bool restoreState;
@@ -69,6 +70,10 @@ namespace LerenTypen
         public TestExercisePage(int testID, MainWindow m, bool restoreState = false)
         {
             InitializeComponent();
+
+            //Play the soundless sound indefinitely so that the application doesn't have a problem loading in the next sounds on time.
+            //Soundplayer() sadly has a delay when the first sound is being loaded and this way, it loads it before we display the other sounds.
+            sp.PlayLooping();
 
             // Bool to stop timer when test is closed
             testClosed = false;
