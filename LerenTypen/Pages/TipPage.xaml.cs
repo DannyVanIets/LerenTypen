@@ -306,7 +306,7 @@ namespace LerenTypen
             TipPage_TestBox.IsEnabled = true;
             TipPage_TestBox.Visibility = Visibility.Visible;
             TipPage_TestBox.Text = "";
-            TipPage_Label_Uitleg2.Content = "Maak zelf woorden";
+            TipPage_Label_Uitleg2.Text = "Maak zelf woorden";
             TipPage_Label_Uitleg2.FontSize = 30;
 
             // First, we make every rectangle visible, incase they arent
@@ -354,7 +354,7 @@ namespace LerenTypen
             TipPage_TestBox.Text = "";
             CurrentLetter = 1;
 
-            TipPage_Label_Uitleg2.Content = "Voorbeeldwoorden";
+            TipPage_Label_Uitleg2.Text = "Voorbeeldwoorden";
             TipPage_Label_Uitleg2.FontSize = 30;
             TipPage_Label_Intro.Content = "Hieronder staat een voorbeeldwoord.\nKijk in het plaatje hiernaast hoe je dit moet typen";
             TipPage_Label_Intro.Visibility = Visibility.Visible;
