@@ -72,6 +72,12 @@ namespace LerenTypen
                 SearchResult = (from t in TableContent
                                 where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
                                 select t).ToList();
+                int i = 1;
+                foreach (TestTable search in SearchResult)
+                {
+                    search.WPFNumber = i;
+                    i++;
+                }
                 TableContent = SearchResult;
 
                 AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = SearchResult;
@@ -196,7 +202,7 @@ namespace LerenTypen
             {
                 CurrentContent = TableContent;
             }
-            else if(AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
+            else if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = SearchResult;
             }
@@ -424,7 +430,7 @@ namespace LerenTypen
 
                     AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = TableContent;
                 }
-                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
 
             }
         }
