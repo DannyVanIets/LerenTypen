@@ -798,7 +798,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate, AVG(trev.testReviewScore) from tests t Inner join accounts a on t.accountID = a.accountID inner join testresults tr on tr.testID = t.testID inner join testReviews trev on t.accountID = a.accountID where tr.accountID = @accountID and t.finished = 1 and t.accountID = @accountID and t.archived = 0 and a.archived = 0 group by t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate, AVG(trev.testReviewScore) from tests t Inner join accounts a on t.accountID = a.accountID inner join testresults tr on tr.testID = t.testID inner join testReviews trev on t.accountID = a.accountID where tr.accountID = @accountID and tr.finished = 1 and t.accountID = @accountID and t.archived = 0 and a.archived = 0 group by t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
