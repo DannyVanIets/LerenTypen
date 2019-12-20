@@ -41,7 +41,6 @@ namespace LerenTypen
         //Check all checkboxes if values are being changed or not.
         private void TimePick_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            System.Console.WriteLine("1");
             int value = TimePick.SelectedIndex;
             if (HardLeaderboardWords != null)
             {
@@ -53,7 +52,6 @@ namespace LerenTypen
         
         private void TimePick2_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            System.Console.WriteLine("12");
             int value = TimePick2.SelectedIndex;
             if (AverageWordsboard != null)
             {
@@ -63,8 +61,6 @@ namespace LerenTypen
         }
         private void TimePick3_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            System.Console.WriteLine("123");
             int Value = TimePick3.SelectedIndex;
             if (EasyLeaderboardWords != null)
             {
