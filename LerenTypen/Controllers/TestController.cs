@@ -319,7 +319,7 @@ namespace LerenTypen.Controllers
                                 int timesMade = TestController.GetTimesMade(id);
                                 int version = Convert.ToInt32(reader[3]);
                                 int difficulty = Convert.ToInt32(reader[4]);
-                                double rating = Convert.ToInt32(ReviewController.GetRatingScore(id));
+                                double rating = ReviewController.GetRatingScore(id);
                                 int isPrivate = Convert.ToInt32(reader[6]);
                                 DateTime createDateTime = (DateTime)reader[7];
 
