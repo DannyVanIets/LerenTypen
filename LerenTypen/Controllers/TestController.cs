@@ -755,7 +755,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername , isnull(Round(AVG(tr.testReviewScore),1),0), t.isPrivate from tests t left join testReviews tr on tr.testID = t.testID join accounts a on t.accountID = a.accountID where t.archived = 0 and a.archived = 0 group by t.testID, t.accountID, testName, t.testDifficulty , a.accountUsername, t.isPrivate ORDER BY AVG(tr.testReviewScore) desc";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate from tests t join accounts a on t.accountID = a.accountID where t.archived = 0 and a.archived = 0 group by t.testID, t.accountID, testName, t.testDifficulty , a.accountUsername, t.isPrivate";
                 int bCounter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -766,13 +766,14 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //adds all the found data to a list
-                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), GetTimesMade(Convert.ToInt32(reader[0])), GetWordHighscore(Convert.ToInt32(reader[0])), GetAmountOfWordsFromTest(Convert.ToInt32(reader[0])), Convert.ToInt32(reader[3]), reader.GetString(4), Convert.ToInt32(reader[5]), Convert.ToInt32(reader[6]), Convert.ToInt32(reader[0])));
+                            int id = Convert.ToInt32(reader[0]);
+                            queryResult.Add(new TestTable(bCounter, reader.GetString(2), GetTimesMade(id), GetWordHighscore(id), GetAmountOfWordsFromTest(id), Convert.ToInt32(reader[3]), reader.GetString(4), ReviewController.GetRatingScore(id), Convert.ToInt32(reader[6]), id));
                             bCounter++;
                         }
                     }
                 }
             }
-            catch (SqlException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
