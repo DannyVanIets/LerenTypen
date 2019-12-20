@@ -59,24 +59,6 @@ namespace LerenTypen
             Birthdatelabel.Content = Account.Birthdate;
             //Get averages from database and fill labels for that account.
 
-            if (Convert.ToInt32(AccountController.GetAverageWordsMinute(Account.UserName)) == 0)
-            {
-                AverageWordsMinute.Content = "Geen gegevens";
-            }
-            else
-            {
-                AverageWordsMinute.Content = Convert.ToInt32(AccountController.GetAverageWordsMinute(Account.UserName));
-            }
-
-            if (Convert.ToInt16(AccountController.GetAverageTestResultpercentage(Account.UserName)) == 0)
-            {
-                AveragePercentage.Content = "Geen gegevens";
-            }
-            else
-            {
-                AveragePercentage.Content = Convert.ToInt16(AccountController.GetAverageTestResultpercentage(Account.UserName)) + " %";
-            }
-
             try
             {
                 UserContent = TestController.GetPrivateTestMyAccount(UserID);
