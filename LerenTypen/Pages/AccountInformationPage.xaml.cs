@@ -57,7 +57,10 @@ namespace LerenTypen
             userNamelabel.Content = Account.UserName;
             FullNamelabel.Content = firstname + " " + lastname;
             Birthdatelabel.Content = Account.Birthdate;
+
             //Get averages from database and fill labels for that account.
+            AverageWordsMinute.Content = AccountController.GetAverageWordsMinute(Account.UserName);
+            AveragePercentage.Content = AccountController.GetAverageTestResultpercentage(Account.UserName) + " %";
 
             try
             {
