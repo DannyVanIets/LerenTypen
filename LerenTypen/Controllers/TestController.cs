@@ -404,7 +404,7 @@ namespace LerenTypen.Controllers
                 connection.Open();
 
                 // this query returns all the content from a given testId
-                string query = "SELECT MAX(wordsEachMinute), accountID FROM testresults WHERE testID=@testID GROUP BY accountID";
+                string query = "SELECT MAX(wordsEachMinute), accountID FROM testresults WHERE testID=@testID and finished = 1 GROUP BY accountID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -484,7 +484,7 @@ namespace LerenTypen.Controllers
                 connection.Open();
 
                 // this query returns all the content from a given testId
-                string query = ("SELECT TOP 3 MAX(wordsEachMinute) AS wordsEachMinute, accountID FROM testresults WHERE testID=@testID GROUP BY accountID ORDER BY wordsEachMinute DESC");
+                string query = ("SELECT TOP 3 MAX(wordsEachMinute) AS wordsEachMinute, accountID FROM testresults WHERE testID=@testID and finished = 1 GROUP BY accountID ORDER BY wordsEachMinute DESC");
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
