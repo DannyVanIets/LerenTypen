@@ -122,7 +122,12 @@ namespace LerenTypen.Models
                 }
             }
         }
-
+        /// <summary>
+        /// Finds the corresponding finger and cirkel from a rectangle
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="ellipses"></param>
+        /// <param name="ellipsesForCircles"></param>
         public static void SelectKey(Rectangle r, List<Ellipse> ellipses, List<Ellipse> ellipsesForCircles)
         {
             r.Visibility = Visibility.Hidden;
@@ -131,7 +136,12 @@ namespace LerenTypen.Models
             TipsController.FindCorrespondingFinger(fingerTag, ellipses);
             TipsController.FindCorrespondingCircle(circleTag, ellipsesForCircles);
         }
-
+        /// <summary>
+        /// Sets the border of a label
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="color"></param>
+        /// <param name="thickness"></param>
         public static void BorderSetter(Label l, Brush color, int thickness)
         {
             l.BorderBrush = color;

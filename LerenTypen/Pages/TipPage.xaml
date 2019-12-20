@@ -34,8 +34,8 @@
 
         <StackPanel x:Name="TipPage_StackPanel_GeneralCanvas" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Height="234" Margin="142,0,142.2,0">
             <StackPanel x:Name="TipPage_StackPanel_Keyboard_Row0" Orientation="Horizontal" MaxHeight="22" MaxWidth="329" Margin="0,5,0,1">
-                <Rectangle x:Name="TipPage_Canvas_Key_Oem3" Tag="Orange" Fill="Black" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Rectangle x:Name="TipPage_Canvas_Key_D1" Tag="Orange" Fill="Black" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,0"/>
+                <Rectangle x:Name="TipPage_Canvas_Key_Oem3" Tag="Orange" Fill="Black" Width="18" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Rectangle x:Name="TipPage_Canvas_Key_D1" Tag="Orange" Fill="Black" Height="20" Width="19" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,0"/>
                 <Rectangle x:Name="TipPage_Canvas_Key_D2" Tag="Purple" Fill="Black" Height="20" Width="22" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Rectangle x:Name="TipPage_Canvas_Key_D3" Tag="Aubergine" Fill="Black" Height="20" Width="22" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,0"/>
                 <Rectangle x:Name="TipPage_Canvas_Key_D4" Tag="Green" Fill="Black" Height="20" Width="21" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1,0"/>
@@ -263,7 +263,7 @@
             <Label x:Name="TipPage_Label_Letter4" Content="" Height="30" Width="30"/>
             <Label x:Name="TipPage_Label_Letter5" Content="" Height="30" Width="30"/>
         </StackPanel>
-        <TextBox x:Name="TipPage_TestBox" IsEnabled="False" Visibility="Visible" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,30" Text="" VerticalAlignment="Bottom" Width="200" Height="30" PreviewKeyDown="PreviewKeyDown_Clicker"/>
+        <TextBox x:Name="TipPage_TestBox" IsEnabled="False" Visibility="Hidden" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="0,30" Text="" VerticalAlignment="Bottom" Width="200" Height="30" PreviewKeyDown="PreviewKeyDown_Clicker"/>
 
     </Grid>
 </Page>
