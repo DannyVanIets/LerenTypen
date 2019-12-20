@@ -83,6 +83,16 @@ namespace LerenTypen
                 AllTestsOverview_CheckBox_MadeBefore.Visibility = Visibility.Hidden;
             }
 
+            //Remove these columns for editing and removing if you are not a teacher.
+            if (!AccountController.IsTeacher(mainWindow.Ingelogd))
+            {
+                everyTest.Columns.Remove(editColumn);
+                everyTest.Columns.Remove(deleteColumn);
+            }
+
+            //This column was only needed to sort on difficulty, but it doesn't need to be shown.
+            everyTest.Columns.Remove(difficultyHeader);
+
             // Check if user is teacher to show delete test and edit tests columns
             if (AccountController.IsTeacher(mainWindow.Ingelogd))
             {
@@ -473,7 +483,7 @@ namespace LerenTypen
             int counter = 1;
             foreach (Test test in trendingTests)
             {
-                TrendingTableContent.Add(new TestTable(counter, test.Name, test.TimesMade, test.WordHighscore, test.WordCount, test.Difficulty, test.AuthorUsername,test.Rating , 0, test.ID ));
+                TrendingTableContent.Add(new TestTable(counter, test.Name, test.TimesMade, test.WordHighscore, test.WordCount, test.Difficulty, test.AuthorUsername, test.Rating, 0, test.ID));
                 counter++;
             }
         }

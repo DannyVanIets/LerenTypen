@@ -46,7 +46,7 @@
 
         <ListView x:Name="AllTestsOverview_ListView_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="3" local:GridViewSort.AutoSort="True" >
             <ListView.View>
-                <GridView>
+                <GridView x:Name="everyTest">
                     <GridView.Columns>
                         <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
                         <GridViewColumn Header="Naam" Width="180" local:GridViewSort.PropertyName="WPFName">
@@ -74,7 +74,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="Beoordeling" DisplayMemberBinding="{Binding Rating}" Width="95" local:GridViewSort.PropertyName="Rating"/>
-                        <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
+                        <GridViewColumn x:Name="difficultyHeader" Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
                         <GridViewColumn x:Name="editColumn" Width="0">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
