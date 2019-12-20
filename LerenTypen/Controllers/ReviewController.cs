@@ -163,6 +163,40 @@ namespace LerenTypen.Controllers
             return true;
         }
 
+        public static double GetRatingScore(int testID)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "SELECT isnull(Round(AVG(testReviewScore),1),0) FROM testReviews WHERE testID=@id;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", testID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToDouble(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return 0;
+        }
+
         //Used to check if the the text is only numberic. If true, the text contains only numbers.
         //Uses the _regex property. Regex checks if the text matches with the property.
         public static bool OnlyNumberic(string text)

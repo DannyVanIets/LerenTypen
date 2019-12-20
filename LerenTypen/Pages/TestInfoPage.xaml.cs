@@ -104,7 +104,7 @@ namespace LerenTypen
                 }
             }
 
-            double Review = TestController.GetRatingScore(testID);
+            double Review = ReviewController.GetRatingScore(testID);
             if (inforeview.Count == 0)
             {
                 averageScoreLabel.Visibility = Visibility.Hidden;
