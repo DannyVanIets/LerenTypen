@@ -107,7 +107,7 @@ namespace LerenTypen
         /// <param name="filter">The id of the filter to apply</param>
         private void ApplyWordFilter(int filter)
         {
-            if (AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals(""))
+            if ((AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals("")) && !AllTestsOverview_CheckBox_MadeBefore.IsChecked.Value)
             {
                 if (AllTestsOverview_CheckBox_TrendingTests.IsChecked.Value)
                 {
@@ -118,7 +118,7 @@ namespace LerenTypen
                     CurrentContent = TableContent;
                 }
             }
-            else
+            else if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = SearchResult;
             }
@@ -386,6 +386,8 @@ namespace LerenTypen
             }
             else
             {
+                AllTestsOverview_ComboBox_AmountOfWords.SelectedIndex = 0;
+                AllTestsOverview_TextBox_Search.Text = "";
                 CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
                 ApplySearchFilter();
                 AllTestsOverview_ListView_AllTestsTable.ItemsSource = CurrentContent;
@@ -459,6 +461,8 @@ namespace LerenTypen
                 if (TrendingTableContent == null)
                 {
                     GetTrendingTests();
+                    AllTestsOverview_TextBox_Search.Text = "";
+                    AllTestsOverview_ComboBox_AmountOfWords.SelectedIndex = 0;
                 }
 
                 CurrentContent = TrendingTableContent;
