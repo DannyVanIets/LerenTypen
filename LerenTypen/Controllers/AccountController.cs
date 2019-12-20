@@ -669,7 +669,7 @@ namespace LerenTypen.Controllers
         }
 
 
-        public static string GetAverageWordsMinute(string userName)
+        public static int GetAverageWordsMinute(string userName)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
@@ -684,7 +684,7 @@ namespace LerenTypen.Controllers
                     {
                         while (reader.Read())
                         {
-                            return reader[0].ToString();
+                            return Convert.ToInt32(reader[0]);
                         }
                     }
                 }
@@ -698,7 +698,7 @@ namespace LerenTypen.Controllers
                 connection.Close();
                 connection.Dispose();
             }
-            return null;
+            return 0;
         }
 
         public static bool DeleteAccount(string userName)
