@@ -43,7 +43,43 @@ namespace LerenTypen.Controllers
             return 0;
         }
 
-       public static double GetRatingScore(int testID)
+        public static Review GetUserRating(int testID, int userID)
+        {
+            Review queryResult = null;
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "select a.accountUsername, testReviewScore , trs.testReviewDescription, trs.testReviewDateAdded ,a.accountID from testReviews trs inner join accounts a on a.accountID = trs.accountID where a.archived=0 and testID=@testid and a.accountID = @accountid order by testReviewID desc;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@testid", testID);
+                    command.Parameters.AddWithValue("@accountid", userID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            queryResult = new Review(reader.GetString(0), Convert.ToInt32(reader[1]), reader[2].ToString(), reader.GetDateTime(3));
+
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return queryResult;
+        }
+
+        public static double GetRatingScore(int testID)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
