@@ -53,7 +53,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 string query = "Select count(accountID) from accounts where accountType = @id";
-               
+
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@id", accountID);
@@ -62,7 +62,7 @@ namespace LerenTypen.Controllers
                     {
                         while (reader.Read())
                         {
-                            return  Convert.ToInt32(reader[0]);
+                            return Convert.ToInt32(reader[0]);
                         }
                     }
                 }
@@ -643,7 +643,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select avg(testresults.score) from testresults where accountID = @id";
+                string query = "select avg(testresults.score) from testresults where accountID = @id and finished = 1";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@id", AccountController.GetAccountIDFromUsername(userName));
@@ -676,7 +676,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select avg(testresults.wordsEachMinute) from testresults where accountID = @id;";
+                string query = "select avg(testresults.wordsEachMinute) from testresults where accountID = @id and finished = 1";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

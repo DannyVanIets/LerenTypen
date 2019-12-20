@@ -16,7 +16,7 @@ namespace LerenTypen.Controllers
                 connection.Open();
 
                 // this query returns all the content from a given testId
-                string mySql = "SELECT ISNULL(MAX(score), 0) FROM testresults WHERE testID=@id";
+                string mySql = "SELECT ISNULL(MAX(score), 0) FROM testresults WHERE testID=@id and finished = 1";
 
                 using (SqlCommand command = new SqlCommand(mySql, connection))
                 {
@@ -87,7 +87,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query returns all the content from a given testId
-                string query = "SELECT ISNULL(AVG(score), 0) FROM testresults WHERE testID=@id";
+                string query = "SELECT ISNULL(AVG(score), 0) FROM testresults WHERE testID=@id and finished = 1";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -248,11 +248,11 @@ namespace LerenTypen.Controllers
                 string query = "";
                 if (limit == 0)
                 {
-                    query = "select tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID)";
+                    query = "select tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and t.finished = 1 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID)";
                 }
                 else
                 {
-                    query = $"select TOP {limit} tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID) DESC";
+                    query = $"select TOP {limit} tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and t.finished = 1 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID) DESC";
                 }
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
 
@@ -525,7 +525,7 @@ namespace LerenTypen.Controllers
                 connection.Open();
 
                 // this query returns all the content from a given testId
-                string query = "SELECT TOP 3 MAX(score) AS score, accountID FROM testresults WHERE testID = @testID GROUP BY accountID  ORDER BY score DESC";
+                string query = "SELECT TOP 3 MAX(score) AS score, accountID FROM testresults WHERE testID = @testID and finished = 1 GROUP BY accountID  ORDER BY score DESC";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -798,7 +798,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate, AVG(trev.testReviewScore) from tests t Inner join accounts a on t.accountID = a.accountID inner join testresults tr on tr.testID = t.testID inner join testReviews trev on t.accountID = a.accountID where tr.accountID = @accountID and t.accountID = @accountID and t.archived = 0 and a.archived = 0 group by t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate, AVG(trev.testReviewScore) from tests t Inner join accounts a on t.accountID = a.accountID inner join testresults tr on tr.testID = t.testID inner join testReviews trev on t.accountID = a.accountID where tr.accountID = @accountID and t.finished = 1 and t.accountID = @accountID and t.archived = 0 and a.archived = 0 group by t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername, t.isPrivate";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -1067,7 +1067,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername from tests t inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0 and t.isPrivate=0 group by t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername";
+                string query = "select t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername from tests t inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @accountID and t.archived=0 and a.archived=0 and t.isPrivate=0 and t.finished = 1 group by t.testID, t.accountID, testName, t.testDifficulty, a.accountUsername";
                 int counter = 1;
 
                 using (SqlCommand command = new SqlCommand(query, connection))
