@@ -1126,26 +1126,41 @@ namespace LerenTypen.Controllers
 
         public static List<TestTable> GetAllMyTestsAlreadyMadeTop3(int accountId)
         {
+
             List<TestTable> queryResult = new List<TestTable>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
                 connection.Open();
                 // this query joins the info needed for the testtable with accounts to find the corresponding username and with testresults to find out if a test has been made before by the user
-                string query = "select top 3 tr.testID, testname, tr.testID ,tr.testResultsDate,t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @id and t.archived=0 and a.archived=0 and t.isPrivate=0 group by tr.testID, testname, t.isPrivate, tr.testID ,tr.testResultsDate order by tr.testResultsDate desc;";
+                string query = "select tr.testID, testname, tr.testID ,tr.testResultsDate,t.isPrivate from tests t Inner join accounts a on t.accountID=a.accountID inner join testresults tr on tr.testID=t.testID where tr.accountID = @id and t.archived=0 and a.archived=0 and t.isPrivate=0 group by tr.testID, testname, t.isPrivate, tr.testID ,tr.testResultsDate order by tr.testResultsDate desc;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@id", accountId);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        int i = 0;
+                        // Create Lists for making top 3 distinct
+                        List<int> testIDList = new List<int>();
+                        List<string> testNameList = new List<string>();
+                        List<int> top3TestID = new List<int>();
+                        List<string> top3TestName = new List<string>();
+
                         while (reader.Read())
                         {
-                            i++;
-                            //adds all the found data to a list
-                            queryResult.Add(new TestTable(i, reader.GetString(1), Convert.ToInt32(reader[2])));
+                            testIDList.Add(Convert.ToInt32(reader[2]));
+                            testNameList.Add(reader.GetString(1));
 
+                            //Making lists top 3
+                            top3TestID = testIDList.Distinct().Take(3).ToList();
+                            top3TestName = testNameList.Distinct().Take(3).ToList();
+                        }
+                        int i = 0;
+                        // putting top3 lists in one testtable list
+                        foreach (int testID in top3TestID)
+                        {
+                            queryResult.Add(new TestTable(i + 1, top3TestName[i], testID));
+                            i++;
                         }
                     }
                 }
