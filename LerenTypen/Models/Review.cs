@@ -12,12 +12,12 @@ namespace LerenTypen.Models
         public int TestID { get; set; }
         public string AccountUsername { get; set; }
         public int AccountID { get; set; }
-        public int ReviewScore { get; set; }
+        public double ReviewScore { get; set; }
         public DateTime ReviewDateAdded { get; set; }
         public string ReviewDescription { get; set; }
 
         //Two different constructors one is used if the description is filled in and the other if it isn't.
-        public Review(int testID, int accountID, int score, string description)
+        public Review(int testID, int accountID, double score, string description)
         {
             TestID = testID;
             AccountID = accountID;
@@ -26,7 +26,7 @@ namespace LerenTypen.Models
             ReviewDescription = description;
         }
 
-        public Review(string accusername , int reviewscoregiven , string reviewdescription, DateTime date)
+        public Review(string accusername , double reviewscoregiven , string reviewdescription, DateTime date)
         {
             AccountUsername = accusername;
             ReviewScore = reviewscoregiven;
@@ -34,7 +34,7 @@ namespace LerenTypen.Models
             ReviewDateAdded = date;
 
         }
-        public Review(int testID, int accountID, int score)
+        public Review(int testID, int accountID, double score)
         {
             TestID = testID;
             AccountID = accountID;

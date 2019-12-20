@@ -32,7 +32,7 @@ namespace LerenTypen
             testNameLabel.Content = test.Name;
 
             //Get all the review info
-            List<Review> inforeview = TestController.GetUserRating(testID , AccountController.GetAccountIDFromUsername(name));
+            List<Review> inforeview = ReviewController.GetUserReviewDetails(testID);
 
             foreach (Review review in inforeview)
             {
@@ -52,8 +52,11 @@ namespace LerenTypen
                 //get the score then convert them into stars.
                 StackPanel starscore = new StackPanel();
                 starscore.Orientation = Orientation.Horizontal;
-                double Reviewscore = Convert.ToDouble(TestController.GetUserRating(testID , accountID));
-                int ratingscore = (int)Math.Floor(Reviewscore);
+
+                TestController.GetUserRating(testID , accountID);
+
+                Review r = TestController.GetUserRating(testID , accountID);
+                int ratingscore = (int)Math.Floor(r.ReviewScore);
 
                 //Print all the full stars
                 for (int i = 0; i < ratingscore; i++)

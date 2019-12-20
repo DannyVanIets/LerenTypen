@@ -44,9 +44,9 @@ namespace LerenTypen.Controllers
         }
 
 
-        public static List<Review> GetUserRating(int testID, int userID)
+        public static Review GetUserRating(int testID, int userID)
         {
-            List<Review> queryResult = new List<Review>();
+            Review queryResult = null;
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
@@ -62,7 +62,7 @@ namespace LerenTypen.Controllers
                     {
                         while (reader.Read())
                         {
-                            queryResult.Add(new Review(reader.GetString(0), Convert.ToInt32(reader[1]), reader[2].ToString(), reader.GetDateTime(3)));
+                            queryResult = new Review(reader.GetString(0), Convert.ToInt32(reader[1]), reader[2].ToString(), reader.GetDateTime(3));
 
                         }
                     }
