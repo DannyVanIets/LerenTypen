@@ -81,8 +81,8 @@ namespace LerenTypen
                 //Put the stackpanel together
                 StackPanel scores = new StackPanel();
                 scores.Orientation = Orientation.Horizontal;
-                scores.Children.Add(username);
                 scores.Children.Add(starscore);
+                scores.Children.Add(username);
                 scores.Children.Add(date);
 
                 UserInfoFill.Children.Add(scores);
