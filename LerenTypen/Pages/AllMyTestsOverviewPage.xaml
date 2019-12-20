@@ -39,7 +39,7 @@
         </StackPanel>
         <ListView x:Name="AllMyTestsOverviewPage_ListView_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="2" local:GridViewSort.AutoSort="True">
             <ListView.View>
-                <GridView>
+                <GridView x:Name="allMyTests">
                     <GridView.Columns>
                         <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding WPFNumber}" local:GridViewSort.PropertyName="WPFNumber"/>
                         <GridViewColumn Header="Naam" Width="150" local:GridViewSort.PropertyName="WPFName">
