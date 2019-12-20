@@ -1105,7 +1105,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select count(*) from testresults where testId=@test;";
+                string query = "select count(*) from testresults where testId=@test and finished = 1;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@test", testId);
