@@ -98,8 +98,17 @@ namespace LerenTypen
             }
 
             double Review = TestController.GetRatingScore(testID);
-            averageScoreLabel.Content += Review.ToString();
-
+            if (inforeview.Count == 0)
+            {
+                averageScoreLabel.Visibility = Visibility.Hidden;
+                UserReviewText.Content = "Er zijn nog geen reviews";
+                UserReviewText.FontSize = 14;
+                UserReviewText.FontWeight = FontWeights.Normal;
+            }
+            else
+            {
+                averageScoreLabel.Content += Review.ToString();
+            }
             int rating = (int)Math.Floor(Review);
 
             for (int i = 0; i < rating; i++)
