@@ -238,10 +238,6 @@ namespace LerenTypen.Controllers
             return queryResult;
         }
 
-        /// <summary>
-        /// Returns the ids of the trending tests from the last week
-        /// </summary>
-        /// <returns></returns>
         public static List<int> GetTrendingTestIDs(int limit)
         {
             List<int> trendingTestIDs = new List<int>();
@@ -252,7 +248,7 @@ namespace LerenTypen.Controllers
                 string query = "";
                 if (limit == 0)
                 {
-                    query = "select tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID) DESC";
+                    query = "select tr.testID from testresults tr JOIN tests t on tr.testID = t.testID JOIN accounts a ON t.accountID = a.accountID where t.archived=0 and a.archived=0 and t.isPrivate=0 and tr.testResultsDate BETWEEN @weekAgo AND @now GROUP BY t.testID, tr.testID ORDER BY count(tr.testID)";
                 }
                 else
                 {
@@ -294,37 +290,47 @@ namespace LerenTypen.Controllers
         {
             List<Test> trendingTests = new List<Test>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
+            string idList = "(";
             List<int> ids = GetTrendingTestIDs(limit);
+
+            foreach (int id in ids)
+            {
+                // Check if this is not the last id
+                if (id != ids[ids.Count - 1])
+                {
+                    idList += $"{id}, ";
+                }
+                else
+                {
+                    idList += $"{id})";
+                }
+            }
 
             try
             {
-                string query;
                 connection.Open();
 
-                foreach (int id in ids)
+                string query = $"SELECT testID, testName, testType, accountID, version, testDifficulty, isPrivate, createDate from tests t WHERE t.testID IN {idList}";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    query = $"SELECT testName,testType, t.accountID, timesMade, version, testDifficulty, isPrivate, createDate FROM tests t WHERE t.testID = {id} group by t.testID, testName, testType, t.accountID, timesMade, highscore, version, testDifficulty, isPrivate, createDate";
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                string name = reader.GetString(0);
-                                int type = Convert.ToInt32(reader[1]);
-                                int authorID = Convert.ToInt32(reader[2]);
-                                string authorName = AccountController.GetUsername(authorID);
-                                int wordCount = TestController.GetAmountOfWordsFromTest(id);
-                                int timesMade = TestController.GetTimesMade(id);
-                                int version = Convert.ToInt32(reader[3]);
-                                int difficulty = Convert.ToInt32(reader[4]);
-                                double rating = ReviewController.GetRatingScore(id);
-                                int isPrivate = Convert.ToInt32(reader[6]);
-                                DateTime createDateTime = (DateTime)reader[7];
+                            int id = Convert.ToInt32(reader[0]);
+                            string name = reader.GetString(1);
+                            int type = Convert.ToInt32(reader[2]);
+                            int authorID = Convert.ToInt32(reader[3]);
+                            string authorName = AccountController.GetUsername(authorID);
+                            int wordCount = TestController.GetAmountOfWordsFromTest(id);
+                            int timesMade = TestController.GetTimesMade(id);
+                            int version = Convert.ToInt32(reader[4]);
+                            int difficulty = Convert.ToInt32(reader[5]);
+                            int isPrivate = Convert.ToInt32(reader[6]);
+                            DateTime createDateTime = (DateTime)reader[7];
 
-                                trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty, rating, Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
-                            }
+                            trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty, Convert.ToInt32(ReviewController.GetRatingScore(id)), Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
                         }
                     }
                 }
@@ -398,7 +404,7 @@ namespace LerenTypen.Controllers
                 connection.Open();
 
                 // this query returns all the content from a given testId
-                string query = "SELECT MAX(wordsEachMinute), accountID FROM testresults WHERE testID=@testID GROUP BY accountID";
+                string query = "SELECT MAX(wordsEachMinute), accountID FROM testresults WHERE testID=@testID and finished = 1 GROUP BY accountID";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -478,7 +484,7 @@ namespace LerenTypen.Controllers
                 connection.Open();
 
                 // this query returns all the content from a given testId
-                string query = ("SELECT TOP 3 MAX(wordsEachMinute) AS wordsEachMinute, accountID FROM testresults WHERE testID=@testID GROUP BY accountID ORDER BY wordsEachMinute DESC");
+                string query = ("SELECT TOP 3 MAX(wordsEachMinute) AS wordsEachMinute, accountID FROM testresults WHERE testID=@testID and finished = 1 GROUP BY accountID ORDER BY wordsEachMinute DESC");
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {

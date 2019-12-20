@@ -61,7 +61,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="Totaal aantal keren geoefend" Width="160" DisplayMemberBinding="{Binding WPFTimesMade}" local:GridViewSort.PropertyName="WPFTimesMade"/>
-                        <GridViewColumn Header="Meeste woorden per minuut" Width="170" DisplayMemberBinding="{Binding WordHighscore}" local:GridViewSort.PropertyName="Highscore"/>
+                        <GridViewColumn Header="Meeste woorden per minuut" Width="170" DisplayMemberBinding="{Binding WordHighscore}" local:GridViewSort.PropertyName="WordHighscore"/>
                         <GridViewColumn Header="Aantal woorden" Width="115" DisplayMemberBinding="{Binding AmountOfWords}" local:GridViewSort.PropertyName="AmountOfWords"/>
                         <GridViewColumn Header="Moeilijkheidsgraad" Width="120" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>
                         <GridViewColumn Header="Geüpload door" Width="100" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
