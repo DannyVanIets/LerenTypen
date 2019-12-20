@@ -28,6 +28,12 @@ namespace LerenTypen
             this.ButtonOption = 0;
             this.CurrentLetter = 1;
             
+
+            if(mainWindow.Ingelogd != 0)
+            {
+                TipPage_Label_Inloglabel.Visibility = Visibility.Collapsed;
+                TipPage_Button_loginRegisterButton.Visibility = Visibility.Collapsed;
+            }
             
 
             // Adds all the ellipses from the fingernails to a list.
@@ -242,7 +248,8 @@ namespace LerenTypen
                     {
                         ellipse.Visibility = Visibility.Hidden;
                     }
-
+                    MessageBox.Show("Je bent klaar met de voorbeeldwoorden,\nals je meer wilt oefenen kan je ze opnieuw maken of\nop de knop 'maak zelf woorden' klikken ");
+                    TipPage_Button_Voorbeeldwoorden.IsEnabled = true;
                 }
             }
             else if (ButtonOption == 2)
