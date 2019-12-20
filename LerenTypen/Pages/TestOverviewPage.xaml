@@ -26,10 +26,13 @@
         <TextBox x:Name="AllTestsOverview_TextBox_Search" HorizontalAlignment="Left" Height="25" Grid.Row="2" TextWrapping="Wrap" Text="Zoek gebruiker/toetsnaam" BorderThickness="2" VerticalAlignment="Top" Width="155" Margin="10,2.6,0,0" TextChanged="Search_Event" PreviewMouseDown="Search_Remove_Event"/>
 
         <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3">
-            <Button x:Name="AllTestsOverview_Button_ShowOwnTestOnly" Content="Toon alleen eigen toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Width="170" Height="25" Margin="0,4,0,0" Click="AllTestsOverview_Button_ShowOwnTestOnly_Click"/>
-            <CheckBox x:Name="AllTestsOverview_CheckBox_MadeBefore" Content="Toon alleen zelf geoefende toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Height="21" Width="225" Checked="AllTestsOverview_CheckBox_MadeBefore_Checked" Unchecked="AllTestsOverview_CheckBox_MadeBefore_Unchecked" Margin="0,4,-0.2,0"/>
-            <CheckBox x:Name="AllTestsOverview_CheckBox_TrendingTests" Content="Toon alleen trending toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Height="21" Width="225" Checked="AllTestsOverview_CheckBox_TrendingTests_Checked" Unchecked="AllTestsOverview_CheckBox_TrendingTests_Unchecked" Margin="0,0,-0.2,0"/>
+            <RadioButton x:Name="AllTestsOverview_CheckBox_ShowAll" Content="Toon alles" IsChecked="True" HorizontalAlignment="Center" VerticalAlignment="Top" Height="21" Width="225" Checked="AllTestsOVerview_RadioButton_ShowAll" Margin="0,4,-0.2,0"/>
+            <RadioButton x:Name="AllTestsOverview_CheckBox_MadeBefore" Content="Toon alleen zelf geoefende toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Height="21" Width="225" Checked="AllTestsOverview_CheckBox_MadeBefore_Checked" Margin="0,4,-0.2,0"/>
+            <RadioButton x:Name="AllTestsOverview_CheckBox_TrendingTests" Content="Toon alleen trending toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Height="21" Width="225" Checked="AllTestsOverview_CheckBox_TrendingTests_Checked" Margin="0,0,-0.2,0"/>
         </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.RowSpan="2" Grid.Column="2">
+        <Button x:Name="AllTestsOverview_Button_ShowOwnTestOnly" Content="Toon alleen eigen toetsen" HorizontalAlignment="Center" VerticalAlignment="Top" Width="170" Height="25" Margin="0,4,0,0" Click="AllTestsOverview_Button_ShowOwnTestOnly_Click"/>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2" Grid.Row="2" Grid.RowSpan="3" Width="381">
             <Label x:Name="AllTestsOverview_Label_AmountOfWords" Content="Aantal woorden: " VerticalAlignment="Top" Grid.Column="2" Grid.Row="2" Height="32" Width="95" Margin="0,2,0,0" />
@@ -43,7 +46,7 @@
             </ComboBox>
             <Button x:Name="AllTestsOverview_Button_MakeOwnTest" Content="Maak een nieuwe toets" VerticalAlignment="Top" Width="150" Height="25" Grid.Column="2" Grid.Row="1" Margin="10,3,10,0" Click="AllTestsOverview_Button_MakeOwnTest_Click"/>
         </StackPanel>
-
+        </StackPanel>
         <ListView x:Name="AllTestsOverview_ListView_AllTestsTable" Grid.ColumnSpan="3" Grid.Row="3" local:GridViewSort.AutoSort="True" >
             <ListView.View>
                 <GridView x:Name="everyTest">

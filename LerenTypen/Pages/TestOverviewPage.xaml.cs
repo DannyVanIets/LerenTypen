@@ -80,7 +80,7 @@ namespace LerenTypen
             {
                 AllTestsOverview_Button_MakeOwnTest.Visibility = Visibility.Hidden;
                 AllTestsOverview_Button_ShowOwnTestOnly.Visibility = Visibility.Hidden;
-                AllTestsOverview_CheckBox_MadeBefore.Visibility = Visibility.Hidden;
+                AllTestsOverview_CheckBox_MadeBefore.Visibility = Visibility.Collapsed;
             }
 
             //Remove these columns for editing and removing if you are not a teacher.
@@ -541,6 +541,16 @@ namespace LerenTypen
             Hyperlink hyperlink = (Hyperlink)sender;
             TestController.UpdateTestToArchived(Convert.ToInt32(hyperlink.Tag));
             MainWindow.frame.Navigate(new TestOverviewPage(MainWindow));
+        }
+
+        private void AllTestsOVerview_RadioButton_ShowAll(object sender, RoutedEventArgs e)
+        {
+            if (IsInitialized)
+            {
+                CurrentContent = TableContent;
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
+            }
         }
     }
 }
