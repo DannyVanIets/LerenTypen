@@ -60,13 +60,13 @@ namespace LerenTypen.Controllers
 
 
         public static List<Review> GetUserReviewDetails(int testID)
-        {
+                {
             List<Review> queryResult = new List<Review>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
                 connection.Open();
-                string query = "select a.accountUsername, trs.testReviewScore, trs.testReviewDescription, trs.testReviewDateAdded from testReviews trs inner join accounts a on a.accountID = trs.accountID where a.archived =0 and trs.testID=@id order by testReviewDateAdded desc;";
+                string query = "select a.accountUsername, trs.testReviewScore, trs.testReviewDescription, trs.testReviewDateAdded , trs.testReviewID from testReviews trs inner join accounts a on a.accountID = trs.accountID where a.archived =0 and trs.testID = @id order by trs.testReviewID desc;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
