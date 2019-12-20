@@ -69,16 +69,22 @@ namespace LerenTypen
         /// <param name="e"></param>
         private void PreviewKeyDown_Clicker(object sender, System.Windows.Input.KeyEventArgs e)
         {
-
+            // Happens when something is typed in the textbox while the "voorbeeldwoorden" button is active.
             if (ButtonOption == 1)
             {
                 TipPage_TestBox.Text = "";
+                // First we check if the right K is typed
                 if (e.Key == System.Windows.Input.Key.K && CurrentLetter == 1)
                 {
+                    // We use currentLetter to show which letter it is
                     CurrentLetter++;
+                    // Turns the border green if the right key is pressed
                     TipsController.BorderSetter(TipPage_Label_Letter1, Brushes.Green, 2);
+                    // Makes the clicked key visible
                     TipPage_Canvas_Key_K.Visibility = Visibility.Visible;
+                    // Selects the next key to show on the keyboard
                     TipsController.SelectKey(TipPage_Canvas_Key_A, Ellipses, EllipsesForCircles);
+                    // Highlights the next key
                     TipsController.BorderSetter(TipPage_Label_Letter2, Brushes.Red, 2);
                 }
                 else if (e.Key == System.Windows.Input.Key.A && CurrentLetter == 2)
@@ -95,6 +101,7 @@ namespace LerenTypen
                     TipsController.BorderSetter(TipPage_Label_Letter3, Brushes.Green, 2);
                     TipPage_Canvas_Key_T.Visibility = Visibility.Visible;
 
+                    // Sets the new word
                     TipPage_Label_Letter1.Content = "H";
                     TipPage_Label_Letter2.Content = "O";
                     TipPage_Label_Letter3.Content = "N";
@@ -278,10 +285,6 @@ namespace LerenTypen
                 // Here we find the corresponding circle around the finger
                 TipsController.FindCorrespondingCircle(circleTag, EllipsesForCircles);
             }
-            else
-            {
-                MessageBox.Show("Kies eerst een optie");
-            }
         }
         /// <summary>
         /// Button that handles the event when its clicked on
@@ -317,6 +320,7 @@ namespace LerenTypen
             TipPage_TestBox.Width = 200;
             TipPage_TestBox.Height = 30;
 
+            // Sets all the keyboardvalues to default
             foreach (Ellipse ellipse in Ellipses)
             {
                 ellipse.Visibility = Visibility.Visible;
@@ -358,6 +362,7 @@ namespace LerenTypen
             TipPage_Label_Letter4.Content = "";
             TipPage_Label_Letter5.Content = "";
 
+            // Sets all the keyboardvalues to default
             foreach (Label label in TipPage_StackPanel_AllLetters.Children)
             {
                 label.Visibility = Visibility.Visible;
@@ -366,12 +371,11 @@ namespace LerenTypen
             {
                 Rectangle foundRectangle = TipsController.FindPressedKey(uIElementCollection, "");
             }
+            // Selects the first key
             TipsController.SelectKey(TipPage_Canvas_Key_K, Ellipses, EllipsesForCircles);
 
-
+            // Sets the defaultvalues for the borders
             TipsController.BorderSetter(TipPage_Label_Letter1, Brushes.Red, 2);
-            //TipsController.BorderSetter(TipPage_Label_Letter2, Brushes.Black, 1);
-            //TipsController.BorderSetter(TipPage_Label_Letter3, Brushes.Black, 1);
             TipsController.BorderSetter(TipPage_Label_Letter2, Brushes.Transparent, 0);
             TipsController.BorderSetter(TipPage_Label_Letter3, Brushes.Transparent, 0);
             TipsController.BorderSetter(TipPage_Label_Letter4, Brushes.Transparent, 0);
