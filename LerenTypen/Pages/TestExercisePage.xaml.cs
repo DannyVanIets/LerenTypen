@@ -125,7 +125,7 @@ namespace LerenTypen
                 // Restore the page in the same state as the unfinished test was saved
 
                 unfinishedTestResultID = TestResultController.GetUnfinishedTestResultID(m.Ingelogd, testID);
-                lines = TestController.GetAllLinesFromResult(unfinishedTestResultID, 2);
+                lines = TestController.GetAllLinesFromResult(unfinishedTestResultID);
                 amountOfPauses = TestResultController.GetAmountOfPauses(unfinishedTestResultID);
                 wrongAnswers = TestResultController.GetTestResultsContentWrong(testID, unfinishedTestResultID);
                 rightAnswers = TestResultController.GetTestResultsContentRight(unfinishedTestResultID);
