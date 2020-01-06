@@ -159,16 +159,31 @@ namespace LerenTypen
             }
         }
 
+
         private void DeleteAccountButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                int amount = AccountController.GetAmountOfAdmins(2);
+
                 MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je je account wilt archiveren?", "Account archiveren", MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
-                {               
-                    AccountController.DeleteAccount(Account.UserName);
-                    MessageBox.Show("Je account is succesvol gearchiveerd!", "Succes");
-                    MainWindow.LogoutUser(true);
+                {
+                    if (amount == 1)
+                    {
+                        MessageBox.Show("Niet mogelijk! Maak eerst ander account admin", "Error");
+                        return ;
+                    }
+                    else
+                    {
+                        AccountController.DeleteAccount(Account.UserName);
+                        MessageBox.Show("Je account is succesvol gearchiveerd!", "Succes");
+                        MainWindow.LogoutUser(true);
+                    }
+                }
+                else
+                {
+                    return ;
                 }
             }
             catch (Exception r)
