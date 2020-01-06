@@ -250,7 +250,7 @@ namespace LerenTypen.Controllers
             return results;
         }
 
-        public static List<TestResult> GetAllTestResultsFromAccount(int accountID, int testID)
+        public static List<TestResult> GetAllTestResultsFromAccountAndTest(int accountID, int testID)
         {
             List<TestResult> results = new List<TestResult>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
