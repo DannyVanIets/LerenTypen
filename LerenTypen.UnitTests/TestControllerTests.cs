@@ -1,7 +1,9 @@
 ﻿using LerenTypen.Controllers;
 using LerenTypen.Models;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace LerenTypen.UnitTests
 {
@@ -10,238 +12,214 @@ namespace LerenTypen.UnitTests
         public TestControllerTests()
         {
             Database.Connect();
-        }
+        }       
 
         #region Select
         [Test]
-        // Happy
-        [TestCase(10)]
-        //new List<TestTable>
-        public void GetAllTests_ReturnsAllTests(int resultCount)
+        public void GetTestHighScore_TestID_ReturnNoException()
         {
-            //Arrange
-            List<TestTable> answer;
-            //Act
-            answer = TestController.GetAllTests();
-            //Assert
-            Assert.AreEqual(resultCount, answer.Count);
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetTestHighscore(testID));
         }
 
         [Test]
-        // Happy
-        [TestCase(9, 39)]
-        [TestCase(21, 42)]
-        // Unhappy
-        [TestCase(1, null)]
-        [TestCase(0, null)]
-        public void GetAmountOfWordsFromTest_testID_AmountOfWordsOfTest(int testID, int result)
+        public void GetUserRating_TestAndUserID_ReturnNoException()
         {
-            //Arrange
-            int answer = 0;
-            //Act
-            answer = TestController.GetAmountOfWordsFromTest(testID);
-            //Assert
-            Assert.AreEqual(result, answer);
+            // Arrange
+            int testID = Database.GetFirstAccountID();
+            int userID = Database.GetFirstAccountID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetUserRating(testID, userID));
         }
 
         [Test]
-        // Happy
-        [TestCase(12, 12, "Landen en steden", 1, 1, "HenkerDenker", 72, 2, 1, false, "02-12-2019", false)]
-        // Unhappy
-        [TestCase(0, null, null, null, null, null, null, null, null, null, null, true)]
-        public void GetTest_testID_Test(int testID, int resultId, string resultName, int resultType, int resultAuthorID, string resultAuthorUsername, int resultWordCount, int resultVersion, int resultDifficulty, bool resultIsPrivate, string resultCreatedDateTime, bool expectNull)
+        public void GetTestAverageScore_TestID_ReturnNoException()
         {
-            //Arrange
-            Test answer;
-            Test result = new Test(resultId, resultName, resultType, resultAuthorID, resultAuthorUsername, resultWordCount, resultVersion, resultDifficulty, resultIsPrivate, resultCreatedDateTime);
-            //Act
-            answer = TestController.GetTest(testID);
-            //Assert
-            if (answer == null && expectNull)
-            {
-                Assert.Pass();
-            }
-            else
-            {
-                Assert.AreEqual(result.AuthorID, answer.AuthorID);
-                Assert.AreEqual(result.AuthorUsername, answer.AuthorUsername);
-                Assert.AreEqual(result.CreatedDateTime, answer.CreatedDateTime);
-                Assert.AreEqual(result.Difficulty, answer.Difficulty);
-                Assert.AreEqual(result.ID, answer.ID);
-                Assert.AreEqual(result.IsPrivate, answer.IsPrivate);
-                Assert.AreEqual(result.Name, answer.Name);
-                Assert.AreEqual(result.Type, answer.Type);
-                Assert.AreEqual(result.WordCount, answer.WordCount);
-            }
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetTestAverageScore(testID));
         }
 
         [Test]
-        // Happy
-        [TestCase(12, 1, 1)]
-        public void GetTestInformation_testID_TestInformation(int testID, int resultAccountID, int resultTestDifficulty)
+        public void GetTest_TestID_ReturnNoException()
         {
-            //Arrange
-            List<int> answer;
-            //Act
-            answer = TestController.GetTestInformation(testID);
-            //Assert
-            Assert.AreEqual(resultAccountID, answer[0]);
-            Assert.AreEqual(resultTestDifficulty, answer[1]);
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetTest(testID));
         }
 
         [Test]
-        // Happy
-        [TestCase(12, "Landen en steden")]
-        [TestCase(15, "Doeizinnen")]
-        // Unhappy
-        [TestCase(1, "")]
-        [TestCase(int.MaxValue, "")]
-        public void GetTestName_testID_TestName(int testID, string result)
+        public void GetAllTests_ReturnNoException()
         {
-            //Arrange
-            string answer = "";
-            //Act
-            answer = TestController.GetTestName(testID);
-            //Assert
-            Assert.AreEqual(result, answer);
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetAllTests());
         }
 
         [Test]
-        // Happy
-        [TestCase(9, 39)]
-        // Unhappy
-        [TestCase(0, 0)]
-        public void GetTestContent_testID_TestContent(int testID, int resultCount)
+        public void GetTrendingTestIDs_ReturnNoException()
         {
-            //Arrange
-            List<string> answer = new List<string>();
-            //Act
-            answer = TestController.GetTestContent(testID);
-            //Assert
-            Assert.AreEqual(resultCount, answer.Count);
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetTrendingTestIDs(3));
         }
 
         [Test]
-        // Happy
-        [TestCase(15, 0)]
-        // Unhappy
-        [TestCase(0, 0)]
-        public void GetAllMyTestswithIsPrivate_accountID_AllUsersTestsWithIsPrivate(int accountID, int resultCount)
+        public void GetTrendingTests_ReturnNoException()
         {
-            //Arrange
-            List<TestTable> answer = new List<TestTable>();
-            //Act
-            answer = TestController.GetAllMyTestswithIsPrivate(accountID);
-            //Assert
-            Assert.AreEqual(resultCount, answer.Count);
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetTrendingTestIDs(testID));
         }
 
         [Test]
-        // Happy
-        [TestCase(15)]
-        // Unhappy
-        [TestCase(0)]
-        public void GetAllMyTestsAlreadyMade_intIngelogd_AllUsersTestsAlreadyMade(int ingelogd)
+        public void GetTrendingTestsNameAndID_ReturnNoException()
         {
-            //Arrange
-            List<TestTable> answer = new List<TestTable>();
-            //Act
-            answer = TestController.GetAllMyTestsAlreadyMade(ingelogd);
-            //Assert
-            Assert.AreEqual(0, answer.Count);
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetTrendingTestsNameAndID());
         }
 
         [Test]
-        // Happy
-        [TestCase(15, 1)]
-        // Unhappy
-        [TestCase(0, 0)]
-        public void GetAllTestsAlreadyMade_intIngelogd_AllTestsAlreadyMade(int ingelogd, int resultCount)
+        public void GetWordHighscore_TestID_ReturnNoException()
         {
-            //Arrange
-            List<TestTable> answer = new List<TestTable>();
-            //Act
-            answer = TestController.GetAllTestsAlreadyMade(ingelogd);
-            //Assert
-            Assert.AreEqual(resultCount, answer.Count);
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetWordHighscore(testID));
         }
 
         [Test]
-        // Happy
-        [TestCase(10, 100)]
-        [TestCase(15, 100)]
-        [TestCase(20, 100)]
-        // Unhappy
-        [TestCase(1, null)]
-        public void GetTestHighscore_accountIDTestID_TestHighscore(int testID, int result)
+        public void GetTestInformation_TestID_ReturnNoException()
         {
-            //Arrange
-            int answer = 0;
-            //Act
-            answer = TestController.GetTestHighscore(testID);
-            //Assert
-            Assert.AreEqual(result, answer);
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetTestInformation(testID));
         }
 
         [Test]
-        // Unhappy
-        [TestCase(1, null)]
-        public void GetTestAverageScore_TestID_TestAverageScore(int testID, int result)
+        public void GetTop3FastestTypers_TestID_ReturnNoException()
         {
-            //Arrange
-            int answer = 0;
-            //Act
-            answer = TestController.GetTestAverageScore(testID);
-            //Assert
-            Assert.AreEqual(result, answer);
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetTop3FastestTypers(testID));
         }
 
         [Test]
-        // Happy
-        [TestCase(20, 60)]
-        [TestCase(14, 162)]
-        // Unhappy
-        [TestCase(1, null)]
-        public void GetWordHighscore_TestID_WordsPerMinute(int testID, int result)
+        public void GetTop3Highscores_TestID_ReturnNoException()
         {
-            //Arrange
-            int answer = 0;
-            //Act
-            answer = TestController.GetWordHighscore(testID);
-            //Assert
-            Assert.AreEqual(result, answer);
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetTop3Highscores(testID));
         }
 
         [Test]
-        // Happy
-        [TestCase(12)]
-        // Unhappy
-        [TestCase(0)]
-        public void GetTop3FastestTypers_TestID_Top3FastestTypers(int testID)
+        public void GetTestName_TestID_ReturnNoException()
         {
-            //Arrange
-            Dictionary<int, int> answer;
-            //Act
-            answer = TestController.GetTop3FastestTypers(testID);
-            //Assert
-            Assert.IsTrue(answer.Count < 4);
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetTestName(testID));
         }
 
         [Test]
-        // Happy
-        [TestCase(12)]
-        // Unhappy
-        [TestCase(0)]
-        public void GetTop3Highscores_TestID_Top3Highscores(int testID)
+        public void GetTestContent_TestID_ReturnNoException()
         {
-            //Arrange
-            Dictionary<int, int> answer;
-            //Act
-            answer = TestController.GetTop3Highscores(testID);
-            //Assert
-            Assert.IsTrue(answer.Count < 4);
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetTestContent(testID));
         }
 
+        [Test]
+        public void GetMyTestNames_AccountID_ReturnNoException()
+        {
+            // Arrange
+            int accountID = Database.GetFirstAccountID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetMyTestNames(accountID));
+        }
+
+        [Test]
+        public void GetAllMyTestswithIsPrivate_AccountID_ReturnNoException()
+        {
+            // Arrange
+            int accountID = Database.GetFirstAccountID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetAllMyTestswithIsPrivate(accountID));
+        }
+
+        [Test]
+        public void GetAllMyTestsAlreadyMade_AccountID_ReturnNoException()
+        {
+            // Arrange
+            int accountID = Database.GetFirstAccountID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetAllMyTestswithIsPrivate(accountID));
+        }
+
+        [Test]
+        public void GetAmountOfWordsFromTest_TestID_ReturnNoException()
+        {
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetAmountOfWordsFromTest(testID));
+        }
+
+        [Test]
+        public void GetAllTestsAlreadyMade_AccountID_ReturnNoException()
+        {
+            // Arrange
+            int accountID = Database.GetFirstAccountID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetAllTestsAlreadyMade(accountID));
+        }
+
+        [Test]
+        public void GetTimesMade_TestID_ReturnNoException()
+        {
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetTimesMade(testID));
+        }
+
+        [Test]
+        public void GetAllMyTestsAlreadyMadeTop3_AccountID_ReturnNoException()
+        {
+            // Arrange
+            int accountID = Database.GetFirstAccountID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetAllMyTestsAlreadyMadeTop3(accountID));
+        }
+
+        [Test]
+        public void GetUnfinishedTestIDsFromAccount_AccountID_ReturnNoException()
+        {
+            // Arrange
+            int accountID = Database.GetFirstAccountID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetUnfinishedTestIDsFromAccount(accountID));
+        }
+
+        [Test]
+        public void GetAllLinesFromResult_TestID_ReturnNoException()
+        {
+            // Arrange
+            int testResultID = Database.GetFirstTestResultID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestController.GetAllLinesFromResult(testResultID));
+        }
         #endregion
 
         #region Insert        
@@ -254,6 +232,8 @@ namespace LerenTypen.UnitTests
             //Assert
             Assert.AreEqual(result, answer);
         }
+
+        // AddTest
 
         #endregion
 
@@ -278,6 +258,20 @@ namespace LerenTypen.UnitTests
             Assert.AreEqual(result, answer);
         }
 
+        public void UpdateTestToArchived_testID_NoException(int testID, bool result)
+        {
+            //Arrange
+            bool answer;
+            //Act
+            answer = TestController.UpdateTestToArchived(testID);
+            //Assert
+            Assert.AreEqual(result, answer);
+        }
+
+
+        // SetBeingEdited
+
+        // UnsetBeingEdited
         #endregion
     }
 }

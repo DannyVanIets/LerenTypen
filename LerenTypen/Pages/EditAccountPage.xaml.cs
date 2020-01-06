@@ -14,16 +14,12 @@ namespace LerenTypen
     {
         private MainWindow MainWindow;
         private Account Account;
-        private Date Date;
 
         public EditAccountPage(MainWindow mainWindow)
         {
             InitializeComponent();
             //MainWindow is used to change pages.
             MainWindow = mainWindow;
-
-            //Date is used to get the current date and the date from 100 years ago.
-            Date = new Date();
 
             //First we will check if the user is logged in, if not, they will be send back to the Homepage with a message that they're not logged in.
             //If a user is logged in, we will fill in all the information from his account into the textboxes.
@@ -37,8 +33,9 @@ namespace LerenTypen
                 usernameTextBox.Text = Account.UserName;
                 birthdateDatePicker.SelectedDate = Account.Birthdate;
 
-                birthdateDatePicker.DisplayDateStart = Date.dateOfToday;
-                birthdateDatePicker.DisplayDateEnd = Date.dateOfTodayHundredYearsAgo;
+                birthdateDatePicker.DisplayDate = DateTime.Now;
+                birthdateDatePicker.DisplayDateStart = DateController.GetDateExactXYearsAgo(100);
+                birthdateDatePicker.DisplayDateEnd = DateTime.Now;
 
                 //securityQuestionComboBox.SelectedValue = "Wat is je geboorteplaats?";
                 securityQuestionComboBox.SelectedValue = Account.SecurityQuestion;
@@ -79,9 +76,9 @@ namespace LerenTypen
 
             //Checks if the birthdate isn't younger than 1 year or older than 100 years.
             //This also checks straight away if the birthdate is really a date.
-            if (birthdate > Date.dateOfToday || birthdate < Date.dateOfTodayHundredYearsAgo)
+            if (birthdate > DateTime.Now || birthdate < DateController.GetDateExactXYearsAgo(100))
             {
-                MessageBox.Show($"Geboortedatum moet tussen {Date.dateOfTodayHundredYearsAgo.Day}-{Date.dateOfTodayHundredYearsAgo.Month}-{Date.dateOfTodayHundredYearsAgo.Year} en {Date.dateOfToday.Day}-{Date.dateOfToday.Month}-{Date.dateOfToday.Year} zijn.", "Error");
+                MessageBox.Show($"Geboortedatum moet tussen {DateController.GetDateExactXYearsAgo(100).ToShortDateString()} en {DateTime.Now.ToShortDateString()} zijn.", "Error");
             }
             //We will first check if the textboxes that aren't passwords are empty. If they are, show a message that that is not allowed!
             else if (string.IsNullOrWhiteSpace(firstname) || string.IsNullOrWhiteSpace(surname) || string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(securityQuestion) || string.IsNullOrWhiteSpace(securityAnswer))

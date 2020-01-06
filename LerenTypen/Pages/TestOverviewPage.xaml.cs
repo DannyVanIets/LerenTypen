@@ -72,7 +72,7 @@ namespace LerenTypen
 
             if (onlyTrending)
             {
-                AllTestsOverview_CheckBox_TrendingTests.IsChecked = true;
+                AllTestsOverview_RadioButton_TrendingTests.IsChecked = true;
             }
 
             // Hide some buttons if a user hasnt logged in yet
@@ -80,7 +80,7 @@ namespace LerenTypen
             {
                 AllTestsOverview_Button_MakeOwnTest.Visibility = Visibility.Hidden;
                 AllTestsOverview_Button_ShowOwnTestOnly.Visibility = Visibility.Hidden;
-                AllTestsOverview_CheckBox_MadeBefore.Visibility = Visibility.Collapsed;
+                AllTestsOverview_RadioButton_MadeBefore.Visibility = Visibility.Collapsed;
             }
 
             //Remove these columns for editing and removing if you are not a teacher.
@@ -107,9 +107,9 @@ namespace LerenTypen
         /// <param name="filter">The id of the filter to apply</param>
         private void ApplyWordFilter(int filter)
         {
-            if ((AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals("")) && !AllTestsOverview_CheckBox_MadeBefore.IsChecked.Value)
+            if ((AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllTestsOverview_TextBox_Search.Text.Equals("")) && !AllTestsOverview_RadioButton_MadeBefore.IsChecked.Value)
             {
-                if (AllTestsOverview_CheckBox_TrendingTests.IsChecked.Value)
+                if (AllTestsOverview_RadioButton_TrendingTests.IsChecked.Value)
                 {
                     CurrentContent = TrendingTableContent;
                 }
@@ -130,11 +130,11 @@ namespace LerenTypen
         {
             if (AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
-                if (AllTestsOverview_CheckBox_MadeBefore.IsChecked.Value)
+                if (AllTestsOverview_RadioButton_MadeBefore.IsChecked.Value)
                 {
                     CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
                 }
-                else if (AllTestsOverview_CheckBox_TrendingTests.IsChecked.Value)
+                else if (AllTestsOverview_RadioButton_TrendingTests.IsChecked.Value)
                 {
                     CurrentContent = TrendingTableContent;
                 }
@@ -231,7 +231,7 @@ namespace LerenTypen
         {
             if (AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
-                if (AllTestsOverview_CheckBox_MadeBefore.IsChecked.Value)
+                if (AllTestsOverview_RadioButton_MadeBefore.IsChecked.Value)
                 {
                     CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
                 }
@@ -243,7 +243,7 @@ namespace LerenTypen
             }
             if (!AllTestsOverview_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") && !AllTestsOverview_TextBox_Search.Text.Equals(""))
             {
-                if (AllTestsOverview_CheckBox_MadeBefore.IsChecked.Value)
+                if (AllTestsOverview_RadioButton_MadeBefore.IsChecked.Value)
                 {
                     CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
                 }
@@ -530,7 +530,7 @@ namespace LerenTypen
         {
             Hyperlink hyperlink = (Hyperlink)sender;
             int testID = Convert.ToInt32(hyperlink.Tag);
-            if (TestController.EditingTest(testID).Equals(0))
+            if (TestController.SetBeingEdited(testID).Equals(0))
             {
                 MainWindow.frame.Navigate(new CreateTestPage(MainWindow, testID));
             }

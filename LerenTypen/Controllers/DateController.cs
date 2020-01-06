@@ -15,6 +15,12 @@ namespace LerenTypen.Controllers
             return new DateTime(date.Year, 1, 1);
         }
 
+        public static DateTime GetDateExactXYearsAgo(int x)
+        {
+            DateTime date = DateTime.Now.AddYears(-x);
+            return new DateTime(date.Year, date.Month, date.Day);
+        }
+
         public static DateTime GetDateXMonthsAgo(int x)
         {
             DateTime date = DateTime.Now.AddMonths(-x);
@@ -31,6 +37,7 @@ namespace LerenTypen.Controllers
         {
             return DateTime.Now.Date.AddDays(-x);
         }
+
 
         //Gets the first day of dt's week
         private static DateTime StartOfWeek(DateTime dt, DayOfWeek startOfWeek)
