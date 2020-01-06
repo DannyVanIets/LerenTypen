@@ -460,7 +460,7 @@ namespace LerenTypen
         /// </summary>        
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            StopTest();
+            AskStopTest();
         }
 
         public MessageBoxResult AskStopTest()
@@ -474,10 +474,12 @@ namespace LerenTypen
                 if (choice == MessageBoxResult.Yes)
                 {
                     StopTest();
+                    m.CheckForUnfinishedTests();
                 }
                 else if (choice == MessageBoxResult.No)
                 {
                     StopTest(false);
+                    m.CheckForUnfinishedTests();
                 }
 
                 return choice;
