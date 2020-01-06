@@ -58,21 +58,13 @@
                         <GridViewColumn Header="Meeste woorden per minuut" Width="170" DisplayMemberBinding="{Binding WordHighscore}" local:GridViewSort.PropertyName="Highscore"/>
                         <GridViewColumn Header="Aantal woorden" Width="90" DisplayMemberBinding="{Binding AmountOfWords}" local:GridViewSort.PropertyName="AmountOfWords"/>
                         <GridViewColumn Header="Moeilijkheidsgraad" Width="110" DisplayMemberBinding="{Binding Difficulty}" local:GridViewSort.PropertyName="DifficultyBinder"/>
-                        <GridViewColumn Header="Geüpload door" Width="110" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Hyperlink_Click"/>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                        <GridViewColumn Header="Geüpload door" Width="110" DisplayMemberBinding="{Binding Uploader}" local:GridViewSort.PropertyName="Uploader"/>
                         <GridViewColumn Header="Beoordeling" Width="90" DisplayMemberBinding="{Binding Rating}" local:GridViewSort.PropertyName="Rating"/>
                         <GridViewColumn Header="DifficultyBinder" DisplayMemberBinding="{Binding DifficultyBinder}" Width="0"/>
                         <GridViewColumn x:Name="AllMyTestsOverviewPage_DG_IsPrivate" Header="Privé" Width="50" local:GridViewSort.PropertyName="IsPrivate">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox Tag="{Binding AmountOfWords}" Checked="DG_Checkbox_Check" Unchecked="DG_Checkbox_Uncheck" IsChecked="{Binding IsPrivate}"/>
+                                    <CheckBox Tag="{Binding IsPrivate}" Checked="DG_Checkbox_Check" Unchecked="DG_Checkbox_Uncheck" IsChecked="{Binding IsPrivate}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -80,7 +72,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
-                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Edit_Hyperlink_Click" TextDecorations="">
+                                        <Hyperlink Tag="{Binding TestId}" Click="DG_ATO_Edit_Hyperlink_Click" TextDecorations="">
                                             <Run Text="✎"/>
                                         </Hyperlink>
                                     </TextBlock>
@@ -91,7 +83,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
-                                        <Hyperlink Tag="{Binding AmountOfWords}" Click="DG_ATO_Delete_Hyperlink_Click" TextDecorations="">
+                                        <Hyperlink Tag="{Binding TestId}" Click="DG_ATO_Delete_Hyperlink_Click" TextDecorations="">
                                             <Run Text="X"/>
                                         </Hyperlink>
                                     </TextBlock>

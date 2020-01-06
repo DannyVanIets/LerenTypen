@@ -443,24 +443,29 @@ namespace LerenTypen
             MainWindow.ChangePage(new TestInfoPage(id, MainWindow));
         }
 
-        private void DG_ATO_Hyperlink_Click(object sender, RoutedEventArgs e)
-        {
-            Hyperlink link = (Hyperlink)sender;
-            string id = link.Tag.ToString();
-        }
-
         private void DG_ATO_Edit_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            //Hyperlink link = (Hyperlink)sender;
-            //string id = link.Tag.ToString();
-            //MessageBox.Show(id);
+            Hyperlink hyperlink = (Hyperlink)sender;
+            int testID = Convert.ToInt32(hyperlink.Tag);
+            if (TestController.SetBeingEdited(testID).Equals(0))
+            {
+                MainWindow.frame.Navigate(new CreateTestPage(MainWindow, testID));
+            }
+            else
+            {
+                MessageBox.Show("Toets wordt momenteel aangepast");
+            }
         }
 
         private void DG_ATO_Delete_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            //Hyperlink link = (Hyperlink)sender;
-            //string id = link.Tag.ToString();
-            //MessageBox.Show(id);
+            Hyperlink hyperlink = (Hyperlink)sender;
+            var result = MessageBox.Show("Weet u zeker dat u deze toets wilt archiveren?", "Toets archiveren", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                TestController.UpdateTestToArchived(Convert.ToInt32(hyperlink.Tag));
+                MainWindow.frame.Navigate(new TestOverviewPage(MainWindow));
+            }
         }
 
         private void DG_Checkbox_Check(object sender, RoutedEventArgs e)
