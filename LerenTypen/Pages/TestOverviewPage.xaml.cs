@@ -543,8 +543,12 @@ namespace LerenTypen
         private void DG_ATO_Delete_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink hyperlink = (Hyperlink)sender;
-            TestController.UpdateTestToArchived(Convert.ToInt32(hyperlink.Tag));
-            MainWindow.frame.Navigate(new TestOverviewPage(MainWindow));
+            var result = MessageBox.Show("Weet u zeker dat u deze toets wilt verwijderen?", "Toets verwijderen", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                TestController.UpdateTestToArchived(Convert.ToInt32(hyperlink.Tag));
+                MainWindow.frame.Navigate(new TestOverviewPage(MainWindow));
+            }
         }
 
         private void AllTestsOVerview_RadioButton_ShowAll(object sender, RoutedEventArgs e)
