@@ -173,7 +173,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Date.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Pages\ForgotPasswordPage.xaml.cs">
       <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>

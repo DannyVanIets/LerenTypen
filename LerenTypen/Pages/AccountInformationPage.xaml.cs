@@ -15,7 +15,6 @@ namespace LerenTypen
     {
         private MainWindow MainWindow;
         private Account Account;
-        private Date Date;
         private List<TestTable> UserContent;
         private List<TestTable> LastMadeContent;
         private List<TestTable> CurrentContent = new List<TestTable>();
@@ -31,7 +30,6 @@ namespace LerenTypen
             InitializeComponent();
             //MainWindow is used to change pages.
             MainWindow = mainWindow;
-            Date = new Date();
             //Make a new list for filling the table
             UserContent = new List<TestTable>();
             LastMadeContent = new List<TestTable>();
