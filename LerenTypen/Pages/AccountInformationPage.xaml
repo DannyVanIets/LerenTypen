@@ -24,18 +24,16 @@
             <Label FontSize="30" Margin="20,5,-0.2,0" FontWeight="Bold" Grid.Column="0" Content="Account Informatie" Height="57"/>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Gebruikersnaam :" Margin="20,0,0,0"  Height="47" FontSize="16" Width="200"/>
-                <Label x:Name="userNamelabel" Content="*Not loaded*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
+                <Label x:Name="userNamelabel" Content="*error*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Volledige naam :" Margin="20,0,0,0"  Height="47" FontSize="16" Width="200"/>
-                <Label x:Name="FullNamelabel" Content="*Not loaded*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
+                <Label x:Name="FullNamelabel" Content="*error*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Geboortedatum :" Margin="20,0,0,0"  Height="47" FontSize="16" Width="200"/>
-                <Label x:Name="Birthdatelabel" Content="*Not loaded*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
+                <Label x:Name="Birthdatelabel" Content="*error*" Margin="0,0,0,0" Height="47" FontSize="16" Width="200"/>
             </StackPanel>
-
-
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Grid.Column="1">
@@ -77,7 +75,7 @@
             </Grid.RowDefinitions>            
 
             <StackPanel Orientation="Vertical" Grid.Column="0">
-                <TextBox HorizontalAlignment="Left" HorizontalContentAlignment="Center" Height="47" BorderThickness="0" Margin="20,0,0,0" TextWrapping="Wrap" Text="Gemiddeld aantal goede woorden per minuut." Width="210" FontSize="15"/>
+                <TextBlock HorizontalAlignment="Left" TextAlignment="Center" Height="47" Margin="20,0,0,0" TextWrapping="Wrap" Text="Gemiddeld aantal goede woorden per minuut." Width="210" FontSize="15"/>
                 <Label x:Name="AverageWordsMinute" Content="*error*" VerticalAlignment="Top" HorizontalAlignment="Left" Height="68" HorizontalContentAlignment="Center" Width="263" Margin="0,0,0,0" FontSize="30"/>
             </StackPanel>
             <lvc:CartesianChart x:Name="Chart"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,20,0,40">
@@ -104,7 +102,7 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="1">
                 <StackPanel Orientation="Vertical">
-                    <TextBox HorizontalAlignment="Left" BorderThickness="0" TextAlignment="Center" Margin="20,0,0,0.0" TextWrapping="Wrap" Text="Gemiddeld % woorden goed per toets." Width="209" FontSize="15"/>
+                    <TextBlock HorizontalAlignment="Left" TextAlignment="Center" Margin="20,0,0,0.0" TextWrapping="Wrap" Text="Gemiddeld % woorden goed per toets." Width="209" FontSize="15"/>
                     <Label x:Name="AveragePercentage" Content="*error*" HorizontalAlignment="Left"  Height="68" HorizontalContentAlignment="Center" Width="263" Margin="0,0,0,0"  FontSize="30"/>
                 </StackPanel>
             </StackPanel>
@@ -150,8 +148,8 @@
             </ListView>
 
             <StackPanel Orientation="Horizontal" Height="50" Margin="0,10,-0.2,0">
-                <Button Content="Al mijn toetsen" HorizontalAlignment="Left" Height="42" Margin="35,2,0,-3.8" Width="135" Click="AllMyTests_Click"/>
-                <Button Content="Maak nieuwe toets aan" HorizontalAlignment="Left" Height="42" Margin="155,2,0,0" Width="135" Click="MakeNewTest_Click"/>
+                <Button Content="Al mijn toetsen" HorizontalAlignment="Left" Height="25" Margin="35,2,0,-3.8" Width="135" Click="AllMyTests_Click"/>
+                <Button Content="Maak nieuwe toets aan" HorizontalAlignment="Left" Height="25" Margin="155,2,0,0" Width="135" Click="MakeNewTest_Click"/>
             </StackPanel>
         </StackPanel>
         
