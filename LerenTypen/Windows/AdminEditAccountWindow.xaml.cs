@@ -77,9 +77,9 @@ namespace LerenTypen
                         MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het laastste admin account wilt archiveren?", "Alle admins archiveren", MessageBoxButton.YesNo);
                         if (messageBoxResult == MessageBoxResult.Yes)
                         {
-                            AccountController.MakeStudent(username);
-                            MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                            MessageBox.Show("Dit is niet mogelijk! Maak eerst een ander account admin", "Error");
                             this.Close();
+                            Logout = false;
                         }
                         else
                         {
@@ -101,9 +101,9 @@ namespace LerenTypen
                         MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het laastste admin account wilt archiveren?", "Alle admins archiveren", MessageBoxButton.YesNo);
                         if (messageBoxResult == MessageBoxResult.Yes)
                         {
-                            AccountController.MakeTeacher(username);
-                            MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                            MessageBox.Show("Dit is niet mogelijk! Maak eerst een ander account admin", "Error");
                             this.Close();
+                            Logout = false;
                         }
                         else
                         {
@@ -123,7 +123,6 @@ namespace LerenTypen
                     AccountController.MakeAdmin(username);
                     MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
                     this.Close();
-
                 }
                 else
                 {

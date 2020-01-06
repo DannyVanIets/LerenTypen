@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace LerenTypen.Controllers
 {
-    //In this controller we have all the testReviews queries we use in this applicaiton.
+    //In this controller we have all the testReviews queries we use in this appliciaton.
     public static class ReviewController
     {
         //Regex is used to check if filled in text has only number. Is used in the OnlyNumberic function.
@@ -57,7 +57,6 @@ namespace LerenTypen.Controllers
             }
             return result;
         }
-
 
         public static List<Review> GetUserReviewDetails(int testID)
                 {

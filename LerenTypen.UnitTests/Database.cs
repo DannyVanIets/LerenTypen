@@ -99,7 +99,7 @@ namespace LerenTypen.UnitTests
                 connection.Open();
 
                 // this query returns all the content from a given testId
-                string mySql = "SELECT top 1 accountID FROM accounts WHERE ";
+                string mySql = "SELECT top 1 accountID FROM accounts WHERE accountType = 2";
 
                 using (SqlCommand command = new SqlCommand(mySql, connection))
                 {
@@ -156,6 +156,39 @@ namespace LerenTypen.UnitTests
                 connection.Dispose();
             }
 
+            return 0;
+        }
+
+        public static int GetFirstReviewID()
+        {
+            SqlConnection connection = new SqlConnection(Models.Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // this query returns all the content from a given testId
+                string mySql = "SELECT top 1 reviewID FROM testReviews";
+
+                using (SqlCommand command = new SqlCommand(mySql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
             return 0;
         }
     }

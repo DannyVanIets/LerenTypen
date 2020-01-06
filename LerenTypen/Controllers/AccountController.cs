@@ -5,9 +5,9 @@ using System.Data.SqlClient;
 
 namespace LerenTypen.Controllers
 {
+    //In this controller we have all the Account queries we use in this appliciaton.
     public class AccountController
     {
-
         //Get all the account information, except for password.
         public static Account GetAllAccountInformation(int accountID)
         {
@@ -635,7 +635,6 @@ namespace LerenTypen.Controllers
             }
             return true;
         }
-
 
         public static string GetAverageTestResultpercentage(string userName)
         {
