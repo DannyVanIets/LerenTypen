@@ -163,7 +163,7 @@ namespace LerenTypen
         {
             try
             {
-                MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je je account wilt verwijderen?", "Account archiveren", MessageBoxButton.YesNo);
+                MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je je account wilt archiveren?", "Account archiveren", MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
                 {               
                     AccountController.DeleteAccount(Account.UserName);
