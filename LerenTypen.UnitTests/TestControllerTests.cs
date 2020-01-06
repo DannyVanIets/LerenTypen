@@ -20,7 +20,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTestHighscore(testID));
         }
 
@@ -30,7 +30,7 @@ namespace LerenTypen.UnitTests
             // Arrange
             int testID = Database.GetFirstAccountID();
             int userID = Database.GetFirstAccountID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetUserRating(testID, userID));
         }
 
@@ -39,7 +39,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTestAverageScore(testID));
         }
 
@@ -48,14 +48,14 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTest(testID));
         }
 
         [Test]
         public void GetAllTests_ReturnNoException()
         {
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetAllTests());
         }
 
@@ -64,7 +64,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTrendingTestIDs(3));
         }
 
@@ -73,7 +73,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTrendingTestIDs(testID));
         }
 
@@ -82,7 +82,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTrendingTestsNameAndID());
         }
 
@@ -91,7 +91,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetWordHighscore(testID));
         }
 
@@ -100,7 +100,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTestInformation(testID));
         }
 
@@ -109,7 +109,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTop3FastestTypers(testID));
         }
 
@@ -118,7 +118,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTop3Highscores(testID));
         }
 
@@ -127,7 +127,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTestName(testID));
         }
 
@@ -136,7 +136,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTestContent(testID));
         }
 
@@ -145,7 +145,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int accountID = Database.GetFirstAccountID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetMyTestNames(accountID));
         }
 
@@ -154,7 +154,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int accountID = Database.GetFirstAccountID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetAllMyTestswithIsPrivate(accountID));
         }
 
@@ -163,7 +163,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int accountID = Database.GetFirstAccountID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetAllMyTestswithIsPrivate(accountID));
         }
 
@@ -172,7 +172,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetAmountOfWordsFromTest(testID));
         }
 
@@ -181,7 +181,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int accountID = Database.GetFirstAccountID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetAllTestsAlreadyMade(accountID));
         }
 
@@ -190,7 +190,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testID = Database.GetFirstTestID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTimesMade(testID));
         }
 
@@ -199,7 +199,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int accountID = Database.GetFirstAccountID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetAllMyTestsAlreadyMadeTop3(accountID));
         }
 
@@ -208,7 +208,7 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int accountID = Database.GetFirstAccountID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetUnfinishedTestIDsFromAccount(accountID));
         }
 
@@ -217,10 +217,9 @@ namespace LerenTypen.UnitTests
         {
             // Arrange
             int testResultID = Database.GetFirstTestResultID();
-            // Act & Arrange
+            // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetAllLinesFromResult(testResultID));
         }
-
         #endregion
 
         #region Insert        
