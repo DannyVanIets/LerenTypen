@@ -142,6 +142,7 @@
     <Compile Include="Database.cs" />
     <Compile Include="LoginControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReviewControllerTests.cs" />
     <Compile Include="TestControllerTests.cs" />
     <Compile Include="TestResultControllerTests.cs" />
   </ItemGroup>
