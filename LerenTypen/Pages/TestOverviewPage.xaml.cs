@@ -543,7 +543,7 @@ namespace LerenTypen
         private void DG_ATO_Delete_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink hyperlink = (Hyperlink)sender;
-            var result = MessageBox.Show("Weet u zeker dat u deze toets wilt verwijderen?", "Toets verwijderen", MessageBoxButton.YesNo);
+            var result = MessageBox.Show("Weet u zeker dat u deze toets wilt archiveren?", "Toets archiveren", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
                 TestController.UpdateTestToArchived(Convert.ToInt32(hyperlink.Tag));
@@ -557,7 +557,6 @@ namespace LerenTypen
             {
                 CurrentContent = TableContent;
                 Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
-
             }
         }
     }
