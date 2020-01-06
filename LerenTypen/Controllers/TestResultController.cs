@@ -61,7 +61,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select avg(wordsEachMinute) from testresults where testResultsDate BETWEEN CAST(@firstDate AS DATETIME) AND CAST(@secondDate AS DATETIME) and accountID = @accountID and finished = 1";
+                string query = "select avg(wordsEachMinute) from testresults r inner join tests t on r.testID = t.testID where r.testResultsDate BETWEEN CAST(@firstDate AS DATETIME) AND CAST(@secondDate AS DATETIME) and r.accountID = @accountID and r.finished = 1 and t.archived =0";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -106,7 +106,7 @@ namespace LerenTypen.Controllers
                 connection.Open();
                 string query = "Declare @start_date DATETIME;" +
                     "Declare @end_date DATETIME;" +
-                    "set @start_date = (select min(testResultsDate) from testresults where accountID = @accountID);" +
+                    "set @start_date = (select min(testResultsDate) from testresults r inner join tests t on r.testID = t.testID where r.accountID = @accountID and t.archived =0);" +
                     " select DATEDIFF(Hour, @start_date, CURRENT_TIMESTAMP);";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
