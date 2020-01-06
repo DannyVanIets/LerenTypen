@@ -2,10 +2,10 @@
 using LerenTypen.Models;
 using Renci.SshNet;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Collections.Generic;
 
 namespace LerenTypen
 {
@@ -177,7 +177,7 @@ namespace LerenTypen
             if (shouldChangePage)
             {
                 frame.Content = pageToChangeTo;
-                SwitchMenuButtons(pageToggleButton);         
+                SwitchMenuButtons(pageToggleButton);
             }
             else
             {

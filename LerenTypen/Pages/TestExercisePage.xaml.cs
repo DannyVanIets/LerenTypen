@@ -129,7 +129,6 @@ namespace LerenTypen
                 amountOfPauses = TestResultController.GetAmountOfPauses(unfinishedTestResultID);
                 wrongAnswers = TestResultController.GetTestResultsContentWrong(testID, unfinishedTestResultID);
                 rightAnswers = TestResultController.GetTestResultsContentRight(unfinishedTestResultID);
-                //unfinishedLines = TestController.GetAllLinesFromResult(unfinishedTestResultID, 2);
                 int timeSeconds = TestResultController.GetTime(unfinishedTestResultID);
                 i = timeSeconds % 60;
                 j = timeSeconds / 60;
@@ -145,16 +144,7 @@ namespace LerenTypen
             // Check if lines are found
             if (!lines.Count.Equals(0))
             {
-                /* if (restoreState)
-                 {
-                     testLineLbl.Content = unfinishedLines[currentLineIndex];
-                 }
-
-                 else
-                 {
-                 */
                 testLineLbl.Content = lines[currentLine];
-                // }
             }
             else
             {
@@ -389,16 +379,7 @@ namespace LerenTypen
             t1.Stop();
 
             lineCheckLbl.Visibility = Visibility.Visible;
-            /*
-                        if (restoreState)
-                        {
-                            lineCheckLbl.Content = unfinishedLines[currentLineIndex];
-                        }
-                        else
-                        {
-                        */
             lineCheckLbl.Content = lines[currentLine];
-            //}
 
             if (input.Trim().Equals(""))
             {
@@ -570,37 +551,19 @@ namespace LerenTypen
             ShowRightOrWrong(right, input);
 
             bool shouldGoToNextLine;
-            /*if (restoreState)
-            {
-                shouldGoToNextLine = currentLineIndex < unfinishedLines.Count - 1;
-            }
-            else
-            {
-            */
+
             shouldGoToNextLine = true;
             if (!(currentLine < lines.Count - 1))
             {
                 shouldGoToNextLine = false;
             }
-            // }
 
             if (shouldGoToNextLine)
             {
                 currentLine++;
-                //currentLineIndex++;
-
-                /*if (restoreState)
-                {
-                    testLineLbl.Content = unfinishedLines[currentLineIndex];
-                    lineNumberLbl.Content = $"{currentLine}/{lines.Count + restoredWrongAnswers - restoredRightAnswers}";
-                }
-                else
-                {
-                */
                 testLineLbl.Content = lines[currentLine];
 
                 lineNumberLbl.Content = $"{currentLine + 1}/{lines.Count}";
-                // }
             }
             else
             {
@@ -615,15 +578,7 @@ namespace LerenTypen
         private bool CheckInput(string input, int key = -1)
         {
             bool answerCorrect;
-            /*if (restoreState)
-            {
-                answerCorrect = input.Trim().Equals(unfinishedLines[currentLineIndex].Trim());
-            }
-            else
-            {
-            */
             answerCorrect = input.Trim().Equals(lines[currentLine].Trim());
-            //}
 
             if (answerCorrect)
             {
@@ -642,16 +597,7 @@ namespace LerenTypen
                 }
                 else
                 {
-                    /*
-                    if (restoreState)
-                    {
-                        lines.Add(lines[currentLineIndex]);
-                    }
-                    else
-                    {
-                    */
                     lines.Add(lines[currentLine]);
-                    //}
                 }
             }
             return false;
