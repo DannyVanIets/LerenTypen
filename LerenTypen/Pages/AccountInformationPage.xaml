@@ -75,7 +75,7 @@
             </Grid.RowDefinitions>            
 
             <StackPanel Orientation="Vertical" Grid.Column="0">
-                <TextBlock HorizontalAlignment="Left" TextAlignment="Center" Height="47" Margin="20,0,0,0" TextWrapping="Wrap" Text="Gemiddeld aantal goede woorden per minuut." Width="210" FontSize="15"/>
+                <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Height="47" TextWrapping="Wrap" Text="Gemiddeld aantal goede woorden per minuut" Width="210" FontSize="15"/>
                 <Label x:Name="AverageWordsMinute" Content="*error*" VerticalAlignment="Top" HorizontalAlignment="Left" Height="68" HorizontalContentAlignment="Center" Width="263" Margin="0,0,0,0" FontSize="30"/>
             </StackPanel>
             <lvc:CartesianChart x:Name="Chart"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,20,0,40">
@@ -102,7 +102,7 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="1">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock HorizontalAlignment="Left" TextAlignment="Center" Margin="20,0,0,0.0" TextWrapping="Wrap" Text="Gemiddeld % woorden goed per toets." Width="209" FontSize="15"/>
+                    <TextBlock HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Text="Gemiddeld % woorden goed per toets" Width="180" FontSize="15"/>
                     <Label x:Name="AveragePercentage" Content="*error*" HorizontalAlignment="Left"  Height="68" HorizontalContentAlignment="Center" Width="263" Margin="0,0,0,0"  FontSize="30"/>
                 </StackPanel>
             </StackPanel>
