@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LerenTypen.Controllers
 {
-    class LeaderboardController
+    public static class LeaderboardController
     {
         //Fill in all the info for the hard words leaderboard
         public static List<Test> GetHardTests(int timespan)

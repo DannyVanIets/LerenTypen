@@ -93,7 +93,7 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        public void CalculatePercentageRight_TestResultID_ReturnNoException()
+        public void CalculatePercentageRight_TestIDAndTestResultID_ReturnNoException()
         {
             // Act & Assert
             Assert.DoesNotThrow(() => TestResultController.CalculatePercentageRight(TestID, TestResultID));
