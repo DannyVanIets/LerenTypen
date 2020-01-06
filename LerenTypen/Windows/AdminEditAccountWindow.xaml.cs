@@ -120,9 +120,9 @@ namespace LerenTypen
 
                 else if (comboboxvalue == "admin")
                 {
-                    MessageBox.Show("Dit is niet mogelijk! Maak eerst een ander account admin", "Error");
+                    AccountController.MakeAdmin(username);
+                    MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
                     this.Close();
-                    Logout = false;
                 }
                 else
                 {
