@@ -8,88 +8,106 @@ namespace LerenTypen.UnitTests
 {
     class TestResultControllerTests
     {
+        private int TestResultID;
+        private int TestID;
+        private int AccountID;
+
         public TestResultControllerTests()
         {
             Database.Connect();
+
+            TestResultID = Database.GetFirstTestResultID();
+            TestID = Database.GetFirstTestID();
+            AccountID = Database.GetFirstAccountID();
         }
 
         #region Select
         [Test]
         public void GetTestResults_TestResultID_ReturnNoException()
         {
-            // Arrange
-            int testResultID = Database.GetFirstTestResultID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestResultController.GetTestResults(testResultID));
+            Assert.DoesNotThrow(() => TestResultController.GetTestResults(TestResultID));
         }
 
         [Test]
         public void GetWordsPerMinuteByPeriod_AccountIDAndDates_ReturnNoException()
         {
-            // Arrange
-            int accountID = Database.GetFirstAccountID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestResultController.GetWordsPerMinuteByPeriod(accountID, DateTime.Now.AddDays(-5), DateTime.Now));
+            Assert.DoesNotThrow(() => TestResultController.GetWordsPerMinuteByPeriod(AccountID, DateTime.Now.AddDays(-5), DateTime.Now));
         }
 
         [Test]
         public void GetDateRange_AccountID_ReturnNoException()
         {
-            // Arrange
-            int accountID = Database.GetFirstAccountID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestResultController.GetDateRange(accountID));
+            Assert.DoesNotThrow(() => TestResultController.GetDateRange(AccountID));
         }
 
         [Test]
         public void GetTestResultsContentRight_TestResultID_ReturnNoException()
         {
-            // Arrange
-            int testResultID = Database.GetFirstTestResultID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestResultController.GetTestResultsContentRight(testResultID));
+            Assert.DoesNotThrow(() => TestResultController.GetTestResultsContentRight(TestResultID));
         }
 
         [Test]
         public void GetTestResultsContentWrong_TestIDAndTestResultID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
-            int testResultID = Database.GetFirstTestResultID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestResultController.GetTestResultsContentWrong(testID, testResultID));
+            Assert.DoesNotThrow(() => TestResultController.GetTestResultsContentWrong(TestID, TestResultID));
         }
 
         [Test]
         public void GetTestResultsContentHadToBe_TestResultID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
-            int testResultID = Database.GetFirstTestResultID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestResultController.GetTestResultsContentWrong(testID, testResultID));
+            Assert.DoesNotThrow(() => TestResultController.GetTestResultsContentHadToBe(TestResultID));
+        }
+
+        [Test]
+        public void GetAllTestResultsFromAccount_TestIDAndAccountID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetAllTestResultsFromAccountAndTest(AccountID, TestID));
+        }
+
+        [Test]
+        public void GetUnfinishedTestResultID_TestIDAndAccountID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetUnfinishedTestResultID(AccountID, TestID));
+        }
+
+        [Test]
+        public void GetAmountOfPauses_TestResultID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetAmountOfPauses(TestResultID));
+        }
+
+        [Test]
+        public void GetTime_TestResultID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetTime(TestResultID));
+        }
+
+        [Test]
+        public void CalculatePercentageRight_TestResultID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.CalculatePercentageRight(TestID, TestResultID));
         }
         #endregion
 
         #region Insert
-        //[Test]
-        //// Happy
-        //[TestCase(20)]
-        //// Unhappy
-        //[TestCase(0)]
-        //public void SaveResultsandInsertResultsContent_testResultsID_testResultID(int testID)
-        //{
-        //    //Arrange
-        //    int answer;
-        //    List<string> rightAnswers = new List<string>() { "test", "test" };
-        //    Dictionary<int, string> wrongAnswers = new Dictionary<int, string>();
-        //    wrongAnswers.Add(2, "Test");
-        //    List<string> lines = new List<string>() { "test", "test", "test", "test" };
-        //    //Act
-        //    answer = TestResultController.SaveResults(testID, 1, 1, 1, rightAnswers, wrongAnswers, lines, 5, 55, true);
-        //    //Assert
-        //    Assert.IsNotNull(answer);
-        //}
+        // SaveResult
+        // InsertResultsContent
+        #endregion
+
+        #region Delete
+        // DeleteTestResult
+        // DeleteTestResultContent
         #endregion
     }
 }

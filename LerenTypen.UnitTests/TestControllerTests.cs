@@ -9,47 +9,46 @@ namespace LerenTypen.UnitTests
 {
     class TestControllerTests
     {
+        private int TestResultID;
+        private int TestID;
+        private int AccountID;
+
         public TestControllerTests()
         {
             Database.Connect();
+
+            TestResultID = Database.GetFirstTestResultID();
+            TestID = Database.GetFirstTestID();
+            AccountID = Database.GetFirstAccountID();
         }       
 
         #region Select
         [Test]
         public void GetTestHighScore_TestID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetTestHighscore(testID));
+            Assert.DoesNotThrow(() => TestController.GetTestHighscore(TestID));
         }
 
         [Test]
         public void GetUserRating_TestAndUserID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstAccountID();
-            int userID = Database.GetFirstAccountID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetUserRating(testID, userID));
+            Assert.DoesNotThrow(() => TestController.GetUserRating(TestID, AccountID));
         }
 
         [Test]
         public void GetTestAverageScore_TestID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetTestAverageScore(testID));
+            Assert.DoesNotThrow(() => TestController.GetTestAverageScore(TestID));
         }
 
         [Test]
         public void GetTest_TestID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetTest(testID));
+            Assert.DoesNotThrow(() => TestController.GetTest(TestID));
         }
 
         [Test]
@@ -62,8 +61,6 @@ namespace LerenTypen.UnitTests
         [Test]
         public void GetTrendingTestIDs_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTrendingTestIDs(3));
         }
@@ -71,17 +68,13 @@ namespace LerenTypen.UnitTests
         [Test]
         public void GetTrendingTests_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetTrendingTestIDs(testID));
+            Assert.DoesNotThrow(() => TestController.GetTrendingTestIDs(TestID));
         }
 
         [Test]
         public void GetTrendingTestsNameAndID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
             Assert.DoesNotThrow(() => TestController.GetTrendingTestsNameAndID());
         }
@@ -89,109 +82,85 @@ namespace LerenTypen.UnitTests
         [Test]
         public void GetWordHighscore_TestID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetWordHighscore(testID));
+            Assert.DoesNotThrow(() => TestController.GetWordHighscore(TestID));
         }
 
         [Test]
         public void GetTestInformation_TestID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetTestInformation(testID));
+            Assert.DoesNotThrow(() => TestController.GetTestInformation(TestID));
         }
 
         [Test]
         public void GetTop3FastestTypers_TestID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetTop3FastestTypers(testID));
+            Assert.DoesNotThrow(() => TestController.GetTop3FastestTypers(TestID));
         }
 
         [Test]
         public void GetTop3Highscores_TestID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetTop3Highscores(testID));
+            Assert.DoesNotThrow(() => TestController.GetTop3Highscores(TestID));
         }
 
         [Test]
         public void GetTestName_TestID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetTestName(testID));
+            Assert.DoesNotThrow(() => TestController.GetTestName(TestID));
         }
 
         [Test]
         public void GetTestContent_TestID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetTestContent(testID));
+            Assert.DoesNotThrow(() => TestController.GetTestContent(TestID));
         }
 
         [Test]
         public void GetMyTestNames_AccountID_ReturnNoException()
         {
-            // Arrange
-            int accountID = Database.GetFirstAccountID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetMyTestNames(accountID));
+            Assert.DoesNotThrow(() => TestController.GetMyTestNames(AccountID));
         }
 
         [Test]
         public void GetAllMyTestswithIsPrivate_AccountID_ReturnNoException()
         {
-            // Arrange
-            int accountID = Database.GetFirstAccountID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetAllMyTestswithIsPrivate(accountID));
+            Assert.DoesNotThrow(() => TestController.GetAllMyTestswithIsPrivate(AccountID));
         }
 
         [Test]
         public void GetAllMyTestsAlreadyMade_AccountID_ReturnNoException()
         {
-            // Arrange
-            int accountID = Database.GetFirstAccountID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetAllMyTestswithIsPrivate(accountID));
+            Assert.DoesNotThrow(() => TestController.GetAllMyTestswithIsPrivate(AccountID));
         }
 
         [Test]
         public void GetAmountOfWordsFromTest_TestID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetAmountOfWordsFromTest(testID));
+            Assert.DoesNotThrow(() => TestController.GetAmountOfWordsFromTest(TestID));
         }
 
         [Test]
         public void GetAllTestsAlreadyMade_AccountID_ReturnNoException()
         {
-            // Arrange
-            int accountID = Database.GetFirstAccountID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetAllTestsAlreadyMade(accountID));
+            Assert.DoesNotThrow(() => TestController.GetAllTestsAlreadyMade(AccountID));
         }
 
         [Test]
         public void GetTimesMade_TestID_ReturnNoException()
         {
-            // Arrange
-            int testID = Database.GetFirstTestID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetTimesMade(testID));
+            Assert.DoesNotThrow(() => TestController.GetTimesMade(TestID));
         }
 
         [Test]
@@ -206,19 +175,15 @@ namespace LerenTypen.UnitTests
         [Test]
         public void GetUnfinishedTestIDsFromAccount_AccountID_ReturnNoException()
         {
-            // Arrange
-            int accountID = Database.GetFirstAccountID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetUnfinishedTestIDsFromAccount(accountID));
+            Assert.DoesNotThrow(() => TestController.GetUnfinishedTestIDsFromAccount(AccountID));
         }
 
         [Test]
-        public void GetAllLinesFromResult_TestID_ReturnNoException()
+        public void GetAllLinesFromResult_TestResultID_ReturnNoException()
         {
-            // Arrange
-            int testResultID = Database.GetFirstTestResultID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestController.GetAllLinesFromResult(testResultID));
+            Assert.DoesNotThrow(() => TestController.GetAllLinesFromResult(TestResultID));
         }
         #endregion
 

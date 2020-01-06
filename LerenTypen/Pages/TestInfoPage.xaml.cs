@@ -181,7 +181,7 @@ namespace LerenTypen
             avarageScoreLabel.Content = $"{test.AverageScore}%";
             highscoreLabel.Content = $"{test.Highscore}%";
 
-            myResultsListView.ItemsSource = TestResultController.GetAllTestResultsFromAccount(mainWindow.Ingelogd, testID);
+            myResultsListView.ItemsSource = TestResultController.GetAllTestResultsFromAccountAndTest(mainWindow.Ingelogd, testID);
 
             Dictionary<int, int> top3Fastest = TestController.GetTop3FastestTypers(testID);
             foreach (KeyValuePair<int, int> kvp in top3Fastest)
