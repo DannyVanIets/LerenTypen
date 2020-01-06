@@ -14,16 +14,12 @@ namespace LerenTypen
     {
         private MainWindow MainWindow;
         private Account Account;
-        private Date Date;
 
         public EditAccountPage(MainWindow mainWindow)
         {
             InitializeComponent();
             //MainWindow is used to change pages.
             MainWindow = mainWindow;
-
-            //Date is used to get the current date and the date from 100 years ago.
-            Date = new Date();
 
             //First we will check if the user is logged in, if not, they will be send back to the Homepage with a message that they're not logged in.
             //If a user is logged in, we will fill in all the information from his account into the textboxes.
@@ -37,8 +33,9 @@ namespace LerenTypen
                 usernameTextBox.Text = Account.UserName;
                 birthdateDatePicker.SelectedDate = Account.Birthdate;
 
-                birthdateDatePicker.DisplayDateStart = Date.dateOfToday;
-                birthdateDatePicker.DisplayDateEnd = Date.dateOfTodayHundredYearsAgo;
+                birthdateDatePicker.DisplayDate = DateTime.Now;
+                birthdateDatePicker.DisplayDateStart = DateController.GetDateExactXYearsAgo(100);
+                birthdateDatePicker.DisplayDateEnd = DateTime.Now;
 
                 //securityQuestionComboBox.SelectedValue = "Wat is je geboorteplaats?";
                 securityQuestionComboBox.SelectedValue = Account.SecurityQuestion;
