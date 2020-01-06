@@ -293,56 +293,60 @@ namespace LerenTypen.Controllers
             string idList = "(";
             List<int> ids = GetTrendingTestIDs(limit);
 
-            foreach (int id in ids)
+            if (ids.Count != 0)
             {
-                // Check if this is not the last id
-                if (id != ids[ids.Count - 1])
+                foreach (int id in ids)
                 {
-                    idList += $"{id}, ";
-                }
-                else
-                {
-                    idList += $"{id})";
-                }
-            }
-
-            try
-            {
-                connection.Open();
-
-                string query = $"SELECT testID, testName, testType, accountID, version, testDifficulty, isPrivate, createDate from tests t WHERE t.testID IN {idList}";
-
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    // Check if this is not the last id
+                    if (id != ids[ids.Count - 1])
                     {
-                        while (reader.Read())
-                        {
-                            int id = Convert.ToInt32(reader[0]);
-                            string name = reader.GetString(1);
-                            int type = Convert.ToInt32(reader[2]);
-                            int authorID = Convert.ToInt32(reader[3]);
-                            string authorName = AccountController.GetUsername(authorID);
-                            int wordCount = TestController.GetAmountOfWordsFromTest(id);
-                            int timesMade = TestController.GetTimesMade(id);
-                            int version = Convert.ToInt32(reader[4]);
-                            int difficulty = Convert.ToInt32(reader[5]);
-                            int isPrivate = Convert.ToInt32(reader[6]);
-                            DateTime createDateTime = (DateTime)reader[7];
+                        idList += $"{id}, ";
+                    }
+                    else
+                    {
+                        idList += $"{id})";
+                    }
+                }
 
-                            trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty, Convert.ToInt32(ReviewController.GetRatingScore(id)), Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
+                try
+                {
+                    connection.Open();
+
+                    string query = $"SELECT testID, testName, testType, accountID, version, testDifficulty, isPrivate, createDate from tests t WHERE t.testID IN {idList}";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int id = Convert.ToInt32(reader[0]);
+                                string name = reader.GetString(1);
+                                int type = Convert.ToInt32(reader[2]);
+                                int authorID = Convert.ToInt32(reader[3]);
+                                string authorName = AccountController.GetUsername(authorID);
+                                int wordCount = TestController.GetAmountOfWordsFromTest(id);
+                                int timesMade = TestController.GetTimesMade(id);
+                                int version = Convert.ToInt32(reader[4]);
+                                int difficulty = Convert.ToInt32(reader[5]);
+                                int isPrivate = Convert.ToInt32(reader[6]);
+                                DateTime createDateTime = (DateTime)reader[7];
+
+                                trendingTests.Add(new Test(id, name, type, authorID, authorName, wordCount, version, difficulty, Convert.ToInt32(ReviewController.GetRatingScore(id)), Convert.ToBoolean(isPrivate), createDateTime.Date.ToString("dd-MM-yyyy")));
+                            }
                         }
                     }
                 }
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                connection.Close();
-                connection.Dispose();
+
+                catch (SqlException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                    connection.Dispose();
+                }
             }
             return trendingTests;
         }
