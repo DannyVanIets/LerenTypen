@@ -17,7 +17,20 @@ namespace LerenTypen.UnitTests
             AccountID = Database.GetFirstAccountID();
         }
 
-        #region Select
+        #region Select[Test]
+        public void GetAllAccountInformation_accountID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => AccountController.GetAllAccountInformation(AccountID));
+        }
+
+        [Test]
+        public void GetAmountOfAdmins_AccountID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => AccountController.GetAmountOfAdmins(AccountID));
+        }
+
         [Test]
         public void GetUserAccount_AccountID_ReturnNoException()
         {
@@ -26,12 +39,10 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
-        public void IsAdmin_accountnumber_ReturnNoException()
+        public void GetAccountNamesAndBirthdate_AccountID_ReturnNoException()
         {
-            // Arrange
-            int adminAccountID = Database.GetFirstAdminAccount();
             // Act & Assert
-            Assert.DoesNotThrow(() => AccountController.IsAdmin(adminAccountID));
+            Assert.DoesNotThrow(() => AccountController.GetAccountNamesAndBirthdate(AccountID));
         }
 
         [Test]
@@ -56,10 +67,26 @@ namespace LerenTypen.UnitTests
         }
 
         [Test]
+        public void GetLast3TestsMade_accountID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => AccountController.GetLast3TestsMade());
+        }
+
+        [Test]
         public void GetAllUsers_ReturnNoException()
         {
             // Act & Assert
             Assert.DoesNotThrow(() => AccountController.GetAllUsers());
+        }
+
+        [Test]
+        public void IsAdmin_accountnumber_ReturnNoException()
+        {
+            // Arrange
+            int adminAccountID = Database.GetFirstAdminAccount();
+            // Act & Assert
+            Assert.DoesNotThrow(() => AccountController.IsAdmin(adminAccountID));
         }
         #endregion
 
