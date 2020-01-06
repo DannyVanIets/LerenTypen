@@ -530,7 +530,7 @@ namespace LerenTypen
         {
             Hyperlink hyperlink = (Hyperlink)sender;
             int testID = Convert.ToInt32(hyperlink.Tag);
-            if (TestController.EditingTest(testID).Equals(0))
+            if (TestController.SetBeingEdited(testID).Equals(0))
             {
                 MainWindow.frame.Navigate(new CreateTestPage(MainWindow, testID));
             }

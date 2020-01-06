@@ -48,21 +48,6 @@ namespace LerenTypen.UnitTests
         [TestCase(58, 1)]
         // Unhappy
         [TestCase(int.MaxValue, 0)]
-        public void GetTestResultsContentWrong_testResultsID_TestResultsContentWrong(int testResultsID, int resultCount)
-        {
-            //Arrange
-            List<string> answer = new List<string>();
-            //Act
-            answer = TestResultController.GetTestResultsContentWrong(testResultsID);
-            //Assert
-            Assert.AreEqual(resultCount, answer.Count);
-        }
-
-        [Test]
-        // Happy
-        [TestCase(58, 1)]
-        // Unhappy
-        [TestCase(int.MaxValue, 0)]
         public void GetTestResultsContentHadToBe_testResultsID_TestResultsContentHadToBe(int testResultsID, int resultCount)
         {
             //Arrange
@@ -90,24 +75,24 @@ namespace LerenTypen.UnitTests
         #endregion
 
         #region Insert
-        [Test]
-        // Happy
-        [TestCase(20)]
-        // Unhappy
-        [TestCase(0)]
-        public void SaveResultsandInsertResultsContent_testResultsID_testResultID(int testID)
-        {
-            //Arrange
-            int answer;
-            List<string> rightAnswers = new List<string>() { "test", "test" };
-            Dictionary<int, string> wrongAnswers = new Dictionary<int, string>();
-            wrongAnswers.Add(2, "Test");
-            List<string> lines = new List<string>() { "test", "test", "test", "test" };
-            //Act
-            answer = TestResultController.SaveResults(testID, 1, 1, 1, rightAnswers, wrongAnswers, lines, 5);
-            //Assert
-            Assert.IsNotNull(answer);
-        }
+        //[Test]
+        //// Happy
+        //[TestCase(20)]
+        //// Unhappy
+        //[TestCase(0)]
+        //public void SaveResultsandInsertResultsContent_testResultsID_testResultID(int testID)
+        //{
+        //    //Arrange
+        //    int answer;
+        //    List<string> rightAnswers = new List<string>() { "test", "test" };
+        //    Dictionary<int, string> wrongAnswers = new Dictionary<int, string>();
+        //    wrongAnswers.Add(2, "Test");
+        //    List<string> lines = new List<string>() { "test", "test", "test", "test" };
+        //    //Act
+        //    answer = TestResultController.SaveResults(testID, 1, 1, 1, rightAnswers, wrongAnswers, lines, 5, 55, true);
+        //    //Assert
+        //    Assert.IsNotNull(answer);
+        //}
         #endregion
     }
 }

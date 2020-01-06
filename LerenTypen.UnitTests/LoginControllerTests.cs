@@ -47,19 +47,6 @@ namespace LerenTypen.UnitTests
         }
         #endregion
 
-        #region Insert
-        // new DateTime
-        public void RegisterUser_Userdata_Bool(string username, string password, DateTime birthday, string firstname, string lastname, string securityvraag, string securityanswer, bool result)
-        {
-            //Arrange
-            bool answer = false;
-            //Act
-            answer = LoginController.RegisterUser(username, password, birthday, firstname, lastname, securityvraag, securityanswer);
-            //Assert
-            Assert.AreEqual(result, answer);
-        }
-        #endregion
-
         [Test]
         public void ComputeSha256Hash_CheckHash_ReturnsSHA256Hash()
         {

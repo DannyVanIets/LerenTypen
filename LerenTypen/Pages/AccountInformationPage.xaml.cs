@@ -62,7 +62,7 @@ namespace LerenTypen
 
             try
             {
-                UserContent = TestController.GetPrivateTestMyAccount(UserID);
+                UserContent = TestController.GetMyTestNames(UserID);
                 if (UserContent.Count.Equals(0))
                 {
                     MyTests.Visibility = Visibility.Collapsed;

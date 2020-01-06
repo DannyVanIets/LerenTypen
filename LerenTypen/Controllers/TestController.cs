@@ -720,7 +720,7 @@ namespace LerenTypen.Controllers
             return true;
         }
 
-        public static List<TestTable> GetPrivateTestMyAccount(int accountId)
+        public static List<TestTable> GetMyTestNames(int accountId)
         {
             List<TestTable> queryResult = new List<TestTable>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -728,7 +728,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select testID, testName, t.isPrivate , t.testID from tests t Inner join accounts a on t.accountID=@id where t.archived= 0 and a.archived= 0 and a.accountId= @id;";
+                string query = "select t.testID, testName, t.isPrivate from tests t Inner join accounts a on t.accountID=@id where t.archived= 0 and a.archived= 0 and a.accountId= @id;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -739,7 +739,7 @@ namespace LerenTypen.Controllers
                         while (reader.Read())
                         {
                             //adds all the found data to a list
-                            queryResult.Add(new TestTable(i, reader.GetString(1), Convert.ToInt32(reader[2]), Convert.ToInt32(reader[3])));
+                            queryResult.Add(new TestTable(i, reader.GetString(1), Convert.ToInt32(reader[2]), Convert.ToInt32(reader[0])));
                             i++;
                         }
                     }
@@ -934,11 +934,11 @@ namespace LerenTypen.Controllers
         }
 
         /// <summary>
-        /// Transaction for editing tests, checks if person is editing the test
+        /// Transaction for editing tests, checks if another person is editing the test first
         /// </summary>
         /// <param name="testID"></param>
         /// <returns></returns>
-        public static int EditingTest(int testID)
+        public static int SetBeingEdited(int testID)
         {
             int result = 2;
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -992,7 +992,7 @@ namespace LerenTypen.Controllers
         /// Called hitting save new test version
         /// </summary>        
         /// <returns></returns>
-        public static bool NotBeingEdited(int testID)
+        public static bool UnsetBeingEdited(int testID)
         {
             bool result;
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -1230,7 +1230,7 @@ namespace LerenTypen.Controllers
         /// Gets a dictionary containing the answers as the key and the answerType as the value
         /// (0 = right, 1 = wrong)
         /// </summary>
-        public static List<string> GetAllLinesFromResult(int testResultID, int type = -1)
+        public static List<string> GetAllLinesFromResult(int testResultID)
         {
             List<string> lines = new List<string>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
@@ -1255,7 +1255,6 @@ namespace LerenTypen.Controllers
                             {
                                 lines.Add(reader["answer"].ToString());
                             }
-
                         }
                     }
 

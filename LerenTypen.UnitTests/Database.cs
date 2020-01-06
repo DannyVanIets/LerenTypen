@@ -22,5 +22,107 @@ namespace LerenTypen.UnitTests
                 Console.WriteLine(e.Message);
             }
         }
+
+        public static int GetFirstTestID()
+        {
+            SqlConnection connection = new SqlConnection(Models.Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // this query returns all the content from a given testId
+                string mySql = "SELECT top 1 testID FROM tests";
+
+                using (SqlCommand command = new SqlCommand(mySql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return 0;
+        }
+
+        public static int GetFirstAccountID()
+        {
+            SqlConnection connection = new SqlConnection(Models.Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // this query returns all the content from a given testId
+                string mySql = "SELECT top 1 accountID FROM accounts";
+
+                using (SqlCommand command = new SqlCommand(mySql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return 0;
+        }
+
+        public static int GetFirstTestResultID()
+        {
+            SqlConnection connection = new SqlConnection(Models.Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // this query returns all the content from a given testId
+                string mySql = "SELECT top 1 testResultID FROM testresults";
+
+                using (SqlCommand command = new SqlCommand(mySql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return 0;
+        }
     }
 }
