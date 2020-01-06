@@ -5,9 +5,9 @@ using System;
 
 namespace LerenTypen.UnitTests
 {
-    class LeaderboardControllerTests
+    class LoginControllerTests
     {
-        public LeaderboardControllerTests()
+        public LoginControllerTests()
         {
             Database.Connect();
         }

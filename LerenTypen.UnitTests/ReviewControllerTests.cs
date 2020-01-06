@@ -8,6 +8,7 @@ namespace LerenTypen.UnitTests
 {
     class ReviewControllerTests
     {
+        private int ReviewID { get; set; }
         private int AccountID { get; set; }
         private int TestID { get; set; }
 
