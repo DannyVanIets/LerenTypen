@@ -79,9 +79,9 @@ namespace LerenTypen
 
             //Checks if the birthdate isn't younger than 1 year or older than 100 years.
             //This also checks straight away if the birthdate is really a date.
-            if (birthdate > Date.dateOfToday || birthdate < Date.dateOfTodayHundredYearsAgo)
+            if (birthdate > DateTime.Now || birthdate < DateController.GetDateExactXYearsAgo(100))
             {
-                MessageBox.Show($"Geboortedatum moet tussen {Date.dateOfTodayHundredYearsAgo.Day}-{Date.dateOfTodayHundredYearsAgo.Month}-{Date.dateOfTodayHundredYearsAgo.Year} en {Date.dateOfToday.Day}-{Date.dateOfToday.Month}-{Date.dateOfToday.Year} zijn.", "Error");
+                MessageBox.Show($"Geboortedatum moet tussen {DateController.GetDateExactXYearsAgo(100).ToShortDateString()} en {DateTime.Now.ToShortDateString()} zijn.", "Error");
             }
             //We will first check if the textboxes that aren't passwords are empty. If they are, show a message that that is not allowed!
             else if (string.IsNullOrWhiteSpace(firstname) || string.IsNullOrWhiteSpace(surname) || string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(securityQuestion) || string.IsNullOrWhiteSpace(securityAnswer))
