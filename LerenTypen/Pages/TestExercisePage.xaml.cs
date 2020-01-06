@@ -61,7 +61,7 @@ namespace LerenTypen
         //Soundplayer is the class we use for sounds. It can only include a file, play a file and stop playing any sounds.
         //It's pretty limited, but it's good enough for what we use it for. It also only supports .wav files!
         //We also already load in an sound that we can play on a loop. You can't hear this sound!
-        private SoundPlayer sp = new SoundPlayer(@"../../../soundsCorrect/EmptyWav.wav");
+        private SoundPlayer sp = new SoundPlayer(@"soundsCorrect/EmptyWav.wav");
         Random random = new Random();
 
         private bool restoreState;
@@ -365,7 +365,7 @@ namespace LerenTypen
                 }
 
                 //Sp.soundlocation is used to make sure the soundplayer goes to the right file and sp.load loads in the file.
-                sp.SoundLocation = @"../../../" + file;
+                sp.SoundLocation = file;
                 sp.Load();
 
                 //This lambda query is used to delay the application until the loading from the soundfile is complete.
