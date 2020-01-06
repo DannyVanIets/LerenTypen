@@ -67,29 +67,66 @@ namespace LerenTypen.UnitTests
             int testID = Database.GetFirstTestID();
             int testResultID = Database.GetFirstTestResultID();
             // Act & Assert
-            Assert.DoesNotThrow(() => TestResultController.GetTestResultsContentWrong(testID, testResultID));
+            Assert.DoesNotThrow(() => TestResultController.GetTestResultsContentHadToBe(testResultID));
+        }
+
+        [Test]
+        public void GetAllTestResultsFromAccount_TestIDAndAccountID_ReturnNoException()
+        {
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            int accountID = Database.GetFirstAccountID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetAllTestResultsFromAccountAndTest(accountID, testID));
+        }
+
+        [Test]
+        public void GetUnfinishedTestResultID_TestIDAndAccountID_ReturnNoException()
+        {
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            int accountID = Database.GetFirstAccountID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetUnfinishedTestResultID(accountID, testID));
+        }
+
+        [Test]
+        public void GetAmountOfPauses_TestResultID_ReturnNoException()
+        {
+            // Arrange
+            int testResultID = Database.GetFirstTestResultID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetAmountOfPauses(testResultID));
+        }
+
+        [Test]
+        public void GetTime_TestResultID_ReturnNoException()
+        {
+            // Arrange
+            int testResultID = Database.GetFirstTestResultID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetTime(testResultID));
+        }
+
+        [Test]
+        public void CalculatePercentageRight_TestResultID_ReturnNoException()
+        {
+            // Arrange
+            int testID = Database.GetFirstTestID();
+            int testResultID = Database.GetFirstTestResultID();
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.CalculatePercentageRight(testID, testResultID));
         }
         #endregion
 
         #region Insert
-        //[Test]
-        //// Happy
-        //[TestCase(20)]
-        //// Unhappy
-        //[TestCase(0)]
-        //public void SaveResultsandInsertResultsContent_testResultsID_testResultID(int testID)
-        //{
-        //    //Arrange
-        //    int answer;
-        //    List<string> rightAnswers = new List<string>() { "test", "test" };
-        //    Dictionary<int, string> wrongAnswers = new Dictionary<int, string>();
-        //    wrongAnswers.Add(2, "Test");
-        //    List<string> lines = new List<string>() { "test", "test", "test", "test" };
-        //    //Act
-        //    answer = TestResultController.SaveResults(testID, 1, 1, 1, rightAnswers, wrongAnswers, lines, 5, 55, true);
-        //    //Assert
-        //    Assert.IsNotNull(answer);
-        //}
+        // SaveResult
+        // InsertResultsContent
+        #endregion
+
+        #region Delete
+        // DeleteTestResult
+        // DeleteTestResultContent
         #endregion
     }
 }
