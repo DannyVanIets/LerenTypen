@@ -91,6 +91,40 @@ namespace LerenTypen.UnitTests
             return 0;
         }
 
+        public static int GetFirstAdminAccount()
+        {
+            SqlConnection connection = new SqlConnection(Models.Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // this query returns all the content from a given testId
+                string mySql = "SELECT top 1 accountID FROM accounts WHERE ";
+
+                using (SqlCommand command = new SqlCommand(mySql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return 0;
+        }
+
         public static int GetFirstTestResultID()
         {
             SqlConnection connection = new SqlConnection(Models.Database.connectionString);
