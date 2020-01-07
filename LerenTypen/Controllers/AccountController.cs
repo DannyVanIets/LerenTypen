@@ -675,7 +675,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select avg(testresults.wordsEachMinute) from testresults where accountID = @id and finished = 1";
+                string query = "select avg(wordsEachMinute) from testresults r inner join tests t on r.testID = t.testID where r.accountID = @id and r.finished = 1 and t.archived=0";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -684,7 +684,10 @@ namespace LerenTypen.Controllers
                     {
                         while (reader.Read())
                         {
-                            return Convert.ToInt32(reader[0]);
+                            if (!reader.IsDBNull(0))
+                            {
+                                return Convert.ToInt32(reader[0]);
+                            }
                         }
                     }
                 }
