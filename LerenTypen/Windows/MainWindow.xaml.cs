@@ -174,6 +174,30 @@ namespace LerenTypen
                 CheckForUnfinishedTests();
             }
 
+            if (frame.Content is CreateTestPage)
+            {
+                CreateTestPage createTestPage = (CreateTestPage)frame.Content;
+                if (createTestPage.NewVersion)
+                {
+                    MessageBoxResult result = MessageBox.Show("Wijzigingen gaan verloren bij het verlaten van de pagina", "Weet u zeker dat u deze pagina wilt verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        createTestPage.SetNotBeingEdited();
+                    }
+                    else
+                    {
+                        shouldChangePage = false;
+                    }
+                }
+                else
+                {
+                    MessageBoxResult result = MessageBox.Show("Toets gaat verloren bij het verlaten van de pagina", "Weet u zeker dat u deze pagina wilt verlaten?", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.No)
+                    {
+                        shouldChangePage = false;
+                    }
+                }
+            }
             if (shouldChangePage)
             {
                 frame.Content = pageToChangeTo;
