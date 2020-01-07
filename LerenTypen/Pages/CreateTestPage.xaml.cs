@@ -45,7 +45,7 @@ namespace LerenTypen
             textBoxValues = new List<string>();
             test = TestController.GetTest(testID);
             textInputTestName.Text = test.Name;
-            textInputTestName.IsReadOnly = true;
+            textInputTestName.IsEnabled = false;
             content = TestController.GetTestContent(test.ID);
             foreach (string line in content)
             {
