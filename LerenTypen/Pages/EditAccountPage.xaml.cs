@@ -51,17 +51,6 @@ namespace LerenTypen
             }
         }
 
-        //This is used to change the colors of the button. Same as DeleteAccountButton_MouseLeave.
-        private void DeleteAccountButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            deleteAccountButton.Foreground = Brushes.Black;
-        }
-
-        private void DeleteAccountButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            deleteAccountButton.Foreground = Brushes.White;
-        }
-
         //Once this button has been pressed, we will convert everything from the textboxes into strings and datetime.
         private void SaveButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -160,6 +149,17 @@ namespace LerenTypen
                     }
                 }
             }
+        }
+
+        //This is used to change the colors of the button. Same as DeleteAccountButton_MouseLeave.
+        private void DeleteAccountButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            deleteAccountButton.Foreground = Brushes.Black;
+        }
+
+        private void DeleteAccountButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            deleteAccountButton.Foreground = Brushes.White;
         }
 
         private void DeleteAccountButton_Click(object sender, RoutedEventArgs e)
