@@ -6,40 +6,7 @@ using System.Data.SqlClient;
 namespace LerenTypen.UnitTests
 {
     class Database
-    {
-        public static string connectionString = "Data Source=127.0.0.1,1433;User Id=qlt;Password=MvBg2T-{K[Vh;Database=quicklylearningtyping;";
-        public static List<string> SelectQuery(string query)
-        {
-            List<string> result = new List<string>();
-            SqlConnection connection = new SqlConnection(Database.connectionString);
-            try
-            {
-                connection.Open();
-
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            result.Add(reader.GetString(0));
-                        }
-                    }
-                }
-            }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                connection.Close();
-                connection.Dispose();
-            }
-            return result;
-        }
-
+    { 
         public static void Connect()
         {
             SshClient client = new SshClient("145.44.233.184", "student", "toor2019");
@@ -54,6 +21,175 @@ namespace LerenTypen.UnitTests
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public static int GetFirstTestID()
+        {
+            SqlConnection connection = new SqlConnection(Models.Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // this query returns all the content from a given testId
+                string mySql = "SELECT top 1 testID FROM tests";
+
+                using (SqlCommand command = new SqlCommand(mySql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return 0;
+        }
+
+        public static int GetFirstAccountID()
+        {
+            SqlConnection connection = new SqlConnection(Models.Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // this query returns all the content from a given testId
+                string mySql = "SELECT top 1 accountID FROM accounts";
+
+                using (SqlCommand command = new SqlCommand(mySql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return 0;
+        }
+
+        public static int GetFirstAdminAccount()
+        {
+            SqlConnection connection = new SqlConnection(Models.Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // this query returns all the content from a given testId
+                string mySql = "SELECT top 1 accountID FROM accounts WHERE accountType = 2";
+
+                using (SqlCommand command = new SqlCommand(mySql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return 0;
+        }
+
+        public static int GetFirstTestResultID()
+        {
+            SqlConnection connection = new SqlConnection(Models.Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // this query returns all the content from a given testId
+                string mySql = "SELECT top 1 testResultID FROM testresults";
+
+                using (SqlCommand command = new SqlCommand(mySql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return 0;
+        }
+
+        public static int GetFirstReviewID()
+        {
+            SqlConnection connection = new SqlConnection(Models.Database.connectionString);
+            try
+            {
+                connection.Open();
+
+                // this query returns all the content from a given testId
+                string mySql = "SELECT top 1 reviewID FROM testReviews";
+
+                using (SqlCommand command = new SqlCommand(mySql, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToInt32(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+            return 0;
         }
     }
 }

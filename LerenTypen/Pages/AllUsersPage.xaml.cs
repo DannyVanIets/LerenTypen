@@ -40,7 +40,15 @@ namespace LerenTypen
             AccountController.GetAccountNamesAndBirthdate(int.Parse(id));
             var newWindow = new AdminEditAccountWindow(int.Parse(id), int.Parse(usertype), Mainwindow);
             newWindow.ShowDialog();
-            Mainwindow.frame.Navigate(new AllUsersPage(Mainwindow));
+
+            if (newWindow.Logout)
+            {
+                Mainwindow.LogoutUser(true);
+            }
+            else
+            {
+                Mainwindow.frame.Navigate(new AllUsersPage(Mainwindow));
+            }          
         }
 
         private void Search_Event(object sender, TextChangedEventArgs e)

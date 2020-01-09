@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using LerenTypen.Controllers;
+using System;
 
 namespace LerenTypen
 {
@@ -16,6 +17,10 @@ namespace LerenTypen
             InitializeComponent();
             //This property is used if you want to change the page.
             MainWindow = mainWindow;
+
+            birthdate.DisplayDate = DateTime.Now;
+            birthdate.DisplayDateStart = DateController.GetDateExactXYearsAgo(100);
+            birthdate.DisplayDateEnd = DateTime.Now;
         }
 
         // Er word gekeken als de velden ingevuld zijn, anders word alles afgebroken

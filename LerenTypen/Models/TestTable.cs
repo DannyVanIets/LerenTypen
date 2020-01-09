@@ -43,7 +43,7 @@ namespace LerenTypen
         }
 
 
-        public TestTable(int number, string name, int timesMade, int wordHighscore, int amountOfWords, int testDifficulty, string uploader , double reviewscore)
+        public TestTable(int number, string name, int timesMade, int wordHighscore, int amountOfWords, int testDifficulty, string uploader, double reviewscore, int testID)
         {
             this.WPFNumber = number;
             this.WPFName = name;
@@ -52,6 +52,7 @@ namespace LerenTypen
             this.AmountOfWords = amountOfWords;
             this.Uploader = uploader;
             this.Rating = reviewscore;
+            this.TestId = testID;
             
 
             if (testDifficulty == 0)

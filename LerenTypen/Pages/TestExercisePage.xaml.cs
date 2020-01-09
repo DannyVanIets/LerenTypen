@@ -58,10 +58,11 @@ namespace LerenTypen
         private bool testClosed;
         private string testName;
         private MainWindow m;
-        Random random = new Random();
         //Soundplayer is the class we use for sounds. It can only include a file, play a file and stop playing any sounds.
         //It's pretty limited, but it's good enough for what we use it for. It also only supports .wav files!
-        private SoundPlayer sp = new SoundPlayer(@"../../../soundsCorrect/EmptyWav.wav");
+        //We also already load in an sound that we can play on a loop. You can't hear this sound!
+        private SoundPlayer sp = new SoundPlayer(@"soundsCorrect/EmptyWav.wav");
+        Random random = new Random();
 
         private bool restoreState;
         private int unfinishedTestResultID;
@@ -70,6 +71,8 @@ namespace LerenTypen
         {
             InitializeComponent();
 
+            //Play the soundless sound indefinitely so that the application doesn't have a problem loading in the next sounds on time.
+            //Soundplayer() sadly has a delay when the first sound is being loaded and this way, it loads it before we display the other sounds.
             sp.PlayLooping();
 
             // Bool to stop timer when test is closed
@@ -122,11 +125,10 @@ namespace LerenTypen
                 // Restore the page in the same state as the unfinished test was saved
 
                 unfinishedTestResultID = TestResultController.GetUnfinishedTestResultID(m.Ingelogd, testID);
-                lines = TestController.GetAllLinesFromResult(unfinishedTestResultID, 2);
+                lines = TestController.GetAllLinesFromResult(unfinishedTestResultID);
                 amountOfPauses = TestResultController.GetAmountOfPauses(unfinishedTestResultID);
                 wrongAnswers = TestResultController.GetTestResultsContentWrong(testID, unfinishedTestResultID);
                 rightAnswers = TestResultController.GetTestResultsContentRight(unfinishedTestResultID);
-                //unfinishedLines = TestController.GetAllLinesFromResult(unfinishedTestResultID, 2);
                 int timeSeconds = TestResultController.GetTime(unfinishedTestResultID);
                 i = timeSeconds % 60;
                 j = timeSeconds / 60;
@@ -142,16 +144,7 @@ namespace LerenTypen
             // Check if lines are found
             if (!lines.Count.Equals(0))
             {
-                /* if (restoreState)
-                 {
-                     testLineLbl.Content = unfinishedLines[currentLineIndex];
-                 }
-
-                 else
-                 {
-                 */
                 testLineLbl.Content = lines[currentLine];
-                // }
             }
             else
             {
@@ -362,13 +355,12 @@ namespace LerenTypen
                 }
 
                 //Sp.soundlocation is used to make sure the soundplayer goes to the right file and sp.load loads in the file.
-                sp.SoundLocation = @"../../../" + file;
+                sp.SoundLocation = file;
                 sp.Load();
 
                 //This lambda query is used to delay the application until the loading from the soundfile is complete.
                 //This way it doesn't stop the whole user-interface.
                 Task.Factory.StartNew(() => { while (!sp.IsLoadCompleted) ; });
-
                 sp.Play();
             }
             else
@@ -387,16 +379,7 @@ namespace LerenTypen
             t1.Stop();
 
             lineCheckLbl.Visibility = Visibility.Visible;
-            /*
-                        if (restoreState)
-                        {
-                            lineCheckLbl.Content = unfinishedLines[currentLineIndex];
-                        }
-                        else
-                        {
-                        */
             lineCheckLbl.Content = lines[currentLine];
-            //}
 
             if (input.Trim().Equals(""))
             {
@@ -477,7 +460,7 @@ namespace LerenTypen
         /// </summary>        
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
-            StopTest();
+            AskStopTest();
         }
 
         public MessageBoxResult AskStopTest()
@@ -491,10 +474,12 @@ namespace LerenTypen
                 if (choice == MessageBoxResult.Yes)
                 {
                     StopTest();
+                    m.CheckForUnfinishedTests();
                 }
                 else if (choice == MessageBoxResult.No)
                 {
                     StopTest(false);
+                    m.CheckForUnfinishedTests();
                 }
 
                 return choice;
@@ -568,37 +553,19 @@ namespace LerenTypen
             ShowRightOrWrong(right, input);
 
             bool shouldGoToNextLine;
-            /*if (restoreState)
-            {
-                shouldGoToNextLine = currentLineIndex < unfinishedLines.Count - 1;
-            }
-            else
-            {
-            */
+
             shouldGoToNextLine = true;
             if (!(currentLine < lines.Count - 1))
             {
                 shouldGoToNextLine = false;
             }
-            // }
 
             if (shouldGoToNextLine)
             {
                 currentLine++;
-                //currentLineIndex++;
-
-                /*if (restoreState)
-                {
-                    testLineLbl.Content = unfinishedLines[currentLineIndex];
-                    lineNumberLbl.Content = $"{currentLine}/{lines.Count + restoredWrongAnswers - restoredRightAnswers}";
-                }
-                else
-                {
-                */
                 testLineLbl.Content = lines[currentLine];
 
                 lineNumberLbl.Content = $"{currentLine + 1}/{lines.Count}";
-                // }
             }
             else
             {
@@ -613,15 +580,7 @@ namespace LerenTypen
         private bool CheckInput(string input, int key = -1)
         {
             bool answerCorrect;
-            /*if (restoreState)
-            {
-                answerCorrect = input.Trim().Equals(unfinishedLines[currentLineIndex].Trim());
-            }
-            else
-            {
-            */
             answerCorrect = input.Trim().Equals(lines[currentLine].Trim());
-            //}
 
             if (answerCorrect)
             {
@@ -640,16 +599,7 @@ namespace LerenTypen
                 }
                 else
                 {
-                    /*
-                    if (restoreState)
-                    {
-                        lines.Add(lines[currentLineIndex]);
-                    }
-                    else
-                    {
-                    */
                     lines.Add(lines[currentLine]);
-                    //}
                 }
             }
             return false;

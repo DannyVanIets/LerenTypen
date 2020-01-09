@@ -45,7 +45,7 @@ namespace LerenTypen
             textBoxValues = new List<string>();
             test = TestController.GetTest(testID);
             textInputTestName.Text = test.Name;
-            textInputTestName.IsReadOnly = true;
+            textInputTestName.IsEnabled = false;
             content = TestController.GetTestContent(test.ID);
             foreach (string line in content)
             {
@@ -215,7 +215,7 @@ namespace LerenTypen
 
         public void SetNotBeingEdited()
         {
-            TestController.NotBeingEdited(test.ID);
+            TestController.UnsetBeingEdited(test.ID);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace LerenTypen
             {
                 TestController.AddTest(test.Name, type, difficulty, 0, textBoxValues, test.AuthorID, test.Version + 1);
                 TestController.UpdateTestToArchived(test.ID);
-                TestController.NotBeingEdited(test.ID);
+                TestController.UnsetBeingEdited(test.ID);
             }
             else
             {

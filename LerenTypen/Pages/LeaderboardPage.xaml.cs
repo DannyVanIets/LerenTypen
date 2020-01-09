@@ -34,7 +34,7 @@ namespace LerenTypen
             AverageWordsboard.ItemsSource = LeaderboardController.GetMediumTests(0);
             AverageWordsboard.Items.Refresh();
 
-            EasyLeaderboardWords.ItemsSource = LeaderboardController.GetMediumTests(0);
+            EasyLeaderboardWords.ItemsSource = LeaderboardController.GetEasyTests(0);
             EasyLeaderboardWords.Items.Refresh();
         }
 
@@ -44,6 +44,7 @@ namespace LerenTypen
             int value = TimePick.SelectedIndex;
             if (HardLeaderboardWords != null)
             {
+                HardLeaderboardWords.Items.Refresh();
                 HardLeaderboardWords.ItemsSource = LeaderboardController.GetHardTests(value);
                 HardLeaderboardWords.Items.Refresh();
             }

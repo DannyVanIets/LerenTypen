@@ -1,113 +1,113 @@
 ﻿using LerenTypen.Controllers;
 using LerenTypen.Models;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace LerenTypen.UnitTests
 {
     class TestResultControllerTests
     {
+        private int TestResultID;
+        private int TestID;
+        private int AccountID;
+
         public TestResultControllerTests()
         {
             Database.Connect();
+
+            TestResultID = Database.GetFirstTestResultID();
+            TestID = Database.GetFirstTestID();
+            AccountID = Database.GetFirstAccountID();
         }
 
         #region Select
         [Test]
-        // Happy
-        [TestCase(48, "60", "0", "100")]
-        public void GetTestResults_testResultsID_TestResults(int testResultsID, string resultWordsEachMinute, string resultPauses, string resultScore)
+        public void GetTestResults_TestResultID_ReturnNoException()
         {
-            //Arrange
-            List<string> answer = new List<string>();
-            //Act
-            answer = TestResultController.GetTestResults(testResultsID);
-            //Assert
-            Assert.AreEqual(resultWordsEachMinute, answer[0]);
-            Assert.AreEqual(resultPauses, answer[1]);
-            Assert.AreEqual(resultScore, answer[2]);
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetTestResults(TestResultID));
         }
 
         [Test]
-        // Happy
-        [TestCase(58, 45)]
-        // Unhappy
-        [TestCase(int.MaxValue, 0)]
-        public void GetTestResultsContentRight_testResultsID_TestResultsContentRight(int testResultsID, int resultCount)
+        public void GetWordsPerMinuteByPeriod_AccountIDAndDates_ReturnNoException()
         {
-            //Arrange
-            List<string> answer = new List<string>();
-            //Act
-            answer = TestResultController.GetTestResultsContentRight(testResultsID);
-            //Assert
-            Assert.AreEqual(resultCount, answer.Count);
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetWordsPerMinuteByPeriod(AccountID, DateTime.Now.AddDays(-5), DateTime.Now));
         }
 
         [Test]
-        // Happy
-        [TestCase(58, 1)]
-        // Unhappy
-        [TestCase(int.MaxValue, 0)]
-        public void GetTestResultsContentWrong_testResultsID_TestResultsContentWrong(int testResultsID, int resultCount)
+        public void GetDateRange_AccountID_ReturnNoException()
         {
-            //Arrange
-            List<string> answer = new List<string>();
-            //Act
-            answer = TestResultController.GetTestResultsContentWrong(testResultsID);
-            //Assert
-            Assert.AreEqual(resultCount, answer.Count);
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetDateRange(AccountID));
         }
 
         [Test]
-        // Happy
-        [TestCase(58, 1)]
-        // Unhappy
-        [TestCase(int.MaxValue, 0)]
-        public void GetTestResultsContentHadToBe_testResultsID_TestResultsContentHadToBe(int testResultsID, int resultCount)
+        public void GetTestResultsContentRight_TestResultID_ReturnNoException()
         {
-            //Arrange
-            List<string> answer = new List<string>();
-            //Act
-            answer = TestResultController.GetTestResultsContentHadToBe(testResultsID);
-            //Assert
-            Assert.AreEqual(resultCount, answer.Count);
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetTestResultsContentRight(TestResultID));
         }
 
         [Test]
-        // Happy
-        [TestCase(2, 1, 0)]
-        // Unhappy
-        [TestCase(0, 1, 0)]
-        public void GetAllTestResultsFromAccount_accountIDTestID_AllTestResultsFromAccount(int accountID, int testID, int resultCount)
+        public void GetTestResultsContentWrong_TestIDAndTestResultID_ReturnNoException()
         {
-            //Arrange
-            List<TestResult> answer = new List<TestResult>();
-            //Act
-            answer = TestResultController.GetAllTestResultsFromAccount(accountID, testID);
-            //Assert
-            Assert.AreEqual(resultCount, answer.Count);
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetTestResultsContentWrong(TestID, TestResultID));
+        }
+
+        [Test]
+        public void GetTestResultsContentHadToBe_TestResultID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetTestResultsContentHadToBe(TestResultID));
+        }
+
+        [Test]
+        public void GetAllTestResultsFromAccount_TestIDAndAccountID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetAllTestResultsFromAccountAndTest(AccountID, TestID));
+        }
+
+        [Test]
+        public void GetUnfinishedTestResultID_TestIDAndAccountID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetUnfinishedTestResultID(AccountID, TestID));
+        }
+
+        [Test]
+        public void GetAmountOfPauses_TestResultID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetAmountOfPauses(TestResultID));
+        }
+
+        [Test]
+        public void GetTime_TestResultID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.GetTime(TestResultID));
+        }
+
+        [Test]
+        public void CalculatePercentageRight_TestIDAndTestResultID_ReturnNoException()
+        {
+            // Act & Assert
+            Assert.DoesNotThrow(() => TestResultController.CalculatePercentageRight(TestID, TestResultID));
         }
         #endregion
 
         #region Insert
-        [Test]
-        // Happy
-        [TestCase(20)]
-        // Unhappy
-        [TestCase(0)]
-        public void SaveResultsandInsertResultsContent_testResultsID_testResultID(int testID)
-        {
-            //Arrange
-            int answer;
-            List<string> rightAnswers = new List<string>() { "test", "test" };
-            Dictionary<int, string> wrongAnswers = new Dictionary<int, string>();
-            wrongAnswers.Add(2, "Test");
-            List<string> lines = new List<string>() { "test", "test", "test", "test" };
-            //Act
-            answer = TestResultController.SaveResults(testID, 1, 1, 1, rightAnswers, wrongAnswers, lines, 5);
-            //Assert
-            Assert.IsNotNull(answer);
-        }
+        // SaveResult
+        // InsertResultsContent
+        #endregion
+
+        #region Delete
+        // DeleteTestResult
+        // DeleteTestResultContent
         #endregion
     }
 }

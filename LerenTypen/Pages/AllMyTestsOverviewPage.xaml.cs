@@ -61,6 +61,8 @@ namespace LerenTypen
 
             TableContent = new List<TestTable>();
 
+            allMyTests.Columns.Remove(AllMyTestsOverviewPage_DG_TestId);
+
             // Add the data to the ListView and refresh to show
             try
             {
@@ -70,6 +72,12 @@ namespace LerenTypen
                 SearchResult = (from t in TableContent
                                 where t.Uploader.IndexOf(searchterm, StringComparison.OrdinalIgnoreCase) >= 0
                                 select t).ToList();
+                int i = 1;
+                foreach (TestTable search in SearchResult)
+                {
+                    search.WPFNumber = i;
+                    i++;
+                }
                 TableContent = SearchResult;
 
                 AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = SearchResult;
@@ -93,11 +101,11 @@ namespace LerenTypen
         {
             if (isInitialized)
             {
-                if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
+                if ((AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals("")) && !AllMyTestsOverviewPage_CheckBox_MadeBefore.IsChecked.Value)
                 {
                     CurrentContent = TableContent;
                 }
-                else
+                else if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
                 {
                     CurrentContent = SearchResult;
                 }
@@ -114,11 +122,11 @@ namespace LerenTypen
         {
 
             List<TestTable> ItemsLessThan50 = new List<TestTable>();
-            if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
+            if ((AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals("")) && !AllMyTestsOverviewPage_CheckBox_MadeBefore.IsChecked.Value)
             {
                 CurrentContent = TableContent;
             }
-            else
+            else if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = SearchResult;
             }
@@ -133,11 +141,11 @@ namespace LerenTypen
         private void Between50And100_Clicker(object sender, RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween50And100 = new List<TestTable>();
-            if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
+            if ((AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals("")) && !AllMyTestsOverviewPage_CheckBox_MadeBefore.IsChecked.Value)
             {
                 CurrentContent = TableContent;
             }
-            else
+            else if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = SearchResult;
             }
@@ -152,11 +160,11 @@ namespace LerenTypen
         private void Between100And150_Clicker(object sender, RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween100And150 = new List<TestTable>();
-            if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
+            if ((AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals("")) && !AllMyTestsOverviewPage_CheckBox_MadeBefore.IsChecked.Value)
             {
                 CurrentContent = TableContent;
             }
-            else
+            else if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = SearchResult;
             }
@@ -171,11 +179,11 @@ namespace LerenTypen
         private void Between150And200_Clicker(object sender, RoutedEventArgs e)
         {
             List<TestTable> ItemsBetween150And200 = new List<TestTable>();
-            if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
+            if ((AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals("")) && !AllMyTestsOverviewPage_CheckBox_MadeBefore.IsChecked.Value)
             {
                 CurrentContent = TableContent;
             }
-            else
+            else if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = SearchResult;
             }
@@ -190,14 +198,15 @@ namespace LerenTypen
         private void MoreThan200_Clicker(object sender, RoutedEventArgs e)
         {
             List<TestTable> ItemsMoreThan200 = new List<TestTable>();
-            if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek gebruiker/toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
+            if ((AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") || AllMyTestsOverviewPage_TextBox_Search.Text.Equals("")) && !AllMyTestsOverviewPage_CheckBox_MadeBefore.IsChecked.Value)
             {
                 CurrentContent = TableContent;
             }
-            else
+            else if (AllMyTestsOverviewPage_TextBox_Search.Text.Equals("Zoek toetsnaam") && AllMyTestsOverviewPage_TextBox_Search.Text.Equals(""))
             {
                 CurrentContent = SearchResult;
             }
+
             ActiveFilter = 5;
             Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
         }
@@ -212,7 +221,9 @@ namespace LerenTypen
             {
                 if (AllMyTestsOverviewPage_CheckBox_MadeBefore.IsChecked.Value)
                 {
-                    CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                    CurrentContent = TestController.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd);
+                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
                 }
                 else
                 {
@@ -225,7 +236,7 @@ namespace LerenTypen
             {
                 if (AllMyTestsOverviewPage_CheckBox_MadeBefore.IsChecked.Value)
                 {
-                    CurrentContent = TestController.GetAllTestsAlreadyMade(MainWindow.Ingelogd);
+                    CurrentContent = TestController.GetAllMyTestsAlreadyMade(MainWindow.Ingelogd);
                 }
                 else
                 {
@@ -377,15 +388,15 @@ namespace LerenTypen
                                     select t).ToList();
 
                     CurrentContent = SearchResult;
-                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
 
                 }
                 else
                 {
 
                     AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = CurrentContent;
-                    AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
                 }
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
             }
         }
         /// <summary>
@@ -412,15 +423,15 @@ namespace LerenTypen
                                     select t).ToList();
 
                     CurrentContent = SearchResult;
-                    Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
 
                 }
                 else
                 {
 
                     AllMyTestsOverviewPage_ListView_AllTestsTable.ItemsSource = TableContent;
-                    AllMyTestsOverviewPage_ListView_AllTestsTable.Items.Refresh();
                 }
+                Filter(FindFilter(ActiveFilter)[0], FindFilter(ActiveFilter)[1]);
+
             }
         }
 
@@ -432,24 +443,29 @@ namespace LerenTypen
             MainWindow.ChangePage(new TestInfoPage(id, MainWindow));
         }
 
-        private void DG_ATO_Hyperlink_Click(object sender, RoutedEventArgs e)
-        {
-            Hyperlink link = (Hyperlink)sender;
-            string id = link.Tag.ToString();
-        }
-
         private void DG_ATO_Edit_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            //Hyperlink link = (Hyperlink)sender;
-            //string id = link.Tag.ToString();
-            //MessageBox.Show(id);
+            Hyperlink hyperlink = (Hyperlink)sender;
+            int testID = Convert.ToInt32(hyperlink.Tag);
+            if (TestController.SetBeingEdited(testID).Equals(0))
+            {
+                MainWindow.frame.Navigate(new CreateTestPage(MainWindow, testID));
+            }
+            else
+            {
+                MessageBox.Show("Toets wordt momenteel aangepast");
+            }
         }
 
         private void DG_ATO_Delete_Hyperlink_Click(object sender, RoutedEventArgs e)
         {
-            //Hyperlink link = (Hyperlink)sender;
-            //string id = link.Tag.ToString();
-            //MessageBox.Show(id);
+            Hyperlink hyperlink = (Hyperlink)sender;
+            var result = MessageBox.Show("Weet u zeker dat u deze toets wilt archiveren?", "Toets archiveren", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                TestController.UpdateTestToArchived(Convert.ToInt32(hyperlink.Tag));
+                MainWindow.frame.Navigate(new TestOverviewPage(MainWindow));
+            }
         }
 
         private void DG_Checkbox_Check(object sender, RoutedEventArgs e)

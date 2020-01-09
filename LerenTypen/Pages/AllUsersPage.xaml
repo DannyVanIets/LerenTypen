@@ -18,7 +18,7 @@
                 <DataGridTextColumn Header="Gebruiker Type" Width="150*" Binding="{Binding Usertype}"/>
                 <DataGridTextColumn Header="Voornaam" Width="150*" Binding="{Binding Firstname}"/>
                 <DataGridTextColumn Header="Achternaam" Width="150*" Binding="{Binding Lastname}"/>
-                <DataGridHyperlinkColumn  ContentBinding="{Binding Edit}" Header="Bewerken" Width="150">
+                <DataGridHyperlinkColumn ContentBinding="{Binding Edit}" Header="Bewerken" Width="150">
                     <DataGridHyperlinkColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="Tag" Value="{Binding}"/>

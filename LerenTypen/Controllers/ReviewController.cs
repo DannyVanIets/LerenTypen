@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace LerenTypen.Controllers
 {
-    //In this controller we have all the testReviews queries we use in this applicaiton.
+    //In this controller we have all the testReviews queries we use in this appliciaton.
     public static class ReviewController
     {
         //Regex is used to check if filled in text has only number. Is used in the OnlyNumberic function.
@@ -58,15 +58,14 @@ namespace LerenTypen.Controllers
             return result;
         }
 
-
         public static List<Review> GetUserReviewDetails(int testID)
-        {
+                {
             List<Review> queryResult = new List<Review>();
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
                 connection.Open();
-                string query = "select a.accountUsername, trs.testReviewScore, trs.testReviewDescription, trs.testReviewDateAdded from testReviews trs inner join accounts a on a.accountID = trs.accountID where a.archived =0 and trs.testID=@id order by testReviewDateAdded desc;";
+                string query = "select a.accountUsername, trs.testReviewScore, trs.testReviewDescription, trs.testReviewDateAdded , trs.testReviewID from testReviews trs inner join accounts a on a.accountID = trs.accountID where a.archived =0 and trs.testID = @id order by trs.testReviewID desc;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -76,7 +75,7 @@ namespace LerenTypen.Controllers
                     {
                         while (reader.Read())
                         {
-                            queryResult.Add(new Review(reader.GetString(0),Convert.ToInt32(reader[1]), reader[2].ToString() , reader.GetDateTime(3)));
+                            queryResult.Add(new Review(reader.GetString(0), Convert.ToInt32(reader[1]), reader[2].ToString(), reader.GetDateTime(3)));
                         }
                     }
                 }
@@ -93,7 +92,6 @@ namespace LerenTypen.Controllers
 
             return queryResult;
         }
-
 
 
         //In this query we will insert a review with a description added to it. Other than that, same as "AddReviewWithoutDescription".
@@ -162,6 +160,40 @@ namespace LerenTypen.Controllers
                 connection.Dispose();
             }
             return true;
+        }
+
+        public static double GetRatingScore(int testID)
+        {
+            SqlConnection connection = new SqlConnection(Database.connectionString);
+            try
+            {
+                connection.Open();
+                string query = "SELECT isnull(Round(AVG(testReviewScore),1),0) FROM testReviews WHERE testID=@id;";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", testID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return Convert.ToDouble(reader[0]);
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+            return 0;
         }
 
         //Used to check if the the text is only numberic. If true, the text contains only numbers.

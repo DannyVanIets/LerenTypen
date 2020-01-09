@@ -5,9 +5,9 @@ using System.Data.SqlClient;
 
 namespace LerenTypen.Controllers
 {
+    //In this controller we have all the Account queries we use in this appliciaton.
     public class AccountController
     {
-
         //Get all the account information, except for password.
         public static Account GetAllAccountInformation(int accountID)
         {
@@ -53,7 +53,7 @@ namespace LerenTypen.Controllers
             {
                 connection.Open();
                 string query = "Select count(accountID) from accounts where accountType = @id";
-               
+
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@id", accountID);
@@ -62,7 +62,7 @@ namespace LerenTypen.Controllers
                     {
                         while (reader.Read())
                         {
-                            return  Convert.ToInt32(reader[0]);
+                            return Convert.ToInt32(reader[0]);
                         }
                     }
                 }
@@ -642,7 +642,7 @@ namespace LerenTypen.Controllers
             try
             {
                 connection.Open();
-                string query = "select avg(testresults.score) from testresults where accountID = @id";
+                string query = "select avg(testresults.score) from testresults where accountID = @id and finished = 1";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@id", AccountController.GetAccountIDFromUsername(userName));
@@ -669,13 +669,13 @@ namespace LerenTypen.Controllers
         }
 
 
-        public static string GetAverageWordsMinute(string userName)
+        public static int GetAverageWordsMinute(string userName)
         {
             SqlConnection connection = new SqlConnection(Database.connectionString);
             try
             {
                 connection.Open();
-                string query = "select avg(testresults.wordsEachMinute) from testresults where accountID = @id;";
+                string query = "select avg(wordsEachMinute) from testresults r inner join tests t on r.testID = t.testID where r.accountID = @id and r.finished = 1 and t.archived=0";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -684,7 +684,10 @@ namespace LerenTypen.Controllers
                     {
                         while (reader.Read())
                         {
-                            return reader[0].ToString();
+                            if (!reader.IsDBNull(0))
+                            {
+                                return Convert.ToInt32(reader[0]);
+                            }
                         }
                     }
                 }
@@ -698,7 +701,7 @@ namespace LerenTypen.Controllers
                 connection.Close();
                 connection.Dispose();
             }
-            return null;
+            return 0;
         }
 
         public static bool DeleteAccount(string userName)

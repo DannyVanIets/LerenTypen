@@ -17,6 +17,7 @@ namespace LerenTypen
     {
         private MainWindow mainWindow;
         private int testID;
+        private string name;
         private bool resumeTest;
         private int Reviewscore;
 
@@ -53,11 +54,16 @@ namespace LerenTypen
                 username.FontSize = 15;
                 username.Content = review.AccountUsername;
 
+                int accountID = AccountController.GetAccountIDFromUsername(review.AccountUsername);
+
                 //get the score then convert them into stars.
                 StackPanel starscore = new StackPanel();
                 starscore.Orientation = Orientation.Horizontal;
-                double Reviewscore = TestController.GetRatingScore(testID);
-                int ratingscore = (int)Math.Floor(Reviewscore);
+
+                TestController.GetUserRating(testID, accountID);
+
+                Review r = TestController.GetUserRating(testID, accountID);
+                int ratingscore = (int)Math.Floor(r.ReviewScore);
 
                 //Print all the full stars
                 for (int i = 0; i < ratingscore; i++)
@@ -82,11 +88,12 @@ namespace LerenTypen
                 //Put the stackpanel together
                 StackPanel scores = new StackPanel();
                 scores.Orientation = Orientation.Horizontal;
-                scores.Children.Add(username);
                 scores.Children.Add(starscore);
+                scores.Children.Add(username);
                 scores.Children.Add(date);
 
                 UserInfoFill.Children.Add(scores);
+               
                 //check if the description isnt empty
                 if (review.ReviewDescription != null)
                 {
@@ -97,9 +104,18 @@ namespace LerenTypen
                 }
             }
 
-            double Review = TestController.GetRatingScore(testID);
-            averageScoreLabel.Content += Review.ToString();
-
+            double Review = ReviewController.GetRatingScore(testID);
+            if (inforeview.Count == 0)
+            {
+                averageScoreLabel.Visibility = Visibility.Hidden;
+                UserReviewText.Content = "Er zijn nog geen reviews";
+                UserReviewText.FontSize = 14;
+                UserReviewText.FontWeight = FontWeights.Normal;
+            }
+            else
+            {
+                averageScoreLabel.Content += Review.ToString();
+            }
             int rating = (int)Math.Floor(Review);
 
             for (int i = 0; i < rating; i++)
@@ -165,7 +181,7 @@ namespace LerenTypen
             avarageScoreLabel.Content = $"{test.AverageScore}%";
             highscoreLabel.Content = $"{test.Highscore}%";
 
-            myResultsListView.ItemsSource = TestResultController.GetAllTestResultsFromAccount(mainWindow.Ingelogd, testID);
+            myResultsListView.ItemsSource = TestResultController.GetAllTestResultsFromAccountAndTest(mainWindow.Ingelogd, testID);
 
             Dictionary<int, int> top3Fastest = TestController.GetTop3FastestTypers(testID);
             foreach (KeyValuePair<int, int> kvp in top3Fastest)

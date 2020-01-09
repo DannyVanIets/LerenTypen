@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LerenTypen.Controllers
 {
-    class LeaderboardController
+    public static class LeaderboardController
     {
         //Fill in all the info for the hard words leaderboard
         public static List<Test> GetHardTests(int timespan)
@@ -23,15 +23,15 @@ namespace LerenTypen.Controllers
                 //check which box is being checked (weekly, monthly, yearly)
                 if (timespan == 0)
                 {
-                    query = "select tr.accountID, AVG(wordsEachMinute), AVG(score), t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc"; 
+                    query = "select tr.accountID , AVG(wordsEachMinute), AVG(score) from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastweek AND @now group by tr.accountID order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
                 else if (timespan == 1)
                 {
-                    query = "select tr.accountID, AVG(wordsEachMinute), AVG(score), t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID , AVG(wordsEachMinute), AVG(score) from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastmonth AND @now group by tr.accountID order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
                 else if (timespan == 2)
                 {
-                    query = "select tr.accountID, AVG(wordsEachMinute), AVG(score), t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID , AVG(wordsEachMinute), AVG(score) from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 2 and tr.testResultsDate BETWEEN @lastyear AND @now group by tr.accountID order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
 
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
@@ -43,8 +43,8 @@ namespace LerenTypen.Controllers
                 {
                     command.Parameters.AddWithValue("@now", DateTime.Now);
                     command.Parameters.AddWithValue("@lastweek", todayWeekAgo);
-                    command.Parameters.AddWithValue("lastmonth", todayMonthAgo);
-                    command.Parameters.AddWithValue("lastyear", todayYearAgo);
+                    command.Parameters.AddWithValue("@lastmonth", todayMonthAgo);
+                    command.Parameters.AddWithValue("@lastyear", todayYearAgo);
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -85,17 +85,16 @@ namespace LerenTypen.Controllers
                 //check which box is picked and run that query.
                 if (timespan == 0)
                 {
-                    query = "select tr.accountID  , AVG(wordsEachMinute) , AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID , AVG(wordsEachMinute), AVG(score) from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastweek AND @now group by tr.accountID order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
                 else if (timespan == 1)
                 {
-                    query = "select tr.accountID  , AVG(wordsEachMinute) , AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID , AVG(wordsEachMinute), AVG(score) from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastmonth AND @now group by tr.accountID order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
                 else if (timespan == 2)
                 {
-                    query = "select tr.accountID  , AVG(wordsEachMinute) , AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID , AVG(wordsEachMinute), AVG(score) from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 1 and tr.testResultsDate BETWEEN @lastyear AND @now group by tr.accountID order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
-
                 //see which days etc.
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
                 DateTime todayMonthAgo = DateTime.Now.AddMonths(-1);
@@ -106,8 +105,8 @@ namespace LerenTypen.Controllers
                 {
                     command.Parameters.AddWithValue("@now", DateTime.Now);
                     command.Parameters.AddWithValue("@lastweek", todayWeekAgo);
-                    command.Parameters.AddWithValue("lastmonth", todayMonthAgo);
-                    command.Parameters.AddWithValue("lastyear", todayYearAgo);
+                    command.Parameters.AddWithValue("@lastmonth", todayMonthAgo);
+                    command.Parameters.AddWithValue("@lastyear", todayYearAgo);
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -148,15 +147,15 @@ namespace LerenTypen.Controllers
                 //check which value in combobox is being picked.
                 if (timespan == 0)
                 {
-                    query = "select tr.accountID , AVG(wordsEachMinute), AVG(score), t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID , AVG(wordsEachMinute), AVG(score) from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastweek AND @now group by tr.accountID order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
                 else if (timespan == 1)
                 {
-                    query = "select tr.accountID, AVG(wordsEachMinute), AVG(score) ,t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and  t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastmonth AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID , AVG(wordsEachMinute), AVG(score) from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastmonth AND @now group by tr.accountID order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
                 else if (timespan == 2)
                 {
-                    query = "select tr.accountID, AVG(wordsEachMinute), AVG(score), t.testDifficulty from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1 and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastyear AND @now group by a.accountUsername, tr.accountID, t.testDifficulty order by(AVG(wordsEachMinute) * AVG(score)) desc";
+                    query = "select tr.accountID , AVG(wordsEachMinute), AVG(score) from testresults tr JOIN tests t on t.testID = tr.testID JOIN accounts a ON t.accountID = a.accountID  where a.archived = 0 and t.archived = 0 and t.accountID in (select a.accountID from accounts a where a.accountType = 1) and tr.finished=1  and t.isPrivate = 0 and t.testDifficulty = 0 and tr.testResultsDate BETWEEN @lastyear AND @now group by tr.accountID order by(AVG(wordsEachMinute) * AVG(score)) desc";
                 }
 
                 DateTime todayWeekAgo = DateTime.Now.AddDays(-7);
@@ -167,8 +166,8 @@ namespace LerenTypen.Controllers
                 {
                     command.Parameters.AddWithValue("@now", DateTime.Now);
                     command.Parameters.AddWithValue("@lastweek", todayWeekAgo);
-                    command.Parameters.AddWithValue("lastmonth", todayMonthAgo);
-                    command.Parameters.AddWithValue("lastyear", todayYearAgo);
+                    command.Parameters.AddWithValue("@lastmonth", todayMonthAgo);
+                    command.Parameters.AddWithValue("@lastyear", todayYearAgo);
 
                     using (SqlDataReader reader = command.ExecuteReader())
                     {

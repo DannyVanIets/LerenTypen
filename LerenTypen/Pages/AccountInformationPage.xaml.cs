@@ -15,7 +15,6 @@ namespace LerenTypen
     {
         private MainWindow MainWindow;
         private Account Account;
-        private Date Date;
         private List<TestTable> UserContent;
         private List<TestTable> LastMadeContent;
         private List<TestTable> CurrentContent = new List<TestTable>();
@@ -31,7 +30,6 @@ namespace LerenTypen
             InitializeComponent();
             //MainWindow is used to change pages.
             MainWindow = mainWindow;
-            Date = new Date();
             //Make a new list for filling the table
             UserContent = new List<TestTable>();
             LastMadeContent = new List<TestTable>();
@@ -57,29 +55,14 @@ namespace LerenTypen
             userNamelabel.Content = Account.UserName;
             FullNamelabel.Content = firstname + " " + lastname;
             Birthdatelabel.Content = Account.Birthdate;
+
             //Get averages from database and fill labels for that account.
-
-            if (Convert.ToInt32(AccountController.GetAverageWordsMinute(Account.UserName)) == 0)
-            {
-                AverageWordsMinute.Content = "Geen gegevens";
-            }
-            else
-            {
-                AverageWordsMinute.Content = Convert.ToInt32(AccountController.GetAverageWordsMinute(Account.UserName));
-            }
-
-            if (Convert.ToInt16(AccountController.GetAverageTestResultpercentage(Account.UserName)) == 0)
-            {
-                AveragePercentage.Content = "Geen gegevens";
-            }
-            else
-            {
-                AveragePercentage.Content = Convert.ToInt16(AccountController.GetAverageTestResultpercentage(Account.UserName)) + " %";
-            }
+            AverageWordsMinute.Content = AccountController.GetAverageWordsMinute(Account.UserName);
+            AveragePercentage.Content = AccountController.GetAverageTestResultpercentage(Account.UserName) + " %";
 
             try
             {
-                UserContent = TestController.GetPrivateTestMyAccount(UserID);
+                UserContent = TestController.GetMyTestNames(UserID);
                 if (UserContent.Count.Equals(0))
                 {
                     MyTests.Visibility = Visibility.Collapsed;

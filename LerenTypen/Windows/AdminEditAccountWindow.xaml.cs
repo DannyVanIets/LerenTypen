@@ -14,6 +14,8 @@ namespace LerenTypen
         private int accountID;
         private MainWindow mainWindow;
 
+        public bool Logout { get; private set; } = false;
+
         public AdminEditAccountWindow(int id, int acctype, MainWindow mainWindow)
         {
             InitializeComponent();
@@ -47,33 +49,25 @@ namespace LerenTypen
             {
                 //get amount of admin accounts on application
                 int amount = AccountController.GetAmountOfAdmins(2);
-               
-                /*
-                 * // Check if own account is being edited
-                bool logout = true;
+
+                // Check if own account is being edited
                 if (accountID == mainWindow.Ingelogd)
                 {
-                    MessageBoxResult result = MessageBox.Show("Je staat op het punt om je eigen account aan te passen. Als je doorgaat zal je opnieuw moeten inloggen. Wil je doorgaan?");
+                    MessageBoxResult result = MessageBox.Show("Je staat op het punt om je eigen account aan te passen. Als je doorgaat zal je opnieuw moeten inloggen. Wil je doorgaan?", "Eigen account aanpassen", MessageBoxButton.YesNo);
 
                     if (result == MessageBoxResult.Yes)
                     {
-                        logout = true;
+                        Logout = true;
                     }
                     else
                     {
                         return;
                     }
                 }
-                */
-
 
                 if (!string.IsNullOrEmpty(firstname) || !string.IsNullOrEmpty(surname) || !string.IsNullOrEmpty(username))
                 {
                     AccountController.UpdateAccount(username, firstname, surname);
-                }
-                else
-                {
-                   
                 }
 
                 if (comboboxvalue == "student")
@@ -83,9 +77,9 @@ namespace LerenTypen
                         MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het laastste admin account wilt archiveren?", "Alle admins archiveren", MessageBoxButton.YesNo);
                         if (messageBoxResult == MessageBoxResult.Yes)
                         {
-                            AccountController.MakeStudent(username);
-                            MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                            MessageBox.Show("Dit is niet mogelijk! Maak eerst een ander account admin", "Error");
                             this.Close();
+                            Logout = false;
                         }
                         else
                         {
@@ -107,9 +101,9 @@ namespace LerenTypen
                         MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het laastste admin account wilt archiveren?", "Alle admins archiveren", MessageBoxButton.YesNo);
                         if (messageBoxResult == MessageBoxResult.Yes)
                         {
-                            AccountController.MakeTeacher(username);
-                            MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
+                            MessageBox.Show("Dit is niet mogelijk! Maak eerst een ander account admin", "Error");
                             this.Close();
+                            Logout = false;
                         }
                         else
                         {
@@ -129,18 +123,11 @@ namespace LerenTypen
                     AccountController.MakeAdmin(username);
                     MessageBox.Show("De aangepaste info is Geupdate!", "Info Geupdate");
                     this.Close();
-
                 }
                 else
                 {
                     MessageBox.Show("Geen geldige rol", "Error");
                 }
-
-             /*   if (logout)
-                {
-                    mainWindow.LogoutUser(true);
-                }
-                */
             }
             catch (Exception q)
             {
